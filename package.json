@@ -9,9 +9,11 @@
     "test": "gulp test",
     "release": "release-it"
   },
-  "description": "",
+  "description": "Catch all process errors: uncaught exceptions, warnings and improperly handled promises",
   "keywords": [
     "process",
+    "error-handling",
+    "error-handler",
     "error",
     "handling",
     "handler",
@@ -20,6 +22,7 @@
     "warnings",
     "logging",
     "uncaught",
+    "uncaught-exceptions",
     "uncaughtException",
     "unhandledRejection",
     "rejectionHandled",

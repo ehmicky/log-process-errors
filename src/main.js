@@ -2,7 +2,7 @@
 
 const process = require('process')
 
-const { defaultHandler } = require('./default')
+const { DEFAULT_OPTS } = require('./default')
 const EVENTS = require('./events')
 
 // Add event handling for all process-related errors
@@ -12,11 +12,6 @@ const setup = function(opts) {
   const listeners = addListeners({ opts: optsA })
   const removeAll = removeListeners.bind(null, listeners)
   return removeAll
-}
-
-const DEFAULT_OPTS = {
-  handlerFunc: defaultHandler,
-  exitOnExceptions: true,
 }
 
 const addListeners = function({ opts }) {

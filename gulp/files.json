@@ -1,4 +1,4 @@
 {
-  "JAVASCRIPT": ["*.js", "gulp/**/*.js"],
+  "JAVASCRIPT": ["*.js", "src/**/*.js", "gulp/**/*.js"],
   "MARKDOWN": ["*.md"]
 }

@@ -36,7 +36,9 @@
   },
   "author": "autoserver founder <founder@autoserver.io> (http://autoserver.io)",
   "directories": {},
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^2.4.1"
+  },
   "devDependencies": {
     "eslint": "^5.7.0",
     "eslint-config-prettier": "^3.1.0",

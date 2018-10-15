@@ -19,46 +19,60 @@ const onProcessError = require('on-process-error')
 const undoSetup = onProcessError.setup()
 ```
 
-When any process errors occur, it will be logged using `console.error()`:
+When any process errors occur, it will be logged using `console.error()`.
+The message will include detailed information about the error.
 
-- the message will include detailed information about the error
-- for `warning`, `console.warn()` will be used instead.
-- for `uncaughtException`, [`process.exit(1)` will be called after
-  `console.error()`](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
+For `warning`, `console.warn()` will be used instead.
 
 You can undo everything by firing the function returned by
 `onProcessError.setup()` (called `undoSetup` in the example above).
 
+# Example output
+
+TO BE DONE
+
 # Custom handling
 
-You can override the default behavior by passing a custom function instead.
+You can override the default behavior by passing a custom function to the
+`handle` option.
 
 <!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict -->
+import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-const onProcessError = require('on-process-error')
-
-const undoSetup = onProcessError.setup(
-  ({ eventName, promiseState, promiseValue, error, message }) => {},
-)
+onProcessError.setup({
+  handle({ eventName, promiseState, promiseValue, error, message }) {},
+})
 ```
+
+This can be useful if you want to use your own logger instead of the console.
 
 The function's argument is an object with the following properties:
 
 - `eventName` `{string}`: can be `uncaughtException`, `unhandledRejection`,
   `rejectionHandled`, `multipleResolves` or `warning`
+- `error` `{any}` is either:
+  - value thrown by `uncaughtException`. Usually an `Error` instance, but not
+    always.
+  - `Error` instance emitted by `warning`.
+    [`error.name`, `error.code` and `error.detail`](https://nodejs.org/api/process.html#process_event_warning)
+    might be defined.
 - `promiseState` `{string}`: whether promise was `resolved` or `rejected`.
   For `unhandledRejection`, `rejectionHandled` and `multipleResolves`.
 - `promiseValue` `{any}`: value resolved/rejected by the promise.
   For `unhandledRejection`, `rejectionHandled` and `multipleResolves`.
-- `error` `{error}`:
-  - can be:
-    - thrown by `uncaughtException`
-    - emitted by `warning`. [`error.name`, `error.code` and `error.detail`](https://nodejs.org/api/process.html#process_event_warning)
-      might be defined.
-    - rejected by `unhandledRejection`, `rejectionHandled` or
-      `multipleResolves`'s promise (if the promise was rejected).
-  - if the error is not an `Error` instance (e.g. if it is a string), it will
-    be normalized to one using `new Error()`.
 - `message` `{string}`: detailed message summing up all of the above.
+
+# Exiting on uncaught exceptions
+
+By default, `uncaughtException` will fire `process.exit(1)`. This is the recommended behavior according to the
+[Node.js documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
+
+You can disable this by setting the `exitOnExceptions` option to `false`:
+
+<!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
+import/no-unresolved, unicorn/filename-case, strict, no-undef -->
+
+```js
+onProcessError.setup({ exitOnExceptions: false })
+```

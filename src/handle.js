@@ -1,35 +1,50 @@
 'use strict'
 
-const { getError } = require('./error')
+const { exit } = require('process')
+
+const { parsePromise } = require('./promise')
 const { getMessage } = require('./message')
 
 // Generic event handler for all events.
-const handleEvent = async function({ handlerFunc, eventName, error, promise }) {
-  const { promiseState, promiseValue } = await parsePromise({ promise })
-  const errorA = getError({ error, promiseValue })
+const handleEvent = async function({
+  opts: { handlerFunc, exitOnExceptions },
+  eventName,
+  error,
+  promise,
+  promiseValue,
+}) {
+  const { promiseState, promiseValue: promiseValueA } = await parsePromise({
+    eventName,
+    promise,
+    promiseValue,
+  })
   const message = getMessage({
     eventName,
     promiseState,
-    promiseValue,
-    error: errorA,
+    promiseValue: promiseValueA,
+    error,
   })
 
-  handlerFunc({ eventName, promiseState, promiseValue, error: errorA, message })
+  handlerFunc({
+    eventName,
+    promiseState,
+    promiseValue: promiseValueA,
+    error,
+    message,
+  })
+
+  exitProcess({ eventName, exitOnExceptions })
 }
 
-// Retrieve promise's resolved/rejected state and value.
-const parsePromise = async function({ promise }) {
-  // `uncaughtException` and `warning` events do not have `promise`.
-  if (promise === undefined) {
-    return {}
+// Exit process on `uncaughtException`
+// See https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
+// Can be disabled with `opts.exitOnExceptions: false`
+const exitProcess = function({ eventName, exitOnExceptions }) {
+  if (eventName !== 'uncaughtException' || !exitOnExceptions) {
+    return
   }
 
-  try {
-    const promiseValue = await promise
-    return { promiseState: 'resolved', promiseValue }
-  } catch (error) {
-    return { promiseState: 'rejected', promiseValue: error }
-  }
+  exit(1)
 }
 
 module.exports = {

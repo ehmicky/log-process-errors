@@ -9,7 +9,6 @@ const DEFAULT_OPTS = {
   getLevel: defaultGetLevel,
   getMessage: defaultGetMessage,
   log: defaultLog,
-  exitOnExceptions: true,
   colors: true,
 }
 

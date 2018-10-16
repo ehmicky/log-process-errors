@@ -26,8 +26,6 @@ logProcessErrors(options)
 `options` is an optional object with the following properties:
 
 - [`log` `{function}`](#custom-logging)
-- [`exitOnExceptions` `{boolean}`](#exiting-on-uncaught-exceptions) (default:
-  `true`)
 - [`getLevel` `{function}`](#log-level)
 - [`getMessage` `{function}`](#log-message)
 - [`colors` `{boolean}`](#log-message) (default: `false`)
@@ -79,21 +77,6 @@ The function's arguments are:
     - `promiseState`, `promiseValue`: only on `unhandledRejection`,
       `rejectionHandled` and `multipleResolves`
     - `secondPromiseState`, `secondPromiseValue`: only on `multipleResolves`
-
-# Exiting on uncaught exceptions
-
-By default `uncaughtException` will fire `process.exit(1)`. This is the
-recommended behavior according to the
-[Node.js documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
-
-This can disabled by setting the `exitOnExceptions` option to `false`:
-
-<!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict, no-undef -->
-
-```js
-logProcessErrors({ exitOnExceptions: false })
-```
 
 # Log level
 
@@ -149,6 +132,16 @@ logProcessErrors({
   },
 })
 ```
+
+# Uncaught exceptions
+
+`uncaughtException` events will fire `process.exit(1)`. This is the recommended
+behavior according to the
+[Node.js documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
+
+`process.exit(1)` will only be fired after the `uncaughtException` event has
+been logged. If an custom `log` option is used and it is asynchronous, the
+function should return a promise (or use `async`/`await`).
 
 # Stop logging
 

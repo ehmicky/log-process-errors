@@ -4,6 +4,7 @@ const { platform } = require('process')
 
 const { red, yellow } = require('chalk')
 
+// Retrieve error's `level`
 const getLevel = function({ opts, info }) {
   const level = opts.getLevel(info)
 
@@ -29,6 +30,7 @@ const LEVELS = {
   },
 }
 
+// Default `opts.getLevel()`
 const defaultGetLevel = function({ eventName }) {
   if (eventName === 'warning') {
     return 'warn'

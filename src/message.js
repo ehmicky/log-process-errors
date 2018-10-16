@@ -13,6 +13,7 @@ const getMessage = function({ opts, info, level }) {
   return messageA
 }
 
+// Default `opts.getMessage()`
 const defaultGetMessage = function({
   eventName,
   promiseState,

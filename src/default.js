@@ -2,17 +2,12 @@
 
 const { defaultGetLevel } = require('./level')
 const { defaultGetMessage } = require('./message')
-
-// Default `opts.handlerFunc`
-const defaultHandler = function(message, level) {
-  // eslint-disable-next-line no-restricted-globals, no-console
-  console[level](message)
-}
+const { defaultLog } = require('./log')
 
 const DEFAULT_OPTS = {
   getLevel: defaultGetLevel,
   getMessage: defaultGetMessage,
-  handlerFunc: defaultHandler,
+  log: defaultLog,
   exitOnExceptions: true,
 }
 

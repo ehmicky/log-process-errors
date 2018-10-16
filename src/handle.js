@@ -9,7 +9,6 @@ const { getMessage } = require('./message')
 // Generic event handler for all events.
 const handleEvent = async function({
   opts,
-  opts: { handlerFunc, exitOnExceptions },
   eventName,
   error,
   promise,
@@ -29,15 +28,15 @@ const handleEvent = async function({
   const level = getLevel({ opts, info })
   const message = getMessage({ opts, info, level })
 
-  handlerFunc(message, level, info)
+  opts.log(message, level, info)
 
-  exitProcess({ eventName, exitOnExceptions })
+  exitProcess({ eventName, opts })
 }
 
 // Exit process on `uncaughtException`
 // See https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
 // Can be disabled with `opts.exitOnExceptions: false`
-const exitProcess = function({ eventName, exitOnExceptions }) {
+const exitProcess = function({ eventName, opts: { exitOnExceptions } }) {
   if (eventName !== 'uncaughtException' || !exitOnExceptions) {
     return
   }

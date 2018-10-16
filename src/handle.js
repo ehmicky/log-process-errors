@@ -2,7 +2,7 @@
 
 const { exit } = require('process')
 
-const { parsePromise } = require('./promise')
+const { getInfo } = require('./info')
 const { getMessage } = require('./message')
 
 // Generic event handler for all events.
@@ -15,27 +15,18 @@ const handleEvent = async function({
   secondPromiseState,
   secondPromiseValue,
 }) {
-  const { promiseState, promiseValue: promiseValueA } = await parsePromise({
+  const info = await getInfo({
     eventName,
+    error,
     promise,
     promiseValue,
-  })
-  const message = getMessage({
-    eventName,
-    promiseState,
-    promiseValue: promiseValueA,
     secondPromiseState,
     secondPromiseValue,
-    error,
   })
 
-  handlerFunc({
-    eventName,
-    promiseState,
-    promiseValue: promiseValueA,
-    error,
-    message,
-  })
+  const message = getMessage(info)
+
+  handlerFunc({ ...info, message })
 
   exitProcess({ eventName, exitOnExceptions })
 }

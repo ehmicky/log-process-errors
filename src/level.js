@@ -2,8 +2,6 @@
 
 const { platform } = require('process')
 
-const { red, yellow } = require('chalk')
-
 // Retrieve error's `level`
 const getLevel = function({ opts, info }) {
   const level = opts.getLevel(info)
@@ -21,11 +19,11 @@ const isWindows = platform === 'win32'
 // Each level is printed in a different way
 const LEVELS = {
   warn: {
-    COLOR: yellow,
+    COLOR: 'yellow',
     SIGN: isWindows ? '\u203C' : '\u26A0',
   },
   error: {
-    COLOR: red,
+    COLOR: 'red',
     SIGN: isWindows ? '\u00D7' : '\u2718',
   },
 }

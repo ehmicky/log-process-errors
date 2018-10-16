@@ -3,6 +3,7 @@
 const { exit } = require('process')
 
 const { getInfo } = require('./info')
+const { getColors } = require('./colors')
 const { getLevel } = require('./level')
 const { getMessage } = require('./message')
 
@@ -29,8 +30,9 @@ const handleEvent = async function({
     return
   }
 
+  const colors = getColors({ opts })
   const level = getLevel({ opts, info })
-  const message = getMessage({ opts, info, level })
+  const message = getMessage({ opts, info, level, colors })
 
   opts.log(message, level, info)
 

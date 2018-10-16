@@ -6,8 +6,8 @@ const { printMultiline, print, prettify } = require('./serialize')
 
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
-const getMessage = function({ opts, info, level }) {
-  const message = opts.getMessage({ ...info, level })
+const getMessage = function({ opts, info, level, colors }) {
+  const message = opts.getMessage({ ...info, level, colors })
   // Ensure this is a string
   const messageA = typeof message === 'string' ? message : inspect(message)
   return messageA
@@ -22,6 +22,7 @@ const defaultGetMessage = function({
   secondPromiseValue,
   error,
   level,
+  colors,
 }) {
   const message = MESSAGES[eventName]({
     promiseState,
@@ -31,7 +32,7 @@ const defaultGetMessage = function({
     error,
   })
 
-  const messageA = prettify({ message, eventName, level })
+  const messageA = prettify({ message, eventName, level, colors })
   return messageA
 }
 

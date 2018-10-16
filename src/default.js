@@ -10,6 +10,7 @@ const DEFAULT_OPTS = {
   getMessage: defaultGetMessage,
   log: defaultLog,
   exitOnExceptions: true,
+  colors: true,
 }
 
 module.exports = {

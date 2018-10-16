@@ -53,19 +53,22 @@ logProcessErrors({
 
 The function's arguments are:
 
-- `message` `{string}`: nice and detailed description of the event. See the
-  [`getMessage` option](#log-message).
-- `level` `{string}`: log level. See the [`getLevel` option](#log-level)
+- `message` `{string}`: nice and detailed description of the event. Can be
+  customized with the [`getMessage` option](#log-message).
+- `level` `{string}`: log level. Can be customized with the
+  [`getLevel` option](#log-level)
 - `info` `{object}`:
-  - information about the event:
+  - information about the event
+  - has the following properties:
     - `eventName` `{string}`: can be `uncaughtException`, `unhandledRejection`,
       `rejectionHandled`, `multipleResolves` or `warning`
     - `error` `{any}`:
-      - either the value thrown by `uncaughtException`. Usually an `Error`
-        instance, but not always.
+      - either the value thrown by `uncaughtException`
       - or the error emitted by `warning`.
         [`error.code` and `error.detail`](https://nodejs.org/api/process.html#process_event_warning)
-        might be defined. Always an `Error` instance.
+        might be defined
+      - it usually is an `Error` instance but (for `uncaughtException`) not
+        always.
     - `promiseState` `{string}`: whether promise was `resolved` or `rejected`.
     - `promiseValue` `{any}`: value resolved/rejected by the promise.
     - `secondPromiseState`, `secondPromiseValue`: like `promiseState` and

@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "test": "gulp test",
+    "prepublishOnly": "npm test",
     "release": "release-it"
   },
   "description": "Log all process errors: uncaught exceptions, warnings and improperly handled promises",

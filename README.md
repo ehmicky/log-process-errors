@@ -20,7 +20,7 @@ import/no-unresolved, unicorn/filename-case, strict -->
 ```js
 const logProcessErrors = require('log-process-errors')
 
-lopProcessErrors()
+logProcessErrors()
 ```
 
 # Custom logging

@@ -35,7 +35,10 @@
     "url": "https://github.com/autoserver-org/log-process-errors/issues"
   },
   "author": "autoserver founder <founder@autoserver.io> (http://autoserver.io)",
-  "directories": {},
+  "directories": {
+    "doc": "docs",
+    "lib": "src"
+  },
   "dependencies": {
     "chalk": "^2.4.1"
   },

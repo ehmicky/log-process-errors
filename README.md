@@ -135,10 +135,10 @@ returning a string. The `info` argument also has the following properties:
 
 # Skipping events
 
-Some events can be ignored by using the `skipEvent` option. It should be a
-function using [`info` as argument](#custom-logging) and returning a boolean.
+Events can be skipped with the `skipEvent` option. It should be a function
+using [`info` as argument](#custom-logging) and returning `true` or `false`.
 
-For example to ignore `warning` events:
+For example to skip `warning` events:
 
 <!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->

@@ -27,7 +27,7 @@ const handleEvent = async function({
   })
 
   const level = getLevel({ opts, info })
-  const message = getMessage({ ...info, level })
+  const message = getMessage({ opts, info, level })
 
   handlerFunc(message, level, info)
 

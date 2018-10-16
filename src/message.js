@@ -1,10 +1,19 @@
 'use strict'
 
+const { inspect } = require('util')
+
 const { printMultiline, print, prettify } = require('./serialize')
 
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
-const getMessage = function({
+const getMessage = function({ opts, info, level }) {
+  const message = opts.getMessage({ ...info, level })
+  // Ensure this is a string
+  const messageA = typeof message === 'string' ? message : inspect(message)
+  return messageA
+}
+
+const defaultGetMessage = function({
   eventName,
   promiseState,
   promiseValue,
@@ -70,4 +79,5 @@ const MESSAGES = {
 
 module.exports = {
   getMessage,
+  defaultGetMessage,
 }

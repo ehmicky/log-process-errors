@@ -1,6 +1,7 @@
 'use strict'
 
 const { defaultGetLevel } = require('./level')
+const { defaultGetMessage } = require('./message')
 
 // Default `opts.handlerFunc`
 const defaultHandler = function(message, level) {
@@ -10,6 +11,7 @@ const defaultHandler = function(message, level) {
 
 const DEFAULT_OPTS = {
   getLevel: defaultGetLevel,
+  getMessage: defaultGetMessage,
   handlerFunc: defaultHandler,
   exitOnExceptions: true,
 }

@@ -1,9 +1,8 @@
 'use strict'
 
-const { platform } = require('process')
 const { inspect } = require('util')
 
-const { red, yellow, bold, dim, inverse } = require('chalk')
+const { bold, dim, inverse } = require('chalk')
 
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
@@ -14,6 +13,7 @@ const getMessage = function({
   secondPromiseState,
   secondPromiseValue,
   error,
+  levelInfo,
 }) {
   const message = MESSAGES[eventName]({
     promiseState,
@@ -23,8 +23,7 @@ const getMessage = function({
     error,
   })
 
-  const level = eventName === 'warning' ? 'warn' : 'error'
-  const messageA = prettify({ message, level, eventName })
+  const messageA = prettify({ message, eventName, levelInfo })
   return messageA
 }
 
@@ -86,31 +85,16 @@ const printValue = function(value) {
   return inspect(value)
 }
 
-const prettify = function({ message, level, eventName }) {
+const prettify = function({ message, eventName, levelInfo: { COLOR, SIGN } }) {
   const [header, ...lines] = message.split('\n')
 
   // Add color, icon and `eventName` to first message line.
-  const { COLOR, SIGN } = LEVELS[level]
   const headerA = COLOR(`${bold(inverse(` ${SIGN}  ${eventName} `))} ${header}`)
   // Add gray color and indentation to other lines.
   const linesA = lines.map(line => dim(`\t${VERTICAL_BAR} ${line}`))
 
   const messageA = [headerA, ...linesA].join('\n')
   return messageA
-}
-
-// Start the message with an icon followed by `Error` or `Warning`
-// Also add colors
-const isWindows = platform === 'win32'
-const LEVELS = {
-  warn: {
-    COLOR: yellow,
-    SIGN: isWindows ? '\u203C' : '\u26A0',
-  },
-  error: {
-    COLOR: red,
-    SIGN: isWindows ? '\u00D7' : '\u2718',
-  },
 }
 
 const VERTICAL_BAR = '\u2016'

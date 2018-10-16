@@ -3,10 +3,12 @@
 const { exit } = require('process')
 
 const { getInfo } = require('./info')
+const { getLevel } = require('./level')
 const { getMessage } = require('./message')
 
 // Generic event handler for all events.
 const handleEvent = async function({
+  opts,
   opts: { handlerFunc, exitOnExceptions },
   eventName,
   error,
@@ -24,9 +26,10 @@ const handleEvent = async function({
     secondPromiseValue,
   })
 
-  const message = getMessage(info)
+  const { level, levelInfo } = getLevel({ opts, info })
+  const message = getMessage({ ...info, levelInfo })
 
-  handlerFunc({ ...info, message })
+  handlerFunc(message, level, info)
 
   exitProcess({ eventName, exitOnExceptions })
 }

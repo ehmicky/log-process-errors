@@ -10,7 +10,7 @@ Log all process errors on the console (or using your own logger):
 
 The message will include nice and detailed information about the error.
 
-TO BE ADDED: screenshot.
+![Screenshot](docs/screenshot.png)
 
 # Usage
 

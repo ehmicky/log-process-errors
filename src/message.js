@@ -50,8 +50,8 @@ const prettifyHeader = function({ header, eventName }) {
 }
 
 const isWindows = platform === 'win32'
-const ERROR_SIGN = isWindows ? '×' : '\u2718'
-const WARN_SIGN = isWindows ? '‼' : '\u26A0'
+const ERROR_SIGN = isWindows ? '\u00D7' : '\u2718'
+const WARN_SIGN = isWindows ? '\u203C' : '\u26A0'
 
 const getContent = function({ promiseState, promiseValue, error }) {
   const content =

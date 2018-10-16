@@ -1,6 +1,6 @@
-[![downloads](https://img.shields.io/npm/dt/on-process-error.svg?logo=npm)](https://www.npmjs.com/package/on-process-error) [![last commit](https://img.shields.io/github/last-commit/autoserver-org/on-process-error.svg?logo=github)](https://github.com/autoserver-org/on-process-error/graphs/contributors) [![license](https://img.shields.io/github/license/autoserver-org/on-process-error.svg?logo=github)](https://www.apache.org/licenses/LICENSE-2.0) [![npm](https://img.shields.io/npm/v/on-process-error.svg?logo=npm)](https://www.npmjs.com/package/on-process-error) [![node](https://img.shields.io/node/v/on-process-error.svg?logo=node.js)](#) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?logo=javascript)](https://standardjs.com) [![eslint-config-standard-prettier-fp](https://img.shields.io/badge/eslint-config--standard--prettier--fp-green.svg?logo=eslint)](https://github.com/autoserver-org/eslint-config-standard-prettier-fp)
+[![downloads](https://img.shields.io/npm/dt/log-process-errors.svg?logo=npm)](https://www.npmjs.com/package/log-process-errors) [![last commit](https://img.shields.io/github/last-commit/autoserver-org/log-process-errors.svg?logo=github)](https://github.com/autoserver-org/log-process-errors/graphs/contributors) [![license](https://img.shields.io/github/license/autoserver-org/log-process-errors.svg?logo=github)](https://www.apache.org/licenses/LICENSE-2.0) [![npm](https://img.shields.io/npm/v/log-process-errors.svg?logo=npm)](https://www.npmjs.com/package/log-process-errors) [![node](https://img.shields.io/node/v/log-process-errors.svg?logo=node.js)](#) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?logo=javascript)](https://standardjs.com) [![eslint-config-standard-prettier-fp](https://img.shields.io/badge/eslint-config--standard--prettier--fp-green.svg?logo=eslint)](https://github.com/autoserver-org/eslint-config-standard-prettier-fp)
 
-Add an event listener to handle any process errors:
+Log any process errors:
 
 - [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception): an exception was thrown and not caught
 - [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection): a promise was rejected and not handled
@@ -14,9 +14,9 @@ Add an event listener to handle any process errors:
 import/no-unresolved, unicorn/filename-case, strict -->
 
 ```js
-const onProcessError = require('on-process-error')
+const logProcessErrors = require('log-process-errors')
 
-const undoSetup = onProcessError.setup()
+const undoSetup = lopProcessErrors.setup()
 ```
 
 When any process errors occur, it will be logged using `console.error()`.

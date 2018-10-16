@@ -1,5 +1,5 @@
 {
-  "name": "on-process-error",
+  "name": "log-process-errors",
   "version": "0.1.1",
   "main": "index.js",
   "files": [
@@ -10,7 +10,7 @@
     "test": "gulp test",
     "release": "release-it"
   },
-  "description": "Catch all process errors: uncaught exceptions, warnings and improperly handled promises",
+  "description": "Log all process errors: uncaught exceptions, warnings and improperly handled promises",
   "keywords": [
     "process",
     "error-handling",

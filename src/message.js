@@ -15,9 +15,7 @@ const getMessage = function({
   secondPromiseValue,
   error,
 }) {
-  const header = getHeader({ eventName, error })
-
-  const content = getContent({
+  const message = MESSAGES[eventName]({
     promiseState,
     promiseValue,
     secondPromiseState,
@@ -25,90 +23,52 @@ const getMessage = function({
     error,
   })
 
-  const message = `${header}\n${dim(content)}`
-  return message
-}
-
-// First line of `message`
-const getHeader = function({ eventName, error }) {
-  const header = HEADERS[eventName]
-  const headerA = typeof header === 'function' ? header({ error }) : header
-  const headerB = prettifyHeader({ header: headerA, eventName })
-  return headerB
-}
-
-// `warning` events use `Error.name|code|detail` in `message`
-const getWarningHeader = function({ error: { code, detail = '' } }) {
-  const codeMessage = code === undefined ? '' : `(${code}) `
-  return `${codeMessage}${detail}`
-}
-
-const HEADERS = {
-  uncaughtException: 'Uncaught exception',
-  warning: getWarningHeader,
-  unhandledRejection: 'A promise was rejected but not handled',
-  rejectionHandled: 'A promise was handled after being already rejected',
-  multipleResolves: 'A promise was resolved/rejected multiple times',
-}
-
-// Start the message with an icon followed by `Error` or `Warning`
-// Also add colors
-const prettifyHeader = function({ header, eventName }) {
   const level = eventName === 'warning' ? 'warn' : 'error'
-  const { COLOR, SIGN } = LEVELS[level]
-
-  return COLOR(`${bold(inverse(` ${SIGN}  ${eventName} `))} ${header}`)
+  const messageA = prettify({ message, level, eventName })
+  return messageA
 }
 
-const isWindows = platform === 'win32'
-const LEVELS = {
-  warn: {
-    COLOR: yellow,
-    SIGN: isWindows ? '\u203C' : '\u26A0',
-  },
-  error: {
-    COLOR: red,
-    SIGN: isWindows ? '\u00D7' : '\u2718',
-  },
+const uncaughtException = function({ error }) {
+  return `An exception was thrown but not caught
+${printValue(error)}`
 }
 
-const getContent = function({
-  promiseState,
-  promiseValue,
-  secondPromiseState,
-  secondPromiseValue,
-  error,
-}) {
-  const content =
-    promiseState === undefined
-      ? printValue(error)
-      : getPromiseContent({
-          promiseState,
-          promiseValue,
-          secondPromiseState,
-          secondPromiseValue,
-        })
-  const contentA = indentContent(content)
-  return contentA
+const warning = function({ error, error: { code, detail = '' } }) {
+  const codeMessage = code === undefined ? '' : `(${code}) `
+  return `${codeMessage}${detail}
+${printValue(error)}`
 }
 
-// `unhandledRejection`, `rejectionHandled` and `multipleResolves` events show
-// the promise's resolved/rejected state and value in `message`
-const getPromiseContent = function({
+const unhandledRejection = function({ promiseValue }) {
+  return `A promise was rejected but not handled
+Promise was rejected with: ${serialize(promiseValue)}`
+}
+
+const rejectionHandled = function({ promiseValue }) {
+  return `A promise was handled after being already rejected
+Promise was rejected with: ${serialize(promiseValue)}`
+}
+
+const multipleResolves = function({
   promiseState,
   promiseValue,
   secondPromiseState,
   secondPromiseValue,
 }) {
-  if (secondPromiseState === undefined) {
-    return `Promise was ${promiseState} with: ${serialize(promiseValue)}`
-  }
-
   const again = promiseState === secondPromiseState ? ' again' : ''
-  return `Promise was initially ${promiseState} with: ${serialize(promiseValue)}
+  return `A promise was resolved/rejected multiple times
+Promise was initially ${promiseState} with: ${serialize(promiseValue)}
 Promise was then ${secondPromiseState}${again} with: ${serialize(
     secondPromiseValue,
   )}`
+}
+
+const MESSAGES = {
+  uncaughtException,
+  warning,
+  unhandledRejection,
+  rejectionHandled,
+  multipleResolves,
 }
 
 const serialize = function(value) {
@@ -126,12 +86,32 @@ const printValue = function(value) {
   return inspect(value)
 }
 
-// Indent each line
-const indentContent = function(string) {
-  return string.replace(EACH_LINE_REGEXP, `\t${VERTICAL_BAR} `)
+const prettify = function({ message, level, eventName }) {
+  const [header, ...lines] = message.split('\n')
+
+  // Add color, icon and `eventName` to first message line.
+  const { COLOR, SIGN } = LEVELS[level]
+  const headerA = COLOR(`${bold(inverse(` ${SIGN}  ${eventName} `))} ${header}`)
+  // Add gray color and indentation to other lines.
+  const linesA = lines.map(line => dim(`\t${VERTICAL_BAR} ${line}`))
+
+  const messageA = [headerA, ...linesA].join('\n')
+  return messageA
 }
 
-const EACH_LINE_REGEXP = /^/gmu
+// Start the message with an icon followed by `Error` or `Warning`
+// Also add colors
+const isWindows = platform === 'win32'
+const LEVELS = {
+  warn: {
+    COLOR: yellow,
+    SIGN: isWindows ? '\u203C' : '\u26A0',
+  },
+  error: {
+    COLOR: red,
+    SIGN: isWindows ? '\u00D7' : '\u2718',
+  },
+}
 
 const VERTICAL_BAR = '\u2016'
 

@@ -13,7 +13,7 @@ Log all process errors on the console (or using a custom logger):
 # Usage
 
 <!-- eslint-disable no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict -->
+import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
 const logProcessErrors = require('log-process-errors')
@@ -56,7 +56,7 @@ The function's arguments are:
 - `message` `{string}`: nice and detailed description of the event. Can be
   customized with the [`getMessage` option](#log-message).
 - `level` `{string}`: log level. Can be customized with the
-  [`getLevel` option](#log-level)
+  [`getLevel` option](#log-level).
 - `info` `{object}`:
   - information about the event
   - has the following properties:
@@ -66,13 +66,13 @@ The function's arguments are:
       - either the value thrown by `uncaughtException`
       - or the error emitted by `warning`.
         [`error.code` and `error.detail`](https://nodejs.org/api/process.html#process_event_warning)
-        might be defined
-      - it usually is an `Error` instance but (for `uncaughtException`) not
-        always.
-    - `promiseState` `{string}`: whether promise was `resolved` or `rejected`.
-    - `promiseValue` `{any}`: value resolved/rejected by the promise.
+        might be defined.
+      - it is usually an `Error` instance but could technically be anything
+    - `promiseState` `{string}`: whether the promise was `resolved` or
+      `rejected`
+    - `promiseValue` `{any}`: value resolved/rejected by the promise
     - `secondPromiseState`, `secondPromiseValue`: like `promiseState` and
-      `promiseValue` but for the second time the promise was resolved/rejected.
+      `promiseValue` but for the second time the promise was resolved/rejected
   - whether the properties above are defined or not depends on the event name:
     - `eventName`: always present
     - `error`: only on `uncaughtException` and `warning`
@@ -103,6 +103,17 @@ the other events.
 This can be overriden by using the `getLevel` option. It should be a function
 function using [`info` as argument](#custom-logging) and returning a string
 among `error`, `warn`, `info` or `debug`.
+
+<!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
+import/no-unresolved, unicorn/filename-case, strict, no-undef -->
+
+```js
+logProcessErrors({
+  getLevel({ eventName }) {
+    return eventName === 'uncaughtException' ? 'error' : 'warn'
+  },
+})
+```
 
 # Log message
 

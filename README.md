@@ -21,12 +21,22 @@ const logProcessErrors = require('log-process-errors')
 logProcessErrors()
 ```
 
+# Options
+
+- [`log` `{function}`](#custom-logging)
+- [`exitOnExceptions` `{boolean}`](#exiting-on-uncaught-exceptions) (default:
+  `true`)
+- [`getLevel` `{function}`](#log-level)
+- [`getMessage` `{function}`](#log-message)
+- [`colors` `{boolean}`](#log-message) (default: `false`)
+- [`filter` `{function}`](#filtering)
+
 # Custom logging
 
 By default events will be logged to the console (e.g. `console.error()`).
 
-This default behavior can be overriden with the `log` option. For example
-to log events with [Winston](https://github.com/winstonjs/winston) instead:
+This behavior can be overriden with the `log` option. For example to log events
+with [Winston](https://github.com/winstonjs/winston) instead:
 
 <!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->

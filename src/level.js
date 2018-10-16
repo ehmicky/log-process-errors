@@ -6,15 +6,14 @@ const { red, yellow } = require('chalk')
 
 const getLevel = function({ opts, info }) {
   const level = opts.getLevel(info)
-  const levelInfo = LEVELS[level]
 
-  if (levelInfo === undefined) {
+  if (LEVELS[level] === undefined) {
     const levels = Object.keys(LEVELS).join(', ')
     // TODO: infinite recursion?
     throw new Error(`Level ${level} is invalid. Must be one of: ${levels}`)
   }
 
-  return { level, levelInfo }
+  return level
 }
 
 const isWindows = platform === 'win32'
@@ -41,4 +40,5 @@ const defaultGetLevel = function({ eventName }) {
 module.exports = {
   getLevel,
   defaultGetLevel,
+  LEVELS,
 }

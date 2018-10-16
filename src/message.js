@@ -4,6 +4,8 @@ const { inspect } = require('util')
 
 const { bold, dim, inverse } = require('chalk')
 
+const { LEVELS } = require('./level')
+
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
 const getMessage = function({
@@ -13,7 +15,7 @@ const getMessage = function({
   secondPromiseState,
   secondPromiseValue,
   error,
-  levelInfo,
+  level,
 }) {
   const message = MESSAGES[eventName]({
     promiseState,
@@ -23,7 +25,7 @@ const getMessage = function({
     error,
   })
 
-  const messageA = prettify({ message, eventName, levelInfo })
+  const messageA = prettify({ message, eventName, level })
   return messageA
 }
 
@@ -85,10 +87,11 @@ const printValue = function(value) {
   return inspect(value)
 }
 
-const prettify = function({ message, eventName, levelInfo: { COLOR, SIGN } }) {
+const prettify = function({ message, eventName, level }) {
   const [header, ...lines] = message.split('\n')
 
   // Add color, icon and `eventName` to first message line.
+  const { COLOR, SIGN } = LEVELS[level]
   const headerA = COLOR(`${bold(inverse(` ${SIGN}  ${eventName} `))} ${header}`)
   // Add gray color and indentation to other lines.
   const linesA = lines.map(line => dim(`\t${VERTICAL_BAR} ${line}`))

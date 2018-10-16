@@ -23,7 +23,7 @@ logProcessErrors(options)
 
 # Options
 
-The `options` is an optional object with the following properties:
+`options` is an optional object with the following properties:
 
 - [`log` `{function}`](#custom-logging)
 - [`exitOnExceptions` `{boolean}`](#exiting-on-uncaught-exceptions) (default:
@@ -53,8 +53,9 @@ logProcessErrors({
 
 The function's arguments are:
 
-- `message` `{string}`: nice and detailed description of the event
-- `level` `{string}`: log level
+- `message` `{string}`: nice and detailed description of the event. See the
+  [`getMessage` option](#log-message).
+- `level` `{string}`: log level. See the [`getLevel` option](#log-level)
 - `info` `{object}`:
   - information about the event:
     - `eventName` `{string}`: can be `uncaughtException`, `unhandledRejection`,

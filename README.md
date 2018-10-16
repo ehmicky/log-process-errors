@@ -18,10 +18,12 @@ import/no-unresolved, unicorn/filename-case, strict -->
 ```js
 const logProcessErrors = require('log-process-errors')
 
-logProcessErrors()
+logProcessErrors(options)
 ```
 
 # Options
+
+The `options` is an optional object with the following properties:
 
 - [`log` `{function}`](#custom-logging)
 - [`exitOnExceptions` `{boolean}`](#exiting-on-uncaught-exceptions) (default:

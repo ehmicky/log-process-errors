@@ -53,7 +53,7 @@ Promise was rejected with: ${printMultiline(promiseValue)}`
 }
 
 const rejectionHandled = function({ promiseValue }) {
-  return `A promise was handled after being already rejected
+  return `A promise was rejected and handled too late
 Promise was rejected with: ${printMultiline(promiseValue)}`
 }
 

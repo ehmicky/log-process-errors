@@ -20,7 +20,7 @@ import/no-unresolved, unicorn/filename-case, strict -->
 ```js
 const logProcessErrors = require('log-process-errors')
 
-lopProcessErrors.setup()
+lopProcessErrors()
 ```
 
 # Custom logging
@@ -36,7 +36,7 @@ the console:
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-onProcessError.setup({
+logProcessErrors({
   handle(message, level) {
     winstonLogger[level](message)
   },
@@ -72,18 +72,18 @@ You can disable this by setting the `exitOnExceptions` option to `false`:
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-onProcessError.setup({ exitOnExceptions: false })
+logProcessErrors({ exitOnExceptions: false })
 ```
 
 # Remove logging
 
 You can undo everything by firing the function returned by
-`onProcessError.setup()`
+`logProcessErrors()`
 
 <!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-const removeLogging = onProcessError.setup()
+const removeLogging = logProcessErrors()
 removeLogging()
 ```

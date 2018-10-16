@@ -38,6 +38,4 @@ const removeListener = function({ eventListener, eventName }) {
   process.removeListener(eventName, eventListener)
 }
 
-module.exports = {
-  setup,
-}
+module.exports = setup

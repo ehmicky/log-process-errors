@@ -7,6 +7,7 @@ const EVENTS = require('./events')
 
 // Add event handling for all process-related errors
 const setup = function(opts) {
+  debugger
   const optsA = { ...DEFAULT_OPTS, ...opts }
 
   const listeners = addListeners({ opts: optsA })

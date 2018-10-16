@@ -26,7 +26,7 @@ const handleEvent = async function({
     secondPromiseValue,
   })
 
-  if (!opts.filter(info)) {
+  if (opts.skipEvent(info)) {
     return
   }
 

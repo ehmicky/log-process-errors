@@ -31,7 +31,7 @@ logProcessErrors(options)
 - [`getLevel` `{function}`](#log-level)
 - [`getMessage` `{function}`](#log-message)
 - [`colors` `{boolean}`](#log-message) (default: `false`)
-- [`filter` `{function}`](#filtering)
+- [`skipEvent` `{function}`](#skipping-events)
 
 # Custom logging
 
@@ -133,11 +133,10 @@ returning a string. The `info` argument also has the following properties:
   to colorize strings. Colors will be disabled if the `colors` option is
   false.
 
-# Filtering
+# Skipping events
 
-Some events can be ignored by using the `filter` option. It should be a
-function using [`info` as argument](#custom-logging) and returning a boolean
-(`false` to ignore the event).
+Some events can be ignored by using the `skipEvent` option. It should be a
+function using [`info` as argument](#custom-logging) and returning a boolean.
 
 For example to ignore `warning` events:
 
@@ -145,7 +144,7 @@ For example to ignore `warning` events:
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-logProcessErrors({ filter: ({ eventName }) => eventName !== 'warning' })
+logProcessErrors({ skipEvent: ({ eventName }) => eventName === 'warning' })
 ```
 
 # Stop logging

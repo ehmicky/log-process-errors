@@ -12,6 +12,8 @@ const handleEvent = async function({
   error,
   promise,
   promiseValue,
+  secondPromiseState,
+  secondPromiseValue,
 }) {
   const { promiseState, promiseValue: promiseValueA } = await parsePromise({
     eventName,
@@ -22,6 +24,8 @@ const handleEvent = async function({
     eventName,
     promiseState,
     promiseValue: promiseValueA,
+    secondPromiseState,
+    secondPromiseValue,
     error,
   })
 

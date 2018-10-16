@@ -125,13 +125,12 @@ The message will be colorized unless either:
 - the option `colors` is set to `false`
 
 The message generation can be overriden by using the `getMessage` option. It
-should be a function function using [`info` as argument](#custom-logging) and
-returning a string. The `info` argument also has the following properties:
+should be a function using [`info` as argument](#custom-logging) and returning
+a string. The `info` argument also has the following properties:
 
 - `level` `{string}`
 - `colors` `{object}`: [Chalk instance](https://github.com/chalk/chalk#api)
-  to colorize strings. Colors will be disabled if the `colors` option is
-  false.
+  to colorize strings (disabled if the option `colors` is `false`)
 
 # Skipping events
 
@@ -144,7 +143,11 @@ For example to skip `warning` events:
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-logProcessErrors({ skipEvent: ({ eventName }) => eventName === 'warning' })
+logProcessErrors({
+  skipEvent({ eventName }) {
+    return eventName === 'warning'
+  },
+})
 ```
 
 # Stop logging

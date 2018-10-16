@@ -25,6 +25,10 @@ const handleEvent = async function({
     secondPromiseValue,
   })
 
+  if (!opts.filter(info)) {
+    return
+  }
+
   const level = getLevel({ opts, info })
   const message = getMessage({ opts, info, level })
 

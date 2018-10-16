@@ -5,6 +5,7 @@ const { defaultGetMessage } = require('./message')
 const { defaultLog } = require('./log')
 
 const DEFAULT_OPTS = {
+  filter: () => true,
   getLevel: defaultGetLevel,
   getMessage: defaultGetMessage,
   log: defaultLog,

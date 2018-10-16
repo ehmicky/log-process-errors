@@ -13,7 +13,6 @@ const handleEvent = async function({
   promise,
   promiseValue,
 }) {
-  debugger
   const { promiseState, promiseValue: promiseValueA } = await parsePromise({
     eventName,
     promise,

@@ -1,6 +1,9 @@
 'use strict'
 
-const { platform } = require('process')
+const {
+  platform,
+  env: { TERM },
+} = require('process')
 
 // Retrieve error's `level`
 const getLevel = function({ opts, info }) {
@@ -15,16 +18,24 @@ const getLevel = function({ opts, info }) {
   return level
 }
 
-const isWindows = platform === 'win32'
+const supportsUnicode = platform !== 'win32' || TERM === 'xterm-256color'
 // Each level is printed in a different way
 const LEVELS = {
+  debug: {
+    COLOR: 'blue',
+    SIGN: supportsUnicode ? '\u2699' : '!',
+  },
+  info: {
+    COLOR: 'green',
+    SIGN: supportsUnicode ? '\u2139' : 'i',
+  },
   warn: {
     COLOR: 'yellow',
-    SIGN: isWindows ? '\u203C' : '\u26A0',
+    SIGN: supportsUnicode ? '\u26A0' : '\u203C',
   },
   error: {
     COLOR: 'red',
-    SIGN: isWindows ? '\u00D7' : '\u2718',
+    SIGN: supportsUnicode ? '\u2718' : '\u00D7',
   },
 }
 

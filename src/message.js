@@ -1,6 +1,7 @@
 'use strict'
 
 const { platform } = require('process')
+const { inspect } = require('util')
 
 const { red, yellow, bold, dim, inverse } = require('chalk')
 
@@ -119,19 +120,10 @@ const serialize = function(value) {
 
 const printValue = function(value) {
   if (value instanceof Error) {
-    return printError(value)
+    return value.stack
   }
 
-  return String(value)
-}
-
-// Print `Error.name|message|stack` if it's an `Error`. Stringify otherwise.
-const printError = function({ name, message, stack }) {
-  if (stack.startsWith(name)) {
-    return stack
-  }
-
-  return `${name}: ${message}\n${stack}`
+  return inspect(value)
 }
 
 // Indent each line

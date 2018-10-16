@@ -30,9 +30,9 @@
     "multipleResolves"
   ],
   "license": "Apache-2.0",
-  "repository": "autoserver-org/on-process-error",
+  "repository": "autoserver-org/log-process-errors",
   "bugs": {
-    "url": "https://github.com/autoserver-org/on-process-error/issues"
+    "url": "https://github.com/autoserver-org/log-process-errors/issues"
   },
   "author": "autoserver founder <founder@autoserver.io> (http://autoserver.io)",
   "directories": {},

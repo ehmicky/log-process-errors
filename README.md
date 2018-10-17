@@ -35,7 +35,7 @@ logProcessErrors(options)
 
 By default events will be logged to the console (e.g. `console.error()`).
 
-This behavior can be overriden with the `log` option. For example to log events
+This behavior can be overridden with the `log` option. For example to log events
 with [Winston](https://github.com/winstonjs/winston) instead:
 
 <!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
@@ -55,36 +55,19 @@ The function's arguments are:
   customized with the [`getMessage` option](#log-message).
 - `level` `{string}`: log level. Can be customized with the
   [`getLevel` option](#log-level).
-- `info` `{object}`:
-  - information about the event
-  - has the following properties:
-    - `eventName` `{string}`: can be `uncaughtException`, `unhandledRejection`,
-      `rejectionHandled`, `multipleResolves` or `warning`
-    - `error` `{any}`:
-      - either the value thrown by `uncaughtException`
-      - or the error emitted by `warning`.
-        [`error.code` and `error.detail`](https://nodejs.org/api/process.html#process_event_warning)
-        might be defined.
-      - it is usually an `Error` instance but could technically be anything
-    - `promiseState` `{string}`: whether the promise was `resolved` or
-      `rejected`
-    - `promiseValue` `{any}`: value resolved/rejected by the promise
-    - `secondPromiseState`, `secondPromiseValue`: like `promiseState` and
-      `promiseValue` but for the second time the promise was resolved/rejected
-  - whether the properties above are defined or not depends on the event name:
-    - `eventName`: always present
-    - `error`: only on `uncaughtException` and `warning`
-    - `promiseState`, `promiseValue`: only on `unhandledRejection`,
-      `rejectionHandled` and `multipleResolves`
-    - `secondPromiseState`, `secondPromiseValue`: only on `multipleResolves`
+- `info` `{object}`: [event information](#event-info)
+
+If logging is asynchronous, the function should return a promise (or use
+`async`/`await`). This is not necessary if logging is using streams (like
+Winston).
 
 # Log level
 
 By default the log level will be `warn` for `warning` events and `error` for
 the other events.
 
-This can be overriden by using the `getLevel` option. It should be a function
-function using [`info` as argument](#custom-logging) and returning a string
+This can be overridden by using the `getLevel` option. It should be a function
+function using [`info` as argument](#event-info) and returning a string
 among `error`, `warn`, `info` or `debug`.
 
 <!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
@@ -107,18 +90,14 @@ The message will be colorized unless either:
 - the output [does not support colors](https://github.com/chalk/supports-color)
 - the option `colors` is set to `false`
 
-The message generation can be overriden by using the `getMessage` option. It
-should be a function using [`info` as argument](#custom-logging) and returning
-a string. The `info` argument also has the following properties:
-
-- `level` `{string}`
-- `colors` `{object}`: [Chalk instance](https://github.com/chalk/chalk#api)
-  to colorize strings (disabled if the option `colors` is `false`)
+The message generation can be overridden by using the `getMessage` option. It
+should be a function using [`info` as argument](#event-info) and returning
+a string.
 
 # Skipping events
 
 Events can be skipped with the `skipEvent` option. It should be a function
-using [`info` as argument](#custom-logging) and returning `true` or `false`.
+using [`info` as argument](#event-info) and returning `true` or `false`.
 
 For example to skip `warning` events:
 
@@ -133,15 +112,45 @@ logProcessErrors({
 })
 ```
 
+# Event information
+
+The options `log`, `getLevel`, `getMessage` and `skipEvent` all receive as
+argument an `info` object with information about the event. It has the following
+properties:
+
+- `eventName` `{string}`: can be `uncaughtException`, `unhandledRejection`,
+  `rejectionHandled`, `multipleResolves` or `warning`
+- `error` `{any}`:
+  - either the value thrown by `uncaughtException`
+  - or the error emitted by `warning`.
+    [`error.code` and `error.detail`](https://nodejs.org/api/process.html#process_event_warning)
+    might be defined.
+  - it is usually an `Error` instance but could technically be anything
+- `promiseState` `{string}`: whether the promise was `resolved` or
+  `rejected`
+- `promiseValue` `{any}`: value resolved/rejected by the promise
+- `secondPromiseState`, `secondPromiseValue`: like `promiseState` and
+  `promiseValue` but for the second time the promise was resolved/rejected
+
+Whether the properties above are defined or not depends on the event name:
+
+- `eventName`: always present
+- `error`: only on `uncaughtException` and `warning`
+- `promiseState`, `promiseValue`: only on `unhandledRejection`,
+  `rejectionHandled` and `multipleResolves`
+- `secondPromiseState`, `secondPromiseValue`: only on `multipleResolves`
+
+The following properties are also defined with the `getMessage` option:
+
+- `level` `{string}`
+- `colors` `{object}`: [Chalk instance](https://github.com/chalk/chalk#api)
+  to colorize strings (disabled if the option `colors` is `false`)
+
 # Uncaught exceptions
 
-`uncaughtException` events will fire `process.exit(1)`. This is the recommended
-behavior according to the
+`uncaughtException` events will fire `process.exit(1)` after being successfully
+logged. Exiting is the default behavior and is recommended by the
 [Node.js documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
-
-`process.exit(1)` will only be fired after the `uncaughtException` event has
-been logged. If an custom `log` option is used and it is asynchronous, the
-function should return a promise (or use `async`/`await`).
 
 # Stop logging
 

@@ -10,18 +10,27 @@ Log all process errors on the console (or using a custom logger):
 
 ![Screenshot](docs/screenshot.png)
 
-# Usage
+# Usage (preferred)
+
+Require this module with the `-r` CLI flag.
+
+```bash
+node -r log-process-errors ...
+```
+
+# Usage (custom)
+
+In order to customize options, `log-process-errors/custom` must be required
+like this instead:
 
 <!-- eslint-disable no-unused-vars, node/no-missing-require,
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-const logProcessErrors = require('log-process-errors')
+const logProcessErrors = require('log-process-errors/custom')
 
 logProcessErrors(options)
 ```
-
-# Options
 
 `options` is an optional object with the following properties:
 
@@ -30,6 +39,14 @@ logProcessErrors(options)
 - [`getMessage` `{function}`](#log-message)
 - [`colors` `{boolean}`](#log-message) (default: `false`)
 - [`skipEvent` `{function}`](#skipping-events)
+
+`logProcessErrors()` should be called as early as possible in the code.
+
+`log-process-errors` modifies logging globally. This is not recommended for
+libraries since their users might not expect this side effect. Also this might
+lead to conflicts between libraries. Libraries should use the
+[`-r log-process-errors` CLI flag](#usage-preferred) instead of
+[`require()`](#usage-custom).
 
 # Custom logging
 

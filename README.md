@@ -39,6 +39,7 @@ logProcessErrors(options)
 - [`getMessage` `{function}`](#log-message)
 - [`colors` `{boolean}`](#log-message) (default: `false`)
 - [`skipEvent` `{function}`](#skipping-events)
+- [`exitOn` `{string[]}`](#process-exit) (default: `['uncaughtException']`)
 
 `logProcessErrors()` should be called as early as possible in the code.
 
@@ -55,6 +56,19 @@ It is recommended to use the
 the
 [`NODE_NO_WARNINGS=1`](https://nodejs.org/api/cli.html#cli_node_no_warnings_1)
 environment variable to prevent warnings being logged twice.
+
+# Process exit
+
+The `exitOn` option specifies which event should trigger `process.exit(1)`:
+
+- the default value is `['uncaughtException']`. Exiting is the default
+  behavior of Node.js. It's also recommended by the
+  [official documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
+- we recommend using `exitOn: ['uncaughtException', 'unhandledRejection']`
+  instead since this will be the [future default behavior of Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections)
+- to prevent any `process.exit()`, use `exitOn: []`
+
+`process.exit(1)` will only be fired after successfully logging the event.
 
 # Custom logging
 
@@ -170,12 +184,6 @@ The following properties are also defined with the `getMessage` option:
 - `level` `{string}`
 - `colors` `{object}`: [Chalk instance](https://github.com/chalk/chalk#api)
   to colorize strings (disabled if the option `colors` is `false`)
-
-# Uncaught exceptions
-
-`uncaughtException` events will fire `process.exit(1)` after being successfully
-logged. Exiting is the default behavior and is recommended by the
-[Node.js documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
 
 # Stop logging
 

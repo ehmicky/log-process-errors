@@ -84,7 +84,7 @@ The function's arguments are:
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
-Winston).
+[Winston](https://github.com/winstonjs/winston)).
 
 # Log level
 

@@ -185,6 +185,9 @@ Logging can be stopped by firing the function returned by `logProcessErrors()`
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
-const stopLogging = logProcessErrors()
+const logProcessErrors = require('log-process-errors/custom')
+
+const stopLogging = logProcessErrors(options)
+
 stopLogging()
 ```

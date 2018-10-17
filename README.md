@@ -4,6 +4,14 @@ Log all process errors on the console (or using a custom logger): [`uncaughtExce
 
 ![Screenshot](docs/screenshot.png)
 
+While Node.js already prints those errors on the console, `log-process-errors`
+provides with the following additional features:
+
+- more detailed messages, including warnings and promises stack traces
+- nicer looking messages
+- [custom logging]($custom-logging)
+- [control whether to `process.exit()` or not](#process-exit)
+
 # Usage (preferred)
 
 Require this module with the `-r` CLI flag.

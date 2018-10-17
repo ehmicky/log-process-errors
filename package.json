@@ -4,6 +4,7 @@
   "main": "index.js",
   "files": [
     "src",
+    "custom.js",
     "!*~"
   ],
   "scripts": {

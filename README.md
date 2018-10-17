@@ -66,7 +66,7 @@ The `exitOn` option specifies which event should trigger `process.exit(1)`:
   [official documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
 - we recommend using `['uncaughtException', 'unhandledRejection']`
   instead since this will be the [future default behavior of Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections)
-- to prevent any `process.exit()`, use `[]`
+- to prevent any `process.exit(1)`, use `[]`
 
 `process.exit(1)` will only be fired after successfully logging the event.
 

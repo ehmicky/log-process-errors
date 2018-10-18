@@ -7,8 +7,10 @@ Log all process errors on the console (or using a custom logger): [`uncaughtExce
 While Node.js already prints those errors on the console, `log-process-errors`
 provides with the following additional features:
 
-- more detailed messages, including stack traces for warnings and promises
-- nicer looking messages
+- more detailed messages, including stack traces and promise values for
+  `warning`, `rejectionHandled` and `multipleResolves` (which are not printed
+  otherwise)
+- nicer looking and more descriptive messages
 - [log repeated events only once](#duplicate-events)
 - [custom logging]($custom-logging)
 - [control whether to `process.exit()` or not](#process-exit)

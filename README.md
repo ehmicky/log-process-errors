@@ -9,6 +9,7 @@ provides with the following additional features:
 
 - more detailed messages, including stack traces for warnings and promises
 - nicer looking messages
+- [log repeated events only once](#duplicate-events)
 - [custom logging]($custom-logging)
 - [control whether to `process.exit()` or not](#process-exit)
 

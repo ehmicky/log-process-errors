@@ -2,7 +2,7 @@
 
 const { inspect } = require('util')
 
-const { printMultiline, print, prettify } = require('./serialize')
+const { serialize, prettify } = require('./serialize')
 
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
@@ -37,24 +37,22 @@ const defaultGetMessage = function({
 }
 
 const uncaughtException = function({ error }) {
-  return `An exception was thrown but not caught
-${print(error)}`
+  return `This exception was thrown but not caught: ${serialize(error)}`
 }
 
 const warning = function({ error, error: { code, detail = '' } }) {
   const codeMessage = code === undefined ? '' : `(${code}) `
-  return `${codeMessage}${detail}
-${print(error)}`
+  return `${codeMessage}${detail}${serialize(error)}`
 }
 
 const unhandledRejection = function({ promiseValue }) {
-  return `A promise was rejected but not handled
-Promise was rejected with: ${printMultiline(promiseValue)}`
+  return `This promise was rejected but not handled: ${serialize(promiseValue)}`
 }
 
 const rejectionHandled = function({ promiseValue }) {
-  return `A promise was rejected and handled too late
-Promise was rejected with: ${printMultiline(promiseValue)}`
+  return `This promise was rejected and handled too late: ${serialize(
+    promiseValue,
+  )}`
 }
 
 const multipleResolves = function({
@@ -64,9 +62,10 @@ const multipleResolves = function({
   secondPromiseValue,
 }) {
   const again = promiseState === secondPromiseState ? ' again' : ''
-  return `A promise was resolved/rejected multiple times
-Promise was initially ${promiseState} with: ${printMultiline(promiseValue)}
-Promise was then ${secondPromiseState}${again} with: ${printMultiline(
+  return `A promise was resolved/rejected multiple times. It was initially ${promiseState} with: ${serialize(
+    promiseValue,
+  )}
+It was then ${secondPromiseState}${again} with: ${serialize(
     secondPromiseValue,
   )}`
 }

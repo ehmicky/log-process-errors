@@ -4,14 +4,7 @@ const { inspect } = require('util')
 
 const { LEVELS } = require('./level')
 
-const printMultiline = function(value) {
-  const valueA = print(value)
-  // Print multiline values on the next line
-  const valueB = valueA.includes('\n') ? `\n${valueA}` : valueA
-  return valueB
-}
-
-const print = function(value) {
+const serialize = function(value) {
   if (value instanceof Error) {
     return value.stack
   }
@@ -34,16 +27,16 @@ const prettify = function({
     `${bold(inverse(` ${SIGN}  ${eventName} `))} ${header}`,
   )
   // Add gray color and indentation to other lines.
-  const linesA = lines.map(line => dim(`\t${VERTICAL_BAR} ${line}`))
+  const linesA = lines.map(line => dim(`${INDENT}${line}`))
 
   const messageA = [headerA, ...linesA].join('\n')
   return messageA
 }
 
-const VERTICAL_BAR = '\u2016'
+const INDENT_SIZE = 4
+const INDENT = ' '.repeat(INDENT_SIZE)
 
 module.exports = {
-  printMultiline,
-  print,
+  serialize,
   prettify,
 }

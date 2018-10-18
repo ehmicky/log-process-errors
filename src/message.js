@@ -37,7 +37,7 @@ const defaultGetMessage = function({
 }
 
 const uncaughtException = function({ error }) {
-  return `an exception was thrown but not caught
+  return ` (an exception was thrown but not caught)
 ${serialize(error)}`
 }
 
@@ -49,12 +49,12 @@ ${codeMessage}${detailMessage}${serialize(error)}`
 }
 
 const unhandledRejection = function({ promiseValue }) {
-  return `a promise was rejected but not handled
+  return ` (a promise was rejected but not handled)
 ${serialize(promiseValue)}`
 }
 
 const rejectionHandled = function({ promiseValue }) {
-  return `a promise was rejected and handled too late
+  return ` (a promise was rejected and handled too late)
 ${serialize(promiseValue)}`
 }
 
@@ -67,7 +67,7 @@ const multipleResolves = function({
   const again = promiseState === secondPromiseState ? ' again' : ''
   const state = again ? promiseState : 'resolve/rejected'
 
-  return `a promise was ${state} multiple times
+  return ` (a promise was ${state} multiple times)
 Initially ${promiseState} with: ${serialize(promiseValue)}
 Then ${secondPromiseState}${again} with: ${serialize(secondPromiseValue)}`
 }

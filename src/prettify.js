@@ -21,15 +21,13 @@ const prettify = function({
 }) {
   const [explanation, firstLine, ...lines] = message.split('\n')
 
-  // `warning` events do not have an `explanation`
-  const explanationA =
-    explanation === '' ? '' : ` ${italic(`(${explanation})`)}`
-
   // Add color, sign and `eventName` to first message line, and concatenate
   // `firstLine`
   const { COLOR, SIGN } = LEVELS[level]
   const header = colors[COLOR](
-    `${inverse(bold(` ${SIGN}  ${eventName}${explanationA} `))} ${firstLine}`,
+    `${inverse(
+      bold(` ${SIGN}  ${eventName}${italic(explanation)} `),
+    )} ${firstLine}`,
   )
 
   // Add gray color and indentation to other lines.

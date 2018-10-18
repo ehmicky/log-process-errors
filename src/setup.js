@@ -21,7 +21,17 @@ const addListeners = function({ opts }) {
 }
 
 const addListener = function({ opts, eventName, eventFunc }) {
-  const eventListener = eventFunc.bind(null, { opts, eventName })
+  // `previousEvents` is `eventName`-specific so that if events of a given
+  // `eventName` stopped being emitted, others still are.
+  // `previousEvents` can take up some memory, but it should be cleaned up
+  // by `removeListener()`, i.e. once `eventListener` is garbage collected.
+  const previousEvents = new Set()
+
+  const eventListener = eventFunc.bind(null, {
+    opts,
+    eventName,
+    previousEvents,
+  })
   process.on(eventName, eventListener)
 
   return { eventListener, eventName }

@@ -51,7 +51,9 @@ lead to conflicts between libraries. Libraries should use the
 [`-r log-process-errors` CLI flag](#usage-preferred) instead of
 [`require()`](#usage-custom).
 
-# Duplicate warnings
+# Duplicate events
+
+Duplicate events are only logged once.
 
 It is recommended to use the
 [`--no-warnings` CLI flag](https://nodejs.org/api/cli.html#cli_no_warnings) or

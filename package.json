@@ -43,7 +43,8 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "jest-validate": "^23.6.0"
+    "jest-validate": "^23.6.0",
+    "moize": "^5.4.1"
   },
   "devDependencies": {
     "eslint": "^5.7.0",

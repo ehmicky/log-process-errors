@@ -17,19 +17,25 @@ const prettify = function({
   eventName,
   level,
   colors,
-  colors: { bold, dim, inverse },
+  colors: { bold, dim, inverse, italic },
 }) {
-  const [header, ...lines] = message.split('\n')
+  const [explanation, firstLine, ...lines] = message.split('\n')
 
-  // Add color, icon and `eventName` to first message line.
+  // `warning` events do not have an `explanation`
+  const explanationA =
+    explanation === '' ? '' : ` ${italic(`(${explanation})`)}`
+
+  // Add color, sign and `eventName` to first message line, and concatenate
+  // `firstLine`
   const { COLOR, SIGN } = LEVELS[level]
-  const headerA = colors[COLOR](
-    `${bold(inverse(` ${SIGN}  ${eventName} `))} ${header}`,
+  const header = colors[COLOR](
+    `${inverse(bold(` ${SIGN}  ${eventName}${explanationA} `))} ${firstLine}`,
   )
+
   // Add gray color and indentation to other lines.
   const linesA = lines.map(line => dim(`${INDENT}${line}`))
 
-  const messageA = [headerA, ...linesA].join('\n')
+  const messageA = [header, ...linesA].join('\n')
   return messageA
 }
 

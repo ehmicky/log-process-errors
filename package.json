@@ -39,7 +39,8 @@
   "author": "autoserver founder <founder@autoserver.io> (http://autoserver.io)",
   "directories": {
     "doc": "docs",
-    "lib": "src"
+    "lib": "src",
+    "test": "test"
   },
   "dependencies": {
     "chalk": "^2.4.1",
@@ -47,6 +48,7 @@
     "moize": "^5.4.1"
   },
   "devDependencies": {
+    "ava": "^1.0.0-rc.1",
     "eslint": "^5.7.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-config-standard": "^12.0.0",

@@ -11,16 +11,15 @@ const format = function() {
   return execCommand(`prettier --write --loglevel warn ${files}`)
 }
 
-// eslint-disable-next-line fp/no-mutation
-format.description = 'Format files using prettier'
-
 // We do not use `gulp-eslint` because it does not support --cache
-const lint = function() {
+const eslint = function() {
   const files = [...FILES.JAVASCRIPT, ...FILES.MARKDOWN].join(' ')
   return execCommand(
     `eslint ${files} --max-warnings 0 --ignore-path .gitignore --fix --cache --format codeframe`,
   )
 }
+
+const lint = series(format, eslint)
 
 // eslint-disable-next-line fp/no-mutation
 lint.description = 'Lint source files'
@@ -40,26 +39,22 @@ const dup = function() {
 // eslint-disable-next-line fp/no-mutation
 dup.description = 'Check for code duplication'
 
-const check = series(format, lint)
-
-const testTask = parallel(check, dup)
+const check = parallel(lint, dup)
 
 // eslint-disable-next-line fp/no-mutation
-testTask.description = 'Lint and test the application'
+check.description = 'Lint and check for code duplication'
 
-const testwatch = getWatchTask(
+const checkwatch = getWatchTask(
   { JAVASCRIPT: [lint, dup], MARKDOWN: [lint, dup] },
-  testTask,
+  check,
 )
 
 // eslint-disable-next-line fp/no-mutation
-testwatch.description = 'Lint and test the application in watch mode'
+checkwatch.description = 'Lint and test the application in watch mode'
 
 module.exports = {
-  test: testTask,
-  testwatch,
   check,
-  format,
+  checkwatch,
   lint,
   dup,
 }

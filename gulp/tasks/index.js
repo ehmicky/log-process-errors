@@ -1,5 +1,7 @@
 'use strict'
 
 module.exports = {
-  ...require('./lint'),
+  ...require('./main'),
+  ...require('./check'),
+  ...require('./unit'),
 }

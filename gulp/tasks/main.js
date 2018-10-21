@@ -1,12 +1,14 @@
 'use strict'
 
-const { series } = require('gulp')
+const { parallel } = require('gulp')
 
-const { check } = require('./check')
-const { unit } = require('./unit')
+const { testwatch } = require('./test')
 
-const testTask = series(check, unit)
+const dev = parallel(testwatch)
+
+// eslint-disable-next-line fp/no-mutation
+dev.description = 'Lint and test source files'
 
 module.exports = {
-  test: testTask,
+  dev,
 }

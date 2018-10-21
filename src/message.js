@@ -65,7 +65,7 @@ const multipleResolves = function({
   secondPromiseValue,
 }) {
   const again = promiseState === secondPromiseState ? ' again' : ''
-  const state = again ? promiseState : 'resolve/rejected'
+  const state = again ? promiseState : 'resolved/rejected'
 
   return ` (a promise was ${state} multiple times)
 Initially ${promiseState} with: ${serialize(promiseValue)}

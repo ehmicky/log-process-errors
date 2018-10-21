@@ -40,7 +40,8 @@
   "directories": {
     "doc": "docs",
     "lib": "src",
-    "test": "test"
+    "test": "test",
+    "example": "examples"
   },
   "dependencies": {
     "chalk": "^2.4.1",

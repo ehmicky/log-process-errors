@@ -17,16 +17,24 @@ provides with the following additional features:
 
 # Usage (preferred)
 
+```bash
+$ npm install -D log-process-errors
+```
+
 Require this module with the `-r` CLI flag.
 
 ```bash
-node -r log-process-errors ...
+$ node -r log-process-errors ...
 ```
 
 # Usage (custom)
 
 In order to customize options, `log-process-errors/custom` must be required
 like this instead:
+
+```bash
+$ npm install log-process-errors
+```
 
 <!-- eslint-disable no-unused-vars, node/no-missing-require,
 import/no-unresolved, unicorn/filename-case, strict, no-undef -->

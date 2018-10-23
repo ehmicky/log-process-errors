@@ -72,7 +72,8 @@
     "ndb": "^1.0.26",
     "plugin-error": "^1.0.1",
     "prettier": "^1.14.3",
-    "release-it": "^7.6.2"
+    "release-it": "^7.6.2",
+    "sinon": "^7.0.0"
   },
   "engines": {
     "node": ">=10.12.0"

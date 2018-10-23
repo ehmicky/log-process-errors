@@ -10,7 +10,8 @@ const unit = function() {
 unit.description = 'Run unit tests'
 
 const unitwatch = function() {
-  return execCommand('ava -w')
+  // We have to use this to debug Ava test files with Chrome devtools
+  return execCommand('ndb ava -w')
 }
 
 // eslint-disable-next-line fp/no-mutation

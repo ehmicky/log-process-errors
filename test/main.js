@@ -59,6 +59,14 @@ test('should validate opts.getMessage() is a function', t => {
   t.throws(startLogging.bind(null, { getMessage: true }))
 })
 
+test('should validate opts.colors is a boolean', t => {
+  t.throws(startLogging.bind(null, { colors: 1 }))
+})
+
+test('should validate opts.exitOn is an array', t => {
+  t.throws(startLogging.bind(null, { exitOn: true }))
+})
+
 test('[uncaughtException] should set info properties', async t => {
   const log = sinon.spy()
   const stopLogging = startLoggingEvent('uncaughtException', { log })

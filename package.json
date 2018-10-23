@@ -78,6 +78,6 @@
     "supports-color": "^5.5.0"
   },
   "engines": {
-    "node": ">=10.12.0"
+    "node": ">=11.0.0"
   }
 }

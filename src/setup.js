@@ -2,12 +2,12 @@
 
 const process = require('process')
 
-const { getOpts } = require('./default')
+const { getOptions } = require('./options')
 const EVENTS = require('./events')
 
 // Add event handling for all process-related errors
 const setup = function(opts) {
-  const optsA = getOpts({ opts })
+  const optsA = getOptions({ opts })
 
   const listeners = addListeners({ opts: optsA })
   const removeAll = removeListeners.bind(null, listeners)

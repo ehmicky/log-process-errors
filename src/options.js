@@ -7,7 +7,7 @@ const { defaultGetMessage } = require('./message')
 const { defaultLog } = require('./log')
 
 // Validate options and assign default options
-const getOpts = function({ opts }) {
+const getOptions = function({ opts }) {
   validate(opts, { exampleConfig: DEFAULT_OPTS })
 
   const optsA = { ...DEFAULT_OPTS, ...opts }
@@ -24,5 +24,5 @@ const DEFAULT_OPTS = {
 }
 
 module.exports = {
-  getOpts,
+  getOptions,
 }

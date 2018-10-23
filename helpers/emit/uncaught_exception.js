@@ -12,6 +12,7 @@ const uncaughtException = async function(getError = defaultGetError) {
   })
 
   await promisify(setImmediate)()
+  await promisify(setImmediate)()
 }
 
 module.exports = {

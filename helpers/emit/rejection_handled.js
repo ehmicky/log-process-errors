@@ -14,6 +14,7 @@ const rejectionHandled = async function(getError = defaultGetError) {
   promise.catch(() => {})
 
   await promisify(setImmediate)()
+  await promisify(setImmediate)()
 }
 
 module.exports = {

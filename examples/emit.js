@@ -3,7 +3,7 @@
 const { argv } = require('process')
 
 const logProcessErrors = require('../custom')
-const TYPES = require('../test')
+const TYPES = require('../helpers')
 
 // Emit one of the process events using its name (or a shortcut) as argument
 // Used for development debugging

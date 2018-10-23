@@ -15,7 +15,7 @@ const format = function() {
 const eslint = function() {
   const files = [...FILES.JAVASCRIPT, ...FILES.MARKDOWN].join(' ')
   return execCommand(
-    `eslint ${files} --max-warnings 0 --ignore-path .gitignore --fix --cache --format codeframe`,
+    `eslint ${files} --max-warnings 0 --ignore-path .gitignore --ignore-pattern ava.config.js --fix --cache --format codeframe`,
   )
 }
 

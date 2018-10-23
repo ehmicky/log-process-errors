@@ -3,31 +3,31 @@
 const { argv } = require('process')
 
 const logProcessErrors = require('../custom')
-const TYPES = require('../helpers')
+const EVENTS = require('../helpers')
 
 // Emit one of the process events using its name (or a shortcut) as argument
 // Used for development debugging
 const emit = async function(typeName) {
-  const fireFunc = getType(typeName)
+  const emitEvent = getEmitEvent(typeName)
 
   const stopLogging = logProcessErrors({ exitOn: [] })
 
-  await fireFunc()
+  await emitEvent()
 
   stopLogging()
 }
 
-const getType = function(name) {
+const getEmitEvent = function(name) {
   // Use `startsWith()` to allow shortcuts
-  const nameB = Object.keys(TYPES).find(nameA => nameA.startsWith(name))
+  const nameB = Object.keys(EVENTS).find(nameA => nameA.startsWith(name))
 
   if (nameB !== undefined) {
-    return TYPES[nameB]
+    return EVENTS[nameB]
   }
 
-  const availableTypes = Object.keys(TYPES).join(', ')
+  const availableEvents = Object.keys(EVENTS).join(', ')
   throw new Error(
-    `Type ${name} does not exist. Available types: ${availableTypes}`,
+    `Event ${name} does not exist. Available events: ${availableEvents}`,
   )
 }
 

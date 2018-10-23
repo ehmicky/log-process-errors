@@ -1,5 +1,7 @@
 'use strict'
 
+const { pickBy } = require('./utils')
+
 // Retrieve `info` object representing the current error information
 const getInfo = async function({
   eventName,
@@ -15,7 +17,7 @@ const getInfo = async function({
     promiseValue,
   })
 
-  return {
+  const info = {
     eventName,
     error,
     promiseState,
@@ -23,6 +25,9 @@ const getInfo = async function({
     secondPromiseState,
     secondPromiseValue,
   }
+
+  const infoA = pickBy(info, value => value !== undefined)
+  return infoA
 }
 
 // Retrieve promise's resolved/rejected state and value.

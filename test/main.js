@@ -99,6 +99,11 @@ const onlyEvent = function(eventName, info) {
   return info.eventName !== eventName
 }
 
+const testLogsDefaultLevel = function({ t, log, eventName }) {
+  const level = eventName === 'warning' ? 'warn' : 'error'
+  t.deepEqual(log.firstCall.args[1], level)
+}
+
 const addProcessHandler = function(eventName) {
   const processHandler = sinon.spy()
   process.on(eventName, processHandler)
@@ -132,8 +137,23 @@ const unstubStackTrace = function() {
 
 const originalPrepare = Error.prepareStackTrace
 
+const stubProcessExit = function() {
+  const clock = lolex.install({ toFake: ['setTimeout'] })
+  const processExit = sinon.stub(process, 'exit')
+  return { clock, processExit }
+}
+
+const unstubProcessExit = function({ clock, processExit }) {
+  processExit.restore()
+  clock.uninstall()
+}
+
 const isLimitedWarning = function({ eventName, error: { name } = {} }) {
   return eventName === 'warning' && name === 'LogProcessError'
+}
+
+const isNotLimitedWarning = function(info) {
+  return !isLimitedWarning(info)
 }
 
 const emitEvents = async function(maxEvents, emitEvent) {
@@ -142,6 +162,11 @@ const emitEvents = async function(maxEvents, emitEvent) {
     // eslint-disable-next-line no-await-in-loop
     await emitEvent()
   }
+}
+
+const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
+  await emitEvent()
+  clock.tick(timeout)
 }
 
 test('should validate opts.log() is a function', t => {
@@ -276,30 +301,6 @@ test('[multipleResolves] should set info properties', async t => {
   stopLogging()
 })
 
-test('[multipleResolves] should get the right promise order', async t => {
-  const { stopLogging, log } = startLogging({
-    log: 'spy',
-    eventName: 'multipleResolves',
-  })
-
-  await EVENTS.multipleResolves([
-    ['reject', () => false],
-    ['resolve', () => true],
-  ])
-
-  t.is(log.callCount, 1)
-
-  t.deepEqual(log.firstCall.args[2], {
-    eventName: 'multipleResolves',
-    promiseState: 'rejected',
-    promiseValue: false,
-    secondPromiseState: 'resolved',
-    secondPromiseValue: true,
-  })
-
-  stopLogging()
-})
-
 /* eslint-disable max-nested-callbacks */
 Object.entries(EVENTS)
   .filter(([eventName]) => eventName !== 'all')
@@ -347,23 +348,7 @@ Object.entries(EVENTS)
       t.true(processHandler.called)
       t.true(log.notCalled)
 
-      process.off(eventName, processHandler)
-    })
-
-    test(`[${eventName}] should disable logging idempotently`, async t => {
-      const processHandler = addProcessHandler(eventName)
-
-      const { stopLogging, log } = startLogging({ log: 'spy' })
-
       stopLogging()
-      stopLogging()
-
-      t.true(processHandler.notCalled)
-
-      await emitEvent()
-
-      t.true(processHandler.called)
-      t.true(log.notCalled)
 
       process.off(eventName, processHandler)
     })
@@ -412,7 +397,6 @@ Object.entries(EVENTS)
 
       await emitEvent()
 
-      t.is(log.callCount, 1)
       t.is(typeof log.firstCall.args[2], 'object')
 
       stopLogging()
@@ -446,9 +430,7 @@ Object.entries(EVENTS)
 
       await emitEvent()
 
-      t.is(log.callCount, 1)
-      const level = eventName === 'warning' ? 'warn' : 'error'
-      t.deepEqual(log.firstCall.args[1], level)
+      testLogsDefaultLevel({ t, log, eventName })
 
       stopLogging()
     })
@@ -464,8 +446,7 @@ Object.entries(EVENTS)
 
       t.true(getLevel.called)
       t.true(log.called)
-      const level = eventName === 'warning' ? 'warn' : 'error'
-      t.deepEqual(log.firstCall.args[1], level)
+      testLogsDefaultLevel({ t, log, eventName })
 
       stopLogging()
     })
@@ -563,67 +544,51 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should call process.exit(1) if inside opts.exitOn`, async t => {
-      const clock = lolex.install({ toFake: ['setTimeout'] })
+      const { clock, processExit } = stubProcessExit()
 
-      const stub = sinon.stub(process, 'exit')
+      const exitOn = [eventName]
+      const { stopLogging } = startLogging({ exitOn, eventName })
 
-      const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
+      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
-      await emitEvent()
-
-      clock.tick(EXIT_TIMEOUT)
-
-      t.is(stub.callCount, 1)
-      t.is(stub.firstCall.args[0], 1)
+      t.is(processExit.callCount, 1)
+      t.is(processExit.firstCall.args[0], 1)
 
       stopLogging()
 
-      stub.restore()
-
-      clock.uninstall()
+      unstubProcessExit({ clock, processExit })
     })
 
     test(`[${eventName}] should not call process.exit(1) if not inside opts.exitOn`, async t => {
-      const clock = lolex.install({ toFake: ['setTimeout'] })
+      const { clock, processExit } = stubProcessExit()
 
-      const stub = sinon.stub(process, 'exit')
+      const exitOn = []
+      const { stopLogging } = startLogging({ exitOn, eventName })
 
-      const { stopLogging } = startLogging({ exitOn: [], eventName })
+      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
-      await emitEvent()
-
-      clock.tick(EXIT_TIMEOUT)
-
-      t.true(stub.notCalled)
+      t.true(processExit.notCalled)
 
       stopLogging()
 
-      stub.restore()
-
-      clock.uninstall()
+      unstubProcessExit({ clock, processExit })
     })
 
-    // eslint-disable-next-line max-statements
     test(`[${eventName}] should delay process.exit(1)`, async t => {
-      const clock = lolex.install({ toFake: ['setTimeout'] })
-
-      const stub = sinon.stub(process, 'exit')
+      const { clock, processExit } = stubProcessExit()
 
       const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
 
-      await emitEvent()
+      await emitEventAndWait(EXIT_TIMEOUT - 1, { clock, emitEvent })
 
-      clock.tick(EXIT_TIMEOUT - 1)
-      t.true(stub.notCalled)
+      t.true(processExit.notCalled)
 
       clock.tick(1)
-      t.true(stub.called)
+      t.true(processExit.called)
 
       stopLogging()
 
-      stub.restore()
-
-      clock.uninstall()
+      unstubProcessExit({ clock, processExit })
     })
 
     test(`[${eventName}] should not repeat identical events`, async t => {
@@ -663,10 +628,13 @@ Object.entries(EVENTS)
     test(`[${eventName}] should emit warning when limiting events`, async t => {
       stubStackTraceRandom()
 
-      const skipEvent = info => !isLimitedWarning(info)
-      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        skipEvent: isNotLimitedWarning,
+      })
 
-      await emitEvents(MAX_EVENTS - 1, emitEvent)
+      const maxEvents = MAX_EVENTS - 1
+      await emitEvents(maxEvents, emitEvent)
 
       t.true(log.notCalled)
 
@@ -682,8 +650,10 @@ Object.entries(EVENTS)
     test(`[${eventName}] should only emit warning once when limiting events`, async t => {
       stubStackTraceRandom()
 
-      const skipEvent = info => !isLimitedWarning(info)
-      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        skipEvent: isNotLimitedWarning,
+      })
 
       await emitEvents(MAX_EVENTS, emitEvent)
 
@@ -700,7 +670,7 @@ Object.entries(EVENTS)
 
     // eslint-disable-next-line max-lines-per-function
     Object.keys(LEVELS).forEach(level => {
-      test(`[${eventName}] [${level}] should fire opts.log() with event`, async t => {
+      test(`[${eventName}] [${level}] should fire opts.log() with level`, async t => {
         const { stopLogging, log } = startLogging({
           log: 'spy',
           level,
@@ -710,7 +680,7 @@ Object.entries(EVENTS)
         await emitEvent()
 
         t.is(log.callCount, 1)
-        t.is(log.firstCall.args[1], level)
+        t.true(typeof log.firstCall.args[1] === 'string')
 
         stopLogging()
       })

@@ -75,7 +75,7 @@ const serializeValue = function({ value }) {
   // introduces higher risk of false positives (event being flagged as repeated
   // even though it's different). Process errors should be exceptional, so this
   // is ok.
-  return inspect(value, { sorted: true })
+  return inspect(value, { sorted: true, depth: 2 })
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like

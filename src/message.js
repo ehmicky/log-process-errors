@@ -9,9 +9,12 @@ const { serialize, prettify } = require('./prettify')
 const getMessage = function({ opts, info, level, colors }) {
   const message = opts.getMessage({ ...info, level, colors })
   // Ensure this is a string
-  const messageA = typeof message === 'string' ? message : inspect(message)
+  const messageA =
+    typeof message === 'string' ? message : inspect(message, INSPECT_OPTS)
   return messageA
 }
+
+const INSPECT_OPTS = { depth: 2 }
 
 // Default `opts.getMessage()`
 const defaultGetMessage = function({

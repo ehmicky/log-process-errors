@@ -8,10 +8,13 @@ const sinon = require('sinon')
 const hasAnsi = require('has-ansi')
 const supportsColor = require('supports-color')
 const chalk = require('chalk')
+const lolex = require('lolex')
 
 const logProcessErrors = require('../src')
 // eslint-disable-next-line import/no-internal-modules
 const { LEVELS } = require('../src/level')
+// eslint-disable-next-line import/no-internal-modules
+const { EXIT_TIMEOUT } = require('../src/exit')
 const EVENTS = require('../helpers')
 
 // Ava sets up process `uncaughtException` and `unhandledRejection` handlers
@@ -456,6 +459,70 @@ Object.entries(EVENTS)
       t.false(hasAnsi(log.firstCall.args[0]))
 
       stopLogging()
+    })
+
+    test(`[${eventName}] should call process.exit(1) if inside opts.exitOn`, async t => {
+      const clock = lolex.install({ toFake: ['setTimeout'] })
+
+      const stub = sinon.stub(process, 'exit')
+
+      const stopLogging = startLoggingEvent(eventName, { exitOn: [eventName] })
+
+      await emitEvent()
+
+      clock.tick(EXIT_TIMEOUT)
+
+      t.is(stub.callCount, 1)
+      t.is(stub.firstCall.args[0], 1)
+
+      stopLogging()
+
+      stub.restore()
+
+      clock.uninstall()
+    })
+
+    test(`[${eventName}] should not call process.exit(1) if not inside opts.exitOn`, async t => {
+      const clock = lolex.install({ toFake: ['setTimeout'] })
+
+      const stub = sinon.stub(process, 'exit')
+
+      const stopLogging = startLoggingEvent(eventName, { exitOn: [] })
+
+      await emitEvent()
+
+      clock.tick(EXIT_TIMEOUT)
+
+      t.true(stub.notCalled)
+
+      stopLogging()
+
+      stub.restore()
+
+      clock.uninstall()
+    })
+
+    // eslint-disable-next-line max-statements
+    test(`[${eventName}] should delay process.exit(1)`, async t => {
+      const clock = lolex.install({ toFake: ['setTimeout'] })
+
+      const stub = sinon.stub(process, 'exit')
+
+      const stopLogging = startLoggingEvent(eventName, { exitOn: [eventName] })
+
+      await emitEvent()
+
+      clock.tick(EXIT_TIMEOUT - 1)
+      t.true(stub.notCalled)
+
+      clock.tick(1)
+      t.true(stub.called)
+
+      stopLogging()
+
+      stub.restore()
+
+      clock.uninstall()
     })
 
     // eslint-disable-next-line max-lines-per-function

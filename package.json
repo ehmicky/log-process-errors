@@ -71,6 +71,7 @@
     "gulp": "^4.0.0",
     "gulp-jscpd": "0.0.8",
     "has-ansi": "^3.0.0",
+    "lolex": "^3.0.0",
     "ndb": "^1.0.26",
     "plugin-error": "^1.0.1",
     "prettier": "^1.14.3",

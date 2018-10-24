@@ -46,7 +46,8 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "jest-validate": "^23.6.0",
-    "moize": "^5.4.1"
+    "moize": "^5.4.1",
+    "supports-color": "^5.5.0"
   },
   "devDependencies": {
     "ava": "^1.0.0-rc.1",
@@ -74,8 +75,7 @@
     "plugin-error": "^1.0.1",
     "prettier": "^1.14.3",
     "release-it": "^7.6.2",
-    "sinon": "^7.0.0",
-    "supports-color": "^5.5.0"
+    "sinon": "^7.0.0"
   },
   "engines": {
     "node": ">=11.0.0"

@@ -1,6 +1,7 @@
 'use strict'
 
 const { validate } = require('jest-validate')
+const supportsColor = require('supports-color')
 
 const { defaultGetLevel } = require('./level')
 const { defaultGetMessage } = require('./message')
@@ -22,7 +23,7 @@ const DEFAULT_OPTS = {
   getLevel: defaultGetLevel,
   getMessage: defaultGetMessage,
   log: defaultLog,
-  colors: true,
+  colors: Boolean(supportsColor.stdout),
   exitOn: ['uncaughtException'],
 }
 

@@ -7,6 +7,7 @@ const test = require('ava')
 const sinon = require('sinon')
 const hasAnsi = require('has-ansi')
 const supportsColor = require('supports-color')
+const chalk = require('chalk')
 
 const logProcessErrors = require('../src')
 // eslint-disable-next-line import/no-internal-modules
@@ -42,6 +43,23 @@ const addProcessHandler = function(eventName) {
   process.on(eventName, processHandler)
   return processHandler
 }
+
+// We need to patch `Error.stack` since it's host-dependent
+const stubStackTrace = function() {
+  // eslint-disable-next-line fp/no-mutation
+  Error.prepareStackTrace = prepareStackTrace
+}
+
+const prepareStackTrace = function({ message }) {
+  return `Error: ${message}\n    at STACK TRACE`
+}
+
+const unstubStackTrace = function() {
+  // eslint-disable-next-line fp/no-mutation
+  Error.prepareStackTrace = originalPrepare
+}
+
+const originalPrepare = Error.prepareStackTrace
 
 test('should validate opts.log() is a function', t => {
   t.throws(startLogging.bind(null, { log: true }))
@@ -98,11 +116,11 @@ test('[warning] should set info properties', async t => {
       args: [, , info],
     },
   } = log
-  t.true(info.error instanceof Error)
   t.deepEqual(
     { ...info, error: { ...info.error, message: info.error.message } },
     { eventName: 'warning', error: { ...warning, name: 'Warning' } },
   )
+  t.true(info.error instanceof Error)
 
   stopLogging()
 })
@@ -204,19 +222,16 @@ Object.entries(EVENTS)
       stopLogging()
     })
 
-    test(`[${eventName}] should keep process event handlers`, async t => {
+    test(`[${eventName}] should keep existing process event handlers`, async t => {
       const processHandler = addProcessHandler(eventName)
 
-      const log = sinon.spy()
-      const stopLogging = startLogging({ log })
+      const stopLogging = startLogging()
 
-      t.true(log.notCalled)
       t.true(processHandler.notCalled)
 
       await emitEvent()
 
       t.true(processHandler.called)
-      t.true(log.called)
 
       stopLogging()
 
@@ -300,20 +315,6 @@ Object.entries(EVENTS)
       stopLogging()
     })
 
-    test(`[${eventName}] should fire opts.log() with event`, async t => {
-      const getLevel = () => 'error'
-
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log, getLevel })
-
-      await emitEvent()
-
-      t.is(log.callCount, 1)
-      t.is(log.firstCall.args[1], 'error')
-
-      stopLogging()
-    })
-
     test(`[${eventName}] should fire opts.log() with info`, async t => {
       const log = sinon.spy()
       const stopLogging = startLoggingEvent(eventName, { log })
@@ -326,83 +327,6 @@ Object.entries(EVENTS)
       stopLogging()
     })
 
-    // eslint-disable-next-line max-lines-per-function
-    Object.keys(LEVELS).forEach(level => {
-      test(`[${eventName}] [${level}] should log on the console by default`, async t => {
-        // eslint-disable-next-line no-restricted-globals
-        const stub = sinon.stub(console, level)
-
-        const getMessage = () => 'message'
-        const getLevel = () => level
-        const stopLogging = startLoggingEvent(eventName, {
-          getMessage,
-          getLevel,
-          log: undefined,
-        })
-
-        await emitEvent()
-
-        t.is(stub.callCount, 1)
-        t.is(stub.firstCall.args[0], 'message')
-
-        stopLogging()
-
-        stub.restore()
-      })
-
-      test(`[${eventName}] [${level}] should allow changing log level`, async t => {
-        const log = sinon.spy()
-        const getLevel = sinon.spy(() => level)
-        const stopLogging = startLoggingEvent(eventName, { log, getLevel })
-
-        await emitEvent()
-
-        t.is(getLevel.callCount, 1)
-        t.is(log.callCount, 1)
-        t.is(log.firstCall.args[1], level)
-
-        stopLogging()
-      })
-
-      test(`[${eventName}] [${level}] should fire opts.getLevel() with info`, async t => {
-        const getLevel = sinon.spy(() => level)
-        const stopLogging = startLoggingEvent(eventName, { getLevel })
-
-        await emitEvent()
-
-        t.true(getLevel.called)
-        t.is(typeof getLevel.firstCall.args[0], 'object')
-
-        stopLogging()
-      })
-
-      test(`[${eventName}] [${level}] should fire opts.getMessage() with a default prettifier`, async t => {
-        // We need to patch `Error.stack` since it's host-dependent
-        const originalPrepare = Error.prepareStackTrace
-        // eslint-disable-next-line fp/no-mutation
-        Error.prepareStackTrace = ({ message }) =>
-          `Error: ${message}\n    at STACK TRACE`
-
-        const log = sinon.spy()
-        const getLevel = sinon.spy(() => level)
-        const stopLogging = startLoggingEvent(eventName, {
-          log,
-          getLevel,
-          colors: false,
-        })
-
-        await emitEvent()
-
-        t.true(log.calledOnce)
-        t.snapshot(log.lastCall.args[0])
-
-        stopLogging()
-
-        // eslint-disable-next-line fp/no-mutation
-        Error.prepareStackTrace = originalPrepare
-      })
-    })
-
     test(`[${eventName}] should allow skipping events`, async t => {
       const log = sinon.spy()
       const skipEvent = sinon.spy(() => true)
@@ -411,7 +335,7 @@ Object.entries(EVENTS)
       await emitEvent()
 
       t.true(skipEvent.called)
-      t.false(log.called)
+      t.true(log.notCalled)
 
       stopLogging()
     })
@@ -434,23 +358,40 @@ Object.entries(EVENTS)
       await emitEvent()
 
       t.is(log.callCount, 1)
-      t.deepEqual(
-        log.firstCall.args[1],
-        eventName === 'warning' ? 'warn' : 'error',
-      )
+      const level = eventName === 'warning' ? 'warn' : 'error'
+      t.deepEqual(log.firstCall.args[1], level)
 
       stopLogging()
     })
 
-    test(`[${eventName}] should validate opts.getLevel() returns a valid level`, async t => {
+    test(`[${eventName}] should use default opts.getLevel() when returning a valid level`, async t => {
       const log = sinon.spy()
-      const getLevel = () => 'invalid'
+      const getLevel = sinon.spy(() => 'invalid')
       const stopLogging = startLoggingEvent(eventName, { log, getLevel })
 
       await emitEvent()
 
-      t.false(log.called)
+      t.true(getLevel.called)
+      t.true(log.called)
+      const level = eventName === 'warning' ? 'warn' : 'error'
+      t.deepEqual(log.firstCall.args[1], level)
 
+      stopLogging()
+    })
+
+    test(`[${eventName}] should emit a warning when opts.getLevel() when returns a valid level`, async t => {
+      const getLevel = sinon.spy(() => 'invalid')
+      const stopLogging = startLoggingEvent(eventName, { getLevel })
+
+      const log = sinon.spy()
+      const stopWarningLog = startLoggingEvent('warning', { log })
+
+      await emitEvent()
+
+      t.true(getLevel.called)
+      t.true(log.called)
+
+      stopWarningLog()
       stopLogging()
     })
 
@@ -464,21 +405,6 @@ Object.entries(EVENTS)
       t.true(getMessage.calledOnce)
       t.true(log.calledOnce)
       t.is(log.firstCall.args[0], 'message')
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should fire opts.getMessage() with info`, async t => {
-      const getMessage = sinon.spy()
-      const getLevel = () => 'debug'
-      const stopLogging = startLoggingEvent(eventName, { getMessage, getLevel })
-
-      await emitEvent()
-
-      t.true(getMessage.calledOnce)
-      t.is(typeof getMessage.firstCall.args[0], 'object')
-      t.is(getMessage.firstCall.args[0].level, 'debug')
-      t.is(typeof getMessage.firstCall.args[0].colors.red, 'function')
 
       stopLogging()
     })
@@ -530,6 +456,109 @@ Object.entries(EVENTS)
       t.false(hasAnsi(log.firstCall.args[0]))
 
       stopLogging()
+    })
+
+    // eslint-disable-next-line max-lines-per-function
+    Object.keys(LEVELS).forEach(level => {
+      test(`[${eventName}] [${level}] should fire opts.log() with event`, async t => {
+        const log = sinon.spy()
+        const getLevel = () => level
+        const stopLogging = startLoggingEvent(eventName, { log, getLevel })
+
+        await emitEvent()
+
+        t.is(log.callCount, 1)
+        t.is(log.firstCall.args[1], level)
+
+        stopLogging()
+      })
+
+      test(`[${eventName}] [${level}] should log on the console by default`, async t => {
+        // eslint-disable-next-line no-restricted-globals
+        const stub = sinon.stub(console, level)
+
+        const getMessage = () => 'message'
+        const getLevel = () => level
+        const stopLogging = startLoggingEvent(eventName, {
+          getMessage,
+          getLevel,
+          log: undefined,
+        })
+
+        await emitEvent()
+
+        t.is(stub.callCount, 1)
+        t.is(stub.firstCall.args[0], 'message')
+
+        stopLogging()
+
+        stub.restore()
+      })
+
+      test(`[${eventName}] [${level}] should allow changing log level`, async t => {
+        const log = sinon.spy()
+        const getLevel = sinon.spy(() => level)
+        const stopLogging = startLoggingEvent(eventName, { log, getLevel })
+
+        await emitEvent()
+
+        t.is(getLevel.callCount, 1)
+        t.is(log.callCount, 1)
+        t.is(log.firstCall.args[1], level)
+
+        stopLogging()
+      })
+
+      test(`[${eventName}] [${level}] should fire opts.getLevel() with info`, async t => {
+        const getLevel = sinon.spy(() => level)
+        const stopLogging = startLoggingEvent(eventName, { getLevel })
+
+        await emitEvent()
+
+        t.true(getLevel.called)
+        t.is(typeof getLevel.firstCall.args[0], 'object')
+
+        stopLogging()
+      })
+
+      test(`[${eventName}] [${level}] should fire opts.getMessage() with info`, async t => {
+        const getMessage = sinon.spy()
+        const getLevel = () => level
+        const stopLogging = startLoggingEvent(eventName, {
+          getMessage,
+          getLevel,
+        })
+
+        await emitEvent()
+
+        t.true(getMessage.calledOnce)
+        t.is(typeof getMessage.firstCall.args[0], 'object')
+        t.is(getMessage.firstCall.args[0].level, level)
+        t.true(getMessage.firstCall.args[0].colors instanceof chalk.constructor)
+
+        stopLogging()
+      })
+
+      test(`[${eventName}] [${level}] should fire opts.getMessage() with a default prettifier`, async t => {
+        stubStackTrace()
+
+        const log = sinon.spy()
+        const getLevel = () => level
+        const stopLogging = startLoggingEvent(eventName, {
+          log,
+          getLevel,
+          colors: false,
+        })
+
+        await emitEvent()
+
+        t.true(log.calledOnce)
+        t.snapshot(log.lastCall.args[0])
+
+        stopLogging()
+
+        unstubStackTrace()
+      })
     })
   })
 /* eslint-enable max-nested-callbacks */

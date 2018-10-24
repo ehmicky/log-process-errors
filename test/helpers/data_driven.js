@@ -5,7 +5,7 @@ const test = require('ava')
 
 // eslint-disable-next-line import/no-internal-modules
 const { LEVELS } = require('../../src/level')
-const EVENTS = require('../../helpers')
+const { EVENTS } = require('../../helpers')
 
 // Create one test for each process event
 const forEachEvent = function(func) {

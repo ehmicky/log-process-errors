@@ -3,7 +3,7 @@
 const { argv } = require('process')
 
 const logProcessErrors = require('../custom')
-const EVENTS = require('../helpers')
+const { ALL_EVENTS } = require('../helpers')
 
 // Emit one of the process events using its name (or a shortcut) as argument
 // Used for development debugging
@@ -19,13 +19,13 @@ const emit = async function(typeName) {
 
 const getEmitEvent = function(name) {
   // Use `startsWith()` to allow shortcuts
-  const nameB = Object.keys(EVENTS).find(nameA => nameA.startsWith(name))
+  const nameB = Object.keys(ALL_EVENTS).find(nameA => nameA.startsWith(name))
 
   if (nameB !== undefined) {
-    return EVENTS[nameB]
+    return ALL_EVENTS[nameB]
   }
 
-  const availableEvents = Object.keys(EVENTS).join(', ')
+  const availableEvents = Object.keys(ALL_EVENTS).join(', ')
   throw new Error(
     `Event ${name} does not exist. Available events: ${availableEvents}`,
   )

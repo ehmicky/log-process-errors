@@ -2,7 +2,7 @@
 
 const process = require('process')
 
-const EVENTS = require('../../helpers')
+const { EVENTS } = require('../../helpers')
 
 // Ava sets up process `uncaughtException` and `unhandledRejection` handlers
 // which makes testing them harder.

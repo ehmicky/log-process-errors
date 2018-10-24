@@ -112,18 +112,16 @@ const addProcessHandler = function(eventName) {
 
 // We need to patch `Error.stack` since it's host-dependent
 const stubStackTrace = function() {
-  // eslint-disable-next-line fp/no-mutation
-  Error.prepareStackTrace = prepareStackTrace
+  setPrepareStackTrace(prepareStackTraceMock)
 }
 
-const prepareStackTrace = function({ message }) {
+const prepareStackTraceMock = function({ message }) {
   return `Error: ${message}\n    at STACK TRACE`
 }
 
 // Make `Error.stack` random for testing
 const stubStackTraceRandom = function() {
-  // eslint-disable-next-line fp/no-mutation
-  Error.prepareStackTrace = prepareStackTraceRandom
+  setPrepareStackTrace(prepareStackTraceRandom)
 }
 
 const prepareStackTraceRandom = function({ message }) {
@@ -131,11 +129,15 @@ const prepareStackTraceRandom = function({ message }) {
 }
 
 const unstubStackTrace = function() {
-  // eslint-disable-next-line fp/no-mutation
-  Error.prepareStackTrace = originalPrepare
+  setPrepareStackTrace(prepareStackTraceOrig)
 }
 
-const originalPrepare = Error.prepareStackTrace
+const prepareStackTraceOrig = Error.prepareStackTrace
+
+const setPrepareStackTrace = function(prepareStackTrace) {
+  // eslint-disable-next-line fp/no-mutation
+  Error.prepareStackTrace = prepareStackTrace
+}
 
 const stubProcessExit = function() {
   const clock = lolex.install({ toFake: ['setTimeout'] })
@@ -157,16 +159,48 @@ const isNotLimitedWarning = function(info) {
 }
 
 const emitEvents = async function(maxEvents, emitEvent) {
-  // eslint-disable-next-line fp/no-let, fp/no-mutation, fp/no-loops
-  for (let count = 0; count <= maxEvents; count += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    await emitEvent()
-  }
+  const array = new Array(maxEvents).fill().map(() => emitEvent())
+  await Promise.all(array)
 }
 
 const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   await emitEvent()
   clock.tick(timeout)
+}
+
+// Create one test for each process event
+const forEachEvent = function(func) {
+  getEvents().forEach(({ eventName, emitEvent }) => {
+    const testA = prefixTitle(`[${eventName}]`)
+    func({ eventName, emitEvent, test: testA })
+  })
+}
+
+// Create one test for each process event + level combination
+const forEachEventLevel = function(func) {
+  getEventsLevels().forEach(({ eventName, emitEvent, level }) => {
+    const testA = prefixTitle(`[${eventName}] [${level}]`)
+    func({ eventName, emitEvent, level, test: testA })
+  })
+}
+
+const getEventsLevels = function() {
+  return getEvents().flatMap(getEventLevels)
+}
+
+const getEvents = function() {
+  return Object.entries(EVENTS)
+    .filter(([eventName]) => eventName !== 'all')
+    .map(([eventName, emitEvent]) => ({ eventName, emitEvent }))
+}
+
+const getEventLevels = function({ eventName, emitEvent }) {
+  return Object.keys(LEVELS).map(level => ({ eventName, emitEvent, level }))
+}
+
+// Prefix test title
+const prefixTitle = function(prefix) {
+  return (title, ...args) => test(`${prefix} ${title}`, ...args)
 }
 
 test('should validate opts.log() is a function', t => {
@@ -302,475 +336,474 @@ test('[multipleResolves] should set info properties', async t => {
 })
 
 /* eslint-disable max-nested-callbacks */
-Object.entries(EVENTS)
-  .filter(([eventName]) => eventName !== 'all')
-  // eslint-disable-next-line max-lines-per-function, max-statements
-  .forEach(([eventName, emitEvent]) => {
-    test(`[${eventName}] events emitters should exist`, t => {
-      t.is(typeof emitEvent, 'function')
-    })
-
-    test(`[${eventName}] events emitters should not throw`, async t => {
-      const { stopLogging } = startLogging()
-
-      await t.notThrowsAsync(emitEvent)
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should keep existing process event handlers`, async t => {
-      const processHandler = addProcessHandler(eventName)
-
-      const { stopLogging } = startLogging()
-
-      t.true(processHandler.notCalled)
-
-      await emitEvent()
-
-      t.true(processHandler.called)
-
-      stopLogging()
-
-      process.off(eventName, processHandler)
-    })
-
-    test(`[${eventName}] should allow disabling logging`, async t => {
-      const processHandler = addProcessHandler(eventName)
-
-      const { stopLogging, log } = startLogging({ log: 'spy' })
-
-      stopLogging()
-
-      t.true(processHandler.notCalled)
-
-      await emitEvent()
-
-      t.true(processHandler.called)
-      t.true(log.notCalled)
-
-      stopLogging()
-
-      process.off(eventName, processHandler)
-    })
-
-    test(`[${eventName}] should fire opts.log()`, async t => {
-      const { stopLogging, log } = startLogging({ log: 'spy' })
-
-      t.true(log.notCalled)
-
-      await emitEvent()
-
-      t.true(log.called)
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should fire opts.log() once`, async t => {
-      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
-
-      t.true(log.notCalled)
-
-      await emitEvent()
-
-      t.is(log.callCount, 1)
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should fire opts.log() with message`, async t => {
-      const { stopLogging, log } = startLogging({
-        log: 'spy',
-        message: 'message',
-        eventName,
-      })
-
-      await emitEvent()
-
-      t.is(log.callCount, 1)
-      t.is(log.firstCall.args[0], 'message')
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should fire opts.log() with info`, async t => {
-      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
-
-      await emitEvent()
-
-      t.is(typeof log.firstCall.args[2], 'object')
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should allow skipping events`, async t => {
-      const skipEvent = sinon.spy(() => true)
-      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
-
-      await emitEvent()
-
-      t.true(skipEvent.called)
-      t.true(log.notCalled)
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should fire opts.skipEvent() with info`, async t => {
-      const skipEvent = sinon.spy(() => true)
-      const { stopLogging } = startLogging({ skipEvent })
-
-      await emitEvent()
-
-      t.is(typeof skipEvent.firstCall.args[0], 'object')
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should use default opts.getLevel()`, async t => {
-      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
-
-      await emitEvent()
-
-      testLogsDefaultLevel({ t, log, eventName })
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should use default opts.getLevel() when returning a valid level`, async t => {
-      const { stopLogging, log, getLevel } = startLogging({
-        log: 'spy',
-        level: 'invalid',
-        eventName,
-      })
-
-      await emitEvent()
-
-      t.true(getLevel.called)
-      t.true(log.called)
-      testLogsDefaultLevel({ t, log, eventName })
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should emit a warning when opts.getLevel() when returns a valid level`, async t => {
-      const { stopLogging, getLevel } = startLogging({
-        level: 'invalid',
-        eventName,
-      })
-
-      const { stopLogging: stopWarningLog, log } = startLogging({
-        log: 'spy',
-        eventName: 'warning',
-      })
-
-      await emitEvent()
-
-      t.true(getLevel.called)
-      t.true(log.called)
-
-      stopWarningLog()
-      stopLogging()
-    })
-
-    test(`[${eventName}] should allow customizing log message`, async t => {
-      const { stopLogging, log, getMessage } = startLogging({
-        log: 'spy',
-        message: 'message',
-        eventName,
-      })
-
-      await emitEvent()
-
-      t.true(getMessage.calledOnce)
-      t.true(log.calledOnce)
-      t.is(log.firstCall.args[0], 'message')
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should stringify opts.getMessage() return value`, async t => {
-      const { stopLogging, log } = startLogging({
-        log: 'spy',
-        message: true,
-        eventName,
-      })
-
-      await emitEvent()
-
-      t.true(log.calledOnce)
-      t.is(log.firstCall.args[0], 'true')
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should colorize default opts.getMessage()`, async t => {
-      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
-
-      await emitEvent()
-
-      t.true(log.calledOnce)
-      t.is(hasAnsi(log.firstCall.args[0]), Boolean(supportsColor.stdout))
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should allow forcing colorizing default opts.getMessage()`, async t => {
-      const { stopLogging, log } = startLogging({
-        log: 'spy',
-        colors: true,
-        eventName,
-      })
-
-      await emitEvent()
-
-      t.true(log.calledOnce)
-      t.true(hasAnsi(log.firstCall.args[0]))
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should allow disabling colorizing default opts.getMessage()`, async t => {
-      const { stopLogging, log } = startLogging({
-        log: 'spy',
-        colors: false,
-        eventName,
-      })
-
-      await emitEvent()
-
-      t.true(log.calledOnce)
-      t.false(hasAnsi(log.firstCall.args[0]))
-
-      stopLogging()
-    })
-
-    test(`[${eventName}] should call process.exit(1) if inside opts.exitOn`, async t => {
-      const { clock, processExit } = stubProcessExit()
-
-      const exitOn = [eventName]
-      const { stopLogging } = startLogging({ exitOn, eventName })
-
-      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
-
-      t.is(processExit.callCount, 1)
-      t.is(processExit.firstCall.args[0], 1)
-
-      stopLogging()
-
-      unstubProcessExit({ clock, processExit })
-    })
-
-    test(`[${eventName}] should not call process.exit(1) if not inside opts.exitOn`, async t => {
-      const { clock, processExit } = stubProcessExit()
-
-      const exitOn = []
-      const { stopLogging } = startLogging({ exitOn, eventName })
-
-      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
-
-      t.true(processExit.notCalled)
-
-      stopLogging()
-
-      unstubProcessExit({ clock, processExit })
-    })
-
-    test(`[${eventName}] should delay process.exit(1)`, async t => {
-      const { clock, processExit } = stubProcessExit()
-
-      const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
-
-      await emitEventAndWait(EXIT_TIMEOUT - 1, { clock, emitEvent })
-
-      t.true(processExit.notCalled)
-
-      clock.tick(1)
-      t.true(processExit.called)
-
-      stopLogging()
-
-      unstubProcessExit({ clock, processExit })
-    })
-
-    test(`[${eventName}] should not repeat identical events`, async t => {
-      stubStackTrace()
-
-      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
-
-      await emitEvents(2, emitEvent)
-
-      t.is(log.callCount, 1)
-
-      stopLogging()
-
-      unstubStackTrace()
-    })
-
-    test(`[${eventName}] should limit events`, async t => {
-      stubStackTraceRandom()
-
-      const skipEvent = info =>
-        info.eventName !== eventName || isLimitedWarning(info)
-      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
-
-      await emitEvents(MAX_EVENTS - 1, emitEvent)
-
-      t.is(log.callCount, MAX_EVENTS)
-
-      await emitEvent()
-
-      t.is(log.callCount, MAX_EVENTS)
-
-      stopLogging()
-
-      unstubStackTrace()
-    })
-
-    test(`[${eventName}] should emit warning when limiting events`, async t => {
-      stubStackTraceRandom()
-
-      const { stopLogging, log } = startLogging({
-        log: 'spy',
-        skipEvent: isNotLimitedWarning,
-      })
-
-      const maxEvents = MAX_EVENTS - 1
-      await emitEvents(maxEvents, emitEvent)
-
-      t.true(log.notCalled)
-
-      await emitEvent()
-
-      t.true(log.called)
-
-      stopLogging()
-
-      unstubStackTrace()
-    })
-
-    test(`[${eventName}] should only emit warning once when limiting events`, async t => {
-      stubStackTraceRandom()
-
-      const { stopLogging, log } = startLogging({
-        log: 'spy',
-        skipEvent: isNotLimitedWarning,
-      })
-
-      await emitEvents(MAX_EVENTS, emitEvent)
-
-      const { callCount } = log
-
-      await emitEvent()
-
-      t.is(log.callCount, callCount)
-
-      stopLogging()
-
-      unstubStackTrace()
-    })
-
-    // eslint-disable-next-line max-lines-per-function
-    Object.keys(LEVELS).forEach(level => {
-      test(`[${eventName}] [${level}] should fire opts.log() with level`, async t => {
-        const { stopLogging, log } = startLogging({
-          log: 'spy',
-          level,
-          eventName,
-        })
-
-        await emitEvent()
-
-        t.is(log.callCount, 1)
-        t.true(typeof log.firstCall.args[1] === 'string')
-
-        stopLogging()
-      })
-
-      test(`[${eventName}] [${level}] should log on the console by default`, async t => {
-        // eslint-disable-next-line no-restricted-globals
-        const stub = sinon.stub(console, level)
-
-        const { stopLogging } = startLogging({
-          log: 'default',
-          message: 'message',
-          level,
-          eventName,
-        })
-
-        await emitEvent()
-
-        t.is(stub.callCount, 1)
-        t.is(stub.firstCall.args[0], 'message')
-
-        stopLogging()
-
-        stub.restore()
-      })
-
-      test(`[${eventName}] [${level}] should allow changing log level`, async t => {
-        const { stopLogging, log, getLevel } = startLogging({
-          log: 'spy',
-          level,
-          eventName,
-        })
-
-        await emitEvent()
-
-        t.is(getLevel.callCount, 1)
-        t.is(log.callCount, 1)
-        t.is(log.firstCall.args[1], level)
-
-        stopLogging()
-      })
-
-      test(`[${eventName}] [${level}] should fire opts.getLevel() with info`, async t => {
-        const { stopLogging, getLevel } = startLogging({ level, eventName })
-
-        await emitEvent()
-
-        t.true(getLevel.called)
-        t.is(typeof getLevel.firstCall.args[0], 'object')
-
-        stopLogging()
-      })
-
-      test(`[${eventName}] [${level}] should fire opts.getMessage() with info`, async t => {
-        const { stopLogging, getMessage } = startLogging({
-          message: 'message',
-          level,
-          eventName,
-        })
-
-        await emitEvent()
-
-        t.true(getMessage.calledOnce)
-        t.is(typeof getMessage.firstCall.args[0], 'object')
-        t.is(getMessage.firstCall.args[0].level, level)
-        t.true(getMessage.firstCall.args[0].colors instanceof chalk.constructor)
-
-        stopLogging()
-      })
-
-      test(`[${eventName}] [${level}] should fire opts.getMessage() with a default prettifier`, async t => {
-        stubStackTrace()
-
-        const { stopLogging, log } = startLogging({
-          log: 'spy',
-          level,
-          colors: false,
-          eventName,
-        })
-
-        await emitEvent()
-
-        t.true(log.calledOnce)
-        t.snapshot(log.lastCall.args[0])
-
-        stopLogging()
-
-        unstubStackTrace()
-      })
-    })
+// eslint-disable-next-line max-lines-per-function, max-statements, no-shadow
+forEachEvent(({ eventName, emitEvent, test }) => {
+  test('events emitters should exist', t => {
+    t.is(typeof emitEvent, 'function')
   })
+
+  test('events emitters should not throw', async t => {
+    const { stopLogging } = startLogging()
+
+    await t.notThrowsAsync(emitEvent)
+
+    stopLogging()
+  })
+
+  test('should keep existing process event handlers', async t => {
+    const processHandler = addProcessHandler(eventName)
+
+    const { stopLogging } = startLogging()
+
+    t.true(processHandler.notCalled)
+
+    await emitEvent()
+
+    t.true(processHandler.called)
+
+    stopLogging()
+
+    process.off(eventName, processHandler)
+  })
+
+  test('should allow disabling logging', async t => {
+    const processHandler = addProcessHandler(eventName)
+
+    const { stopLogging, log } = startLogging({ log: 'spy' })
+
+    stopLogging()
+
+    t.true(processHandler.notCalled)
+
+    await emitEvent()
+
+    t.true(processHandler.called)
+    t.true(log.notCalled)
+
+    stopLogging()
+
+    process.off(eventName, processHandler)
+  })
+
+  test('should fire opts.log()', async t => {
+    const { stopLogging, log } = startLogging({ log: 'spy' })
+
+    t.true(log.notCalled)
+
+    await emitEvent()
+
+    t.true(log.called)
+
+    stopLogging()
+  })
+
+  test('should fire opts.log() once', async t => {
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+
+    t.true(log.notCalled)
+
+    await emitEvent()
+
+    t.is(log.callCount, 1)
+
+    stopLogging()
+  })
+
+  test('should fire opts.log() with message', async t => {
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      message: 'message',
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.is(log.callCount, 1)
+    t.is(log.firstCall.args[0], 'message')
+
+    stopLogging()
+  })
+
+  test('should fire opts.log() with info', async t => {
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+
+    await emitEvent()
+
+    t.is(typeof log.firstCall.args[2], 'object')
+
+    stopLogging()
+  })
+
+  test('should allow skipping events', async t => {
+    const skipEvent = sinon.spy(() => true)
+    const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
+
+    await emitEvent()
+
+    t.true(skipEvent.called)
+    t.true(log.notCalled)
+
+    stopLogging()
+  })
+
+  test('should fire opts.skipEvent() with info', async t => {
+    const skipEvent = sinon.spy(() => true)
+    const { stopLogging } = startLogging({ skipEvent })
+
+    await emitEvent()
+
+    t.is(typeof skipEvent.firstCall.args[0], 'object')
+
+    stopLogging()
+  })
+
+  test('should use default opts.getLevel()', async t => {
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+
+    await emitEvent()
+
+    testLogsDefaultLevel({ t, log, eventName })
+
+    stopLogging()
+  })
+
+  test('should use default opts.getLevel() when returning a valid level', async t => {
+    const { stopLogging, log, getLevel } = startLogging({
+      log: 'spy',
+      level: 'invalid',
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(getLevel.called)
+    t.true(log.called)
+    testLogsDefaultLevel({ t, log, eventName })
+
+    stopLogging()
+  })
+
+  test('should emit a warning when opts.getLevel() when returns a valid level', async t => {
+    const { stopLogging, getLevel } = startLogging({
+      level: 'invalid',
+      eventName,
+    })
+
+    const { stopLogging: stopWarningLog, log } = startLogging({
+      log: 'spy',
+      eventName: 'warning',
+    })
+
+    await emitEvent()
+
+    t.true(getLevel.called)
+    t.true(log.called)
+
+    stopWarningLog()
+    stopLogging()
+  })
+
+  test('should allow customizing log message', async t => {
+    const { stopLogging, log, getMessage } = startLogging({
+      log: 'spy',
+      message: 'message',
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(getMessage.calledOnce)
+    t.true(log.calledOnce)
+    t.is(log.firstCall.args[0], 'message')
+
+    stopLogging()
+  })
+
+  test('should stringify opts.getMessage() return value', async t => {
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      message: true,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(log.calledOnce)
+    t.is(log.firstCall.args[0], 'true')
+
+    stopLogging()
+  })
+
+  test('should colorize default opts.getMessage()', async t => {
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+
+    await emitEvent()
+
+    t.true(log.calledOnce)
+    t.is(hasAnsi(log.firstCall.args[0]), Boolean(supportsColor.stdout))
+
+    stopLogging()
+  })
+
+  test('should allow forcing colorizing default opts.getMessage()', async t => {
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      colors: true,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(log.calledOnce)
+    t.true(hasAnsi(log.firstCall.args[0]))
+
+    stopLogging()
+  })
+
+  test('should allow disabling colorizing default opts.getMessage()', async t => {
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      colors: false,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(log.calledOnce)
+    t.false(hasAnsi(log.firstCall.args[0]))
+
+    stopLogging()
+  })
+
+  test('should call process.exit(1) if inside opts.exitOn', async t => {
+    const { clock, processExit } = stubProcessExit()
+
+    const exitOn = [eventName]
+    const { stopLogging } = startLogging({ exitOn, eventName })
+
+    await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+
+    t.is(processExit.callCount, 1)
+    t.is(processExit.firstCall.args[0], 1)
+
+    stopLogging()
+
+    unstubProcessExit({ clock, processExit })
+  })
+
+  test('should not call process.exit(1) if not inside opts.exitOn', async t => {
+    const { clock, processExit } = stubProcessExit()
+
+    const exitOn = []
+    const { stopLogging } = startLogging({ exitOn, eventName })
+
+    await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+
+    t.true(processExit.notCalled)
+
+    stopLogging()
+
+    unstubProcessExit({ clock, processExit })
+  })
+
+  test('should delay process.exit(1)', async t => {
+    const { clock, processExit } = stubProcessExit()
+
+    const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
+
+    await emitEventAndWait(EXIT_TIMEOUT - 1, { clock, emitEvent })
+
+    t.true(processExit.notCalled)
+
+    clock.tick(1)
+    t.true(processExit.called)
+
+    stopLogging()
+
+    unstubProcessExit({ clock, processExit })
+  })
+
+  test('should not repeat identical events', async t => {
+    stubStackTrace()
+
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+
+    await emitEvents(2, emitEvent)
+
+    t.is(log.callCount, 1)
+
+    stopLogging()
+
+    unstubStackTrace()
+  })
+
+  test('should limit events', async t => {
+    stubStackTraceRandom()
+
+    const skipEvent = info =>
+      info.eventName !== eventName || isLimitedWarning(info)
+    const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
+
+    await emitEvents(MAX_EVENTS, emitEvent)
+
+    t.is(log.callCount, MAX_EVENTS)
+
+    await emitEvent()
+
+    t.is(log.callCount, MAX_EVENTS)
+
+    stopLogging()
+
+    unstubStackTrace()
+  })
+
+  test('should emit warning when limiting events', async t => {
+    stubStackTraceRandom()
+
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      skipEvent: isNotLimitedWarning,
+    })
+
+    await emitEvents(MAX_EVENTS, emitEvent)
+
+    t.true(log.notCalled)
+
+    await emitEvent()
+
+    t.true(log.called)
+
+    stopLogging()
+
+    unstubStackTrace()
+  })
+
+  test('should only emit warning once when limiting events', async t => {
+    stubStackTraceRandom()
+
+    const { stopLogging, log } = startLogging({
+      skipEvent: isNotLimitedWarning,
+      log: 'spy',
+    })
+
+    await emitEvents(MAX_EVENTS, emitEvent)
+
+    await emitEvent()
+
+    const { callCount } = log
+
+    await emitEvent()
+
+    t.is(log.callCount, callCount)
+
+    stopLogging()
+
+    unstubStackTrace()
+  })
+})
+
+// eslint-disable-next-line max-lines-per-function, no-shadow
+forEachEventLevel(({ eventName, emitEvent, level, test }) => {
+  test('should fire opts.log() with level', async t => {
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      level,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.is(log.callCount, 1)
+    t.true(typeof log.firstCall.args[1] === 'string')
+
+    stopLogging()
+  })
+
+  test('should log on the console by default', async t => {
+    // eslint-disable-next-line no-restricted-globals
+    const stub = sinon.stub(console, level)
+
+    const { stopLogging } = startLogging({
+      log: 'default',
+      message: 'message',
+      level,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.is(stub.callCount, 1)
+    t.is(stub.firstCall.args[0], 'message')
+
+    stopLogging()
+
+    stub.restore()
+  })
+
+  test('should allow changing log level', async t => {
+    const { stopLogging, log, getLevel } = startLogging({
+      log: 'spy',
+      level,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.is(getLevel.callCount, 1)
+    t.is(log.callCount, 1)
+    t.is(log.firstCall.args[1], level)
+
+    stopLogging()
+  })
+
+  test('should fire opts.getLevel() with info', async t => {
+    const { stopLogging, getLevel } = startLogging({ level, eventName })
+
+    await emitEvent()
+
+    t.true(getLevel.called)
+    t.is(typeof getLevel.firstCall.args[0], 'object')
+
+    stopLogging()
+  })
+
+  test('should fire opts.getMessage() with info', async t => {
+    const { stopLogging, getMessage } = startLogging({
+      message: 'message',
+      level,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(getMessage.calledOnce)
+    t.is(typeof getMessage.firstCall.args[0], 'object')
+    t.is(getMessage.firstCall.args[0].level, level)
+    t.true(getMessage.firstCall.args[0].colors instanceof chalk.constructor)
+
+    stopLogging()
+  })
+
+  test('should fire opts.getMessage() with a default prettifier', async t => {
+    stubStackTrace()
+
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      level,
+      colors: false,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(log.calledOnce)
+    t.snapshot(log.lastCall.args[0])
+
+    stopLogging()
+
+    unstubStackTrace()
+  })
+})
 /* eslint-enable max-nested-callbacks */
 
 /* eslint-enable max-lines */

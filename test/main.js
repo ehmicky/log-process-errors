@@ -15,6 +15,8 @@ const logProcessErrors = require('../src')
 const { LEVELS } = require('../src/level')
 // eslint-disable-next-line import/no-internal-modules
 const { EXIT_TIMEOUT } = require('../src/exit')
+// eslint-disable-next-line import/no-internal-modules
+const { MAX_EVENTS } = require('../src/limit')
 const EVENTS = require('../helpers')
 
 // Ava sets up process `uncaughtException` and `unhandledRejection` handlers
@@ -57,12 +59,34 @@ const prepareStackTrace = function({ message }) {
   return `Error: ${message}\n    at STACK TRACE`
 }
 
+// Make `Error.stack` random for testing
+const stubStackTraceRandom = function() {
+  // eslint-disable-next-line fp/no-mutation
+  Error.prepareStackTrace = prepareStackTraceRandom
+}
+
+const prepareStackTraceRandom = function({ message }) {
+  return `Error: ${message}\n    at ${Math.random()}`
+}
+
 const unstubStackTrace = function() {
   // eslint-disable-next-line fp/no-mutation
   Error.prepareStackTrace = originalPrepare
 }
 
 const originalPrepare = Error.prepareStackTrace
+
+const isLimitedWarning = function({ eventName, error: { name } = {} }) {
+  return eventName === 'warning' && name === 'LogProcessError'
+}
+
+const emitEvents = async function(maxEvents, emitEvent) {
+  // eslint-disable-next-line fp/no-let, fp/no-mutation, fp/no-loops
+  for (let count = 0; count <= maxEvents; count += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    await emitEvent()
+  }
+}
 
 test('should validate opts.log() is a function', t => {
   t.throws(startLogging.bind(null, { log: true }))
@@ -523,6 +547,82 @@ Object.entries(EVENTS)
       stub.restore()
 
       clock.uninstall()
+    })
+
+    test(`[${eventName}] should not repeat identical events`, async t => {
+      stubStackTrace()
+
+      const log = sinon.spy()
+      const stopLogging = startLoggingEvent(eventName, { log })
+
+      await emitEvents(2, emitEvent)
+
+      t.is(log.callCount, 1)
+
+      stopLogging()
+
+      unstubStackTrace()
+    })
+
+    test(`[${eventName}] should limit events`, async t => {
+      stubStackTraceRandom()
+
+      const log = sinon.spy()
+      const skipEvent = info =>
+        info.eventName !== eventName || isLimitedWarning(info)
+      const stopLogging = startLogging({ log, skipEvent })
+
+      await emitEvents(MAX_EVENTS - 1, emitEvent)
+
+      t.is(log.callCount, MAX_EVENTS)
+
+      await emitEvent()
+
+      t.is(log.callCount, MAX_EVENTS)
+
+      stopLogging()
+
+      unstubStackTrace()
+    })
+
+    test(`[${eventName}] should emit warning when limiting events`, async t => {
+      stubStackTraceRandom()
+
+      const log = sinon.spy()
+      const skipEvent = info => !isLimitedWarning(info)
+      const stopLogging = startLogging({ log, skipEvent })
+
+      await emitEvents(MAX_EVENTS - 1, emitEvent)
+
+      t.true(log.notCalled)
+
+      await emitEvent()
+
+      t.true(log.called)
+
+      stopLogging()
+
+      unstubStackTrace()
+    })
+
+    test(`[${eventName}] should only emit warning once when limiting events`, async t => {
+      stubStackTraceRandom()
+
+      const log = sinon.spy()
+      const skipEvent = info => !isLimitedWarning(info)
+      const stopLogging = startLogging({ log, skipEvent })
+
+      await emitEvents(MAX_EVENTS, emitEvent)
+
+      const { callCount } = log
+
+      await emitEvent()
+
+      t.is(log.callCount, callCount)
+
+      stopLogging()
+
+      unstubStackTrace()
     })
 
     // eslint-disable-next-line max-lines-per-function

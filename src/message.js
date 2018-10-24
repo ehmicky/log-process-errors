@@ -14,6 +14,7 @@ const getMessage = function({ opts, info, level, colors }) {
   return messageA
 }
 
+// Default `depth` changes with Node.js 11
 const INSPECT_OPTS = { depth: 2 }
 
 // Default `opts.getMessage()`

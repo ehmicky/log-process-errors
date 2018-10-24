@@ -3,19 +3,21 @@
 const {
   platform,
   env: { TERM },
+  emitWarning,
 } = require('process')
 
 // Retrieve error's `level`
 const getLevel = function({ opts, info }) {
   const level = opts.getLevel(info)
 
-  if (LEVELS[level] === undefined) {
-    const levels = Object.keys(LEVELS).join(', ')
-    // TODO: infinite recursion?
-    throw new Error(`Level ${level} is invalid. Must be one of: ${levels}`)
+  if (LEVELS[level] !== undefined) {
+    return level
   }
 
-  return level
+  const levels = Object.keys(LEVELS).join(', ')
+  emitWarning(`Level ${level} is invalid. Must be one of: ${levels}`)
+
+  return defaultGetLevel(info)
 }
 
 const supportsUnicode = platform !== 'win32' || TERM === 'xterm-256color'

@@ -2,8 +2,6 @@
 
 const { emitWarning } = require('process')
 
-const moize = require('moize').default
-
 // We only allow 100 events (per `eventName`) for the global process because:
 //   - process errors are exceptional and if more than 100 happen, this is
 //     probably due to some infinite recursion.
@@ -15,9 +13,14 @@ const moize = require('moize').default
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `error` or `[second]promiseValue` is not an `Error` instance
 //    and contain dynamic content.
-const isLimited = function({ previousEvents, eventName, error }) {
+const isLimited = function({
+  previousEvents,
+  mEmitLimitedWarning,
+  eventName,
+  error,
+}) {
   if (isLimitedWarning({ eventName, error })) {
-    return
+    return false
   }
 
   const isLimitedEvent = [...previousEvents].length >= MAX_EVENTS
@@ -46,9 +49,9 @@ const ERROR_MESSAGE = eventName =>
 const ERROR_NAME = 'LogProcessError'
 const ERROR_CODE = 'TooManyErrors'
 
-// Should only emit the warning once per `eventName`
-const mEmitLimitedWarning = moize(emitLimitedWarning)
-
 module.exports = {
   isLimited,
+  emitLimitedWarning,
+  isLimitedWarning,
+  MAX_EVENTS,
 }

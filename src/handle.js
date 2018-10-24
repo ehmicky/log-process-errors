@@ -13,13 +13,14 @@ const handleEvent = async function({
   opts,
   eventName,
   previousEvents,
+  mEmitLimitedWarning,
   error,
   promise,
   promiseValue,
   secondPromiseState,
   secondPromiseValue,
 }) {
-  if (isLimited({ previousEvents, eventName, error })) {
+  if (isLimited({ previousEvents, mEmitLimitedWarning, eventName, error })) {
     return
   }
 

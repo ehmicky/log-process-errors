@@ -2,8 +2,11 @@
 
 const process = require('process')
 
+const moize = require('moize').default
+
 const { getOptions } = require('./options')
 const EVENTS = require('./events')
+const { emitLimitedWarning } = require('./limit')
 
 // Add event handling for all process-related errors
 const setup = function(opts) {
@@ -26,11 +29,14 @@ const addListener = function({ opts, eventName, eventFunc }) {
   // `previousEvents` can take up some memory, but it should be cleaned up
   // by `removeListener()`, i.e. once `eventListener` is garbage collected.
   const previousEvents = new Set()
+  // Should only emit the warning once per `eventName` and per `setup()`
+  const mEmitLimitedWarning = moize(emitLimitedWarning)
 
   const eventListener = eventFunc.bind(null, {
     opts,
     eventName,
     previousEvents,
+    mEmitLimitedWarning,
   })
   process.on(eventName, eventListener)
 

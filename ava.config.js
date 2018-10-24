@@ -1,7 +1,8 @@
 'use strict'
 
 export default {
-  // Tests are adding and remove listeners on `process` which is a global
-  // object, so we cannot parallelize them.
+  // Tests are setting listeners on `process` and stubbing global
+  // `process.exit`, `console`, `setTimeout` and `Error.prepareStackTrace`,
+  // so we cannot parallelize them.
   serial: true,
 }

@@ -29,14 +29,70 @@ const removeProcessListeners = function() {
 
 removeProcessListeners()
 
-const startLogging = function(opts) {
-  // eslint-disable-next-line no-empty-function
-  return logProcessErrors({ exitOn: [], log() {}, ...opts })
+const startLogging = function({
+  eventName,
+  skipEvent,
+  log,
+  level,
+  message,
+  ...opts
+} = {}) {
+  const logA = getLog({ log })
+  const getLevel = getLevelFunc({ level })
+  const getMessage = getMessageFunc({ message })
+  const skipEventA = getSkipEvent({ eventName, skipEvent })
+  const stopLogging = logProcessErrors({
+    log: logA,
+    getLevel,
+    getMessage,
+    skipEvent: skipEventA,
+    exitOn: [],
+    ...opts,
+  })
+  return { stopLogging, log: logA, getLevel, getMessage }
 }
 
-const startLoggingEvent = function(eventName, opts) {
-  const skipEvent = onlyEvent.bind(null, eventName)
-  return startLogging({ ...opts, skipEvent })
+const getLog = function({ log }) {
+  if (log === 'default') {
+    return
+  }
+
+  if (log === 'spy') {
+    return sinon.spy()
+  }
+
+  if (log === undefined) {
+    return noop
+  }
+
+  return log
+}
+
+// eslint-disable-next-line no-empty-function
+const noop = function() {}
+
+const getLevelFunc = function({ level }) {
+  if (level === undefined) {
+    return
+  }
+
+  return sinon.spy(() => level)
+}
+
+const getMessageFunc = function({ message }) {
+  if (message === undefined) {
+    return
+  }
+
+  return sinon.spy(() => message)
+}
+
+const getSkipEvent = function({ eventName, skipEvent }) {
+  if (eventName === undefined) {
+    return skipEvent
+  }
+
+  return onlyEvent.bind(null, eventName)
 }
 
 const onlyEvent = function(eventName, info) {
@@ -113,8 +169,10 @@ test('should validate opts.exitOn is an array', t => {
 })
 
 test('[uncaughtException] should set info properties', async t => {
-  const log = sinon.spy()
-  const stopLogging = startLoggingEvent('uncaughtException', { log })
+  const { stopLogging, log } = startLogging({
+    log: 'spy',
+    eventName: 'uncaughtException',
+  })
 
   const getError = () => true
   await EVENTS.uncaughtException(getError)
@@ -130,8 +188,10 @@ test('[uncaughtException] should set info properties', async t => {
 })
 
 test('[warning] should set info properties', async t => {
-  const log = sinon.spy()
-  const stopLogging = startLoggingEvent('warning', { log })
+  const { stopLogging, log } = startLogging({
+    log: 'spy',
+    eventName: 'warning',
+  })
 
   const warning = { message: 'message', code: '500', detail: 'Detail' }
   await EVENTS.warning(warning)
@@ -153,8 +213,10 @@ test('[warning] should set info properties', async t => {
 })
 
 test('[unhandledRejection] should set info properties', async t => {
-  const log = sinon.spy()
-  const stopLogging = startLoggingEvent('unhandledRejection', { log })
+  const { stopLogging, log } = startLogging({
+    log: 'spy',
+    eventName: 'unhandledRejection',
+  })
 
   const getError = () => true
   await EVENTS.unhandledRejection(getError)
@@ -171,8 +233,10 @@ test('[unhandledRejection] should set info properties', async t => {
 })
 
 test('[rejectionHandled] should set info properties', async t => {
-  const log = sinon.spy()
-  const stopLogging = startLoggingEvent('rejectionHandled', { log })
+  const { stopLogging, log } = startLogging({
+    log: 'spy',
+    eventName: 'rejectionHandled',
+  })
 
   const getError = () => true
   await EVENTS.rejectionHandled(getError)
@@ -189,8 +253,10 @@ test('[rejectionHandled] should set info properties', async t => {
 })
 
 test('[multipleResolves] should set info properties', async t => {
-  const log = sinon.spy()
-  const stopLogging = startLoggingEvent('multipleResolves', { log })
+  const { stopLogging, log } = startLogging({
+    log: 'spy',
+    eventName: 'multipleResolves',
+  })
 
   await EVENTS.multipleResolves([
     ['resolve', () => true],
@@ -211,8 +277,10 @@ test('[multipleResolves] should set info properties', async t => {
 })
 
 test('[multipleResolves] should get the right promise order', async t => {
-  const log = sinon.spy()
-  const stopLogging = startLoggingEvent('multipleResolves', { log })
+  const { stopLogging, log } = startLogging({
+    log: 'spy',
+    eventName: 'multipleResolves',
+  })
 
   await EVENTS.multipleResolves([
     ['reject', () => false],
@@ -242,7 +310,7 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] events emitters should not throw`, async t => {
-      const stopLogging = startLogging()
+      const { stopLogging } = startLogging()
 
       await t.notThrowsAsync(emitEvent)
 
@@ -252,7 +320,7 @@ Object.entries(EVENTS)
     test(`[${eventName}] should keep existing process event handlers`, async t => {
       const processHandler = addProcessHandler(eventName)
 
-      const stopLogging = startLogging()
+      const { stopLogging } = startLogging()
 
       t.true(processHandler.notCalled)
 
@@ -268,8 +336,7 @@ Object.entries(EVENTS)
     test(`[${eventName}] should allow disabling logging`, async t => {
       const processHandler = addProcessHandler(eventName)
 
-      const log = sinon.spy()
-      const stopLogging = startLogging({ log })
+      const { stopLogging, log } = startLogging({ log: 'spy' })
 
       stopLogging()
 
@@ -286,8 +353,7 @@ Object.entries(EVENTS)
     test(`[${eventName}] should disable logging idempotently`, async t => {
       const processHandler = addProcessHandler(eventName)
 
-      const log = sinon.spy()
-      const stopLogging = startLogging({ log })
+      const { stopLogging, log } = startLogging({ log: 'spy' })
 
       stopLogging()
       stopLogging()
@@ -303,8 +369,7 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should fire opts.log()`, async t => {
-      const log = sinon.spy()
-      const stopLogging = startLogging({ log })
+      const { stopLogging, log } = startLogging({ log: 'spy' })
 
       t.true(log.notCalled)
 
@@ -316,8 +381,7 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should fire opts.log() once`, async t => {
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log })
+      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
       t.true(log.notCalled)
 
@@ -329,10 +393,11 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should fire opts.log() with message`, async t => {
-      const getMessage = () => 'message'
-
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log, getMessage })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        message: 'message',
+        eventName,
+      })
 
       await emitEvent()
 
@@ -343,8 +408,7 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should fire opts.log() with info`, async t => {
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log })
+      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
       await emitEvent()
 
@@ -355,9 +419,8 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should allow skipping events`, async t => {
-      const log = sinon.spy()
       const skipEvent = sinon.spy(() => true)
-      const stopLogging = startLogging({ log, skipEvent })
+      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
 
       await emitEvent()
 
@@ -369,7 +432,7 @@ Object.entries(EVENTS)
 
     test(`[${eventName}] should fire opts.skipEvent() with info`, async t => {
       const skipEvent = sinon.spy(() => true)
-      const stopLogging = startLogging({ skipEvent })
+      const { stopLogging } = startLogging({ skipEvent })
 
       await emitEvent()
 
@@ -379,8 +442,7 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should use default opts.getLevel()`, async t => {
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log })
+      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
       await emitEvent()
 
@@ -392,9 +454,11 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should use default opts.getLevel() when returning a valid level`, async t => {
-      const log = sinon.spy()
-      const getLevel = sinon.spy(() => 'invalid')
-      const stopLogging = startLoggingEvent(eventName, { log, getLevel })
+      const { stopLogging, log, getLevel } = startLogging({
+        log: 'spy',
+        level: 'invalid',
+        eventName,
+      })
 
       await emitEvent()
 
@@ -407,11 +471,15 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should emit a warning when opts.getLevel() when returns a valid level`, async t => {
-      const getLevel = sinon.spy(() => 'invalid')
-      const stopLogging = startLoggingEvent(eventName, { getLevel })
+      const { stopLogging, getLevel } = startLogging({
+        level: 'invalid',
+        eventName,
+      })
 
-      const log = sinon.spy()
-      const stopWarningLog = startLoggingEvent('warning', { log })
+      const { stopLogging: stopWarningLog, log } = startLogging({
+        log: 'spy',
+        eventName: 'warning',
+      })
 
       await emitEvent()
 
@@ -423,9 +491,11 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should allow customizing log message`, async t => {
-      const log = sinon.spy()
-      const getMessage = sinon.spy(() => 'message')
-      const stopLogging = startLoggingEvent(eventName, { log, getMessage })
+      const { stopLogging, log, getMessage } = startLogging({
+        log: 'spy',
+        message: 'message',
+        eventName,
+      })
 
       await emitEvent()
 
@@ -437,9 +507,11 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should stringify opts.getMessage() return value`, async t => {
-      const log = sinon.spy()
-      const getMessage = sinon.spy(() => true)
-      const stopLogging = startLoggingEvent(eventName, { log, getMessage })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        message: true,
+        eventName,
+      })
 
       await emitEvent()
 
@@ -450,8 +522,7 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should colorize default opts.getMessage()`, async t => {
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log })
+      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
       await emitEvent()
 
@@ -462,8 +533,11 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should allow forcing colorizing default opts.getMessage()`, async t => {
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log, colors: true })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        colors: true,
+        eventName,
+      })
 
       await emitEvent()
 
@@ -474,8 +548,11 @@ Object.entries(EVENTS)
     })
 
     test(`[${eventName}] should allow disabling colorizing default opts.getMessage()`, async t => {
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log, colors: false })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        colors: false,
+        eventName,
+      })
 
       await emitEvent()
 
@@ -490,7 +567,7 @@ Object.entries(EVENTS)
 
       const stub = sinon.stub(process, 'exit')
 
-      const stopLogging = startLoggingEvent(eventName, { exitOn: [eventName] })
+      const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
 
       await emitEvent()
 
@@ -511,7 +588,7 @@ Object.entries(EVENTS)
 
       const stub = sinon.stub(process, 'exit')
 
-      const stopLogging = startLoggingEvent(eventName, { exitOn: [] })
+      const { stopLogging } = startLogging({ exitOn: [], eventName })
 
       await emitEvent()
 
@@ -532,7 +609,7 @@ Object.entries(EVENTS)
 
       const stub = sinon.stub(process, 'exit')
 
-      const stopLogging = startLoggingEvent(eventName, { exitOn: [eventName] })
+      const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
 
       await emitEvent()
 
@@ -552,8 +629,7 @@ Object.entries(EVENTS)
     test(`[${eventName}] should not repeat identical events`, async t => {
       stubStackTrace()
 
-      const log = sinon.spy()
-      const stopLogging = startLoggingEvent(eventName, { log })
+      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
       await emitEvents(2, emitEvent)
 
@@ -567,10 +643,9 @@ Object.entries(EVENTS)
     test(`[${eventName}] should limit events`, async t => {
       stubStackTraceRandom()
 
-      const log = sinon.spy()
       const skipEvent = info =>
         info.eventName !== eventName || isLimitedWarning(info)
-      const stopLogging = startLogging({ log, skipEvent })
+      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
 
       await emitEvents(MAX_EVENTS - 1, emitEvent)
 
@@ -588,9 +663,8 @@ Object.entries(EVENTS)
     test(`[${eventName}] should emit warning when limiting events`, async t => {
       stubStackTraceRandom()
 
-      const log = sinon.spy()
       const skipEvent = info => !isLimitedWarning(info)
-      const stopLogging = startLogging({ log, skipEvent })
+      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
 
       await emitEvents(MAX_EVENTS - 1, emitEvent)
 
@@ -608,9 +682,8 @@ Object.entries(EVENTS)
     test(`[${eventName}] should only emit warning once when limiting events`, async t => {
       stubStackTraceRandom()
 
-      const log = sinon.spy()
       const skipEvent = info => !isLimitedWarning(info)
-      const stopLogging = startLogging({ log, skipEvent })
+      const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
 
       await emitEvents(MAX_EVENTS, emitEvent)
 
@@ -628,9 +701,11 @@ Object.entries(EVENTS)
     // eslint-disable-next-line max-lines-per-function
     Object.keys(LEVELS).forEach(level => {
       test(`[${eventName}] [${level}] should fire opts.log() with event`, async t => {
-        const log = sinon.spy()
-        const getLevel = () => level
-        const stopLogging = startLoggingEvent(eventName, { log, getLevel })
+        const { stopLogging, log } = startLogging({
+          log: 'spy',
+          level,
+          eventName,
+        })
 
         await emitEvent()
 
@@ -644,12 +719,11 @@ Object.entries(EVENTS)
         // eslint-disable-next-line no-restricted-globals
         const stub = sinon.stub(console, level)
 
-        const getMessage = () => 'message'
-        const getLevel = () => level
-        const stopLogging = startLoggingEvent(eventName, {
-          getMessage,
-          getLevel,
-          log: undefined,
+        const { stopLogging } = startLogging({
+          log: 'default',
+          message: 'message',
+          level,
+          eventName,
         })
 
         await emitEvent()
@@ -663,9 +737,11 @@ Object.entries(EVENTS)
       })
 
       test(`[${eventName}] [${level}] should allow changing log level`, async t => {
-        const log = sinon.spy()
-        const getLevel = sinon.spy(() => level)
-        const stopLogging = startLoggingEvent(eventName, { log, getLevel })
+        const { stopLogging, log, getLevel } = startLogging({
+          log: 'spy',
+          level,
+          eventName,
+        })
 
         await emitEvent()
 
@@ -677,8 +753,7 @@ Object.entries(EVENTS)
       })
 
       test(`[${eventName}] [${level}] should fire opts.getLevel() with info`, async t => {
-        const getLevel = sinon.spy(() => level)
-        const stopLogging = startLoggingEvent(eventName, { getLevel })
+        const { stopLogging, getLevel } = startLogging({ level, eventName })
 
         await emitEvent()
 
@@ -689,11 +764,10 @@ Object.entries(EVENTS)
       })
 
       test(`[${eventName}] [${level}] should fire opts.getMessage() with info`, async t => {
-        const getMessage = sinon.spy()
-        const getLevel = () => level
-        const stopLogging = startLoggingEvent(eventName, {
-          getMessage,
-          getLevel,
+        const { stopLogging, getMessage } = startLogging({
+          message: 'message',
+          level,
+          eventName,
         })
 
         await emitEvent()
@@ -709,12 +783,11 @@ Object.entries(EVENTS)
       test(`[${eventName}] [${level}] should fire opts.getMessage() with a default prettifier`, async t => {
         stubStackTrace()
 
-        const log = sinon.spy()
-        const getLevel = () => level
-        const stopLogging = startLoggingEvent(eventName, {
-          log,
-          getLevel,
+        const { stopLogging, log } = startLogging({
+          log: 'spy',
+          level,
           colors: false,
+          eventName,
         })
 
         await emitEvent()

@@ -1,7 +1,9 @@
 'use strict'
 
+const test = require('ava')
+
 const {
-  forEachEvent,
+  repeatEvents,
   startLogging,
   stubStackTrace,
   unstubStackTrace,
@@ -9,8 +11,8 @@ const {
 } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ eventName, emitEvent, test }) => {
-  test('should not repeat identical events', async t => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
+  test(`${prefix} should not repeat identical events`, async t => {
     stubStackTrace()
 
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })

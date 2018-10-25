@@ -1,6 +1,8 @@
 'use strict'
 
-const { forEachEvent, forEachEventLevel, startLogging } = require('./helpers')
+const test = require('ava')
+
+const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
 
 const testLogsDefaultLevel = function({ t, log, eventName }) {
   const level = eventName === 'warning' ? 'warn' : 'error'
@@ -8,8 +10,8 @@ const testLogsDefaultLevel = function({ t, log, eventName }) {
 }
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ eventName, emitEvent, test }) => {
-  test('should use default opts.getLevel()', async t => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
+  test(`${prefix} should use default opts.getLevel()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent()
@@ -19,7 +21,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should use default opts.getLevel() when returning a valid level', async t => {
+  test(`${prefix} should use default opts.getLevel() when returning a valid level`, async t => {
     const { stopLogging, log, getLevel } = startLogging({
       log: 'spy',
       level: 'invalid',
@@ -35,7 +37,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should emit a warning when opts.getLevel() when returns a valid level', async t => {
+  test(`${prefix} should emit a warning when opts.getLevel() when returns a valid level`, async t => {
     const { stopLogging, getLevel } = startLogging({
       level: 'invalid',
       eventName,
@@ -56,8 +58,8 @@ forEachEvent(({ eventName, emitEvent, test }) => {
   })
 })
 
-forEachEventLevel(({ eventName, emitEvent, level, test }) => {
-  test('should allow changing log level', async t => {
+repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+  test(`${prefix} should allow changing log level`, async t => {
     const { stopLogging, log, getLevel } = startLogging({
       log: 'spy',
       level,
@@ -73,7 +75,7 @@ forEachEventLevel(({ eventName, emitEvent, level, test }) => {
     stopLogging()
   })
 
-  test('should fire opts.getLevel() with info', async t => {
+  test(`${prefix} should fire opts.getLevel() with info`, async t => {
     const { stopLogging, getLevel } = startLogging({ level, eventName })
 
     await emitEvent()

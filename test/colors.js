@@ -1,13 +1,14 @@
 'use strict'
 
+const test = require('ava')
 const hasAnsi = require('has-ansi')
 const supportsColor = require('supports-color')
 
-const { forEachEvent, startLogging } = require('./helpers')
+const { repeatEvents, startLogging } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ eventName, emitEvent, test }) => {
-  test('should colorize default opts.getMessage()', async t => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
+  test(`${prefix} should colorize default opts.getMessage()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent()
@@ -18,7 +19,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should allow forcing colorizing default opts.getMessage()', async t => {
+  test(`${prefix} should allow forcing colorizing default opts.getMessage()`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       colors: true,
@@ -33,7 +34,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should allow disabling colorizing default opts.getMessage()', async t => {
+  test(`${prefix} should allow disabling colorizing default opts.getMessage()`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       colors: false,

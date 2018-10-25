@@ -6,4 +6,5 @@ module.exports = {
   ...require('./stack'),
   ...require('./several'),
   ...require('./data_driven'),
+  ...require('./repeat'),
 }

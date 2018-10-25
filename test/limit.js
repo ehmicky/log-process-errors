@@ -1,10 +1,12 @@
 'use strict'
 
+const test = require('ava')
+
 // eslint-disable-next-line import/no-internal-modules
 const { MAX_EVENTS } = require('../src/limit')
 
 const {
-  forEachEvent,
+  repeatEvents,
   startLogging,
   stubStackTraceRandom,
   unstubStackTrace,
@@ -20,8 +22,8 @@ const isNotLimitedWarning = function(info) {
 }
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ eventName, emitEvent, test }) => {
-  test('should limit events', async t => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
+  test(`${prefix} should limit events`, async t => {
     stubStackTraceRandom()
 
     const skipEvent = info =>
@@ -41,7 +43,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     unstubStackTrace()
   })
 
-  test('should emit warning when limiting events', async t => {
+  test(`${prefix} should emit warning when limiting events`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
@@ -62,7 +64,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     unstubStackTrace()
   })
 
-  test('should only emit warning once when limiting events', async t => {
+  test(`${prefix} should only emit warning once when limiting events`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({

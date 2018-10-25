@@ -6,7 +6,7 @@ const {
   ALL_EVENTS: { all },
 } = require('../helpers')
 
-const { forEachEvent, startLogging } = require('./helpers')
+const { repeatEvents, startLogging } = require('./helpers')
 
 test('[all] events emitters should not throw', async t => {
   const { stopLogging } = startLogging()
@@ -17,13 +17,12 @@ test('[all] events emitters should not throw', async t => {
 })
 
 /* eslint-disable max-nested-callbacks */
-// eslint-disable-next-line no-shadow
-forEachEvent(({ emitEvent, test }) => {
-  test('events emitters should exist', t => {
+repeatEvents((prefix, { emitEvent }) => {
+  test(`${prefix} events emitters should exist`, t => {
     t.is(typeof emitEvent, 'function')
   })
 
-  test('events emitters should not throw', async t => {
+  test(`${prefix} events emitters should not throw`, async t => {
     const { stopLogging } = startLogging()
 
     await t.notThrowsAsync(emitEvent)

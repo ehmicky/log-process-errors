@@ -1,12 +1,13 @@
 'use strict'
 
+const test = require('ava')
 const chalk = require('chalk')
 
-const { forEachEvent, forEachEventLevel, startLogging } = require('./helpers')
+const { startLogging, repeatEvents, repeatEventsLevels } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ eventName, emitEvent, test }) => {
-  test('should allow customizing log message', async t => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
+  test(`${prefix} should allow customizing log message`, async t => {
     const { stopLogging, log, getMessage } = startLogging({
       log: 'spy',
       message: 'message',
@@ -22,7 +23,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should stringify opts.getMessage() return value', async t => {
+  test(`${prefix} should stringify opts.getMessage() return value`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       message: true,
@@ -38,8 +39,8 @@ forEachEvent(({ eventName, emitEvent, test }) => {
   })
 })
 
-forEachEventLevel(({ eventName, emitEvent, level, test }) => {
-  test('should fire opts.getMessage() with info', async t => {
+repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+  test(`${prefix} should fire opts.getMessage() with info`, async t => {
     const { stopLogging, getMessage } = startLogging({
       message: 'message',
       level,

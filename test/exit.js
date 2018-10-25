@@ -2,13 +2,14 @@
 
 const process = require('process')
 
+const test = require('ava')
 const sinon = require('sinon')
 const lolex = require('lolex')
 
 // eslint-disable-next-line import/no-internal-modules
 const { EXIT_TIMEOUT } = require('../src/exit')
 
-const { forEachEvent, startLogging } = require('./helpers')
+const { repeatEvents, startLogging } = require('./helpers')
 
 // Stub `process.exit()`
 const stubProcessExit = function() {
@@ -28,8 +29,8 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
 }
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ eventName, emitEvent, test }) => {
-  test('should call process.exit(1) if inside opts.exitOn', async t => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
+  test(`${prefix} should call process.exit(1) if inside opts.exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const exitOn = [eventName]
@@ -45,7 +46,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     unstubProcessExit({ clock, processExit })
   })
 
-  test('should not call process.exit(1) if not inside opts.exitOn', async t => {
+  test(`${prefix} should not call process.exit(1) if not inside opts.exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const exitOn = []
@@ -60,7 +61,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     unstubProcessExit({ clock, processExit })
   })
 
-  test('should delay process.exit(1)', async t => {
+  test(`${prefix} should delay process.exit(1)`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const { stopLogging } = startLogging({ exitOn: [eventName], eventName })

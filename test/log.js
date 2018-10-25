@@ -1,12 +1,13 @@
 'use strict'
 
+const test = require('ava')
 const sinon = require('sinon')
 
-const { forEachEvent, forEachEventLevel, startLogging } = require('./helpers')
+const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ eventName, emitEvent, test }) => {
-  test('should fire opts.log()', async t => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
+  test(`${prefix} should fire opts.log()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
     t.true(log.notCalled)
@@ -18,7 +19,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should fire opts.log() once', async t => {
+  test(`${prefix} should fire opts.log() once`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     t.true(log.notCalled)
@@ -30,7 +31,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should fire opts.log() with message', async t => {
+  test(`${prefix} should fire opts.log() with message`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       message: 'message',
@@ -45,7 +46,7 @@ forEachEvent(({ eventName, emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should fire opts.log() with info', async t => {
+  test(`${prefix} should fire opts.log() with info`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent()
@@ -56,8 +57,8 @@ forEachEvent(({ eventName, emitEvent, test }) => {
   })
 })
 
-forEachEventLevel(({ eventName, emitEvent, level, test }) => {
-  test('should fire opts.log() with level', async t => {
+repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+  test(`${prefix} should fire opts.log() with level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level,
@@ -72,7 +73,7 @@ forEachEventLevel(({ eventName, emitEvent, level, test }) => {
     stopLogging()
   })
 
-  test('should log on the console by default', async t => {
+  test(`${prefix} should log on the console by default`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, level)
 

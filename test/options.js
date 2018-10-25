@@ -2,32 +2,21 @@
 
 const test = require('ava')
 
-const { startLogging } = require('./helpers')
+const { repeat, startLogging } = require('./helpers')
 
-const validateTest = function(t, value) {
-  t.throws(startLogging.bind(null, value))
-}
+const OPTIONS = [
+  { name: 'log', wrongValue: true },
+  { name: 'skipEvent', wrongValue: true },
+  { name: 'getLevel', wrongValue: true },
+  { name: 'getMessage', wrongValue: true },
+  { name: 'colors', wrongValue: 1 },
+  { name: 'exitOn', wrongValue: true },
+]
 
-test('should validate opts.log() is a function', t => {
-  validateTest(t, { log: true })
+/* eslint-disable max-nested-callbacks */
+repeat(OPTIONS, (prefix, { name, wrongValue }) => {
+  test(`${prefix} should validate options`, t => {
+    t.throws(startLogging.bind(null, { [name]: wrongValue }))
+  })
 })
-
-test('should validate opts.skipEvent() is a function', t => {
-  validateTest(t, { skipEvent: true })
-})
-
-test('should validate opts.getLevel() is a function', t => {
-  validateTest(t, { getLevel: true })
-})
-
-test('should validate opts.getMessage() is a function', t => {
-  validateTest(t, { getMessage: true })
-})
-
-test('should validate opts.colors is a boolean', t => {
-  validateTest(t, { colors: 1 })
-})
-
-test('should validate opts.exitOn is an array', t => {
-  validateTest(t, { exitOn: true })
-})
+/* eslint-enable max-nested-callbacks */

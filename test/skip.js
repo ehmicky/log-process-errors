@@ -1,12 +1,13 @@
 'use strict'
 
+const test = require('ava')
 const sinon = require('sinon')
 
-const { forEachEvent, startLogging } = require('./helpers')
+const { repeatEvents, startLogging } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
-forEachEvent(({ emitEvent, test }) => {
-  test('should allow skipping events', async t => {
+repeatEvents((prefix, { emitEvent }) => {
+  test(`${prefix} should allow skipping events`, async t => {
     const skipEvent = sinon.spy(() => true)
     const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
 
@@ -18,7 +19,7 @@ forEachEvent(({ emitEvent, test }) => {
     stopLogging()
   })
 
-  test('should fire opts.skipEvent() with info', async t => {
+  test(`${prefix} should fire opts.skipEvent() with info`, async t => {
     const skipEvent = sinon.spy(() => true)
     const { stopLogging } = startLogging({ skipEvent })
 

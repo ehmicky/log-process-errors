@@ -1,15 +1,17 @@
 'use strict'
 
+const test = require('ava')
+
 const {
-  forEachEventLevel,
+  repeatEventsLevels,
   startLogging,
   stubStackTrace,
   unstubStackTrace,
 } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
-forEachEventLevel(({ eventName, emitEvent, level, test }) => {
-  test('should fire opts.getMessage() with a default prettifier', async t => {
+repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+  test(`${prefix} should fire opts.getMessage() with a default prettifier`, async t => {
     stubStackTrace()
 
     const { stopLogging, log } = startLogging({

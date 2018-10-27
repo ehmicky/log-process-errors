@@ -10,7 +10,8 @@
   "scripts": {
     "test": "gulp test",
     "prepublishOnly": "npm test",
-    "release": "release-it"
+    "release": "release-it",
+    "ci-test": "nyc npm test"
   },
   "description": "Log all process errors: uncaught exceptions, warnings and improperly handled promises",
   "keywords": [
@@ -73,6 +74,7 @@
     "has-ansi": "^3.0.0",
     "lolex": "^3.0.0",
     "ndb": "^1.0.26",
+    "nyc": "^13.1.0",
     "plugin-error": "^1.0.1",
     "prettier": "^1.14.3",
     "release-it": "^7.6.2",

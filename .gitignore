@@ -7,3 +7,4 @@ core
 .eslintcache
 .npmrc
 .yarn-error.log
+.nyc_output

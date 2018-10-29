@@ -4,6 +4,11 @@ const chalk = require('chalk')
 const { stdout: { level } = {} } = require('supports-color')
 
 const getColors = function({ opts }) {
+  // This is just a test
+  if (opts === true) {
+    return
+  }
+
   const chalkOpts = getChalkOpts({ opts })
   return chalk.constructor(chalkOpts)
 }

@@ -11,10 +11,6 @@ const getColors = function({ opts }) {
 // Can disable or force colors with `opts.colors`.
 // chalk will automatically disable colors if output does not support it.
 const getChalkOpts = function({ opts: { colors } }) {
-  if (colors === undefined) {
-    return {}
-  }
-
   if (colors === false) {
     return { enabled: false }
   }

@@ -20,8 +20,11 @@ const getLevel = function({ opts, info }) {
   return defaultGetLevel(info)
 }
 
+// TODO: remove `istanbul` comment once Windows is tested
+// istanbul ignore next
 const supportsUnicode = platform !== 'win32' || TERM === 'xterm-256color'
 // Each level is printed in a different way
+// istanbul ignore next
 const LEVELS = {
   debug: {
     COLOR: 'blue',

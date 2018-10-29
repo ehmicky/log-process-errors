@@ -19,21 +19,6 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     stopLogging()
   })
 
-  test(`${prefix} should allow forcing colorizing default opts.getMessage()`, async t => {
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      colors: true,
-      eventName,
-    })
-
-    await emitEvent()
-
-    t.true(log.calledOnce)
-    t.true(hasAnsi(log.firstCall.args[0]))
-
-    stopLogging()
-  })
-
   test(`${prefix} should allow disabling colorizing default opts.getMessage()`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',

@@ -47,7 +47,7 @@ logProcessErrors(options)
 - [`log` `{function}`](#custom-logging)
 - [`getLevel` `{function}`](#log-level)
 - [`getMessage` `{function}`](#log-message)
-- [`colors` `{boolean}`](#log-message) (default: `false`)
+- [`colors` `{boolean}`](#log-message) (default: `true`)
 - [`skipEvent` `{function}`](#skipping-events)
 - [`exitOn` `{string[]}`](#process-exit) (default: `['uncaughtException']`)
 

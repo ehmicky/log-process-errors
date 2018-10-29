@@ -36,9 +36,6 @@ like this instead:
 $ npm install log-process-errors
 ```
 
-<!-- eslint-disable no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict, no-undef -->
-
 ```js
 const logProcessErrors = require('log-process-errors/custom')
 
@@ -92,9 +89,6 @@ By default events will be logged to the console (e.g. `console.error()`).
 This behavior can be overridden with the `log` option. For example to log events
 with [Winston](https://github.com/winstonjs/winston) instead:
 
-<!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict, no-undef -->
-
 ```js
 logProcessErrors({
   log(message, level, info) {
@@ -124,9 +118,6 @@ This can be overridden by using the `getLevel` option. It should be a function
 function using [`info` as argument](#event-info) and returning a string
 among `error`, `warn`, `info` or `debug`.
 
-<!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict, no-undef -->
-
 ```js
 logProcessErrors({
   getLevel({ eventName }) {
@@ -154,9 +145,6 @@ Events can be skipped with the `skipEvent` option. It should be a function
 using [`info` as argument](#event-info) and returning `true` or `false`.
 
 For example to skip `warning` events:
-
-<!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
 logProcessErrors({
@@ -203,9 +191,6 @@ The following properties are also defined with the `getMessage` option:
 # Stop logging
 
 Logging can be stopped by firing the function returned by `logProcessErrors()`
-
-<!-- eslint-disable no-empty-function, no-unused-vars, node/no-missing-require,
-import/no-unresolved, unicorn/filename-case, strict, no-undef -->
 
 ```js
 const logProcessErrors = require('log-process-errors/custom')

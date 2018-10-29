@@ -68,7 +68,9 @@ const multipleResolves = function({
   secondPromiseState,
   secondPromiseValue,
 }) {
+  // istanbul ignore next
   const again = promiseState === secondPromiseState ? ' again' : ''
+  // istanbul ignore next
   const state = again ? promiseState : 'resolved/rejected'
 
   return ` (a promise was ${state} multiple times)

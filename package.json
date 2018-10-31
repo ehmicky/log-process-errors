@@ -79,7 +79,7 @@
     "plugin-error": "^1.0.1",
     "prettier": "^1.14.3",
     "release-it": "^7.6.2",
-    "sinon": "^7.1.0"
+    "sinon": "^7.1.1"
   },
   "engines": {
     "node": ">=11.0.0"

@@ -1,0 +1,9 @@
+language: node_js
+script: npm run ci-test
+node_js:
+  - 11
+cache: npm
+os:
+  - linux
+notifications:
+  email: false

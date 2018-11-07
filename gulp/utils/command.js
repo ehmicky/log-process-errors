@@ -1,18 +1,27 @@
 'use strict'
 
 const { env } = require('process')
+const { promisify } = require('util')
 
-const { spawn } = require('npm-run')
+const spawn = require('cross-spawn')
+const { get: getPath, PATH } = require('npm-path')
 const PluginError = require('plugin-error')
 
 // Execute a shell command
-const execCommand = function(command, { quiet = false, cwd } = {}) {
+const execCommand = async function(command, { quiet = false, cwd } = {}) {
   const [commandA, ...args] = command.trim().split(/ +/u)
   const stdio = getStdio({ quiet })
-  const child = spawn(commandA, args, { env, stdio, cwd })
+  const envA = await getEnv()
+  const child = spawn(commandA, args, { env: envA, stdio, cwd })
 
   // eslint-disable-next-line promise/avoid-new
   return new Promise(execCommandPromise.bind(null, { child, command }))
+}
+
+// Allow executing binaries installed in `node_modules/.bin`
+const getEnv = async function() {
+  const path = await promisify(getPath)()
+  return { ...env, [PATH]: path }
 }
 
 // If `opts.quiet` `true`, does not print stdout (but still prints stderr)

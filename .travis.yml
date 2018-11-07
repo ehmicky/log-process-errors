@@ -7,6 +7,5 @@ cache: npm
 os:
   - linux
   - osx
-  - windows
 notifications:
   email: false

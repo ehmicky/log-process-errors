@@ -24,7 +24,10 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     await emitEvent()
 
     t.true(log.calledOnce)
-    t.snapshot(log.lastCall.args[0])
+
+    // The first sign is OS-dependent, so we remove it
+    const message = log.lastCall.args[0].replace(/[^ ]/u, '[]')
+    t.snapshot(message)
 
     stopLogging()
 

@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "gulp test",
-    "ci-test": "nyc npm test && coveralls <coverage/lcov.info",
+    "ci-test": "nyc --check-coverage --statements 100 --lines 100 --functions 100 --branches 100 npm test && coveralls <coverage/lcov.info",
     "prepublishOnly": "npm test",
     "release": "release-it"
   },

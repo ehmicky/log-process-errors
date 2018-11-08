@@ -1,12 +1,11 @@
 language: node_js
-install: npm ci
-script: npm run ci-test
 node_js:
   - 11
-cache: npm
 os:
   - linux
   - osx
   - windows
+script: npm run ci-test
+cache: npm
 notifications:
   email: false

@@ -6,7 +6,7 @@ os:
   - osx
   - windows
 script: npm run ci-test
-if: '!(commit_message =~ /^Release/ && tag is not blank)'
+if: '!(commit_message =~ /^Release/ && tag is blank)'
 jobs:
   include:
     - stage: Deploy

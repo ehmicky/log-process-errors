@@ -9,10 +9,10 @@ script: npm run ci-test
 jobs:
   include:
     - stage: Deploy
+      script: skip
       deploy:
         provider: npm
-        email:
-          secure: 'qydS+KN8AP2DVSBIAFB++99SbETG+M2lQEVHUBK4N/07rQfSLqWxQc/T8CSzfpDCZmZypOY/+GX6jQ2j5oz9zLzk5SfP493PTJpHLXLe4QF/ci+B33yvjd5Ug5V5WNJT7eDvGqCH1+BxMbHXBxBo4vCLZbH9ZaiMHajZdVu7KBr7tqZmHYpSJnVj7I+Hx2ommkRe4TXelMqLWqBylb5i5ssv4pRHKHy1okwsTA1womKy9R2e3iEMM1G2s/qlOcQlhac7PQhEfUWsaw403Cued5WdV73Lj2SyKecBJAmze+/xJVU2yPmO5kx1grAF0eAAWBHe2XMr6SL6JUkyccsDtjavNJxNelZ/rPMj1Hmep6Rg+sK7iNi1wfdun5xZFFtL6/SYta+L1U7A+QmHMPFfhIyogKQk1P1ZJQV4hawzcR4PeKI8sPmJmONTETdbMY1NPKyb8SvJTVhztZa6k8FQK15ZDwwg+DC8612B7c1z23ErFhTJtE8j/o5bDk7V09T+HZP0zVFNZW2gyV782VWyKyIEzHk1xbOw4N2EcWttL398vhNMVk4f9R9l2QpLJPJb0+z3x5nl7t9pl/9j+ulRuKchkcjri9AfmlfTR15xp1QrIBh5ht9LdTQLYG8YyuKgGz6fFB9fNi15HEjXARKilLViXgaI8crmKhrrBTy4lCg='
+        email: ehmicky@gmail.com
         api_key:
           secure: 'HGXkllgDvBpKufrSY73j9u2QqEm0aiKXpyLQ4DvwPTaOlFnWWe74j+eiNJvpdKoRoi9CZQGFnaO0ngzOUfGgxP5fa0N1Gt5Pjiwr2dcqsKgkN1OMozzkS8Wzzwtpulfs7hUdfydqjo0P+5A9qEPRA1yhn5TFUYompOT1IYZyyS8hJwrn0o516/ZkxzpJI75p3vUv62o+Fnd7RyWeCVKIjzS2lEV3YSsVeixlSFKJ08F7YtlWgwHju5wCkcYvtMH3S1XQz8SFGbnT74XKxb5SnEaIr6j3c4TS6JP0myCZL/t9YlRzPUHCsYRgxAs7IdsHr+eK+SBODHyfzpkBcTErfdyf74AymJu244EFT1jAGMeydq4ZYexrgcftVTPYsdmzSZJgSXoL7ziayXm1qstFmJPQrfcRHag0BEivPHl1nAvS2sstk7YdQQN/1ri39qi9oK24fdL8GQ7kcj9shRHBd2UTZDl8tE/3g0Ujn+iQsUeJ/JFAlaa8hN9SaRGhG/dvdiYAu3lB8ga1aDKNlnHEkR6eR9GCPV8WjbooSNBSHEJC/cGHLzJeeF4By8prshCIBd3iPou6JDtjpyiVa2nOnlFIdU//fDdU0wq6tcp/LxUqYaBpHvU3LpklKVZzUAmipBnlKLgEpgt1sSpuJckTJOY+TWt6T3egYtieLeIiLqk='
         on:

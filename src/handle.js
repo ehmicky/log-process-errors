@@ -47,10 +47,6 @@ const handleEvent = async function({
 }
 
 const logEvent = async function({ opts, info }) {
-  if (Math.random() > 2) {
-    return
-  }
-
   const colors = getColors({ opts })
   const level = getLevel({ opts, info })
   const message = getMessage({ opts, info, level, colors })

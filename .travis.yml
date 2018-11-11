@@ -25,6 +25,8 @@ jobs:
       deploy:
         provider: npm
         email: ehmicky@gmail.com
+        api_key:
+          secure: "ZljD9b31Bgm7F4wGpo/qXtEyvTd0nnehtWHWwGquZgVFx/jGDCBFuAauP0BfBvUe762tHKN6dIqvZ/0wmM1FvCQjx/TLEPcJALN4u+wzEAQ55pU4utCoFaqGISpPRpo15DKwqzdgh8JwWeLGcFnQHsEcA+5Nbtlstv9R+5GocElxXrDSReA1U0SCtZgkcOPjlc1AFiNg67FtCI3KSTeTtJOXF8qBzU+lNTjxvjXcf6EzbeziluWMkQ9wPFUInFIABXBECHg4ErDlYe5f8t6A9BU+SwxgCPBi03IoKcHXxP6PwpxVQwBra1EIj2vRs++SB/1K8b6KVI/b2PVubpvDsmxQeSSpX49qYQEz3OYArU/lQF51FN8zgzyRsbXPJDadJVno2eXGqurhgZh46OHbI7Z7DkdwlLMfswvw3NhpB4iAmbgxU4S5KoyWLFoUbAtaATPDOiPXFHE43wO022vheOmwqVYVYrAumT0vrTfuSn51+3P7+EsVj79mnwim4F/D5qp1QCck5L6aQm/EV/MHosGgtfD1f7RwKfY3HhNvb6GLf5mMXiGdqf6a+GzeJsuF0cytSehmiaplgcH2P6TsamYtK1o+YJ7L8fkzDt2ghamdUm8sjL374FBPP3aLcLhE/KRc73iORI3WrixmnqbUloPFi/mlXBrNAtGcUyPbKVw="
         on:
           tags: true
 cache: npm

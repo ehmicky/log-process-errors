@@ -40,4 +40,5 @@ notifications:
     - https://www.travisbuddy.com?only=failed,errored
   email: false
 travisBuddy:
+  regex: '.*callCount.*'
   insertMode: update

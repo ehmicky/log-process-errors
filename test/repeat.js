@@ -19,7 +19,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     await emitEvents(2, emitEvent)
 
-    t.is(log.callCount, 1)
+    t.is(log.callCount, 3)
 
     stopLogging()
 

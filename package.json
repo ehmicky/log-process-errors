@@ -32,6 +32,7 @@
     "multipleResolves"
   ],
   "license": "Apache-2.0",
+  "homepage": "https://git.io/fpqVS",
   "repository": "autoserver-org/log-process-errors",
   "bugs": {
     "url": "https://github.com/autoserver-org/log-process-errors/issues"

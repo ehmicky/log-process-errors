@@ -11,17 +11,17 @@ const PluginError = require('plugin-error')
 const execCommand = async function(command, { quiet = false, ...opts } = {}) {
   const [commandA, ...args] = command.trim().split(/ +/u)
   const stdio = getStdio({ quiet })
-  const envA = await getEnv()
-  const child = spawn(commandA, args, { env: envA, stdio, ...opts })
+  const envA = await getEnv({ opts })
+  const child = spawn(commandA, args, { ...opts, env: envA, stdio })
 
   // eslint-disable-next-line promise/avoid-new
   return new Promise(execCommandPromise.bind(null, { child, command }))
 }
 
 // Allow executing binaries installed in `node_modules/.bin`
-const getEnv = async function() {
+const getEnv = async function({ opts }) {
   const path = await promisify(getPath)()
-  return { ...env, [PATH]: path }
+  return { ...env, ...opts.env, [PATH]: path }
 }
 
 // If `opts.quiet` `true`, does not print stdout (but still prints stderr)

@@ -44,10 +44,10 @@ const LEVELS = {
 // Default `opts.getLevel()`
 const defaultGetLevel = function({ eventName }) {
   if (eventName === 'warning') {
-    return 'warn'
+    return 'error'
   }
 
-  return 'error'
+  return 'warn'
 }
 
 module.exports = {

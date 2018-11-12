@@ -3,8 +3,6 @@ node_js:
   - 11
 os:
   - linux
-  - osx
-  - windows
 script: npm run ci-test
 # When pushing a tagged commit, Travis adds two builds: one with the tag, one
 # without. We only want to build the one with the tag, because it's the one
@@ -37,7 +35,7 @@ env:
 notifications:
   webhooks:
     - https://coveralls.io/webhook
-    - https://www.travisbuddy.com
+    - https://www.travisbuddy.com?only=failed,errored
   email: false
 travisBuddy:
   insertMode: update

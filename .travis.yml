@@ -12,7 +12,8 @@ env:
 notifications:
   webhooks:
     - https://coveralls.io/webhook
-    - https://www.travisbuddy.com?only=failed,errored
+    - https://www.travisbuddy.com
   email: false
 travisBuddy:
   insertMode: update
+  only: [failed, errored]

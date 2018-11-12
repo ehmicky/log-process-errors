@@ -8,11 +8,11 @@ const { get: getPath, PATH } = require('npm-path')
 const PluginError = require('plugin-error')
 
 // Execute a shell command
-const execCommand = async function(command, { quiet = false, cwd } = {}) {
+const execCommand = async function(command, { quiet = false, ...opts } = {}) {
   const [commandA, ...args] = command.trim().split(/ +/u)
   const stdio = getStdio({ quiet })
   const envA = await getEnv()
-  const child = spawn(commandA, args, { env: envA, stdio, cwd })
+  const child = spawn(commandA, args, { env: envA, stdio, ...opts })
 
   // eslint-disable-next-line promise/avoid-new
   return new Promise(execCommandPromise.bind(null, { child, command }))

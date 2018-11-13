@@ -4,6 +4,8 @@ const execa = require('execa')
 const PluginError = require('plugin-error')
 
 // Execute a shell command
+// To create a Gulp task, one should not use `bind()` as it removes
+// `Function.name`. Instead one should do `const taskName = () => exec(...)`
 const exec = async function(command, opts = {}) {
   const optsA = addStdio({ opts })
 

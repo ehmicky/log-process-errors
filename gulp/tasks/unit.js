@@ -9,13 +9,13 @@ const gulpExeca = require('../exec')
 
 const TRAVIS_CONFIG = `${__dirname}/../../.travis.yml`
 
-const unit = gulpExeca.bind(null, 'ava')
+const unit = () => gulpExeca('ava')
 
 // eslint-disable-next-line fp/no-mutation
 unit.description = 'Run unit tests'
 
 // We have to use this to debug Ava test files with Chrome devtools
-const unitwatch = gulpExeca.bind(null, 'ndb ava -w')
+const unitwatch = () => gulpExeca('ndb ava -w')
 
 // eslint-disable-next-line fp/no-mutation
 unitwatch.description = 'Run unit tests in watch mode'

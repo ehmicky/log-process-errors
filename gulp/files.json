@@ -1,9 +1,13 @@
 {
   "JAVASCRIPT": [
     "{index,custom,gulpfile}.js",
+    "src/*.js",
     "src/**/*.js",
+    "gulp/*.js",
     "gulp/**/*.js",
+    "test/*.js",
     "test/**/*.js",
+    "examples/*.js",
     "examples/**/*.js"
   ],
   "MARKDOWN": ["*.md"]

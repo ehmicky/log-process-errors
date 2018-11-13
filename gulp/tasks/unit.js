@@ -5,21 +5,17 @@ const { promisify } = require('util')
 
 const { load: loadYaml } = require('js-yaml')
 
-const { execCommand } = require('../utils')
+const gulpExeca = require('../exec')
 
 const TRAVIS_CONFIG = `${__dirname}/../../.travis.yml`
 
-const unit = function() {
-  return execCommand('ava')
-}
+const unit = gulpExeca.bind(null, 'ava')
 
 // eslint-disable-next-line fp/no-mutation
 unit.description = 'Run unit tests'
 
-const unitwatch = function() {
-  // We have to use this to debug Ava test files with Chrome devtools
-  return execCommand('ndb ava -w')
-}
+// We have to use this to debug Ava test files with Chrome devtools
+const unitwatch = gulpExeca.bind(null, 'ndb ava -w')
 
 // eslint-disable-next-line fp/no-mutation
 unitwatch.description = 'Run unit tests in watch mode'
@@ -30,9 +26,7 @@ const unitfull = async function() {
   // eslint-disable-next-line fp/no-loops
   for (const version of versions) {
     // eslint-disable-next-line no-await-in-loop
-    await execCommand(`. ${NVM_PATH} && nvm exec ${version} ava`, {
-      shell: true,
-    })
+    await gulpExeca(`. ${NVM_PATH} && nvm exec ${version} ava`)
   }
 }
 

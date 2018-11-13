@@ -4,18 +4,19 @@ const { src, series, parallel } = require('gulp')
 const jscpd = require('gulp-jscpd')
 
 const FILES = require('../files')
-const { execCommand, getWatchTask } = require('../utils')
+const { getWatchTask } = require('../utils')
+const gulpExeca = require('../exec')
 
 const format = function() {
   const files = [...FILES.JAVASCRIPT].join(' ')
-  return execCommand(`prettier --write --loglevel warn ${files}`)
+  return gulpExeca(`prettier --write --loglevel warn ${files}`)
 }
 
 // We do not use `gulp-eslint` because it does not support --cache
 const eslint = function() {
   const files = [...FILES.JAVASCRIPT, ...FILES.MARKDOWN].join(' ')
-  return execCommand(
-    `eslint ${files} --max-warnings 0 --ignore-path .gitignore --ignore-pattern ava.config.js --fix --cache --format codeframe`,
+  return gulpExeca(
+    `eslint ${files} --ignore-path .gitignore --fix --cache --format codeframe --max-warnings 0 --report-unused-disable-directives`,
   )
 }
 

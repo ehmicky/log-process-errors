@@ -2,11 +2,11 @@
 
 const { argv } = require('process')
 
-const { execCommand } = require('../utils')
+const gulpExeca = require('../exec')
 
 const emitEvent = function(flags) {
   const eventName = getEventName()
-  return execCommand(`node --no-warnings ${flags}${EMIT_PATH} ${eventName}`)
+  return gulpExeca(`node --no-warnings ${flags}${EMIT_PATH} ${eventName}`)
 }
 
 const getEventName = function() {

@@ -80,7 +80,7 @@
     "nyc": "^13.1.0",
     "plugin-error": "^1.0.1",
     "prettier": "^1.15.2",
-    "release-it": "^7.6.3",
+    "release-it": "^8.0.0",
     "sinon": "^7.1.1"
   },
   "engines": {

@@ -3,7 +3,7 @@
   "version": "0.13.14",
   "main": "index.js",
   "files": [
-    "src",
+    "dist",
     "custom.js",
     "!*~"
   ],
@@ -45,12 +45,17 @@
     "example": "examples"
   },
   "dependencies": {
+    "@babel/runtime": "^7.1.5",
     "chalk": "^2.4.1",
+    "core-js": "^2.5.7",
     "jest-validate": "^23.6.0",
     "moize": "^5.4.1",
     "supports-color": "^5.5.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
     "ava": "^1.0.0-rc.2",
     "coveralls": "^3.0.2",
     "eslint": "^5.9.0",

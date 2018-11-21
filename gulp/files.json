@@ -10,5 +10,6 @@
     "examples/*.js",
     "examples/**/*.js"
   ],
+  "TRANSPILED": ["src", "test"],
   "MARKDOWN": ["*.md"]
 }

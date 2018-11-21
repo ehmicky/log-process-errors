@@ -8,7 +8,7 @@ const { defaultLog } = require('./log')
 const { pickBy } = require('./utils')
 
 // Validate options and assign default options
-const getOptions = function({ opts }) {
+const getOptions = function({ opts = {} }) {
   const optsA = pickBy(opts, value => value !== undefined)
 
   validate(optsA, { exampleConfig: DEFAULT_OPTS })

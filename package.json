@@ -84,7 +84,8 @@
     "plugin-error": "^1.0.1",
     "prettier": "^1.15.2",
     "release-it": "^8.0.1",
-    "sinon": "^7.1.1"
+    "sinon": "^7.1.1",
+    "source-map-support": "^0.5.9"
   },
   "engines": {
     "node": ">=11.2.0"

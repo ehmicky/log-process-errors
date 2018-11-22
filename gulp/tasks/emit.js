@@ -8,7 +8,9 @@ const EMIT_PATH = './test/helpers/emit/fire.js'
 
 const emitEvent = function(flags) {
   const eventName = getEventName()
-  return gulpExeca(`node --no-warnings ${flags}${EMIT_PATH} ${eventName}`)
+  return gulpExeca(
+    `node -r source-map-support/register ${flags}${EMIT_PATH} ${eventName}`,
+  )
 }
 
 const getEventName = function() {

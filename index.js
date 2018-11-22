@@ -1,6 +1,6 @@
 'use strict'
 
-const setup = require('./dist')
+const setup = require('./custom')
 
 // Logging setup is automatically performed by `node -r log-process-errors` or
 // `require('log-process-errors')`.

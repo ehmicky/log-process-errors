@@ -10,7 +10,7 @@ const process = require('process')
 // By default `unhandledRejection` is opt-in so that using this library does not
 // decrease stability (if the application does not restart on exit).
 const exitProcess = function({ eventName, opts: { exitOn } }) {
-  if (!exitOn.includes(eventName)) {
+  if (!shouldExit({ eventName, exitOn })) {
     return
   }
 
@@ -21,6 +21,14 @@ const exitProcess = function({ eventName, opts: { exitOn } }) {
     // eslint-disable-next-line unicorn/no-process-exit, no-process-exit
     process.exit(EXIT_STATUS)
   }, EXIT_TIMEOUT)
+}
+
+const shouldExit = function({ eventName, exitOn }) {
+  return (
+    // This environment variable is only used for unit testing.
+    // eslint-disable-next-line no-process-env
+    exitOn.includes(eventName) && process.env.LOG_PROCESS_ERRORS_NO_EXIT !== '1'
+  )
 }
 
 const EXIT_TIMEOUT = 3e3

@@ -15,7 +15,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm test"
+      "pre-push": "gulp check"
     }
   },
   "description": "Log all process errors: uncaught exceptions, warnings and improperly handled promises",

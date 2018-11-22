@@ -5,6 +5,7 @@ const { promisify } = require('util')
 
 const { load: loadYaml } = require('js-yaml')
 
+const { getWatchTask } = require('../utils')
 const gulpExeca = require('../exec')
 
 const TRAVIS_CONFIG = `${__dirname}/../../.travis.yml`
@@ -15,7 +16,7 @@ const unit = () => gulpExeca('ava')
 unit.description = 'Run unit tests'
 
 // We have to use this to debug Ava test files with Chrome devtools
-const unitwatch = () => gulpExeca('ndb ava -w')
+const unitwatch = getWatchTask({ UNIT: unit }, unit)
 
 // eslint-disable-next-line fp/no-mutation
 unitwatch.description = 'Run unit tests in watch mode'
@@ -43,7 +44,7 @@ const getNodeVersions = async function() {
 const NVM_PATH = '~/.nvm/nvm.sh'
 
 // eslint-disable-next-line fp/no-mutation
-unit.description = 'Run unit tests on all supported Node.js versions'
+unitfull.description = 'Run unit tests on all supported Node.js versions'
 
 module.exports = {
   unit,

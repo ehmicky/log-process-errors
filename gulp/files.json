@@ -1,15 +1,27 @@
 {
-  "JAVASCRIPT": [
+  "CHECK": [
     "{index,custom,gulpfile}.js",
-    "src/*.js",
-    "src/**/*.js",
-    "gulp/*.js",
-    "gulp/**/*.js",
-    "test/*.js",
-    "test/**/*.js",
-    "examples/*.js",
-    "examples/**/*.js"
+    "{src,gulp,test,examples}/*.js",
+    "{src,gulp,test,examples}/**/*.js",
+    "*.md"
   ],
-  "TRANSPILED": ["src", "test", "helpers"],
-  "MARKDOWN": ["*.md"]
+  "UNIT": ["{index,custom}.js", "src", "test"],
+  "TEST": [
+    "{index,custom,gulpfile}.js",
+    "src",
+    "gulp",
+    "test",
+    "examples",
+    "*.md"
+  ],
+  "BUILD": ["src", "test", "helpers"],
+  "DEV": [
+    "{index,custom,gulpfile}.js",
+    "src",
+    "gulp",
+    "test",
+    "helpers",
+    "examples",
+    "*.md"
+  ]
 }

@@ -1,16 +1,18 @@
 'use strict'
 
-const { series, parallel } = require('gulp')
+const { series } = require('gulp')
 
-const { check, checkwatch } = require('./check')
-const { unit, unitwatch } = require('./unit')
+const { getWatchTask } = require('../utils')
+
+const { check } = require('./check')
+const { unit } = require('./unit')
 
 const testTask = series(check, unit)
 
 // eslint-disable-next-line fp/no-mutation
 testTask.description = 'Lint and test source files'
 
-const testwatch = parallel(checkwatch, unitwatch)
+const testwatch = getWatchTask({ TEST: testTask }, testTask)
 
 // eslint-disable-next-line fp/no-mutation
 testwatch.description = 'Lint and test source files in watch mode'

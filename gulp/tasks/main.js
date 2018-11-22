@@ -1,11 +1,15 @@
 'use strict'
 
-const { parallel } = require('gulp')
+const { series } = require('gulp')
 
-const { testwatch } = require('./test')
-const { buildwatch } = require('./build')
+const { getWatchTask } = require('../utils')
 
-const dev = parallel(testwatch, buildwatch)
+const { test } = require('./test')
+const { build } = require('./build')
+
+const devTask = series(build, test)
+
+const dev = getWatchTask({ DEV: devTask }, devTask)
 
 // eslint-disable-next-line fp/no-mutation
 dev.description = 'Lint, test and build source files'

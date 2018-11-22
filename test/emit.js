@@ -3,10 +3,10 @@
 const test = require('ava')
 
 const {
+  repeatEvents,
+  startLogging,
   ALL_EVENTS: { all },
-} = require('../helpers')
-
-const { repeatEvents, startLogging } = require('./helpers')
+} = require('./helpers')
 
 test('[all] events emitters should not throw', async t => {
   const { stopLogging } = startLogging()

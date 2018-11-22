@@ -4,7 +4,7 @@ const { argv } = require('process')
 
 const gulpExeca = require('../exec')
 
-const EMIT_PATH = './helpers/emit/fire.js'
+const EMIT_PATH = './test/helpers/emit/fire.js'
 
 const emitEvent = function(flags) {
   const eventName = getEventName()

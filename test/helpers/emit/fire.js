@@ -2,7 +2,7 @@
 
 const { argv } = require('process')
 
-const logProcessErrors = require('../../custom')
+const logProcessErrors = require('../../../custom')
 
 const { ALL_EVENTS } = require('./main')
 

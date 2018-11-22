@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line import/no-internal-modules
 const { LEVELS } = require('../../src/level')
-const { EVENTS } = require('../../helpers')
 
+const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')
 
 const getEvents = function() {

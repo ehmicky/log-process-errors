@@ -7,4 +7,5 @@ module.exports = {
   ...require('./several'),
   ...require('./data_driven'),
   ...require('./repeat'),
+  ...require('./emit'),
 }

@@ -1,6 +1,6 @@
 {
   "name": "log-process-errors",
-  "version": "0.13.14",
+  "version": "0.13.15",
   "main": "index.js",
   "files": [
     "dist",

@@ -41,8 +41,7 @@
   "directories": {
     "doc": "docs",
     "lib": "src",
-    "test": "test",
-    "example": "examples"
+    "test": "test"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",

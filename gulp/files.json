@@ -1,8 +1,8 @@
 {
   "CHECK": [
     "{index,custom,gulpfile}.js",
-    "{src,gulp,test,examples}/*.js",
-    "{src,gulp,test,examples}/**/*.js",
+    "{src,gulp,test,helpers}/*.js",
+    "{src,gulp,test,helpers}/**/*.js",
     "*.md"
   ],
   "UNIT": ["{index,custom}.js", "src", "test"],
@@ -11,7 +11,7 @@
     "src",
     "gulp",
     "test",
-    "examples",
+    "helpers",
     "*.md"
   ],
   "BUILD_SRC": ["src"],
@@ -22,7 +22,6 @@
     "gulp",
     "test",
     "helpers",
-    "examples",
     "*.md"
   ]
 }

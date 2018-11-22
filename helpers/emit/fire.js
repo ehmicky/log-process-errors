@@ -2,12 +2,13 @@
 
 const { argv } = require('process')
 
-const logProcessErrors = require('../custom')
-const { ALL_EVENTS } = require('../helpers')
+const logProcessErrors = require('../../custom')
+
+const { ALL_EVENTS } = require('./main')
 
 // Emit one of the process events using its name (or a shortcut) as argument
 // Used for development debugging
-const emit = async function(typeName) {
+const fireEvent = async function(typeName) {
   const emitEvent = getEmitEvent(typeName)
 
   const stopLogging = logProcessErrors({ exitOn: [] })
@@ -31,4 +32,4 @@ const getEmitEvent = function(name) {
   )
 }
 
-emit(argv[2])
+fireEvent(argv[2])

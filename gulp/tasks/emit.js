@@ -4,6 +4,8 @@ const { argv } = require('process')
 
 const gulpExeca = require('../exec')
 
+const EMIT_PATH = './helpers/emit/fire.js'
+
 const emitEvent = function(flags) {
   const eventName = getEventName()
   return gulpExeca(`node --no-warnings ${flags}${EMIT_PATH} ${eventName}`)
@@ -11,10 +13,8 @@ const emitEvent = function(flags) {
 
 const getEventName = function() {
   const [, , , eventName] = argv
-  return eventName.replace('--', '')
+  return eventName.replace(/^--?/u, '')
 }
-
-const EMIT_PATH = './examples/emit.js'
 
 const emit = emitEvent.bind(null, '')
 

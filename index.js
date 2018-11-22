@@ -1,7 +1,6 @@
 'use strict'
 
-// eslint-disable-next-line import/no-internal-modules
-const setup = require('./dist/src')
+const setup = require('./dist')
 
 // Logging setup is automatically performed by `node -r log-process-errors` or
 // `require('log-process-errors')`.

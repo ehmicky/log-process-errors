@@ -4,19 +4,14 @@ const test = require('ava')
 
 const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
 
-const testLogsDefaultLevel = function({ t, log, eventName }) {
-  const level = eventName === 'warning' ? 'warn' : 'error'
-  t.deepEqual(log.firstCall.args[1], level)
-}
-
 /* eslint-disable max-nested-callbacks */
-repeatEvents((prefix, { eventName, emitEvent }) => {
+repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   test(`${prefix} should use default opts.getLevel()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent()
 
-    testLogsDefaultLevel({ t, log, eventName })
+    t.deepEqual(log.firstCall.args[1], defaultLevel)
 
     stopLogging()
   })
@@ -32,7 +27,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     t.true(getLevel.called)
     t.true(log.called)
-    testLogsDefaultLevel({ t, log, eventName })
+    t.deepEqual(log.firstCall.args[1], defaultLevel)
 
     stopLogging()
   })

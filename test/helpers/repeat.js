@@ -7,11 +7,12 @@ const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')
 
 const getEvents = function() {
-  return Object.entries(EVENTS).map(([eventName, emitEvent]) => ({
-    eventName,
-    emitEvent,
-    name: eventName,
-  }))
+  return Object.entries(EVENTS).map(getEvent)
+}
+
+const getEvent = function([eventName, emitEvent]) {
+  const defaultLevel = eventName === 'warning' ? 'warn' : 'error'
+  return { eventName, emitEvent, name: eventName, defaultLevel }
 }
 
 const getLevels = function() {

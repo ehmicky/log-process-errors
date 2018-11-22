@@ -4,8 +4,16 @@ const process = require('process')
 
 const test = require('ava')
 const sinon = require('sinon')
+const stripAnsi = require('strip-ansi')
 
-const { repeatEvents, startLogging } = require('./helpers')
+const {
+  repeatEvents,
+  startLogging,
+  startLoggingNoOpts,
+  stubStackTrace,
+  unstubStackTrace,
+  normalizeMessage,
+} = require('./helpers')
 
 const addProcessHandler = function(eventName) {
   const processHandler = sinon.spy()
@@ -14,7 +22,24 @@ const addProcessHandler = function(eventName) {
 }
 
 /* eslint-disable max-nested-callbacks */
-repeatEvents((prefix, { eventName, emitEvent }) => {
+repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
+  test(`${prefix} should work with no options`, async t => {
+    stubStackTrace()
+    // eslint-disable-next-line no-restricted-globals
+    const stub = sinon.stub(console, defaultLevel)
+    const { stopLogging } = startLoggingNoOpts()
+
+    await emitEvent()
+
+    const messages = stub.args.map(([arg]) => normalizeMessage(stripAnsi(arg)))
+
+    stopLogging()
+    stub.restore()
+    unstubStackTrace()
+
+    t.snapshot(messages)
+  })
+
   test(`${prefix} should keep existing process event handlers`, async t => {
     const processHandler = addProcessHandler(eventName)
 

@@ -5,6 +5,11 @@ const sinon = require('sinon')
 const logProcessErrors = require('../../custom')
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
+const startLoggingNoOpts = function() {
+  const stopLogging = logProcessErrors()
+  return { stopLogging }
+}
+
 const startLogging = function({
   eventName,
   skipEvent,
@@ -81,5 +86,6 @@ const onlyEvent = function(eventName, info) {
 }
 
 module.exports = {
+  startLoggingNoOpts,
   startLogging,
 }

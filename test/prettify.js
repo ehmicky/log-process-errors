@@ -7,6 +7,7 @@ const {
   startLogging,
   stubStackTrace,
   unstubStackTrace,
+  normalizeMessage,
 } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
@@ -25,8 +26,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
 
     t.true(log.calledOnce)
 
-    // The first sign is OS-dependent, so we remove it
-    const message = log.lastCall.args[0].replace(/[^ ]/u, '[]')
+    const message = normalizeMessage(log.lastCall.args[0])
     t.snapshot(message)
 
     stopLogging()

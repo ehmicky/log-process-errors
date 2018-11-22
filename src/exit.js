@@ -2,6 +2,10 @@
 
 // Do not destructure so tests can stub it
 const process = require('process')
+// This environment variable is only used for unit testing.
+const {
+  env: { LOG_PROCESS_ERRORS_TEST },
+} = require('process')
 
 // Exit process according to `opts.exitOn` (default: ['uncaughtException']):
 //  - `uncaughtException`: default behavior of Node.js and recommended by https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
@@ -24,11 +28,7 @@ const exitProcess = function({ eventName, opts: { exitOn } }) {
 }
 
 const shouldExit = function({ eventName, exitOn }) {
-  return (
-    // This environment variable is only used for unit testing.
-    // eslint-disable-next-line no-process-env
-    exitOn.includes(eventName) && process.env.LOG_PROCESS_ERRORS_NO_EXIT !== '1'
-  )
+  return exitOn.includes(eventName) && LOG_PROCESS_ERRORS_TEST !== '1'
 }
 
 const EXIT_TIMEOUT = 3e3

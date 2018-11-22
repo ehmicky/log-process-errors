@@ -5,7 +5,6 @@ const process = require('process')
 const test = require('ava')
 const sinon = require('sinon')
 const stripAnsi = require('strip-ansi')
-const execa = require('execa')
 
 const {
   repeatEvents,
@@ -24,20 +23,6 @@ const addProcessHandler = function(eventName) {
 
 /* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
-  test(`${prefix} should work using the -r flag`, async t => {
-    const { stdout, stderr, code } = await execa.shell(
-      `LOG_PROCESS_ERRORS_NO_EXIT=1 node \
-        --no-warnings \
-        -r ${__dirname}/helpers/stack_register \
-        -r ${__dirname}/.. \
-        -e "require('${__dirname}/helpers/emit').EVENTS.${eventName}()"`,
-    )
-
-    const message = normalizeMessage(stderr)
-
-    t.snapshot({ message, stdout, code })
-  })
-
   test(`${prefix} should work with no options`, async t => {
     stubStackTrace()
     // eslint-disable-next-line no-restricted-globals

@@ -14,7 +14,8 @@
     "examples",
     "*.md"
   ],
-  "BUILD": ["src", "test", "helpers"],
+  "BUILD_SRC": ["src"],
+  "BUILD_DIST": ["dist"],
   "DEV": [
     "{index,custom,gulpfile}.js",
     "src",

@@ -17,7 +17,7 @@ jobs:
   include:
     - stage: Deploy
       # We have already run tests
-      script: skip
+      script: npm run build
       # We want to run install step and keep built files for release
       skip_cleanup: true
       if: tag is not blank

@@ -8,9 +8,15 @@
     "!*~"
   ],
   "scripts": {
-    "test": "gulp build && gulp test",
-    "ci-test": "gulp build && nyc npm test && coveralls <coverage/lcov.info",
-    "release": "release-it"
+    "build": "gulp build",
+    "test": "npm run build && gulp test",
+    "ci-test": "nyc npm test && coveralls <coverage/lcov.info",
+    "release": "npm test && release-it"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
   },
   "description": "Log all process errors: uncaught exceptions, warnings and improperly handled promises",
   "keywords": [
@@ -78,6 +84,7 @@
     "gulp": "^4.0.0",
     "gulp-jscpd": "0.0.8",
     "has-ansi": "^3.0.0",
+    "husky": "^1.2.0",
     "js-yaml": "^3.12.0",
     "lolex": "^3.0.0",
     "nyc": "^13.1.0",

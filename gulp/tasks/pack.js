@@ -9,6 +9,8 @@ const rimraf = require('rimraf')
 const { name, version } = require('../../package')
 const gulpExeca = require('../exec')
 
+// We run tests on what's distributed by `npm publish`, in case we missed some
+// files in the package.
 const pack = async function() {
   // Create tarball
   await gulpExeca('npm pack', { stdout: 'ignore' })

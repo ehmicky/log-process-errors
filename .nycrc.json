@@ -1,5 +1,5 @@
 {
   "include": ["dist", "{index,custom}.js"],
   "all": true,
-  "reporter": ["text", "lcov"]
+  "reporter": ["lcov", "text"]
 }

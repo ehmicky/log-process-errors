@@ -55,7 +55,7 @@ init(options)
 `log-process-errors` modifies logging globally. This is not recommended for
 libraries since their users might not expect this side effect. Also this might
 lead to conflicts between libraries. Libraries should use the
-[`-r log-process-errors` CLI flag](#usage-preferred) instead of
+[`-r log-process-errors/register` CLI flag](#usage-preferred) instead of
 [`require()`](#usage-custom).
 
 # Duplicate events

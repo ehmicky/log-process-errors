@@ -4,7 +4,7 @@ const test = require('ava')
 
 const {
   constants: { MAX_EVENTS },
-} = require('../dist')
+} = require('../build')
 
 const {
   repeatEvents,

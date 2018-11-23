@@ -10,3 +10,4 @@ core
 .nyc_output
 coverage
 dist
+build

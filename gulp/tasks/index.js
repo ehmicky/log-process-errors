@@ -6,5 +6,6 @@ module.exports = {
   ...require('./check'),
   ...require('./unit'),
   ...require('./build'),
+  ...require('./pack'),
   ...require('./emit'),
 }

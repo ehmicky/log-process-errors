@@ -8,7 +8,7 @@ const lolex = require('lolex')
 
 const {
   constants: { EXIT_TIMEOUT, EXIT_STATUS },
-} = require('../dist')
+} = require('../build')
 
 const { repeatEvents, startLogging } = require('./helpers')
 

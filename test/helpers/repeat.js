@@ -2,7 +2,7 @@
 
 const {
   constants: { LEVELS },
-} = require('../../dist')
+} = require('../../build')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')

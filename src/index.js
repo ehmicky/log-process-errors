@@ -1,3 +1,8 @@
 'use strict'
 
-module.exports = require('./setup')
+const constants = require('./constants')
+
+module.exports = {
+  ...require('./init'),
+  constants,
+}

@@ -7,6 +7,8 @@ const {
   env: { LOG_PROCESS_ERRORS_TEST },
 } = require('process')
 
+const { EXIT_STATUS, EXIT_TIMEOUT } = require('./constants')
+
 // Exit process according to `opts.exitOn` (default: ['uncaughtException']):
 //  - `uncaughtException`: default behavior of Node.js and recommended by https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
 //  - `unhandledRejection`: possible future behavior and recommended by Node.js.
@@ -31,11 +33,6 @@ const shouldExit = function({ eventName, exitOn }) {
   return exitOn.includes(eventName) && LOG_PROCESS_ERRORS_TEST !== '1'
 }
 
-const EXIT_TIMEOUT = 3e3
-const EXIT_STATUS = 1
-
 module.exports = {
   exitProcess,
-  EXIT_TIMEOUT,
-  EXIT_STATUS,
 }

@@ -2,6 +2,8 @@
 
 const { emitWarning } = require('process')
 
+const { MAX_EVENTS } = require('./constants')
+
 // We only allow 100 events (per `eventName`) for the global process because:
 //   - process errors are exceptional and if more than 100 happen, this is
 //     probably due to some infinite recursion.
@@ -32,8 +34,6 @@ const isLimited = function({
   return isLimitedEvent
 }
 
-const MAX_EVENTS = 1e2
-
 // Notify that limit has been reached with a `warning` event
 const emitLimitedWarning = function(eventName) {
   emitWarning(ERROR_MESSAGE(eventName), ERROR_NAME, ERROR_CODE)
@@ -53,5 +53,4 @@ module.exports = {
   isLimited,
   emitLimitedWarning,
   isLimitedWarning,
-  MAX_EVENTS,
 }

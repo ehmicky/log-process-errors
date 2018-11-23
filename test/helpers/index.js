@@ -1,8 +1,8 @@
 'use strict'
 
 module.exports = {
+  ...require('./remove'),
   ...require('./init'),
-  ...require('./setup'),
   ...require('./stack'),
   ...require('./normalize'),
   ...require('./several'),

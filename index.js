@@ -2,9 +2,9 @@
 // This file is unit tested but in a child process
 'use strict'
 
-const setup = require('./custom')
+const { init } = require('./custom')
 
-// Logging setup is automatically performed by `node -r log-process-errors` or
+// Logging init is automatically performed by `node -r log-process-errors` or
 // `require('log-process-errors')`.
 // It encourages using `node -r` to prevent from adding this helper in the
 // source code. This is beneficial in the following use cases:
@@ -16,4 +16,4 @@ const setup = require('./custom')
 // events are caught.
 // To either defer the call or to pass options, one must use instead
 // `require('log-process-errors/custom')(options)`
-setup()
+init()

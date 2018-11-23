@@ -9,7 +9,7 @@ const EVENTS = require('./events')
 const { emitLimitedWarning } = require('./limit')
 
 // Add event handling for all process-related errors
-const setup = function(opts) {
+const init = function(opts) {
   const optsA = getOptions({ opts })
 
   const listeners = addListeners({ opts: optsA })
@@ -29,7 +29,7 @@ const addListener = function({ opts, eventName, eventFunc }) {
   // `previousEvents` can take up some memory, but it should be cleaned up
   // by `removeListener()`, i.e. once `eventListener` is garbage collected.
   const previousEvents = new Set()
-  // Should only emit the warning once per `eventName` and per `setup()`
+  // Should only emit the warning once per `eventName` and per `init()`
   const mEmitLimitedWarning = moize(emitLimitedWarning)
 
   const eventListener = eventFunc.bind(null, {
@@ -54,4 +54,6 @@ const removeListener = function({ eventListener, eventName }) {
   process.removeListener(eventName, eventListener)
 }
 
-module.exports = setup
+module.exports = {
+  init,
+}

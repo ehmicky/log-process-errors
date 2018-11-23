@@ -1,7 +1,8 @@
 'use strict'
 
-// eslint-disable-next-line import/no-internal-modules
-const { LEVELS } = require('../../src/level')
+const {
+  constants: { LEVELS },
+} = require('../../dist')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')
@@ -15,13 +16,9 @@ const getEvent = function([eventName, emitEvent]) {
   return { eventName, emitEvent, name: eventName, defaultLevel }
 }
 
-const getLevels = function() {
-  return Object.keys(LEVELS)
-}
-
 const repeatEvents = repeat.bind(null, getEvents())
-const repeatLevels = repeat.bind(null, getLevels())
-const repeatEventsLevels = repeat.bind(null, getEvents(), getLevels())
+const repeatLevels = repeat.bind(null, LEVELS)
+const repeatEventsLevels = repeat.bind(null, getEvents(), LEVELS)
 
 module.exports = {
   repeatEvents,

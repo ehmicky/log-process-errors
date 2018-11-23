@@ -6,8 +6,9 @@ const test = require('ava')
 const sinon = require('sinon')
 const lolex = require('lolex')
 
-// eslint-disable-next-line import/no-internal-modules
-const { EXIT_TIMEOUT, EXIT_STATUS } = require('../src/exit')
+const {
+  constants: { EXIT_TIMEOUT, EXIT_STATUS },
+} = require('../dist')
 
 const { repeatEvents, startLogging } = require('./helpers')
 

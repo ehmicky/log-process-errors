@@ -37,9 +37,9 @@ $ npm install log-process-errors
 ```
 
 ```js
-const logProcessErrors = require('log-process-errors/custom')
+const { init } = require('log-process-errors/custom')
 
-logProcessErrors(options)
+init(options)
 ```
 
 `options` is an optional object with the following properties:
@@ -193,9 +193,9 @@ The following properties are also defined with the `getMessage` option:
 Logging can be stopped by firing the function returned by `logProcessErrors()`
 
 ```js
-const logProcessErrors = require('log-process-errors/custom')
+const { init } = require('log-process-errors/custom')
 
-const stopLogging = logProcessErrors(options)
+const stopLogging = init(options)
 
 stopLogging()
 ```

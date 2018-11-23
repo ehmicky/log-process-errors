@@ -1,0 +1,13 @@
+{
+  "EVENTS": [
+    "uncaughtException",
+    "unhandledRejection",
+    "rejectionHandled",
+    "multipleResolves",
+    "warning"
+  ],
+  "LEVELS": ["debug", "info", "warn", "error"],
+  "EXIT_TIMEOUT": 3e3,
+  "EXIT_STATUS": 1,
+  "MAX_EVENTS": 1e2
+}

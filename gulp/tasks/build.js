@@ -18,7 +18,7 @@ const build = series(babel, pack)
 // eslint-disable-next-line fp/no-mutation
 build.description = 'Build source files'
 
-const buildwatch = getWatchTask({ BUILD_SRC: build }, build)
+const buildwatch = getWatchTask({ BUILD: build }, build)
 
 // eslint-disable-next-line fp/no-mutation
 buildwatch.description = 'Build source files in watch mode'

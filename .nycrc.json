@@ -1,5 +1,5 @@
 {
-  "include": ["dist", "{index,custom}.js"],
+  "include": ["dist", "{index,register}.js"],
   "all": true,
   "reporter": ["lcov", "text"]
 }

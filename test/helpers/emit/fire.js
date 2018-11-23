@@ -2,7 +2,7 @@
 
 const { argv } = require('process')
 
-const { init } = require('../../../custom')
+const { init } = require('../../..')
 
 const { ALL_EVENTS } = require('./main')
 

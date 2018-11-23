@@ -29,15 +29,14 @@ $ node -r log-process-errors/register ...
 
 # Usage (custom)
 
-In order to customize options, `log-process-errors/custom` must be required
-like this instead:
+In order to customize options, this module must be required like this instead:
 
 ```bash
 $ npm install log-process-errors
 ```
 
 ```js
-const { init } = require('log-process-errors/custom')
+const { init } = require('log-process-errors')
 
 init(options)
 ```
@@ -193,7 +192,7 @@ The following properties are also defined with the `getMessage` option:
 Logging can be stopped by firing the function returned by `logProcessErrors()`
 
 ```js
-const { init } = require('log-process-errors/custom')
+const { init } = require('log-process-errors')
 
 const stopLogging = init(options)
 

@@ -2,7 +2,7 @@
 // This file is unit tested but in a child process
 'use strict'
 
-const { init } = require('./custom')
+const { init } = require('.')
 
 // Logging init is automatically performed by `node -r log-process-errors` or
 // `require('log-process-errors')`.
@@ -15,5 +15,5 @@ const { init } = require('./custom')
 // Also it ensures this code is called as early as possible, to make sure early
 // events are caught.
 // To either defer the call or to pass options, one must use instead
-// `require('log-process-errors/custom')(options)`
+// `require('log-process-errors').init(options)`
 init()

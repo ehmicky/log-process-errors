@@ -1,13 +1,13 @@
 {
   "CHECK": [
-    "{index,custom,gulpfile}.js",
+    "{index,register,gulpfile}.js",
     "{src,gulp,test}/*.js",
     "{src,gulp,test}/**/*.js",
     "*.md"
   ],
-  "UNIT": ["{index,custom}.js", "src", "test"],
-  "TEST": ["{index,custom,gulpfile}.js", "src", "gulp", "test", "*.md"],
+  "UNIT": ["{index,register}.js", "src", "test"],
+  "TEST": ["{index,register,gulpfile}.js", "src", "gulp", "test", "*.md"],
   "BUILD_SRC": ["src"],
   "BUILD_DIST": ["dist"],
-  "DEV": ["{index,custom,gulpfile}.js", "src", "gulp", "test", "*.md"]
+  "DEV": ["{index,register,gulpfile}.js", "src", "gulp", "test", "*.md"]
 }

@@ -37,4 +37,5 @@ const EXIT_STATUS = 1
 module.exports = {
   exitProcess,
   EXIT_TIMEOUT,
+  EXIT_STATUS,
 }

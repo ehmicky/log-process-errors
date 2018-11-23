@@ -7,7 +7,7 @@ const sinon = require('sinon')
 const lolex = require('lolex')
 
 // eslint-disable-next-line import/no-internal-modules
-const { EXIT_TIMEOUT } = require('../src/exit')
+const { EXIT_TIMEOUT, EXIT_STATUS } = require('../src/exit')
 
 const { repeatEvents, startLogging } = require('./helpers')
 
@@ -39,7 +39,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
     t.is(processExit.callCount, 1)
-    t.is(processExit.firstCall.args[0], 1)
+    t.is(processExit.firstCall.args[0], EXIT_STATUS)
 
     stopLogging()
 

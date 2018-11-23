@@ -24,7 +24,7 @@ $ npm install -D log-process-errors
 Require this module with the `-r` CLI flag.
 
 ```bash
-$ node -r log-process-errors ...
+$ node -r log-process-errors/register ...
 ```
 
 # Usage (custom)

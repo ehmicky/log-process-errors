@@ -17,7 +17,7 @@ repeatEvents((prefix, { eventName }) => {
       `node \
         --no-warnings \
         -r ${STACK_REGISTER_FILE} \
-        -r . \
+        -r ./register \
         -e "require('${EMIT_FILE}').EVENTS.${eventName}()"`,
       { env: { LOG_PROCESS_ERRORS_TEST: '1' } },
     )

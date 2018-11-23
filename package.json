@@ -1,7 +1,7 @@
 {
   "name": "log-process-errors",
   "version": "0.13.16",
-  "main": "index.js",
+  "main": "register.js",
   "files": [
     "dist",
     "custom.js",

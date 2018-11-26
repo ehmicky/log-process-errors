@@ -2,9 +2,13 @@
 
 const { argv } = require('process')
 
-const { init } = require('../../../build')
+// eslint-disable-next-line import/no-internal-modules
+const { getPackage } = require('../../../gulp/utils')
 
 const { ALL_EVENTS } = require('./main')
+
+// eslint-disable-next-line import/no-dynamic-require
+const { init } = require(getPackage())
 
 // Emit one of the process events using its name (or a shortcut) as argument
 // Used for development debugging

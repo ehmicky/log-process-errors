@@ -2,7 +2,11 @@
 
 const sinon = require('sinon')
 
-const { init } = require('../../build')
+// eslint-disable-next-line import/no-internal-modules
+const { getPackage } = require('../../gulp/utils')
+
+// eslint-disable-next-line import/no-dynamic-require
+const { init } = require(getPackage())
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
 const startLoggingNoOpts = function() {

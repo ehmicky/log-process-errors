@@ -1,11 +1,15 @@
 'use strict'
 
-const {
-  constants: { LEVELS },
-} = require('../../build')
+// eslint-disable-next-line import/no-internal-modules
+const { getPackage } = require('../../gulp/utils')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')
+
+const {
+  constants: { LEVELS },
+  // eslint-disable-next-line import/no-dynamic-require
+} = require(getPackage())
 
 const getEvents = function() {
   return Object.entries(EVENTS).map(getEvent)

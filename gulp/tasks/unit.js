@@ -1,16 +1,40 @@
 'use strict'
 
-const { readFile } = require('fs')
+const { readFile, readdir, stat } = require('fs')
 const { promisify } = require('util')
+const { join } = require('path')
 
 const { load: loadYaml } = require('js-yaml')
+const isCi = require('is-ci')
 
-const { getWatchTask } = require('../utils')
+const { getWatchTask, pack } = require('../utils')
 const gulpExeca = require('../exec')
 
 const TRAVIS_CONFIG = `${__dirname}/../../.travis.yml`
 
-const unit = () => gulpExeca('ava')
+// eslint-disable-next-line max-statements
+const unit = async function() {
+  if (!isCi) {
+    return gulpExeca('ava')
+  }
+
+  const lcovFile = join('coverage', 'lcov.info')
+  await pack('nyc --nycrc-path .nycrc-ci.json ava')
+
+  const files = await promisify(readdir)('coverage', { encoding: 'utf-8' })
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('Files', files)
+
+  const statA = await promisify(stat)(lcovFile)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('Stat', statA.size)
+
+  const content = await promisify(readFile)(lcovFile, { encoding: 'utf-8' })
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('Coverage', content)
+
+  await gulpExeca(`coveralls <${lcovFile}`)
+}
 
 // eslint-disable-next-line fp/no-mutation
 unit.description = 'Run unit tests'

@@ -6,7 +6,7 @@ os:
   - osx
   - linux
 dist: xenial
-script: npm run ci-test
+script: npm test
 # When pushing a tagged commit, Travis adds two builds: one with the tag, one
 # without. We only want to build the one with the tag, because it's the one
 # that runs the deployment stage

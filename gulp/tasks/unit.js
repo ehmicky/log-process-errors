@@ -30,6 +30,7 @@ const unit = async function() {
   console.log('Stat', statA.size)
 
   const content = await promisify(readFile)(lcovFile, { encoding: 'utf-8' })
+
   // eslint-disable-next-line no-console, no-restricted-globals
   console.log('Coverage', content)
 

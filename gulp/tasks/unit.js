@@ -1,6 +1,6 @@
 'use strict'
 
-const { readFile, readdir, stat } = require('fs')
+const { readFile } = require('fs')
 const { promisify } = require('util')
 
 const { load: loadYaml } = require('js-yaml')
@@ -11,34 +11,22 @@ const gulpExeca = require('../exec')
 
 const TRAVIS_CONFIG = `${__dirname}/../../.travis.yml`
 
-// eslint-disable-next-line max-statements
 const unit = async function() {
   if (!isCi) {
     return gulpExeca('ava')
   }
 
-  const lcovFile = './coverage/lcov.info'
   await pack(
     'nyc --include node_modules/log-process-errors --exclude !node_modules/log-process-errors ava',
   )
 
-  const files = await promisify(readdir)('coverage', { encoding: 'utf-8' })
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('Files', files)
-
-  const statA = await promisify(stat)(lcovFile)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('Stat', statA.size)
-
-  const content = await promisify(readFile)(lcovFile, { encoding: 'utf-8' })
-
+  const content = await promisify(readFile)('./coverage/lcov.info', {
+    encoding: 'utf-8',
+  })
   const contentA = content.replace(
     /node_modules(\/|\\)log-process-errors(\/|\\)/gu,
     '',
   )
-
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('Coverage', contentA)
 
   await gulpExeca('coveralls', { input: contentA })
 }

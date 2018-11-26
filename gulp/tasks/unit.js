@@ -21,15 +21,16 @@ const unit = async function() {
     `nyc --include node_modules/${name} --exclude !node_modules/${name} ava`,
   )
 
-  const content = await promisify(readFile)(COVMAP_PATH, { encoding: 'utf-8' })
-  const contentA = content.replace(
-    /node_modules(\/|\\)log-process-errors(\/|\\)/gu,
-    '',
-  )
+  const covMap = await promisify(readFile)(COVMAP_PATH, { encoding: 'utf-8' })
+  const covMapA = covMap.replace(NESTED_REGEXP, '')
 
-  await gulpExeca('coveralls', { input: contentA })
+  await gulpExeca('coveralls', { input: covMapA })
 }
 
+const NESTED_REGEXP = new RegExp(
+  `node_modules(\\/|\\\\)${name}(\\/|\\\\)`,
+  'gu',
+)
 const COVMAP_PATH = './coverage/lcov.info'
 
 // eslint-disable-next-line fp/no-mutation

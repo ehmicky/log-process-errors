@@ -6,6 +6,7 @@ const { promisify } = require('util')
 const { load: loadYaml } = require('js-yaml')
 const isCi = require('is-ci')
 
+const { name } = require('../../package.json')
 const { getWatchTask, pack } = require('../utils')
 const gulpExeca = require('../exec')
 
@@ -17,12 +18,10 @@ const unit = async function() {
   }
 
   await pack(
-    'nyc --include node_modules/log-process-errors --exclude !node_modules/log-process-errors ava',
+    `nyc --include node_modules/${name} --exclude !node_modules/${name} ava`,
   )
 
-  const content = await promisify(readFile)('./coverage/lcov.info', {
-    encoding: 'utf-8',
-  })
+  const content = await promisify(readFile)(COVMAP_PATH, { encoding: 'utf-8' })
   const contentA = content.replace(
     /node_modules(\/|\\)log-process-errors(\/|\\)/gu,
     '',
@@ -30,6 +29,8 @@ const unit = async function() {
 
   await gulpExeca('coveralls', { input: contentA })
 }
+
+const COVMAP_PATH = './coverage/lcov.info'
 
 // eslint-disable-next-line fp/no-mutation
 unit.description = 'Run unit tests'

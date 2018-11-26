@@ -10,7 +10,6 @@
   "scripts": {
     "build": "gulp build",
     "test": "npm run build && gulp test",
-    "ci-test": "nyc npm test && coveralls <coverage/lcov.info",
     "release": "npm test && release-it"
   },
   "husky": {
@@ -85,17 +84,17 @@
     "gulp-jscpd": "0.0.8",
     "has-ansi": "^3.0.0",
     "husky": "^1.2.0",
+    "is-ci": "^1.2.1",
     "js-yaml": "^3.12.0",
     "lolex": "^3.0.0",
     "nyc": "^13.1.0",
+    "pkg-dir": "^3.0.0",
     "plugin-error": "^1.0.1",
     "prettier": "^1.15.2",
     "release-it": "^8.0.1",
-    "rimraf": "^2.6.2",
     "sinon": "^7.1.1",
     "source-map-support": "^0.5.9",
-    "strip-ansi": "^5.0.0",
-    "tar": "^4.4.8"
+    "strip-ansi": "^5.0.0"
   },
   "engines": {
     "node": ">=11.2.0"

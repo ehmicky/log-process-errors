@@ -31,7 +31,7 @@ const addStdio = function({ opts }) {
   return { ...opts, stdio: 'inherit' }
 }
 
-const STDIO_OPTIONS = ['stdio', 'stdin', 'stdout', 'stderr']
+const STDIO_OPTIONS = ['stdio', 'stdin', 'stdout', 'stderr', 'input']
 
 // Retrieve error message to print
 const getErrorMessage = function({

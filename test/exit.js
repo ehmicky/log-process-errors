@@ -6,11 +6,15 @@ const test = require('ava')
 const sinon = require('sinon')
 const lolex = require('lolex')
 
-const {
-  constants: { EXIT_TIMEOUT, EXIT_STATUS },
-} = require('../build')
+// eslint-disable-next-line import/no-internal-modules
+const { getPackage } = require('../gulp/utils')
 
 const { repeatEvents, startLogging } = require('./helpers')
+
+const {
+  constants: { EXIT_TIMEOUT, EXIT_STATUS },
+  // eslint-disable-next-line import/no-dynamic-require
+} = require(getPackage())
 
 // Stub `process.exit()`
 const stubProcessExit = function() {

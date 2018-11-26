@@ -31,10 +31,12 @@ const unit = async function() {
 
   const content = await promisify(readFile)(lcovFile, { encoding: 'utf-8' })
 
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('Coverage', content)
+  const contentA = content.replace(/node_modules\/log-process-errors\//gu, '')
 
-  await gulpExeca(`coveralls <${lcovFile}`)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('Coverage', contentA)
+
+  await gulpExeca('coveralls', { input: contentA })
 }
 
 // eslint-disable-next-line fp/no-mutation

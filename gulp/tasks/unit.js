@@ -18,7 +18,9 @@ const unit = async function() {
   }
 
   const lcovFile = './coverage/lcov.info'
-  await pack('nyc --nycrc-path .nycrc-ci.json ava')
+  await pack(
+    'nyc --nycrc-path .nycrc-ci.json --include node_modules/log-process-errors ava',
+  )
 
   const files = await promisify(readdir)('coverage', { encoding: 'utf-8' })
   // eslint-disable-next-line no-console, no-restricted-globals

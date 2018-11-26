@@ -17,17 +17,20 @@ const unit = async function() {
     return gulpExeca('ava')
   }
 
-  await pack(
-    `nyc --include node_modules/${name} --exclude !node_modules/${name} ava`,
-  )
+  await pack(`nyc --include ${NESTED_DIR} --exclude !${NESTED_DIR} ava`)
 
+  await sendToCoveralls()
+}
+
+const sendToCoveralls = async function() {
   const covMap = await promisify(readFile)(COVMAP_PATH, { encoding: 'utf-8' })
-  const covMapA = covMap.replace(NESTED_REGEXP, '')
+  const covMapA = covMap.replace(NESTED_DIR_REGEXP, '')
 
   await gulpExeca('coveralls', { input: covMapA })
 }
 
-const NESTED_REGEXP = new RegExp(
+const NESTED_DIR = `node_modules/${name}`
+const NESTED_DIR_REGEXP = new RegExp(
   `node_modules(\\/|\\\\)${name}(\\/|\\\\)`,
   'gu',
 )

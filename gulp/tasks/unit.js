@@ -2,7 +2,6 @@
 
 const { readFile, readdir, stat } = require('fs')
 const { promisify } = require('util')
-const { join } = require('path')
 
 const { load: loadYaml } = require('js-yaml')
 const isCi = require('is-ci')
@@ -18,7 +17,7 @@ const unit = async function() {
     return gulpExeca('ava')
   }
 
-  const lcovFile = join('coverage', 'lcov.info')
+  const lcovFile = './coverage/lcov.info'
   await pack('nyc --nycrc-path .nycrc-ci.json ava')
 
   const files = await promisify(readdir)('coverage', { encoding: 'utf-8' })

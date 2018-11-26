@@ -31,7 +31,10 @@ const unit = async function() {
 
   const content = await promisify(readFile)(lcovFile, { encoding: 'utf-8' })
 
-  const contentA = content.replace(/node_modules\/log-process-errors\//gu, '')
+  const contentA = content.replace(
+    /node_modules(\/|\\)log-process-errors(\/|\\)/gu,
+    '',
+  )
 
   // eslint-disable-next-line no-console, no-restricted-globals
   console.log('Coverage', contentA)

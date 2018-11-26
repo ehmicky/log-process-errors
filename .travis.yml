@@ -16,6 +16,7 @@ if: '!(commit_message =~ /^Release/ && tag is blank)'
 jobs:
   include:
     - stage: Deploy
+      os: linux
       # We have already run tests
       script: npm run build
       if: tag is not blank

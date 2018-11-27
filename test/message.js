@@ -52,7 +52,10 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     t.true(getMessage.calledOnce)
     t.is(typeof getMessage.firstCall.args[0], 'object')
     t.is(getMessage.firstCall.args[0].level, level)
-    t.true(getMessage.firstCall.args[0].colors instanceof chalk.constructor)
+    t.is(
+      getMessage.firstCall.args[0].colors.constructor.name,
+      chalk.constructor.name,
+    )
 
     stopLogging()
   })

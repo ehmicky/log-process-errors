@@ -3,6 +3,7 @@
 const assert = require('assert')
 
 const pkgDir = require('pkg-dir')
+const moize = require('moize').default
 
 const getPackageInfo = async function() {
   const packageRoot = await getPackageRoot()
@@ -22,6 +23,8 @@ const getPackageRootSync = function() {
   return packageRoot
 }
 
+const mGetPackageRootSync = moize(getPackageRootSync)
+
 const checkPackageRoot = function({ packageRoot }) {
   assert(
     packageRoot !== null,
@@ -36,5 +39,5 @@ const getManifest = function({ packageRoot }) {
 
 module.exports = {
   getPackageInfo,
-  getPackageRootSync,
+  getPackageRootSync: mGetPackageRootSync,
 }

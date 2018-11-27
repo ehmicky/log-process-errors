@@ -7,28 +7,31 @@ const { tmpdir } = require('os')
 
 const execa = require('execa')
 
-const { getPackageRoot, getManifest } = require('./root')
+const { getPackageInfo } = require('./root')
 const { ENV_VAR } = require('./constants')
 
 // Runs `npm pack && npm install tarball && rm tarball && command`
 const pack = async function(command = DEFAULT_COMMAND) {
-  const tarball = await createTarball()
+  const { packageRoot, name, version } = await getPackageInfo()
+
+  const tarball = await createTarball({ packageRoot, name, version })
 
   await installTarball({ tarball })
 
-  await Promise.all([removeTarball({ tarball }), fireCommand({ command })])
+  await Promise.all([
+    removeTarball({ tarball }),
+    fireCommand({ command, name }),
+  ])
 }
 
 const DEFAULT_COMMAND = 'npm test'
 
-const createTarball = async function() {
+const createTarball = async function({ packageRoot, name, version }) {
   const tarballDir = tmpdir()
-
-  const packageRoot = await getPackageRoot()
 
   await packTarball({ packageRoot, tarballDir })
 
-  const tarball = getTarball({ packageRoot, tarballDir })
+  const tarball = getTarball({ tarballDir, name, version })
   return tarball
 }
 
@@ -39,8 +42,7 @@ const packTarball = async function({ packageRoot, tarballDir }) {
   })
 }
 
-const getTarball = function({ packageRoot, tarballDir }) {
-  const { name, version } = getManifest({ packageRoot })
+const getTarball = function({ tarballDir, name, version }) {
   const tarball = join(tarballDir, `${name}-${version}.tgz`)
   return tarball
 }
@@ -58,10 +60,10 @@ const removeTarball = async function({ tarball }) {
   await promisify(unlink)(tarball)
 }
 
-const fireCommand = async function({ command }) {
+const fireCommand = async function({ command, name }) {
   await execa.shell(command, {
     stdout: 'inherit',
-    env: { [ENV_VAR.NAME]: ENV_VAR.VALUE },
+    env: { [ENV_VAR]: name },
   })
 }
 

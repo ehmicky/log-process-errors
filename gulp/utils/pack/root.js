@@ -4,6 +4,12 @@ const assert = require('assert')
 
 const pkgDir = require('pkg-dir')
 
+const getPackageInfo = async function() {
+  const packageRoot = await getPackageRoot()
+  const { name, version } = getManifest({ packageRoot })
+  return { packageRoot, name, version }
+}
+
 const getPackageRoot = async function() {
   const packageRoot = await pkgDir()
   checkPackageRoot({ packageRoot })
@@ -29,7 +35,6 @@ const getManifest = function({ packageRoot }) {
 }
 
 module.exports = {
-  getPackageRoot,
+  getPackageInfo,
   getPackageRootSync,
-  getManifest,
 }

@@ -1,6 +1,3 @@
 {
-  "ENV_VAR": {
-    "NAME": "GULP_PACK",
-    "VALUE": "1"
-  }
+  "ENV_VAR": "GULP_PACK"
 }

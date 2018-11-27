@@ -2,7 +2,7 @@
 
 const { env } = require('process')
 
-const { getPackageRootSync, getManifest } = require('./root')
+const { getPackageRootSync } = require('./root')
 const { ENV_VAR } = require('./constants')
 
 // Retrieve the package root directory.
@@ -13,14 +13,11 @@ const { ENV_VAR } = require('./constants')
 //  - wrong entry point (`main` or `browser` field)
 //  - requiring `devDependencies` in production code
 const getPackage = function() {
-  const packageRoot = getPackageRootSync()
-
-  if (env[ENV_VAR.NAME] !== ENV_VAR.VALUE) {
-    return packageRoot
+  if (env[ENV_VAR]) {
+    return env[ENV_VAR]
   }
 
-  const { name } = getManifest({ packageRoot })
-  return name
+  return getPackageRootSync()
 }
 
 module.exports = {

@@ -11,3 +11,4 @@ core
 coverage
 dist
 build
+lcov.info

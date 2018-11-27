@@ -5,9 +5,13 @@ const { join } = require('path')
 const test = require('ava')
 const execa = require('execa')
 
+// eslint-disable-next-line import/no-internal-modules
+const { getPackage } = require('../gulp/utils')
+
 const { repeatEvents, normalizeMessage } = require('./helpers')
 
 const STACK_REGISTER_FILE = join(__dirname, 'helpers', 'stack_register')
+const REGISTER_FILE = join(getPackage(), 'register')
 const EMIT_FILE = './test/helpers/emit'
 
 /* eslint-disable max-nested-callbacks */
@@ -17,7 +21,7 @@ repeatEvents((prefix, { eventName }) => {
       `node \
         --no-warnings \
         -r ${STACK_REGISTER_FILE} \
-        -r ./register \
+        -r ${REGISTER_FILE} \
         -e "require('${EMIT_FILE}').EVENTS.${eventName}()"`,
       { env: { LOG_PROCESS_ERRORS_TEST: '1' } },
     )

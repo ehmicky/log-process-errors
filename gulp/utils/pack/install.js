@@ -7,7 +7,7 @@ const {
   access,
   constants: { R_OK, W_OK },
 } = require('fs')
-const { join } = require('path')
+const { join, sep } = require('path')
 const { promisify } = require('util')
 const { tmpdir } = require('os')
 
@@ -103,9 +103,8 @@ const fixCovMap = async function({ packageRoot, name }) {
 
   const covMap = await promisify(readFile)(covMapPath, { encoding: 'utf-8' })
 
-  // The RegExp needs to account for Windows having different separators.
   const nestedDirRegExp = new RegExp(
-    `node_modules(\\/|\\\\)${name}(\\/|\\\\)`,
+    `node_modules\\${sep}${name}\\${sep}`,
     'gu',
   )
   const covMapA = covMap.replace(nestedDirRegExp, '')

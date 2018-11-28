@@ -15,13 +15,19 @@ provides with the following additional features:
 - [custom logging]($custom-logging)
 - [control whether to `process.exit()` or not](#process-exit)
 
-# Usage (preferred)
+# Installation
 
 ```bash
 $ npm install -D log-process-errors
 ```
 
-Require this module with the `-r` CLI flag.
+`log-process-errors` modifies logging globally. It should not be installed as
+a production dependency inside libraries since:
+
+- users might not expect this side effect
+- this might lead to conflicts between libraries
+
+# Usage (simple)
 
 ```bash
 $ node -r log-process-errors/register ...
@@ -29,17 +35,13 @@ $ node -r log-process-errors/register ...
 
 # Usage (custom)
 
-In order to customize options, this module must be required like this instead:
-
-```bash
-$ npm install log-process-errors
-```
-
 ```js
 const { init } = require('log-process-errors')
 
 init(options)
 ```
+
+`init()` should be called as early as possible in the code.
 
 `options` is an optional object with the following properties:
 
@@ -49,14 +51,6 @@ init(options)
 - [`colors` `{boolean}`](#log-message) (default: `true`)
 - [`skipEvent` `{function}`](#skipping-events)
 - [`exitOn` `{string[]}`](#process-exit) (default: `['uncaughtException']`)
-
-`logProcessErrors()` should be called as early as possible in the code.
-
-`log-process-errors` modifies logging globally. This is not recommended for
-libraries since their users might not expect this side effect. Also this might
-lead to conflicts between libraries. Libraries should use the
-[`-r log-process-errors/register` CLI flag](#usage-preferred) instead of
-[`require()`](#usage-custom).
 
 # Duplicate events
 

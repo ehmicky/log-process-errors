@@ -116,14 +116,12 @@ const getCovMapPath = async function({ packageRoot }) {
   const covMapPath = `${packageRoot}/coverage/lcov.info`
 
   try {
-    await promisify(access)(covMapPath, READ_WRITE)
+    // eslint-disable-next-line no-bitwise
+    await promisify(access)(covMapPath, R_OK | W_OK)
   } catch {}
 
   return covMapPath
 }
-
-// eslint-disable-next-line no-bitwise
-const READ_WRITE = R_OK | W_OK
 
 module.exports = {
   pack,

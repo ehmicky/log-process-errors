@@ -18,9 +18,9 @@ const { ENV_VAR } = require('./constants')
 
 // Runs `npm pack && npm install tarball && rm tarball && command`
 const pack = async function(command = DEFAULT_COMMAND) {
-  const { packageRoot, name, version } = await getPackageInfo()
+  const { packageRoot, name } = await getPackageInfo()
 
-  const tarball = await createTarball({ packageRoot, name, version })
+  const tarball = await createTarball({ packageRoot })
 
   await installTarball({ tarball })
 
@@ -32,34 +32,28 @@ const pack = async function(command = DEFAULT_COMMAND) {
 
 const DEFAULT_COMMAND = 'npm test'
 
-const createTarball = async function({ packageRoot, name, version }) {
+const createTarball = async function({ packageRoot }) {
   const tarballDir = tmpdir()
 
-  await packTarball({ packageRoot, tarballDir })
+  const tarballName = await packTarball({ packageRoot, tarballDir })
 
-  const tarball = getTarball({ tarballDir, name, version })
+  const tarball = join(tarballDir, tarballName)
   return tarball
 }
 
 const packTarball = async function({ packageRoot, tarballDir }) {
-  await execa.shell(`npm pack ${packageRoot}`, {
-    stdout: 'ignore',
+  const { stdout } = await execa.shell(`npm pack --silent ${packageRoot}`, {
+    stderr: 'inherit',
     cwd: tarballDir,
   })
-}
-
-const getTarball = function({ tarballDir, name, version }) {
-  const tarball = join(tarballDir, `${name}-${version}.tgz`)
-  return tarball
+  return stdout
 }
 
 // We don't need to support other package managers like yarn because:
 //  - this command produces the same side-effects
 //  - `npm` binary is always available
 const installTarball = async function({ tarball }) {
-  await execa.shell(`npm install --no-save --force ${tarball}`, {
-    stdout: 'ignore',
-  })
+  await execa.shell(`npm install --no-save --force ${tarball}`)
 }
 
 const removeTarball = async function({ tarball }) {
@@ -70,10 +64,7 @@ const removeTarball = async function({ tarball }) {
 const fireCommand = async function({ command, name }) {
   const commandA = await fixTestCoverage({ command, name })
 
-  await execa.shell(commandA, {
-    stdout: 'inherit',
-    env: { [ENV_VAR]: name },
-  })
+  await execa.shell(commandA, { stdio: 'inherit', env: { [ENV_VAR]: name } })
 
   await fixCovMap({ name })
 }

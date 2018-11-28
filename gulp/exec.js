@@ -20,18 +20,16 @@ const exec = async function(command, opts = {}) {
 // Default to piping shell stdin|stdout|stderr to console.
 const addStdio = function({ opts }) {
   // Unless user specified another stdio redirection.
-  const hasStdioOption = STDIO_OPTIONS.some(
-    stdioOption => opts[stdioOption] !== undefined,
-  )
-
-  if (hasStdioOption) {
+  if (opts.stdio !== undefined) {
     return opts
   }
 
-  return { ...opts, stdio: 'inherit' }
-}
+  if (opts.input !== undefined) {
+    return { stdout: 'inherit', stderr: 'inherit', ...opts }
+  }
 
-const STDIO_OPTIONS = ['stdio', 'stdin', 'stdout', 'stderr', 'input']
+  return { stdin: 'inherit', stdout: 'inherit', stderr: 'inherit', ...opts }
+}
 
 // Retrieve error message to print
 const getErrorMessage = function({

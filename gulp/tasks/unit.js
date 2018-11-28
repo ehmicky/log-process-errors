@@ -2,12 +2,12 @@
 
 const { readFile } = require('fs')
 const { promisify } = require('util')
-const { join } = require('path')
 
 const { load: loadYaml } = require('js-yaml')
 const isCi = require('is-ci')
+const execa = require('execa')
 
-const { getWatchTask, pack } = require('../utils')
+const { getWatchTask } = require('../utils')
 const gulpExeca = require('../exec')
 
 const TRAVIS_CONFIG = `${__dirname}/../../.travis.yml`
@@ -19,9 +19,10 @@ const unit = async function() {
     return gulpExeca('ava')
   }
 
-  // TODO: use && instead (must create CLI first)
-  await pack('nyc ava')
-  await gulpExeca(`coveralls <${join('coverage', 'lcov.info')}`)
+  // TODO: separate pack into own repository, then use:
+  //   await gulpExeca('pack nyc ava && coveralls <coverage/lcov.info')
+  await execa('./gulp/utils/pack/pack.js', ['nyc', 'ava'], { stdio: 'inherit' })
+  await gulpExeca('coveralls <coverage/lcov.info')
 }
 
 // eslint-disable-next-line fp/no-mutation

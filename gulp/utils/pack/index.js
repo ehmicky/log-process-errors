@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = {
-  ...require('./install'),
+  ...require('./main'),
   ...require('./get'),
 }

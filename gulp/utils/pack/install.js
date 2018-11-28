@@ -60,39 +60,40 @@ const removeTarball = async function({ tarball }) {
   await promisify(unlink)(tarball)
 }
 
-// TODO: use packageRoot instead of process.cwd()?
 const fireCommand = async function({ command, packageRoot, name }) {
-  const commandA = await fixTestCoverage({ command, packageRoot, name })
+  const commandA = await fixCommand({ command, packageRoot, name })
 
   await execa.shell(commandA, { stdio: 'inherit', env: { [ENV_VAR]: name } })
 
   await fixCovMap({ packageRoot, name })
 }
 
-// When using `pack`, tested files will be inside `node_modules/PACKAGE`,
-// so we need to use nyc --cwd:
-//  - otherwise they will be ignored
-//  - also other nyc logic should consider `node_modules/PACKAGE` as if it
-//    was the top directory, e.g. `--all` flag.
-const fixTestCoverage = function({ command, packageRoot, name }) {
+const fixCommand = function({ command, packageRoot, name }) {
   if (command.startsWith('nyc ')) {
-    return command.replace(
-      'nyc',
-      `nyc --cwd ${packageRoot}/node_modules/${name} --report-dir ../../coverage --temp-dir ../../.nyc_output`,
-    )
+    return fixNyc({ command, packageRoot, name })
   }
 
   return command
 }
 
-// We need to strip `node_modules/PACKAGE/` from test coverage reports.
-// Reasons:
-//   - `coveralls` tries to fetch source files (after source maps has been
-//     applied), i.e. it will try to find them inside `node_modules/PACKAGE/`.
-//     Since it won't find them, they won't be reported.
+// When using `pack`, tested files will be inside `node_modules/PACKAGE`.
+// This won't work properly with nyc unless using `--cwd` flag.
+// Otherwise those files will be ignored, and flags like `--all` won't work.
+// We need to also specify `--report-dir` and `--temp-dir` to make sure those
+// directories do not use `--cwd` flag location.
+const fixNyc = function({ command, packageRoot, name }) {
+  return command.replace(
+    'nyc',
+    `nyc --cwd ${packageRoot}/node_modules/${name} --report-dir ../../coverage --temp-dir ../../.nyc_output`,
+  )
+}
+
+// We need to strip `node_modules/PACKAGE/` from file paths in coverage maps:
 //   - so it looks like source files were in the same directory (not inside
 //     `node_modules`).
-// Some tools like coveralls will otherwise show wrong reporting.
+//   - so file paths point to existing files in the filesystem.
+//     Some tools like `coveralls` try to fetch content of files from the
+//     coverage map. If they can't find them, they won't be reported.
 const fixCovMap = async function({ packageRoot, name }) {
   const covMapPath = await getCovMapPath({ packageRoot })
 
@@ -112,6 +113,7 @@ const fixCovMap = async function({ packageRoot, name }) {
   await promisify(writeFile)(covMapPath, covMapA, { encoding: 'utf-8' })
 }
 
+// Retrieve coverage map location and make sure it exists.
 const getCovMapPath = async function({ packageRoot }) {
   const covMapPath = `${packageRoot}/coverage/lcov.info`
 

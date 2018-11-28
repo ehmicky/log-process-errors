@@ -26,7 +26,7 @@ const pack = async function(command = DEFAULT_COMMAND) {
 
   await Promise.all([
     removeTarball({ tarball }),
-    fireCommand({ command, name }),
+    fireCommand({ command, packageRoot, name }),
   ])
 }
 
@@ -61,12 +61,12 @@ const removeTarball = async function({ tarball }) {
 }
 
 // TODO: use packageRoot instead of process.cwd()?
-const fireCommand = async function({ command, name }) {
-  const commandA = await fixTestCoverage({ command, name })
+const fireCommand = async function({ command, packageRoot, name }) {
+  const commandA = await fixTestCoverage({ command, packageRoot, name })
 
   await execa.shell(commandA, { stdio: 'inherit', env: { [ENV_VAR]: name } })
 
-  await fixCovMap({ name })
+  await fixCovMap({ packageRoot, name })
 }
 
 // When using `pack`, tested files will be inside `node_modules/PACKAGE`,
@@ -74,11 +74,11 @@ const fireCommand = async function({ command, name }) {
 //  - otherwise they will be ignored
 //  - also other nyc logic should consider `node_modules/PACKAGE` as if it
 //    was the top directory, e.g. `--all` flag.
-const fixTestCoverage = function({ command, name }) {
+const fixTestCoverage = function({ command, packageRoot, name }) {
   if (command.startsWith('nyc ')) {
     return command.replace(
       'nyc',
-      `nyc --cwd node_modules/${name} --report-dir ../../coverage --temp-dir ../../.nyc_output`,
+      `nyc --cwd ${packageRoot}/node_modules/${name} --report-dir ../../coverage --temp-dir ../../.nyc_output`,
     )
   }
 
@@ -93,8 +93,8 @@ const fixTestCoverage = function({ command, name }) {
 //   - so it looks like source files were in the same directory (not inside
 //     `node_modules`).
 // Some tools like coveralls will otherwise show wrong reporting.
-const fixCovMap = async function({ name }) {
-  const covMapPath = await getCovMapPath()
+const fixCovMap = async function({ packageRoot, name }) {
+  const covMapPath = await getCovMapPath({ packageRoot })
 
   if (covMapPath === undefined) {
     return
@@ -112,8 +112,8 @@ const fixCovMap = async function({ name }) {
   await promisify(writeFile)(covMapPath, covMapA, { encoding: 'utf-8' })
 }
 
-const getCovMapPath = async function() {
-  const covMapPath = './coverage/lcov.info'
+const getCovMapPath = async function({ packageRoot }) {
+  const covMapPath = `${packageRoot}/coverage/lcov.info`
 
   try {
     await promisify(access)(covMapPath, READ_WRITE)

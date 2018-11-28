@@ -11,6 +11,7 @@ const getPackageInfo = async function() {
   return { packageRoot, name, version }
 }
 
+// Retrieve package root directory
 const getPackageRoot = async function() {
   const packageRoot = await pkgDir()
   checkPackageRoot({ packageRoot })
@@ -32,6 +33,7 @@ const checkPackageRoot = function({ packageRoot }) {
   )
 }
 
+// Retrieve root `package.json`
 const getManifest = function({ packageRoot }) {
   // eslint-disable-next-line import/no-dynamic-require
   return require(`${packageRoot}/package.json`)

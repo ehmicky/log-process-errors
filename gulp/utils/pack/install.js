@@ -7,6 +7,7 @@ const { tmpdir } = require('os')
 
 const execa = require('execa')
 
+// Runs `npm pack && npm install tarball && rm tarball`
 const install = async function({ packageRoot }) {
   const tarball = await createTarball({ packageRoot })
 

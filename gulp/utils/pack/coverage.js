@@ -9,15 +9,20 @@ const {
 const { sep } = require('path')
 const { promisify } = require('util')
 
-const isNyc = function({ command }) {
-  return command.startsWith('nyc ')
-}
-
 // When using `pack`, tested files will be inside `node_modules/PACKAGE`.
 // This won't work properly with nyc unless using `--cwd` flag.
 // Otherwise those files will be ignored, and flags like `--all` won't work.
 // We need to also specify `--report-dir` and `--temp-dir` to make sure those
 // directories do not use `--cwd` flag location.
+// If any of those nyc CLI flags are already specified, user should adjust them
+// like this:
+//  - `--cwd` should point within `node_modules/packageName`
+//  - `--report-dir` and `--temp-dir` paths are relative to
+//    `node_modules/packageName`
+const isNyc = function({ command }) {
+  return command.startsWith('nyc ')
+}
+
 const fixNyc = function({ command, packageRoot, name }) {
   return command.replace(
     'nyc',
@@ -39,13 +44,10 @@ const fixCovMap = async function({ packageRoot, name }) {
   }
 
   const covMap = await promisify(readFile)(covMapPath, { encoding: 'utf-8' })
-
-  const nestedDirRegExp = new RegExp(
-    `node_modules\\${sep}${name}\\${sep}`,
-    'gu',
+  const covMapA = covMap.replace(
+    new RegExp(`node_modules\\${sep}${name}\\${sep}`, 'gu'),
+    '',
   )
-  const covMapA = covMap.replace(nestedDirRegExp, '')
-
   await promisify(writeFile)(covMapPath, covMapA, { encoding: 'utf-8' })
 }
 

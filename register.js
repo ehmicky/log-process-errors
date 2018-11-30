@@ -1,5 +1,3 @@
-// istanbul ignore file
-// This file is unit tested but in a child process
 'use strict'
 
 const { init } = require('.')

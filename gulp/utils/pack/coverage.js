@@ -6,48 +6,48 @@ const {
   access,
   constants: { R_OK, W_OK },
 } = require('fs')
-const { sep } = require('path')
+const { normalize } = require('path')
 const { promisify } = require('util')
 
-// When using `pack`, tested files will be inside `node_modules/PACKAGE`.
+const { replaceAll } = require('./utils')
+
+// When using `pack`, tested files will be inside `buildDir`
 // This won't work properly with nyc unless using `--cwd` flag.
 // Otherwise those files will be ignored, and flags like `--all` won't work.
 // We need to also specify `--report-dir` and `--temp-dir` to make sure those
-// directories do not use `--cwd` flag location.
-// If any of those nyc CLI flags are already specified, user should adjust them
-// like this:
-//  - `--cwd` should point within `node_modules/packageName`
-//  - `--report-dir` and `--temp-dir` paths are relative to
-//    `node_modules/packageName`
+// directories do not use `buildDir`.
 const isNyc = function({ command }) {
   return command.startsWith('nyc ')
 }
 
-const fixNyc = function({ command, packageRoot, name }) {
+const fixNyc = function({ command, packageRoot, buildDir }) {
   return command.replace(
     'nyc',
-    `nyc --cwd ${packageRoot}/node_modules/${name} --report-dir ../../coverage --temp-dir ../../.nyc_output`,
+    `nyc --cwd ${buildDir} --report-dir ${packageRoot}/coverage --temp-dir ${packageRoot}/.nyc_output`,
   )
 }
 
-// We need to strip `node_modules/PACKAGE/` from file paths in coverage maps:
-//   - so it looks like source files were in the same directory (not inside
-//     `node_modules`).
-//   - so file paths point to existing files in the filesystem.
-//     Some tools like `coveralls` try to fetch content of files from the
-//     coverage map. If they can't find them, they won't be reported.
-const fixCovMap = async function({ packageRoot, name }) {
+// We need to strip `buildDir` from file paths in coverage maps, because
+// tools (like `nyc` reporters and `coveralls`) require them to point to
+// source files that exist on the filesystem.
+const fixCovMap = async function({ packageRoot, buildDir }) {
   const covMapPath = await getCovMapPath({ packageRoot })
 
   if (covMapPath === undefined) {
     return
   }
 
+  // For Windows
+  const buildDirA = normalize(buildDir)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('Normalized buildDir: ', buildDirA)
+
   const covMap = await promisify(readFile)(covMapPath, { encoding: 'utf-8' })
-  const covMapA = covMap.replace(
-    new RegExp(`node_modules\\${sep}${name}\\${sep}`, 'gu'),
-    '',
-  )
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('Before covMap: ', covMap)
+  const covMapA = replaceAll(covMap, buildDirA, packageRoot)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('After covMap: ', covMapA)
   await promisify(writeFile)(covMapPath, covMapA, { encoding: 'utf-8' })
 }
 

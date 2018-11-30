@@ -80,6 +80,7 @@
     "eslint-plugin-unicorn": "^6.0.1",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.4.0",
     "execa": "^1.0.0",
+    "fs-extra": "^7.0.1",
     "gulp": "^4.0.0",
     "gulp-jscpd": "0.0.8",
     "has-ansi": "^3.0.0",
@@ -98,6 +99,7 @@
     "sinon": "^7.1.1",
     "source-map-support": "^0.5.9",
     "strip-ansi": "^5.0.0",
+    "tar": "^4.4.8",
     "yargs": "^12.0.5"
   },
   "engines": {

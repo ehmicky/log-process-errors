@@ -14,7 +14,7 @@ const { replaceAll } = require('./utils')
 // When using `pack`, tested files will be inside `buildDir`
 // This won't work properly with nyc unless using `--cwd` flag.
 // Otherwise those files will be ignored, and flags like `--all` won't work.
-// We need to also specify `--report-dir` and `--temp-dir` to make sure those
+// We need to also specify `--report|temp|cache-dir` to make sure those
 // directories do not use `buildDir`.
 const isNyc = function({ command }) {
   return command.startsWith('nyc ')
@@ -23,7 +23,7 @@ const isNyc = function({ command }) {
 const fixNyc = function({ command, packageRoot, buildDir }) {
   return command.replace(
     'nyc',
-    `nyc --cwd ${buildDir} --report-dir ${packageRoot}/coverage --temp-dir ${packageRoot}/.nyc_output`,
+    `nyc --clean --cwd ${buildDir} --report-dir ${packageRoot}/coverage --temp-dir ${packageRoot}/.nyc_output --cache-dir ${packageRoot}/node_modules/.cache/nyc`,
   )
 }
 
@@ -39,15 +39,9 @@ const fixCovMap = async function({ packageRoot, buildDir }) {
 
   // For Windows
   const buildDirA = normalize(buildDir)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('Normalized buildDir: ', buildDirA)
 
   const covMap = await promisify(readFile)(covMapPath, { encoding: 'utf-8' })
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('Before covMap: ', covMap)
   const covMapA = replaceAll(covMap, buildDirA, packageRoot)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('After covMap: ', covMapA)
   await promisify(writeFile)(covMapPath, covMapA, { encoding: 'utf-8' })
 }
 

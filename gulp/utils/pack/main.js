@@ -22,7 +22,7 @@ const pack = async function(command = DEFAULT_COMMAND) {
 const DEFAULT_COMMAND = 'npm test'
 
 const fireCommand = async function({ command, packageRoot, buildDir }) {
-  const commandA = await fixCommand({ command, packageRoot, buildDir })
+  const commandA = fixCommand({ command, packageRoot, buildDir })
 
   await execa.shell(commandA, {
     stdio: 'inherit',

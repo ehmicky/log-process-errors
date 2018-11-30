@@ -1,6 +1,6 @@
 'use strict'
 
-const { unlink, rmdir, rename } = require('fs')
+const { unlink, rmdir, rename, realpath } = require('fs')
 const { resolve } = require('path')
 const { promisify } = require('util')
 const { tmpdir } = require('os')
@@ -13,12 +13,17 @@ const tar = require('tar')
 // We must use a directory that is not a sibling or child so that requiring
 // `devDependencies` fails.
 const getBuildDir = async function({ name }) {
-  const buildDir = `${tmpdir}/gulp_pack/${name}`
+  const buildDirRoot = tmpdir()
+  // Until https://github.com/istanbuljs/istanbuljs/issues/240 is resolved.
+  const buildDirRootA = await promisify(realpath)(buildDirRoot)
+  const buildDir = `${buildDirRootA}/${BUILD_DIR_NAME}/${name}`
 
   await emptyDir(buildDir)
 
   return buildDir
 }
+
+const BUILD_DIR_NAME = 'gulp_pack'
 
 // Runs `npm pack`, unpack it to `buildDir`, then run `npm install` inside it.
 const install = async function({ packageRoot, buildDir }) {

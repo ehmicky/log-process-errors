@@ -1,15 +1,10 @@
 'use strict'
 
-const {
-  readFile,
-  writeFile,
-  access,
-  constants: { R_OK, W_OK },
-} = require('fs')
+const { readFile, writeFile } = require('fs')
 const { normalize } = require('path')
 const { promisify } = require('util')
 
-const { replaceAll } = require('./utils')
+const { replaceAll, fileExists } = require('./utils')
 
 // When using `pack`, tested files will be inside `buildDir`
 // This won't work properly with nyc unless using `--cwd` flag.
@@ -30,31 +25,30 @@ const fixNyc = function({ command, packageRoot, buildDir }) {
 // We need to strip `buildDir` from file paths in coverage maps, because
 // tools (like `nyc` reporters and `coveralls`) require them to point to
 // source files that exist on the filesystem.
-const fixCovMap = async function({ packageRoot, buildDir }) {
-  const covMapPath = await getCovMapPath({ packageRoot })
-
-  if (covMapPath === undefined) {
+const fixCovMap = async function({ command, packageRoot, buildDir }) {
+  if (!isNyc({ command })) {
     return
   }
 
+  // Retrieve coverage map location and make sure it exists.
+  const covMapPath = `${packageRoot}/coverage/lcov.info`
+
+  const covMapExists = await fileExists({ path: covMapPath, readWrite: true })
+
+  if (!covMapExists) {
+    return
+  }
+
+  await substituteCovMap({ packageRoot, buildDir, covMapPath })
+}
+
+const substituteCovMap = async function({ packageRoot, buildDir, covMapPath }) {
   // For Windows
   const buildDirA = normalize(buildDir)
 
   const covMap = await promisify(readFile)(covMapPath, { encoding: 'utf-8' })
   const covMapA = replaceAll(covMap, buildDirA, packageRoot)
   await promisify(writeFile)(covMapPath, covMapA, { encoding: 'utf-8' })
-}
-
-// Retrieve coverage map location and make sure it exists.
-const getCovMapPath = async function({ packageRoot }) {
-  const covMapPath = `${packageRoot}/coverage/lcov.info`
-
-  try {
-    // eslint-disable-next-line no-bitwise
-    await promisify(access)(covMapPath, R_OK | W_OK)
-  } catch {}
-
-  return covMapPath
 }
 
 module.exports = {

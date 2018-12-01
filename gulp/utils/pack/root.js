@@ -5,18 +5,14 @@ const assert = require('assert')
 const pkgDir = require('pkg-dir')
 const moize = require('moize').default
 
-const getPackageInfo = async function() {
-  const packageRoot = await getPackageRoot()
-  const { name, version } = getManifest({ packageRoot })
-  return { packageRoot, name, version }
-}
-
 // Retrieve package root directory
 const getPackageRoot = async function() {
   const packageRoot = await pkgDir()
   checkPackageRoot({ packageRoot })
   return packageRoot
 }
+
+const mGetPackageRoot = moize(getPackageRoot)
 
 const getPackageRootSync = function() {
   const packageRoot = pkgDir.sync()
@@ -33,13 +29,7 @@ const checkPackageRoot = function({ packageRoot }) {
   )
 }
 
-// Retrieve root `package.json`
-const getManifest = function({ packageRoot }) {
-  // eslint-disable-next-line import/no-dynamic-require
-  return require(`${packageRoot}/package.json`)
-}
-
 module.exports = {
-  getPackageInfo,
+  getPackageRoot: mGetPackageRoot,
   getPackageRootSync: mGetPackageRootSync,
 }

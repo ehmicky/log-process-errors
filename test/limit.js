@@ -2,8 +2,10 @@
 
 const test = require('ava')
 
-// eslint-disable-next-line import/no-internal-modules
-const { getPackage } = require('../gulp/utils')
+const {
+  constants: { MAX_EVENTS },
+  // eslint-disable-next-line import/no-internal-modules
+} = require('../gulp/utils').load()
 
 const {
   repeatEvents,
@@ -12,11 +14,6 @@ const {
   unstubStackTrace,
   emitEvents,
 } = require('./helpers')
-
-const {
-  constants: { MAX_EVENTS },
-  // eslint-disable-next-line import/no-dynamic-require
-} = require(getPackage())
 
 const isLimitedWarning = function({ eventName, error: { name } = {} }) {
   return eventName === 'warning' && name === 'LogProcessError'

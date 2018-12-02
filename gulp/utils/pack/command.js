@@ -2,7 +2,7 @@
 
 const execa = require('execa')
 
-const { isNyc, fixNyc, fixCovMap } = require('./coverage')
+const { isNyc, fixNyc, fixCovMap } = require('./nyc')
 const { ENV_VAR } = require('./constants')
 
 // Fire main command

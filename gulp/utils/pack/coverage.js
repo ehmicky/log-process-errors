@@ -6,6 +6,9 @@ const { promisify } = require('util')
 
 const { replaceAll, fileExists } = require('./utils')
 
+const pReadFile = promisify(readFile)
+const pWriteFile = promisify(writeFile)
+
 // When using `pack`, tested files will be inside `buildDir`
 // This won't work properly with nyc unless using `--cwd` flag.
 // Otherwise those files will be ignored, and flags like `--all` won't work.
@@ -46,9 +49,9 @@ const substituteCovMap = async function({ packageRoot, buildDir, covMapPath }) {
   // For Windows
   const buildDirA = normalize(buildDir)
 
-  const covMap = await promisify(readFile)(covMapPath, { encoding: 'utf-8' })
+  const covMap = await pReadFile(covMapPath, { encoding: 'utf-8' })
   const covMapA = replaceAll(covMap, buildDirA, packageRoot)
-  await promisify(writeFile)(covMapPath, covMapA, { encoding: 'utf-8' })
+  await pWriteFile(covMapPath, covMapA, { encoding: 'utf-8' })
 }
 
 module.exports = {

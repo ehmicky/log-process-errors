@@ -6,6 +6,8 @@ const {
 } = require('fs')
 const { promisify } = require('util')
 
+const pAccess = promisify(access)
+
 // Like input.replace(oldString, newString) but for all occurences
 const replaceAll = function(input, oldString, newString) {
   const regExp = escapeRegExp(oldString)
@@ -22,7 +24,7 @@ const fileExists = async function({ path, readWrite = false }) {
   const flags = readWrite ? R_OK | W_OK : R_OK
 
   try {
-    await promisify(access)(path, flags)
+    await pAccess(path, flags)
     return true
   } catch {
     return false

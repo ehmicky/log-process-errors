@@ -4,12 +4,14 @@ const { promisify } = require('util')
 
 const { defaultGetError } = require('./default')
 
+const pSetImmediate = promisify(setImmediate)
+
 // Emit an `unhandledRejection` event
 const unhandledRejection = async function(getError = defaultGetError) {
   // eslint-disable-next-line promise/catch-or-return
   Promise.reject(getError())
 
-  await promisify(setImmediate)()
+  await pSetImmediate()
 }
 
 module.exports = {

@@ -7,6 +7,9 @@ const { tmpdir } = require('os')
 const { remove } = require('fs-extra')
 const moize = require('moize').default
 
+const pRealpath = promisify(realpath)
+const pMkdir = promisify(mkdir)
+
 // Retrieve build directory.
 // We must use a directory that is not a sibling or child so that requiring
 // `devDependencies` fails.
@@ -24,7 +27,7 @@ const getBuildBase = async function() {
   const randomId = getRandomId()
   const buildBase = `${buildRoot}/${BUILD_DIR_NAME}/${randomId}`
 
-  await promisify(mkdir)(buildBase, { recursive: true })
+  await pMkdir(buildBase, { recursive: true })
 
   return buildBase
 }
@@ -32,7 +35,7 @@ const getBuildBase = async function() {
 const getBuildRoot = async function() {
   const buildRoot = tmpdir()
   // Until https://github.com/istanbuljs/istanbuljs/issues/240 is resolved.
-  const buildRootA = await promisify(realpath)(buildRoot)
+  const buildRootA = await pRealpath(buildRoot)
   return buildRootA
 }
 

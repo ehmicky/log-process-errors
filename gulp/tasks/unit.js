@@ -12,6 +12,8 @@ const gulpExeca = require('../exec')
 
 const TRAVIS_CONFIG = `${__dirname}/../../.travis.yml`
 
+const pReadFile = promisify(readFile)
+
 const unit = async function() {
   // In CI, we use `pack`, but not locally since it is slow.
   // Also, in CI we do test coverage and send it to Coveralls.
@@ -46,7 +48,7 @@ const unitfull = async function() {
 
 // Retrieve Node.js versions from Travis configuration
 const getNodeVersions = async function() {
-  const travisConfig = await promisify(readFile)(TRAVIS_CONFIG)
+  const travisConfig = await pReadFile(TRAVIS_CONFIG)
   const { node_js: versions = [] } = loadYaml(travisConfig)
   // eslint-disable-next-line fp/no-mutating-methods
   const versionsA = versions.sort().reverse()

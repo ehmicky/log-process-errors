@@ -5,14 +5,16 @@ const { promisify } = require('util')
 
 const { defaultGetError } = require('./default')
 
+const pSetImmediate = promisify(setImmediate)
+
 // Emit an `uncaughtException` event
 const uncaughtException = async function(getError = defaultGetError) {
   nextTick(() => {
     throw getError()
   })
 
-  await promisify(setImmediate)()
-  await promisify(setImmediate)()
+  await pSetImmediate()
+  await pSetImmediate()
 }
 
 module.exports = {

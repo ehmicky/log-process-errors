@@ -4,6 +4,8 @@ const { promisify } = require('util')
 
 const { defaultSteps } = require('./default')
 
+const pSetImmediate = promisify(setImmediate)
+
 // Emit a `multipleResolves` event
 const multipleResolves = async function(steps = defaultSteps) {
   // eslint-disable-next-line no-new, promise/avoid-new
@@ -14,7 +16,7 @@ const multipleResolves = async function(steps = defaultSteps) {
     })
   })
 
-  await promisify(setImmediate)()
+  await pSetImmediate()
 }
 
 module.exports = {

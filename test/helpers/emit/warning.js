@@ -5,6 +5,8 @@ const { promisify } = require('util')
 
 const { defaultWarning } = require('./default')
 
+const pSetImmediate = promisify(setImmediate)
+
 // Emit a `warning` event
 const warning = async function({
   message,
@@ -14,7 +16,7 @@ const warning = async function({
 } = defaultWarning) {
   emitWarning(message, { type, code, detail })
 
-  await promisify(setImmediate)()
+  await pSetImmediate()
 }
 
 module.exports = {

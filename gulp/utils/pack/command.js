@@ -2,27 +2,16 @@
 
 const execa = require('execa')
 
-const { isNyc, fixNyc, fixCovMap } = require('./nyc')
+const { isNyc, fireNyc } = require('./nyc')
 const { ENV_VAR } = require('./constants')
 
 // Fire main command
 const fireCommand = async function({ command, packageRoot, buildDir }) {
-  const commandA = fixCommand({ command, packageRoot, buildDir })
-
-  await execa.shell(commandA, {
-    stdio: 'inherit',
-    env: { [ENV_VAR]: buildDir },
-  })
-
-  await fixCovMap({ command: commandA, packageRoot, buildDir })
-}
-
-const fixCommand = function({ command, packageRoot, buildDir }) {
   if (isNyc({ command })) {
-    return fixNyc({ command, packageRoot, buildDir })
+    return fireNyc({ command, packageRoot, buildDir })
   }
 
-  return command
+  await execa.shell(command, { stdio: 'inherit', env: { [ENV_VAR]: buildDir } })
 }
 
 const DEFAULT_COMMAND = 'npm test'

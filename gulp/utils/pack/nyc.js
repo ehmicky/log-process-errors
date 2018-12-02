@@ -4,7 +4,10 @@ const { readFile, writeFile } = require('fs')
 const { normalize } = require('path')
 const { promisify } = require('util')
 
+const execa = require('execa')
+
 const { replaceAll, fileExists } = require('./utils')
+const { ENV_VAR } = require('./constants')
 
 const pReadFile = promisify(readFile)
 const pWriteFile = promisify(writeFile)
@@ -21,6 +24,17 @@ const isNyc = function({ command }) {
 
 // We only patch top-level `nyc` not `nyc instrument`, etc.
 const NYC_SUB_COMMANDS = ['check-coverage', 'report', 'instrument', 'merge']
+
+const fireNyc = async function({ command, packageRoot, buildDir }) {
+  const commandA = fixNyc({ command, packageRoot, buildDir })
+
+  await execa.shell(commandA, {
+    stdio: 'inherit',
+    env: { [ENV_VAR]: buildDir },
+  })
+
+  await fixCovMap({ command: commandA, packageRoot, buildDir })
+}
 
 const fixNyc = function({ command, packageRoot, buildDir }) {
   return command.replace(
@@ -60,6 +74,5 @@ const substituteCovMap = async function({ packageRoot, buildDir, covMapPath }) {
 
 module.exports = {
   isNyc,
-  fixNyc,
-  fixCovMap,
+  fireNyc,
 }

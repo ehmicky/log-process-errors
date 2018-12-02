@@ -8,7 +8,6 @@ const defineCli = function() {
     .example(EXAMPLE, 'Run tests')
     .help()
     .version()
-    .strict()
 }
 
 const USAGE = `$0 COMMAND

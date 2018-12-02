@@ -10,7 +10,7 @@ const { parseConfig } = require('./parse')
 const runCli = async function() {
   try {
     const yargs = defineCli()
-    const { command } = parseConfig({ yargs })
+    const command = parseConfig({ yargs })
     await pack(command)
   } catch (error) {
     runCliHandler(error)

@@ -24,6 +24,7 @@ const unit = async function() {
   // TODO: separate pack into own repository, then use:
   //   await gulpExeca('pack nyc ava && coveralls <coverage/lcov.info')
   await execa('./gulp/utils/pack/pack.js', ['nyc', 'ava'], { stdio: 'inherit' })
+
   await gulpExeca('coveralls <coverage/lcov.info')
 }
 

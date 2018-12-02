@@ -26,17 +26,17 @@ const isNyc = function({ command }) {
 const NYC_SUB_COMMANDS = ['check-coverage', 'report', 'instrument', 'merge']
 
 const fireNyc = async function({ command, packageRoot, buildDir }) {
-  const commandA = fixNyc({ command, packageRoot, buildDir })
+  const commandA = fixCommand({ command, packageRoot, buildDir })
 
   await execa.shell(commandA, {
     stdio: 'inherit',
     env: { [ENV_VAR]: buildDir },
   })
 
-  await fixCovMap({ command: commandA, packageRoot, buildDir })
+  await fixCovMap({ packageRoot, buildDir })
 }
 
-const fixNyc = function({ command, packageRoot, buildDir }) {
+const fixCommand = function({ command, packageRoot, buildDir }) {
   return command.replace(
     'nyc',
     `nyc --clean --cwd ${buildDir} --report-dir ${packageRoot}/coverage --temp-dir ${packageRoot}/.nyc_output --cache-dir ${packageRoot}/node_modules/.cache/nyc`,
@@ -46,11 +46,7 @@ const fixNyc = function({ command, packageRoot, buildDir }) {
 // We need to strip `buildDir` from file paths in coverage maps, because
 // tools (like `nyc` reporters and `coveralls`) require them to point to
 // source files that exist on the filesystem.
-const fixCovMap = async function({ command, packageRoot, buildDir }) {
-  if (!isNyc({ command })) {
-    return
-  }
-
+const fixCovMap = async function({ packageRoot, buildDir }) {
   // Retrieve coverage map location and make sure it exists.
   const covMapPath = `${packageRoot}/coverage/lcov.info`
 

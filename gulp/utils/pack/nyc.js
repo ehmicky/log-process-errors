@@ -15,8 +15,12 @@ const pWriteFile = promisify(writeFile)
 // We need to also specify `--report|temp|cache-dir` to make sure those
 // directories do not use `buildDir`.
 const isNyc = function({ command }) {
-  return command.startsWith('nyc ')
+  const [mainCommand, subCommand] = command.trim().split(/\s+/u)
+  return mainCommand === 'nyc' && !NYC_SUB_COMMANDS.includes(subCommand)
 }
+
+// We only patch top-level `nyc` not `nyc instrument`, etc.
+const NYC_SUB_COMMANDS = ['check-coverage', 'report', 'instrument', 'merge']
 
 const fixNyc = function({ command, packageRoot, buildDir }) {
   return command.replace(

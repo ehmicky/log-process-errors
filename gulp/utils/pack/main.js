@@ -29,12 +29,12 @@ const pack = async function(command = DEFAULT_COMMAND) {
     await installDeps({ buildDir, cachedModules })
 
     await Promise.all([
-      cacheDeps({ buildBase, buildDir }),
+      cacheDeps({ buildBase, buildDir, cachedModules }),
       fireCommand({ command, packageRoot, buildDir }),
-      removeSiblings({ siblings, name }),
+      removeSiblings({ siblings }),
     ])
   } finally {
-    await removeBuildDir({ buildDir })
+    await removeBuildDir({ buildBase, buildDir, cachedModules })
   }
 }
 

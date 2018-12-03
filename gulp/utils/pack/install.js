@@ -38,7 +38,13 @@ const npmInstall = async function({ buildDir }) {
 // by other runs for caching.
 // We use a temporary file so that creating `buildBase/modules` is atomic.
 // Otherwise a concurrent run using it might get a partial directory.
-const cacheDeps = async function({ buildBase, buildDir }) {
+const cacheDeps = async function({ buildBase, buildDir, cachedModules }) {
+  // If this run used caching, we do not create a new `buildBase/modules` since
+  // one already exists
+  if (cachedModules !== undefined) {
+    return
+  }
+
   await copy(`${buildDir}/node_modules`, `${buildBase}/modules_temp`, {
     overwrite: false,
     errorOnExist: true,

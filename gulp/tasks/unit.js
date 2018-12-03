@@ -7,17 +7,13 @@ const { getWatchTask } = require('../utils')
 const gulpExeca = require('../exec')
 
 const unit = async function() {
-  // In CI, we use `pack`, but not locally since it is slow.
-  // Also, in CI we do test coverage and send it to Coveralls.
-  if (!isCi) {
-    return gulpExeca('ava')
-  }
-
   // TODO: separate pack into own repository, then use:
-  //   await gulpExeca('pack nyc ava && coveralls <coverage/lcov.info')
+  //   await gulpExeca('pack nyc ava')
   await execa('./gulp/utils/pack/pack.js', ['nyc', 'ava'], { stdio: 'inherit' })
 
-  await gulpExeca('coveralls <coverage/lcov.info')
+  if (isCi) {
+    await gulpExeca('coveralls <coverage/lcov.info')
+  }
 }
 
 // eslint-disable-next-line fp/no-mutation

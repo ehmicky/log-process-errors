@@ -1,42 +1,52 @@
 'use strict'
 
-const { resolve } = require('path')
+const { rename } = require('fs')
+const { promisify } = require('util')
 
 const execa = require('execa')
-const tar = require('tar')
+const { copy } = require('fs-extra')
 
-// Runs `npm pack`, unpack it to `buildDir`, then run `npm install` inside it.
-const install = async function({ packageRoot, buildBase, buildDir }) {
-  const tarball = await createTarball({ packageRoot, buildBase })
+const pRename = promisify(rename)
 
-  await extractTarball({ tarball, buildBase })
+// Run `npm install`.
+// If a cached previous run `node_modules` can be used, copy it instead, as this
+// is much faster.
+const installDeps = function({ buildDir, cachedModules }) {
+  if (cachedModules !== undefined) {
+    return copyCachedModules({ buildDir, cachedModules })
+  }
 
-  await installDeps({ buildDir })
+  return npmInstall({ buildDir })
 }
 
-const createTarball = async function({ packageRoot, buildBase }) {
-  const { stdout } = await execa.shell(`npm pack --silent ${packageRoot}`, {
-    stderr: 'inherit',
-    cwd: buildBase,
-  })
-
-  const tarball = resolve(buildBase, stdout)
-  return tarball
-}
-
-const extractTarball = async function({ tarball, buildBase }) {
-  await tar.x({ file: tarball, cwd: buildBase })
+const copyCachedModules = async function({ buildDir, cachedModules }) {
+  // Note that `node_modules` might already exist if there are
+  // `bundledDependencies` in which case they will be overwritten (which is ok)
+  await copy(cachedModules, `${buildDir}/node_modules`)
 }
 
 // We don't need to support other package managers like yarn because:
 //  - this command produces the same side-effects
 //  - `npm` binary is always available
-const installDeps = async function({ buildDir }) {
+const npmInstall = async function({ buildDir }) {
   await execa.shell('npm install --only=prod --no-package-lock', {
     cwd: buildDir,
   })
 }
 
+// Copy `buildDir/node_modules` to `buildBase/modules`, which is what's used
+// by other runs for caching.
+// We use a temporary file so that creating `buildBase/modules` is atomic.
+// Otherwise a concurrent run using it might get a partial directory.
+const cacheDeps = async function({ buildBase, buildDir }) {
+  await copy(`${buildDir}/node_modules`, `${buildBase}/modules_temp`, {
+    overwrite: false,
+    errorOnExist: true,
+  })
+  await pRename(`${buildBase}/modules_temp`, `${buildBase}/modules`)
+}
+
 module.exports = {
-  install,
+  installDeps,
+  cacheDeps,
 }

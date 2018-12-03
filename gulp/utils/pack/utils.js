@@ -53,9 +53,67 @@ const listFiles = async function(dir, extension) {
   return filesA
 }
 
+// Sort an object's keys to canonicalize it
+const sortKeys = function(object) {
+  // eslint-disable-next-line fp/no-mutating-methods
+  const objectA = Object.keys(object)
+    .sort()
+    .map(key => ({ [key]: object[key] }))
+  const objectB = Object.assign({}, ...objectA)
+  return objectB
+}
+
+// Wraps a functor so it does not modify a function `name`, `length`, etc.
+const keepProps = function(functor) {
+  return (originalFunc, ...args) => {
+    const wrappedFunc = functor(originalFunc, ...args)
+
+    copyProperties({ originalFunc, wrappedFunc })
+
+    return wrappedFunc
+  }
+}
+
+const copyProperties = function({ originalFunc, wrappedFunc }) {
+  Reflect.ownKeys(originalFunc).forEach(propName =>
+    copyProperty({ originalFunc, wrappedFunc, propName }),
+  )
+}
+
+const copyProperty = function({ originalFunc, wrappedFunc, propName }) {
+  const prop = Object.getOwnPropertyDescriptor(originalFunc, propName)
+  // eslint-disable-next-line fp/no-mutating-methods
+  Object.defineProperty(wrappedFunc, propName, prop)
+}
+
+// Wrap a function with a error handler
+// Allow passing an empty error handler, i.e. ignoring any error thrown
+// eslint-disable-next-line no-empty-function
+const addErrorHandler = function(func, errorHandler = () => {}) {
+  return errorHandledFunc.bind(null, func, errorHandler)
+}
+
+const kAddErrorHandler = keepProps(addErrorHandler)
+
+const errorHandledFunc = function(func, errorHandler, ...args) {
+  try {
+    const retVal = func(...args)
+
+    // Works for async functions as well
+    // eslint-disable-next-line promise/prefer-await-to-then
+    return retVal && typeof retVal.then === 'function'
+      ? retVal.catch(error => errorHandler(error, ...args))
+      : retVal
+  } catch (error) {
+    return errorHandler(error, ...args)
+  }
+}
+
 module.exports = {
   replaceAll,
   escapeJsonString,
   fileExists,
   listFiles,
+  sortKeys,
+  addErrorHandler: kAddErrorHandler,
 }

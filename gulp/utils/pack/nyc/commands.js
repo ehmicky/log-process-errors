@@ -1,5 +1,7 @@
 'use strict'
 
+const { getInstrumentCommand } = require('./instrument')
+
 // Break down `nyc ...` into `nyc --silent` and
 // `nyc report && nyc check-coverage`
 const getCommands = function({ command, packageRoot, buildDir }) {
@@ -18,21 +20,14 @@ const getCommands = function({ command, packageRoot, buildDir }) {
   return { instrument, report, avaTempDir }
 }
 
+// We remove `--check-coverage` because `nyc check-coverage` is done afterwards.
 const handleCheckCoverage = function({ command }) {
-  const commandA = command.replace(/ --check-coverage/gu, '')
+  const commandA = command.replace(CHECK_COVERAGE_REGEXP, '')
   const hasCheckCoverage = command !== commandA
   return { hasCheckCoverage, command: commandA }
 }
 
-// Get main `nyc` instrumentation command
-const getInstrumentCommand = function({ command, packageRoot, buildDir }) {
-  const avaTempDir = `${packageRoot}/.nyc_output`
-  const instrument = command.replace(
-    'nyc',
-    `nyc --clean --silent --cwd ${buildDir} --report-dir ${packageRoot}/coverage --temp-dir ${avaTempDir} --cache-dir ${packageRoot}/node_modules/.cache/nyc`,
-  )
-  return { instrument, avaTempDir }
-}
+const CHECK_COVERAGE_REGEXP = / --check-coverage/gu
 
 // Get `nyc report [&& nyc check-coverage]` command
 const getReportCommand = function({ command, hasCheckCoverage }) {

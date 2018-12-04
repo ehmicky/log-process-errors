@@ -2,8 +2,7 @@
 
 const {
   constants: { LEVELS },
-  // eslint-disable-next-line import/no-internal-modules
-} = require('../../gulp/utils').load()
+} = require('../../package')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')

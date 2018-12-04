@@ -2,8 +2,8 @@
 
 const { argv } = require('process')
 
-// eslint-disable-next-line import/no-internal-modules
-require('../../gulp/utils').load('register')
+// eslint-disable-next-line import/no-unassigned-import
+require('../../package/register')
 
 const { stubStackTrace } = require('./stack')
 const { EVENTS } = require('./emit')

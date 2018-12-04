@@ -1,42 +1,55 @@
 'use strict'
 
+const { resolve } = require('path')
+const { unlink, rename } = require('fs')
+const { promisify } = require('util')
+
+const execa = require('execa')
+const tar = require('tar')
+const { remove } = require('fs-extra')
+
+const pUnlink = promisify(unlink)
+const pRename = promisify(rename)
+
 const { getPackageRoot } = require('./root')
-const { getBuildDir } = require('./dir')
-const { findSiblings } = require('./siblings')
-const { unpack } = require('./unpack')
-const { installDeps, cacheDeps } = require('./install')
-const { fireCommand, DEFAULT_COMMAND } = require('./command')
-const { removeBuildDir, removeSiblings } = require('./cleanup')
+const { getTempDir, cleanTempDir } = require('./temp')
 
-// Runs command with `GULP_PACK_BUILD_DIR` environment variable pointing
-// towards a built directory of itself (through `npm pack`)
-const pack = async function(command = DEFAULT_COMMAND) {
-  const packageRoot = await getPackageRoot()
+// Runs `npm pack` then unpack it to `opts.output`
+const pack = async function({ output } = {}) {
+  const [packageRoot, tempDir] = await Promise.all([
+    getPackageRoot(),
+    getTempDir(),
+  ])
 
-  const { buildRoot, buildBase, buildDir, name, hash } = await getBuildDir({
-    packageRoot,
-  })
+  const outputA = getOutput({ packageRoot, output })
 
-  const { siblings, cachedModules } = await findSiblings({
-    buildRoot,
-    name,
-    hash,
-  })
+  await unpack({ packageRoot, tempDir, output: outputA })
 
-  await unpack({ packageRoot, buildBase })
-
-  try {
-    await installDeps({ buildDir, cachedModules })
-
-    await Promise.all([
-      cacheDeps({ buildBase, buildDir, cachedModules }),
-      fireCommand({ command, packageRoot, buildDir }),
-      removeSiblings({ siblings }),
-    ])
-  } finally {
-    await removeBuildDir({ buildBase, buildDir, cachedModules })
-  }
+  await cleanTempDir({ tempDir })
 }
+
+const getOutput = function({ packageRoot, output = `${packageRoot}/package` }) {
+  return output
+}
+
+// Runs `npm pack` and unpack it to `packageDir`
+const unpack = async function({ packageRoot, tempDir, output }) {
+  const { stdout } = await execa.shell(`npm pack --silent ${packageRoot}`, {
+    stderr: 'inherit',
+    cwd: tempDir,
+  })
+  const tarball = resolve(tempDir, stdout)
+
+  await tar.x({ file: tarball, cwd: tempDir })
+
+  await pUnlink(tarball)
+
+  await remove(output)
+
+  await pRename(`${tempDir}/package`, output)
+}
+
+pack()
 
 module.exports = {
   pack,

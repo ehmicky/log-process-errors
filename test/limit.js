@@ -4,8 +4,7 @@ const test = require('ava')
 
 const {
   constants: { MAX_EVENTS },
-  // eslint-disable-next-line import/no-internal-modules
-} = require('../gulp/utils').load()
+} = require('../package')
 
 const {
   repeatEvents,

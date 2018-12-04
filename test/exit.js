@@ -8,8 +8,7 @@ const lolex = require('lolex')
 
 const {
   constants: { EXIT_TIMEOUT, EXIT_STATUS },
-  // eslint-disable-next-line import/no-internal-modules
-} = require('../gulp/utils').load()
+} = require('../package')
 
 const { repeatEvents, startLogging } = require('./helpers')
 

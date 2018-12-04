@@ -2,8 +2,7 @@
 
 const { argv } = require('process')
 
-// eslint-disable-next-line import/no-internal-modules
-const { init } = require('../../../gulp/utils').load()
+const { init } = require('../../../package')
 
 const { ALL_EVENTS } = require('./main')
 

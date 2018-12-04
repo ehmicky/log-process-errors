@@ -7,13 +7,15 @@ const { getWatchTask } = require('../utils')
 const gulpExeca = require('../exec')
 
 const unit = async function() {
+  if (!isCi) {
+    return execa('./gulp/utils/pack/pack.js', ['ava'], { stdio: 'inherit' })
+  }
+
   // TODO: separate pack into own repository, then use:
   //   await gulpExeca('pack nyc ava')
   await execa('./gulp/utils/pack/pack.js', ['nyc', 'ava'], { stdio: 'inherit' })
 
-  if (isCi) {
-    await gulpExeca('coveralls <coverage/lcov.info')
-  }
+  await gulpExeca('coveralls <coverage/lcov.info')
 }
 
 // eslint-disable-next-line fp/no-mutation

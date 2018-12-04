@@ -10,5 +10,3 @@ core
 .nyc_output
 coverage
 dist
-build
-lcov.info

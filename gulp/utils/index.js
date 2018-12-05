@@ -2,5 +2,4 @@
 
 module.exports = {
   ...require('./watch'),
-  ...require('./localpack'),
 }

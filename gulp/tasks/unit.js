@@ -1,21 +1,20 @@
 'use strict'
 
 const isCi = require('is-ci')
-const execa = require('execa')
 
 const { getWatchTask } = require('../utils')
+// eslint-disable-next-line import/no-internal-modules
+const localpack = require('../utils/localpack')
 const gulpExeca = require('../exec')
 
 const unit = async function() {
+  await localpack()
+
   if (!isCi) {
-    return execa('./gulp/utils/pack/pack.js', ['ava'], { stdio: 'inherit' })
+    return gulpExeca('ava')
   }
 
-  // TODO: separate pack into own repository, then use:
-  //   await gulpExeca('pack nyc ava')
-  await execa('./gulp/utils/pack/pack.js', ['nyc', 'ava'], { stdio: 'inherit' })
-
-  await gulpExeca('coveralls <coverage/lcov.info')
+  return gulpExeca('nyc ava && coveralls <coverage/lcov.info')
 }
 
 // eslint-disable-next-line fp/no-mutation

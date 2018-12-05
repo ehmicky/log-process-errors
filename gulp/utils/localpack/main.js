@@ -15,7 +15,7 @@ const { getPackageRoot } = require('./root')
 const { getTempDir, cleanTempDir } = require('./temp')
 
 // Runs `npm pack` then unpack it to `opts.output`
-const localpack = async function({ output } = {}) {
+const main = async function({ output } = {}) {
   const [packageRoot, tempDir] = await Promise.all([
     getPackageRoot(),
     getTempDir(),
@@ -56,6 +56,4 @@ const unpack = async function({ packageRoot, tempDir, output }) {
   await pRename(`${tempDir}/package`, output)
 }
 
-module.exports = {
-  localpack,
-}
+module.exports = main

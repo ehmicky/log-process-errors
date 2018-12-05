@@ -7,7 +7,7 @@ const { promisify } = require('util')
 const pRmdir = promisify(rmdir)
 const pMkdir = promisify(mkdir)
 
-// `tempDir` is `/{tmpdir()}/gulp_pack/RANDOM_ID`
+// `tempDir` is `/{tmpdir()}/localpack/RANDOM_ID`
 const getTempDir = async function() {
   const osTempDir = tmpdir()
   const randomId = getRandomId()
@@ -18,7 +18,7 @@ const getTempDir = async function() {
   return tempDir
 }
 
-const PROJECT_NAME = 'gulp_pack'
+const PROJECT_NAME = 'localpack'
 
 const getRandomId = function() {
   return String(Math.random()).replace('.', '')

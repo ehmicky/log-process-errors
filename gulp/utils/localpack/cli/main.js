@@ -2,7 +2,7 @@
 
 const { exit } = require('process')
 
-const { pack } = require('../main')
+const { localpack } = require('../main')
 
 const { defineCli } = require('./top')
 const { parseConfig } = require('./parse')
@@ -11,7 +11,7 @@ const runCli = async function() {
   try {
     const yargs = defineCli()
     const command = parseConfig({ yargs })
-    await pack(command)
+    await localpack(command)
   } catch (error) {
     runCliHandler(error)
   }

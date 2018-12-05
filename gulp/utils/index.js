@@ -2,5 +2,5 @@
 
 module.exports = {
   ...require('./watch'),
-  ...require('./pack'),
+  ...require('./localpack'),
 }

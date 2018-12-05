@@ -7,7 +7,7 @@ const { promisify } = require('util')
 const pRmdir = promisify(rmdir)
 const pMkdir = promisify(mkdir)
 
-// `tempDir` is `/{tmpdir()}/localpack/RANDOM_ID`
+// `tempDir` is `/{tmpdir()}/localpack-RANDOM_ID`
 const getTempDir = async function() {
   const osTempDir = tmpdir()
   const randomId = getRandomId()

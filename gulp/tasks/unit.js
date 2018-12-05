@@ -2,6 +2,7 @@
 
 const { readFile, writeFile } = require('fs')
 const { promisify } = require('util')
+const { sep } = require('path')
 
 const isCi = require('is-ci')
 
@@ -26,7 +27,7 @@ const unit = async function() {
 const tempFix = async function() {
   const lcov = await pReadFile('coverage/lcov.info', { encoding: 'utf-8' })
 
-  const lcovA = lcov.replace(/localpack\//gu, '')
+  const lcovA = lcov.replace(new RegExp(`localpack${sep}`, 'gu'), '')
 
   await pWriteFile('coverage/lcov.info', lcovA, { encoding: 'utf-8' })
 }

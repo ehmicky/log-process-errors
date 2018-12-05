@@ -2,8 +2,9 @@
 
 const { init } = require('.')
 
-// Logging init is automatically performed by `node -r log-process-errors` or
-// `require('log-process-errors')`.
+// Logging init is automatically performed by
+// `node -r log-process-errors/register` or
+// `require('log-process-errors/register')`.
 // It encourages using `node -r` to prevent from adding this helper in the
 // source code. This is beneficial in the following use cases:
 //  - when using it for debugging purpose only

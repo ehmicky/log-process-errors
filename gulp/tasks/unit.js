@@ -6,16 +6,12 @@ const { promisify } = require('util')
 const isCi = require('is-ci')
 
 const { getWatchTask } = require('../utils')
-// eslint-disable-next-line import/no-internal-modules
-const localpack = require('../utils/localpack-code')
 const gulpExeca = require('../exec')
 
 const pReadFile = promisify(readFile)
 const pWriteFile = promisify(writeFile)
 
 const unit = async function() {
-  await localpack()
-
   if (!isCi) {
     return gulpExeca('ava')
   }

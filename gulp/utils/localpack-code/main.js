@@ -14,6 +14,7 @@ const pRename = promisify(rename)
 
 const { getPackageRoot } = require('./root')
 const { getTempDir, cleanTempDir } = require('./temp')
+const { addDevChecks } = require('./dev_checks')
 
 // Runs `npm pack` then unpack it to `opts.output`
 const localpack = async function({ output } = {}) {
@@ -25,6 +26,8 @@ const localpack = async function({ output } = {}) {
   const outputA = getOutput({ packageRoot, output })
 
   await unpack({ packageRoot, tempDir, output: outputA })
+
+  await addDevChecks({ output: outputA })
 
   await cleanTempDir({ tempDir })
 }

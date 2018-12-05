@@ -4,17 +4,28 @@ const yargs = require('yargs')
 
 const defineCli = function() {
   return yargs
+    .options(CONFIG)
     .usage(USAGE)
-    .example(EXAMPLE, 'Run tests')
+    .example(EXAMPLE, 'Run on current project')
     .help()
     .version()
+    .strict()
 }
 
-const USAGE = `$0 COMMAND
+const CONFIG = {
+  output: {
+    string: true,
+    alias: 'o',
+    requiresArg: true,
+    describe: 'Where to unpack the package (default: {packageRoot}/package/)',
+  },
+}
 
-Test a Node.js module after packing it.`
+const USAGE = `$0
 
-const EXAMPLE = '$0 npm test'
+Test how your module will be published to npm, by unpacking it locally.`
+
+const EXAMPLE = '$0'
 
 module.exports = {
   defineCli,

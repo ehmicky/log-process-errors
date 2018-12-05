@@ -56,8 +56,6 @@ const unpack = async function({ packageRoot, tempDir, output }) {
   await pRename(`${tempDir}/package`, output)
 }
 
-localpack()
-
 module.exports = {
   localpack,
 }

@@ -10,19 +10,28 @@ const { parseConfig } = require('./parse')
 const runCli = async function() {
   try {
     const yargs = defineCli()
-    const command = parseConfig({ yargs })
-    await localpack(command)
+    const config = parseConfig({ yargs })
+    await localpack(config)
   } catch (error) {
-    runCliHandler(error)
+    runCliHandler({ error })
   }
 }
 
 // If an error is thrown, print error's description, then exit with exit code 1
-const runCliHandler = function(error) {
+const runCliHandler = function({ error }) {
+  const message = getMessage({ error }).trim()
   // eslint-disable-next-line no-console, no-restricted-globals
-  console.error(error)
+  console.error(message)
 
   exit(1)
+}
+
+const getMessage = function({ error }) {
+  if (error && typeof error.message === 'string') {
+    return error.message
+  }
+
+  return String(error)
 }
 
 module.exports = {

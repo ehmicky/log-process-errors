@@ -1,11 +1,17 @@
 'use strict'
 
+const { readFile, writeFile } = require('fs')
+const { promisify } = require('util')
+
 const isCi = require('is-ci')
 
 const { getWatchTask } = require('../utils')
 // eslint-disable-next-line import/no-internal-modules
 const localpack = require('../utils/localpack-code')
 const gulpExeca = require('../exec')
+
+const pReadFile = promisify(readFile)
+const pWriteFile = promisify(writeFile)
 
 const unit = async function() {
   await localpack()
@@ -14,8 +20,22 @@ const unit = async function() {
     return gulpExeca('ava')
   }
 
-  return gulpExeca('nyc ava && coveralls <coverage/lcov.info')
+  await gulpExeca('nyc ava')
+
+  await tempFix()
+
+  await gulpExeca('coveralls --verbose <coverage/lcov.info')
 }
+
+const tempFix = async function() {
+  const lcov = await pReadFile('coverage/lcov.info', { encoding: 'utf-8' })
+
+  const lcovA = lcov.replace(/localpack\//gu, '')
+
+  await pWriteFile('coverage/lcov.info', lcovA, { encoding: 'utf-8' })
+}
+
+tempFix()
 
 // eslint-disable-next-line fp/no-mutation
 unit.description = 'Run unit tests'

@@ -21,7 +21,7 @@ const unit = async function() {
 
   await tempFix()
 
-  await gulpExeca('coveralls --verbose <coverage/lcov.info')
+  await gulpExeca('coveralls <coverage/lcov.info')
 }
 
 const tempFix = async function() {

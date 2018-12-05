@@ -34,16 +34,23 @@ const getOutput = function({ packageRoot, output = `${packageRoot}/package` }) {
 
 // Runs `npm pack` and unpack it to `packageDir`
 const unpack = async function({ packageRoot, tempDir, output }) {
-  const { stdout } = await execa.shell(`npm pack --silent ${packageRoot}`, {
-    stderr: 'inherit',
-    cwd: tempDir,
-  })
+  // We use `npm pack` instead of `require('./npm/lib/pack')`:
+  //  - to use the same `npm` version as the one globally installed,
+  //    so it mirrors what will be published
+  //  - to make code less likely to change with npm internal changes
+  // However this means this next line is 4 times slower (because it creates
+  // a new process)
+  const { stdout } = await execa.shell(
+    `npm pack --silent --no-update-notifier ${packageRoot}`,
+    { stderr: 'inherit', cwd: tempDir },
+  )
   const tarball = resolve(tempDir, stdout)
 
   await tar.x({ file: tarball, cwd: tempDir })
 
   await pUnlink(tarball)
 
+  // Is silent when `output` does not exist
   await remove(output)
 
   await pRename(`${tempDir}/package`, output)

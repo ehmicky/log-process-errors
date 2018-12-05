@@ -3,7 +3,7 @@
 const { argv } = require('process')
 
 // eslint-disable-next-line import/no-unassigned-import, import/no-internal-modules
-require('../../package/register')
+require('../../localpack/register')
 
 const { stubStackTrace } = require('./stack')
 const { EVENTS } = require('./emit')

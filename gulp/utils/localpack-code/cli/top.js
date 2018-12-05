@@ -17,7 +17,7 @@ const CONFIG = {
     string: true,
     alias: 'o',
     requiresArg: true,
-    describe: 'Where to unpack the package (default: {packageRoot}/package/)',
+    describe: 'Where to unpack the package (default: {packageRoot}/localpack/)',
   },
 }
 

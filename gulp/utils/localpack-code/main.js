@@ -28,11 +28,16 @@ const main = async function({ output } = {}) {
   await cleanTempDir({ tempDir })
 }
 
-const getOutput = function({ packageRoot, output = `${packageRoot}/package` }) {
+const getOutput = function({
+  packageRoot,
+  output = `${packageRoot}/${DEFAULT_OUTPUT}`,
+}) {
   return output
 }
 
-// Runs `npm pack` and unpack it to `packageDir`
+const DEFAULT_OUTPUT = 'localpack'
+
+// Runs `npm pack` and unpack it to `output`
 const unpack = async function({ packageRoot, tempDir, output }) {
   // We use `npm pack` instead of `require('./npm/lib/pack')`:
   //  - to use the same `npm` version as the one globally installed,

@@ -2,7 +2,7 @@
 
 const sinon = require('sinon')
 
-const { init } = require('../../package')
+const { init } = require('../../localpack')
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
 const startLoggingNoOpts = function() {

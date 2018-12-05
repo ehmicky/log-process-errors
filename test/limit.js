@@ -4,7 +4,7 @@ const test = require('ava')
 
 const {
   constants: { MAX_EVENTS },
-} = require('../package')
+} = require('../localpack')
 
 const {
   repeatEvents,

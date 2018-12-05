@@ -2,7 +2,7 @@
 
 const {
   constants: { LEVELS },
-} = require('../../package')
+} = require('../../localpack')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')

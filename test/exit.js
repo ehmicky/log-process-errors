@@ -8,7 +8,7 @@ const lolex = require('lolex')
 
 const {
   constants: { EXIT_TIMEOUT, EXIT_STATUS },
-} = require('../package')
+} = require('../localpack')
 
 const { repeatEvents, startLogging } = require('./helpers')
 

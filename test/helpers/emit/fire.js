@@ -2,7 +2,7 @@
 
 const { argv } = require('process')
 
-const { init } = require('../../../package')
+const { init } = require('../../../localpack')
 
 const { ALL_EVENTS } = require('./main')
 

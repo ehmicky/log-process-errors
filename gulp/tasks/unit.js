@@ -4,7 +4,7 @@ const isCi = require('is-ci')
 
 const { getWatchTask } = require('../utils')
 // eslint-disable-next-line import/no-internal-modules
-const localpack = require('../utils/localpack')
+const localpack = require('../utils/localpack-code')
 const gulpExeca = require('../exec')
 
 const unit = async function() {

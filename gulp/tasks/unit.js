@@ -31,8 +31,6 @@ const tempFix = async function() {
   await pWriteFile('coverage/lcov.info', lcovA, { encoding: 'utf-8' })
 }
 
-tempFix()
-
 // eslint-disable-next-line fp/no-mutation
 unit.description = 'Run unit tests'
 

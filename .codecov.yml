@@ -17,3 +17,5 @@ coverage:
   parsers:
     javascript:
       enable_partials: true
+comment:
+  layout: reach,diff,flags,files

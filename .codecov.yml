@@ -3,7 +3,7 @@ codecov:
   notify:
     delay: 5
 coverage:
-  range: 80...100
+  range: [80, 100]
   notify:
     email:
       default:
@@ -13,4 +13,4 @@ coverage:
         layout: reach,diff,flags,files
   parsers:
     javascript:
-      enable_partials: yes
+      enable_partials: true

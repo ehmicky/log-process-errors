@@ -20,11 +20,14 @@ const unit = async function() {
 
   await gulpExeca('nyc ava')
 
+  // TODO: remove and link the two `gulpExeca` with &&
   await tempFix()
 
   const os = PLATFORMS[platform()]
   await gulpExeca(
-    `curl -s https://codecov.io/bash > codecov && bash codecov -f coverage/lcov.info -F ${os} -Z && rm codecov`,
+    `curl -s https://codecov.io/bash > codecov && \
+      bash codecov -f coverage/lcov.info -F ${os} -Z && \
+      rm codecov`,
   )
 }
 

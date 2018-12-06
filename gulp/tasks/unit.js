@@ -23,7 +23,9 @@ const unit = async function() {
   await tempFix()
 
   const os = PLATFORMS[platform()]
-  await gulpExeca(`codecov -f coverage/lcov.info -F ${os}`)
+  await gulpExeca(
+    `curl -s https://codecov.io/bash > codecov && bash codecov -f coverage/lcov.info -F ${os} -Z && rm codecov`,
+  )
 }
 
 const PLATFORMS = {

@@ -6,7 +6,9 @@ os:
   - osx
   - linux
 dist: xenial
-script: npm test
+script:
+  - npm test
+  - bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info
 # When pushing a tagged commit, Travis adds two builds: one with the tag, one
 # without. We only want to build the one with the tag, because it's the one
 # that runs the deployment stage

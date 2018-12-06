@@ -20,8 +20,8 @@
   "description": "Log all process errors: uncaught exceptions, warnings and improperly handled promises",
   "keywords": [
     "process",
-    "error-handler",
     "error-handling",
+    "error-handler",
     "error",
     "handling",
     "handler",

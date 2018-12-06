@@ -9,8 +9,11 @@ coverage:
       default:
         to: ehmicky@gmail.com
         threshold: 100
-        branches: master
+        branches: null
         layout: reach,diff,flags,files
+        only_pulls: false
+        flags: null
+        paths: null
   parsers:
     javascript:
       enable_partials: true

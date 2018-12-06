@@ -1,5 +1,5 @@
 coverage:
   range: 80...100
-parsers:
-  javascript:
-    enable_partials: yes
+  parsers:
+    javascript:
+      enable_partials: yes

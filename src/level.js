@@ -47,6 +47,10 @@ const defaultGetLevel = function({ eventName }) {
     return 'warn'
   }
 
+  if (eventName === 'does not exist') {
+    return 'warn'
+  }
+
   return 'error'
 }
 

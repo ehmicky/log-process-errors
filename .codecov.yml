@@ -1,8 +1,16 @@
 codecov:
   strict_yaml_branch: master
+  notify:
+    delay: 5
 coverage:
   range: 80...100
+  notify:
+    email:
+      default:
+        to: ehmicky@gmail.com
+        threshold: 100
+        branches: master
+        layout: reach,diff,flags,files
   parsers:
     javascript:
       enable_partials: yes
-delay: 5

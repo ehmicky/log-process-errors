@@ -22,7 +22,7 @@ const unit = async function() {
   await tempFix()
 
   await gulpExeca(
-    'curl -s https://codecov.io/bash > codecov && bash codecov -f coverage/lcov.info && rm codecov',
+    'curl -s https://codecov.io/bash > codecov && bash codecov -f coverage/lcov.info -F $TRAVIS_OS_NAME && rm codecov',
   )
 }
 

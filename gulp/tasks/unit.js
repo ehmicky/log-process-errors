@@ -3,6 +3,7 @@
 const { readFile, writeFile } = require('fs')
 const { promisify } = require('util')
 const { sep } = require('path')
+const { platform } = require('os')
 
 const isCi = require('is-ci')
 
@@ -21,9 +22,16 @@ const unit = async function() {
 
   await tempFix()
 
+  const os = PLATFORMS[platform()]
   await gulpExeca(
-    'curl -s https://codecov.io/bash > codecov && bash codecov -f coverage/lcov.info -F $TRAVIS_OS_NAME && rm codecov',
+    `curl -s https://codecov.io/bash > codecov && bash codecov -f coverage/lcov.info -F ${os} && rm codecov`,
   )
+}
+
+const PLATFORMS = {
+  linux: 'linux',
+  darwin: 'mac',
+  win32: 'windows',
 }
 
 const tempFix = async function() {

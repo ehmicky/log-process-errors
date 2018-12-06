@@ -21,7 +21,9 @@ const unit = async function() {
 
   await tempFix()
 
-  await gulpExeca('coveralls <coverage/lcov.info')
+  await gulpExeca(
+    'bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info',
+  )
 }
 
 const tempFix = async function() {

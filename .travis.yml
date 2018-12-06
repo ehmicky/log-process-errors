@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - 11
 os:
+  - windows
   - osx
   - linux
 dist: xenial

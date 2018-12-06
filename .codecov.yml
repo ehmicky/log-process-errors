@@ -3,3 +3,4 @@ coverage:
   parsers:
     javascript:
       enable_partials: yes
+delay: 5

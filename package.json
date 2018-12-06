@@ -87,7 +87,7 @@
     "husky": "^1.2.0",
     "is-ci": "^1.2.1",
     "lolex": "^3.0.0",
-    "node-releases": "^1.0.5",
+    "node-releases": "^1.1.0",
     "nyc": "^13.1.0",
     "pkg-dir": "^3.0.0",
     "plugin-error": "^1.0.1",

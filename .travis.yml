@@ -32,12 +32,7 @@ jobs:
         # We want to run install step and keep built files for release
         skip_cleanup: true
 cache: npm
-# This merges all LCOV files into one before sending to Coveralls, allowing
-# code coverage percentage to include OS/environment-specific coverage.
-env:
-  global: COVERALLS_PARALLEL=true
 notifications:
   webhooks:
-    - https://coveralls.io/webhook
     - https://www.travisbuddy.com?only=failed,errored&insertMode=update
   email: false

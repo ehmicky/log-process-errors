@@ -1,16 +1,7 @@
 'use strict'
 
 const {
-  env: {
-    TRAVIS_REPO_SLUG,
-    TRAVIS_PULL_REQUEST_SLUG,
-    TRAVIS_COMMIT,
-    TRAVIS_PULL_REQUEST_SHA,
-    TRAVIS_BRANCH,
-    // eslint-disable-next-line id-length
-    TRAVIS_PULL_REQUEST_BRANCH,
-    TRAVIS_PULL_REQUEST,
-  },
+  env: { TRAVIS_REPO_SLUG, TRAVIS_COMMIT },
 } = require('process')
 
 const isCi = require('is-ci')
@@ -35,7 +26,7 @@ const checkCoverage = async function() {
 }
 
 const getCoverage = async function() {
-  const codecovUrl = getCodecovUrl()
+  const codecovUrl = `https://codecov.io/api/gh/${TRAVIS_REPO_SLUG}/commit/${TRAVIS_COMMIT}`
   const response = await fetch(codecovUrl)
   const {
     commit: {
@@ -46,28 +37,6 @@ const getCoverage = async function() {
 
   const coverageA = Number(coverage)
   return coverageA
-}
-
-// eslint-disable-next-line max-statements
-const getCodecovUrl = function() {
-  const slug = TRAVIS_REPO_SLUG || TRAVIS_PULL_REQUEST_SLUG
-  const commit = TRAVIS_COMMIT || TRAVIS_PULL_REQUEST_SHA
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('TRAVIS_REPO_SLUG', TRAVIS_REPO_SLUG)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('TRAVIS_PULL_REQUEST_SLUG', TRAVIS_PULL_REQUEST_SLUG)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('TRAVIS_COMMIT', TRAVIS_COMMIT)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('TRAVIS_PULL_REQUEST_SHA', TRAVIS_PULL_REQUEST_SHA)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('TRAVIS_BRANCH', TRAVIS_BRANCH)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('TRAVIS_PULL_REQUEST_BRANCH', TRAVIS_PULL_REQUEST_BRANCH)
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log('TRAVIS_PULL_REQUEST', TRAVIS_PULL_REQUEST)
-  const codecovUrl = `https://codecov.io/api/gh/${slug}/commit/${commit}`
-  return codecovUrl
 }
 
 const COVERAGE_THRESHOLD = 100

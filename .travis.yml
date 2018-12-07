@@ -19,7 +19,7 @@ jobs:
       os: linux
       script: npm run check-coverage
       # If CI fails, codecov does not post a bot comment on PR, so we skip it
-      # if: type is not pull_request
+      if: type != pull_request and branch == master
     # Deployment must happen after tests for the whole matrix have been
     # performed, so we use `jobs.include` with a different `stage`
     - stage: Deploy

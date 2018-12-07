@@ -1,7 +1,12 @@
 'use strict'
 
 const {
-  env: { TRAVIS_REPO_SLUG, TRAVIS_COMMIT },
+  env: {
+    TRAVIS_REPO_SLUG,
+    TRAVIS_PULL_REQUEST_SLUG,
+    TRAVIS_COMMIT,
+    TRAVIS_PULL_REQUEST_SHA,
+  },
 } = require('process')
 
 const isCi = require('is-ci')
@@ -26,7 +31,7 @@ const checkCoverage = async function() {
 }
 
 const getCoverage = async function() {
-  const codecovUrl = `https://codecov.io/api/gh/${TRAVIS_REPO_SLUG}/commit/${TRAVIS_COMMIT}`
+  const codecovUrl = getCodecovUrl()
   const response = await fetch(codecovUrl)
   const {
     commit: {
@@ -37,6 +42,21 @@ const getCoverage = async function() {
 
   const coverageA = Number(coverage)
   return coverageA
+}
+
+const getCodecovUrl = function() {
+  const slug = TRAVIS_REPO_SLUG || TRAVIS_PULL_REQUEST_SLUG
+  const commit = TRAVIS_COMMIT || TRAVIS_PULL_REQUEST_SHA
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('TRAVIS_REPO_SLUG', TRAVIS_REPO_SLUG)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('TRAVIS_PULL_REQUEST_SLUG', TRAVIS_PULL_REQUEST_SLUG)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('TRAVIS_COMMIT', TRAVIS_COMMIT)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('TRAVIS_PULL_REQUEST_SHA', TRAVIS_PULL_REQUEST_SHA)
+  const codecovUrl = `https://codecov.io/api/gh/${slug}/commit/${commit}`
+  return codecovUrl
 }
 
 const COVERAGE_THRESHOLD = 100

@@ -2,14 +2,6 @@ codecov:
   strict_yaml_branch: master
 coverage:
   range: [80, 100]
-  notify:
-    email:
-      default:
-        to:
-          - &author
-        threshold: .1
-        layout: files,flags
-        only_pulls: false
   parsers:
     javascript:
       enable_partials: true

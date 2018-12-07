@@ -31,7 +31,8 @@ jobs:
       # GitHub release) but we publish to npm only after CI success.
       deploy:
         provider: npm
-        email: ehmicky@gmail.com
+        email:
+          secure: 'hqfZM+5MsO3lUnwFFi470Fk080BkylNaiLqQ1jvZjGOp+2F0lxMrgovZRhEbtktMk33zf0jvxZ96QcF7brwFLeuANdX4ufU38EH0eCKqPSiSgMQ/CkWMECqezU++FEYlF808LPpkfs1pzmAOb0Kh6FEtNMkjcC/SCB8sqdHn1qjIvnmkEUiaGpNSsVVHTO207XBHvNVkYu3ibr5I/+EQy8rx0rDDwxHNFsGqOG6TDtBRQuZ21rnA5ITM/bSdNKC5jeqdpYhBn9hNgVRJlYCtnBPyhaV5HbglCfqJ42fw0lLZ88NJ7ZWRrMKxwwJbeeebl5NMJtKQ7z8lbCBPOrJVln7OdktWXCo9Gt8ujfcmJ0RGZoC/2x2GtFOiEvlZxuJ/jzHIe4g2rQiyOKk7fbZuCI7prSmlEBalI9TkVR7n5vluk+AIfqla//Yb62MEIrXB07oCVGwMC8kkG9+h4qx2ndbKRuFkAywHzr6MxXvb3Fv/87pdNsdLjnf4pGJtpbNuLBv9HaBE2ZkkBUwKAYPL7nrbp00p/oundQc4UZ7oXMQXPDXOrX0+M2aNAhHSzV8Vkom0i1s0c4Ypd2UaL7ouVvYesnaOMiLANGsZSTIsqDL/e1qBoMHm0JcrMEgz81z4tAx3cQGVzCZNIPbHqVAl7Fslule3qevIcSU1QuLis90='
         api_key:
           secure: 'ZljD9b31Bgm7F4wGpo/qXtEyvTd0nnehtWHWwGquZgVFx/jGDCBFuAauP0BfBvUe762tHKN6dIqvZ/0wmM1FvCQjx/TLEPcJALN4u+wzEAQ55pU4utCoFaqGISpPRpo15DKwqzdgh8JwWeLGcFnQHsEcA+5Nbtlstv9R+5GocElxXrDSReA1U0SCtZgkcOPjlc1AFiNg67FtCI3KSTeTtJOXF8qBzU+lNTjxvjXcf6EzbeziluWMkQ9wPFUInFIABXBECHg4ErDlYe5f8t6A9BU+SwxgCPBi03IoKcHXxP6PwpxVQwBra1EIj2vRs++SB/1K8b6KVI/b2PVubpvDsmxQeSSpX49qYQEz3OYArU/lQF51FN8zgzyRsbXPJDadJVno2eXGqurhgZh46OHbI7Z7DkdwlLMfswvw3NhpB4iAmbgxU4S5KoyWLFoUbAtaATPDOiPXFHE43wO022vheOmwqVYVYrAumT0vrTfuSn51+3P7+EsVj79mnwim4F/D5qp1QCck5L6aQm/EV/MHosGgtfD1f7RwKfY3HhNvb6GLf5mMXiGdqf6a+GzeJsuF0cytSehmiaplgcH2P6TsamYtK1o+YJ7L8fkzDt2ghamdUm8sjL374FBPP3aLcLhE/KRc73iORI3WrixmnqbUloPFi/mlXBrNAtGcUyPbKVw='
         on:

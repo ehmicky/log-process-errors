@@ -6,8 +6,8 @@ const pkgDir = require('pkg-dir')
 const moize = require('moize').default
 
 // Retrieve package root directory
-const getPackageRoot = async function() {
-  const packageRoot = await pkgDir()
+const getPackageRoot = async function(cwd) {
+  const packageRoot = await pkgDir(cwd)
 
   assert(
     packageRoot !== null,

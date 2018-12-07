@@ -13,11 +13,17 @@ const defineCli = function() {
 }
 
 const CONFIG = {
+  cwd: {
+    string: true,
+    alias: 'c',
+    requiresArg: true,
+    describe: 'Current directory',
+  },
   output: {
     string: true,
     alias: 'o',
     requiresArg: true,
-    describe: 'Where to unpack the package (default: {packageRoot}/localpack/)',
+    describe: 'Where to unpack the package (default: {cwd}/localpack/)',
   },
 }
 

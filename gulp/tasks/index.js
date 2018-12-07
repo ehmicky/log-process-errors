@@ -5,6 +5,7 @@ module.exports = {
   ...require('./test'),
   ...require('./check'),
   ...require('./unit'),
+  ...require('./coverage'),
   ...require('./build'),
   ...require('./emit'),
 }

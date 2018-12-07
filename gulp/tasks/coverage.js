@@ -6,6 +6,10 @@ const {
     TRAVIS_PULL_REQUEST_SLUG,
     TRAVIS_COMMIT,
     TRAVIS_PULL_REQUEST_SHA,
+    TRAVIS_BRANCH,
+    // eslint-disable-next-line id-length
+    TRAVIS_PULL_REQUEST_BRANCH,
+    TRAVIS_PULL_REQUEST,
   },
 } = require('process')
 
@@ -44,6 +48,7 @@ const getCoverage = async function() {
   return coverageA
 }
 
+// eslint-disable-next-line max-statements
 const getCodecovUrl = function() {
   const slug = TRAVIS_REPO_SLUG || TRAVIS_PULL_REQUEST_SLUG
   const commit = TRAVIS_COMMIT || TRAVIS_PULL_REQUEST_SHA
@@ -55,6 +60,12 @@ const getCodecovUrl = function() {
   console.log('TRAVIS_COMMIT', TRAVIS_COMMIT)
   // eslint-disable-next-line no-console, no-restricted-globals
   console.log('TRAVIS_PULL_REQUEST_SHA', TRAVIS_PULL_REQUEST_SHA)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('TRAVIS_BRANCH', TRAVIS_BRANCH)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('TRAVIS_PULL_REQUEST_BRANCH', TRAVIS_PULL_REQUEST_BRANCH)
+  // eslint-disable-next-line no-console, no-restricted-globals
+  console.log('TRAVIS_PULL_REQUEST', TRAVIS_PULL_REQUEST)
   const codecovUrl = `https://codecov.io/api/gh/${slug}/commit/${commit}`
   return codecovUrl
 }

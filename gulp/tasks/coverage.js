@@ -16,21 +16,17 @@ const checkCoverage = async function() {
   }
 
   const coverage = await getCoverage()
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log(`coverage ${coverage}`)
 
   if (coverage < COVERAGE_THRESHOLD) {
     throw new PluginError(
       'gulp-codecov-check',
-      `Test coverage is ${coverage} but should be at least ${COVERAGE_THRESHOLD}`,
+      `Test coverage is ${coverage}% but should be at least ${COVERAGE_THRESHOLD}%`,
     )
   }
 }
 
 const getCoverage = async function() {
   const codecovUrl = `https://codecov.io/api/gh/${TRAVIS_REPO_SLUG}/commit/${TRAVIS_COMMIT}`
-  // eslint-disable-next-line no-console, no-restricted-globals
-  console.log(`Checking ${codecovUrl}`)
   const response = await fetch(codecovUrl)
   const {
     commit: {

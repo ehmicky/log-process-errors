@@ -47,6 +47,10 @@ const defaultGetLevel = function({ eventName }) {
     return 'warn'
   }
 
+  if (eventName === 'fail') {
+    return 'warn'
+  }
+
   return 'error'
 }
 

@@ -2,7 +2,7 @@
 
 const { exit } = require('process')
 
-const { localpack } = require('../main')
+const localpack = require('../main')
 
 const { defineCli } = require('./top')
 const { parseConfig } = require('./parse')

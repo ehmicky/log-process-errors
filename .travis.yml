@@ -10,10 +10,15 @@ script: npm test
 # without. We only want to build the one with the tag, because it's the one
 # that runs the deployment stage
 if: '!(commit_message =~ /^Release/ && tag is blank)'
-# Deployment must happen after tests for the whole matrix have been performed,
-# so we use `jobs.include` with a different `stage`
 jobs:
   include:
+    # Test coverage check must happen after tests for the whole matrix have
+    # been performed, so we get the merged coverage map
+    - stage: Coverage check
+      os: linux
+      script: npm run check-coverage
+    # Deployment must happen after tests for the whole matrix have been
+    # performed, so we use `jobs.include` with a different `stage`
     - stage: Deploy
       os: linux
       # We have already run tests

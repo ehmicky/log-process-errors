@@ -11,7 +11,7 @@ const format = () =>
   gulpExeca(`prettier --write --loglevel warn ${FILES.CHECK.join(' ')}`)
 
 // We do not use `gulp-eslint` because it does not support --cache
-const eslint = () => {
+const eslint = function() {
   const files = FILES.CHECK.map(pattern => `'${pattern}'`).join(' ')
   return gulpExeca(
     `eslint ${files} --ignore-path .gitignore --fix --cache --format codeframe --max-warnings 0 --report-unused-disable-directives`,

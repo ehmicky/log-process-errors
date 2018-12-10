@@ -12,7 +12,7 @@ const format = () =>
 
 // We do not use `gulp-eslint` because it does not support --cache
 const eslint = function() {
-  const files = FILES.CHECK.map(pattern => `'${pattern}'`).join(' ')
+  const files = FILES.CHECK.map(pattern => `"${pattern}"`).join(' ')
   return gulpExeca(
     `eslint ${files} --ignore-path .gitignore --fix --cache --format codeframe --max-warnings 0 --report-unused-disable-directives`,
   )

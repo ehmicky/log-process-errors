@@ -1,6 +1,6 @@
 'use strict'
 
-const { inspect } = require('util')
+const { stableSerialize } = require('./serialize')
 
 // Events with the same `info` are only logged once because:
 //  - it makes logs clearer
@@ -66,16 +66,7 @@ const serializeValue = function({ value }) {
     return serializeError({ error: value })
   }
 
-  // We use `util.inspect()` instead of `JSON.stringify()` to support more
-  // types and circular references.
-  // `sorted` prevents the same event using different keys order from having
-  // a different fingerprint. It is only `Node.js 10` but is backward-compatible
-  // Big arrays, objects or buffers will be truncated, which makes this call
-  // less CPU-intensive and the result value smaller in memory. However it
-  // introduces higher risk of false positives (event being flagged as repeated
-  // even though it's different). Process errors should be exceptional, so this
-  // is ok.
-  return inspect(value, { sorted: true, depth: 2 })
+  return stableSerialize(value)
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like

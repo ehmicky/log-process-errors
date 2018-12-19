@@ -1,21 +1,16 @@
 'use strict'
 
-const { inspect } = require('util')
-
-const { serialize, prettify } = require('./prettify')
+const { serialize } = require('./serialize')
+const { prettify } = require('./prettify')
 
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
 const getMessage = function({ opts, info, level, colors }) {
   const message = opts.getMessage({ ...info, level, colors })
   // Ensure this is a string
-  const messageA =
-    typeof message === 'string' ? message : inspect(message, INSPECT_OPTS)
+  const messageA = typeof message === 'string' ? message : serialize(message)
   return messageA
 }
-
-// Default `depth` changes with Node.js 11
-const INSPECT_OPTS = { depth: 2 }
 
 // Default `opts.getMessage()`
 const defaultGetMessage = function({

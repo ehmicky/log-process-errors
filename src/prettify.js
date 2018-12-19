@@ -1,16 +1,6 @@
 'use strict'
 
-const { inspect } = require('util')
-
 const { LEVELS } = require('./level')
-
-const serialize = function(value) {
-  if (value instanceof Error) {
-    return value.stack
-  }
-
-  return inspect(value)
-}
 
 const prettify = function({
   message,
@@ -41,6 +31,5 @@ const INDENT_SIZE = 4
 const INDENT = ' '.repeat(INDENT_SIZE)
 
 module.exports = {
-  serialize,
   prettify,
 }

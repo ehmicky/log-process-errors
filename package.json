@@ -55,7 +55,7 @@
     "core-js": "^2.6.1",
     "jest-validate": "^23.6.0",
     "moize": "^5.4.1",
-    "supports-color": "^5.5.0"
+    "supports-color": "^6.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

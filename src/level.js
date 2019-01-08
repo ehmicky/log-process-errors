@@ -1,10 +1,8 @@
 'use strict'
 
-const {
-  platform,
-  env: { TERM },
-  emitWarning,
-} = require('process')
+const { emitWarning } = require('process')
+
+const { circleFilled, info: infoSym, warning, cross } = require('figures')
 
 // Retrieve error's `level`
 const getLevel = function({ opts, info }) {
@@ -20,25 +18,12 @@ const getLevel = function({ opts, info }) {
   return defaultGetLevel(info)
 }
 
-const supportsUnicode = platform !== 'win32' || TERM === 'xterm-256color'
 // Each level is printed in a different way
 const LEVELS = {
-  debug: {
-    COLOR: 'blue',
-    SIGN: supportsUnicode ? '\u25C9' : '(*)',
-  },
-  info: {
-    COLOR: 'green',
-    SIGN: supportsUnicode ? '\u2139' : 'i',
-  },
-  warn: {
-    COLOR: 'yellow',
-    SIGN: supportsUnicode ? '\u26A0' : '\u203C',
-  },
-  error: {
-    COLOR: 'red',
-    SIGN: supportsUnicode ? '\u2716' : '\u00D7',
-  },
+  debug: { COLOR: 'blue', SIGN: circleFilled },
+  info: { COLOR: 'green', SIGN: infoSym },
+  warn: { COLOR: 'yellow', SIGN: warning },
+  error: { COLOR: 'red', SIGN: cross },
 }
 
 // Default `opts.getLevel()`

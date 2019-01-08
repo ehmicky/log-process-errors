@@ -25,7 +25,7 @@ const supportsUnicode = platform !== 'win32' || TERM === 'xterm-256color'
 const LEVELS = {
   debug: {
     COLOR: 'blue',
-    SIGN: supportsUnicode ? '\u2699' : '!',
+    SIGN: supportsUnicode ? '\u25C9' : '(*)',
   },
   info: {
     COLOR: 'green',
@@ -37,7 +37,7 @@ const LEVELS = {
   },
   error: {
     COLOR: 'red',
-    SIGN: supportsUnicode ? '\u2718' : '\u00D7',
+    SIGN: supportsUnicode ? '\u2716' : '\u00D7',
   },
 }
 

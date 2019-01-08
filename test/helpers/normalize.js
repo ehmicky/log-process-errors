@@ -2,7 +2,7 @@
 
 // The first sign in a console message is OS-dependent, so we remove it
 const normalizeMessage = function(message) {
-  return message.replace(/^ [^ ]/gmu, '[]')
+  return message.replace(/^ [^ ]+/gmu, '[]')
 }
 
 module.exports = {

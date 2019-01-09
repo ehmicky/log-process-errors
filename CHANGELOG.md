@@ -1,3 +1,9 @@
+# 1.1.1
+
+# Bug fix
+
+- Fix wrong Git timestamps
+
 # 1.1.0
 
 ## Features

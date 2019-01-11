@@ -95,7 +95,7 @@
     "prettier": "^1.15.3",
     "release-it": "^9.7.1",
     "sinon": "^7.2.2",
-    "source-map-support": "^0.5.9",
+    "source-map-support": "^0.5.10",
     "strip-ansi": "^5.0.0",
     "tar": "^4.4.8",
     "yargs": "^12.0.5"

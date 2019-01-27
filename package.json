@@ -54,7 +54,7 @@
     "chalk": "^2.4.2",
     "core-js": "^2.6.3",
     "figures": "^2.0.0",
-    "jest-validate": "^23.6.0",
+    "jest-validate": "^24.0.0",
     "moize": "^5.4.1",
     "supports-color": "^6.1.0"
   },

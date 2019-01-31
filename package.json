@@ -92,7 +92,7 @@
     "nyc": "^13.1.0",
     "pkg-dir": "^3.0.0",
     "plugin-error": "^1.0.1",
-    "prettier": "^1.16.2",
+    "prettier": "^1.16.3",
     "release-it": "^10.0.7",
     "sinon": "^7.2.3",
     "source-map-support": "^0.5.10",

@@ -64,7 +64,7 @@
     "@babel/preset-env": "^7.3.1",
     "ava": "^1.2.0",
     "cross-fetch": "^3.0.0",
-    "eslint": "^5.12.1",
+    "eslint": "^5.13.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-prettier-fp": "^13.0.0",

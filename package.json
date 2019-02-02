@@ -43,7 +43,7 @@
   "bugs": {
     "url": "https://github.com/autoserver-org/log-process-errors/issues"
   },
-  "author": "autoserver founder <founder@autoserver.io> (http://autoserver.io)",
+  "author": "ehmicky <ehmicky@gmail.com> (https://github.com/ehmicky)",
   "directories": {
     "doc": "docs",
     "lib": "src",

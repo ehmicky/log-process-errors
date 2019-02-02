@@ -38,10 +38,10 @@
     "multipleResolves"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://git.io/fpqVS",
-  "repository": "autoserver-org/log-process-errors",
+  "homepage": "https://git.io/fhSGY",
+  "repository": "ehmicky/log-process-errors",
   "bugs": {
-    "url": "https://github.com/autoserver-org/log-process-errors/issues"
+    "url": "https://github.com/ehmicky/log-process-errors/issues"
   },
   "author": "ehmicky <ehmicky@gmail.com> (https://github.com/ehmicky)",
   "directories": {

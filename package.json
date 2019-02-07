@@ -93,7 +93,7 @@
     "pkg-dir": "^3.0.0",
     "plugin-error": "^1.0.1",
     "prettier": "^1.16.4",
-    "release-it": "^10.0.7",
+    "release-it": "^10.1.0",
     "sinon": "^7.2.3",
     "source-map-support": "^0.5.10",
     "strip-ansi": "^5.0.0",

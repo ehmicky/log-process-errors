@@ -2,8 +2,8 @@
 
 const { argv } = require('process')
 
-// eslint-disable-next-line import/no-unassigned-import, import/no-internal-modules
-require('../../localpack/register')
+// eslint-disable-next-line import/no-unassigned-import
+require('../../register')
 
 const { stubStackTrace } = require('./stack')
 const { EVENTS } = require('./emit')

@@ -1,7 +1,8 @@
 'use strict'
 
 const { emitWarning } = require('process')
-const { promisify } = require('util')
+
+const promisify = require('util.promisify')
 
 const { defaultWarning } = require('./default')
 

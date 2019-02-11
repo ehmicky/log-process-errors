@@ -1,7 +1,6 @@
 'use strict'
 
-const { promisify } = require('util')
-
+const promisify = require('util.promisify')
 const { watch, series, parallel } = require('gulp')
 
 const FILES = require('../files')

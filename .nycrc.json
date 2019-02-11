@@ -1,5 +1,3 @@
 {
-  "include": ["localpack"],
-  "all": true,
   "reporter": ["lcov", "text", "html", "json"]
 }

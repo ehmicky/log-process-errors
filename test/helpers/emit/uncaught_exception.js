@@ -1,7 +1,8 @@
 'use strict'
 
 const { nextTick } = require('process')
-const { promisify } = require('util')
+
+const promisify = require('util.promisify')
 
 const { defaultGetError } = require('./default')
 

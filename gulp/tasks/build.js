@@ -3,8 +3,6 @@
 const { series } = require('gulp')
 
 const { getWatchTask } = require('../utils')
-// eslint-disable-next-line import/no-internal-modules
-const localpack = require('../utils/localpack-code')
 const { BUILD_SRC, BUILD_DIST } = require('../files')
 const gulpExeca = require('../exec')
 
@@ -13,7 +11,7 @@ const babel = () =>
     `babel ${BUILD_SRC} --out-dir ${BUILD_DIST} --copy-files --delete-dir-on-start --source-maps --no-comments --minified --retain-lines`,
   )
 
-const build = series(babel, localpack)
+const build = series(babel)
 
 // eslint-disable-next-line fp/no-mutation
 build.description = 'Build source files'

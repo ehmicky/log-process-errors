@@ -98,6 +98,6 @@
     "util.promisify": "^1.0.0"
   },
   "engines": {
-    "node": ">=11.9.0"
+    "node": ">=6.5.0"
   }
 }

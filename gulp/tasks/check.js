@@ -37,7 +37,12 @@ const dup = () =>
 // eslint-disable-next-line fp/no-mutation
 dup.description = 'Check for code duplication'
 
-const check = parallel(lint, dup)
+const audit = () => gulpExeca('npm audit')
+
+// eslint-disable-next-line fp/no-mutation
+audit.description = 'Check for security vulnerabilities'
+
+const check = parallel(lint, dup, audit)
 
 // eslint-disable-next-line fp/no-mutation
 check.description = 'Lint and check for code duplication'
@@ -52,4 +57,5 @@ module.exports = {
   checkwatch,
   lint,
   dup,
+  audit,
 }

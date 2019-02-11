@@ -29,7 +29,7 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-
+/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should call process.exit(1) if inside opts.exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()

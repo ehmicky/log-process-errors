@@ -1,5 +1,8 @@
 language: node_js
 node_js:
+  - 6.5.0
+  - 8
+  - 10
   - 11
 os:
   - windows
@@ -17,6 +20,7 @@ jobs:
     # been performed, so we get the merged coverage map
     - stage: Coverage check
       os: linux
+      node_js: 11
       script: npm run check-coverage
       # If CI fails, codecov does not post a bot comment on PR, so we skip it
       if: type != pull_request && (branch == master || tag is not blank)
@@ -24,6 +28,7 @@ jobs:
     # performed, so we use `jobs.include` with a different `stage`
     - stage: Deploy
       os: linux
+      node_js: 11
       # We have already run tests
       script: npm run build
       if: tag is not blank

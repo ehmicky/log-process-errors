@@ -15,7 +15,12 @@ const warning = async function({
   code,
   detail,
 } = defaultWarning) {
-  emitWarning(message, { type, code, detail })
+  // TODO: replace to `emitWarning(message, { type, code, detail })` and
+  // remove `new Error()` once support for Node <=7 is dropped
+  const error = new Error(message)
+  // eslint-disable-next-line fp/no-mutating-assign
+  Object.assign(error, { name: type, code, detail })
+  emitWarning(error)
 
   await pSetImmediate()
 }

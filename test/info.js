@@ -12,7 +12,12 @@ const INFOS = [
   },
   {
     name: 'warning',
-    arg: { message: 'message', code: '500', detail: 'Detail' },
+    arg: {
+      message: 'message',
+      type: 'WarningType',
+      code: '500',
+      detail: 'Detail',
+    },
     getInfo: ({ error, error: { message } = {}, ...info }) => ({
       ...info,
       error: { ...error, message },
@@ -20,9 +25,9 @@ const INFOS = [
     expected: {
       error: {
         message: 'message',
+        name: 'WarningType',
         code: '500',
         detail: 'Detail',
-        name: 'Warning',
       },
     },
   },

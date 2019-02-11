@@ -53,7 +53,9 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     stopLogging()
 
-    process.off(eventName, processHandler)
+    // TODO: use `process.off()` instead of `process.removeListener()`
+    // after dropping Node.js <10 support
+    process.removeListener(eventName, processHandler)
   })
 
   test(`${prefix} should allow disabling logging`, async t => {
@@ -72,7 +74,9 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     stopLogging()
 
-    process.off(eventName, processHandler)
+    // TODO: use `process.off()` instead of `process.removeListener()`
+    // after dropping Node.js <10 support
+    process.removeListener(eventName, processHandler)
   })
 })
 /* eslint-enable max-nested-callbacks */

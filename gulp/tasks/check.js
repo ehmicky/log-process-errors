@@ -42,7 +42,12 @@ const audit = () => gulpExeca('npm audit')
 // eslint-disable-next-line fp/no-mutation
 audit.description = 'Check for security vulnerabilities'
 
-const check = parallel(lint, dup, audit)
+const outdated = () => gulpExeca('npm outdated')
+
+// eslint-disable-next-line fp/no-mutation
+outdated.description = 'Report outdated dependencies'
+
+const check = parallel(lint, dup, audit, outdated)
 
 // eslint-disable-next-line fp/no-mutation
 check.description = 'Lint and check for code duplication'
@@ -58,4 +63,5 @@ module.exports = {
   lint,
   dup,
   audit,
+  outdated,
 }

@@ -37,8 +37,16 @@ const dup = () =>
 // eslint-disable-next-line fp/no-mutation
 dup.description = 'Check for code duplication'
 
-// `npm audit -h` because older `npm` versions do not have this command
-const audit = () => gulpExeca('npm audit -h && npm audit', { stdout: 'ignore' })
+const audit = async () => {
+  // Older `npm` versions do not have this command
+  try {
+    await gulpExeca('npm audit -h', { stdout: 'ignore' })
+  } catch {
+    return
+  }
+
+  await gulpExeca('npm audit', { stdout: 'ignore' })
+}
 
 // eslint-disable-next-line fp/no-mutation
 audit.description = 'Check for security vulnerabilities'

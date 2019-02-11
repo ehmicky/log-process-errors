@@ -76,8 +76,10 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
   test(`${prefix} should log on the console by default`, async t => {
     // `console.debug()` does not exist in Node.js <8
     // TODO: remove once dropping support for Node.js <8
+    // eslint-disable-next-line no-restricted-globals, no-console
     const consoleLevel = console[level] === undefined ? 'info' : level
 
+    // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, consoleLevel)
 
     const { stopLogging } = startLogging({

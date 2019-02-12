@@ -43,7 +43,8 @@ test('[warning] should restore default event handlers', async t => {
   await emitWarning()
 
   t.true(stub.calledOnce)
-  t.snapshot(normalizeMessage(stub.lastCall.args[0]))
+  const message = normalizeMessage(stub.lastCall.args[0])
+  t.snapshot(message)
 
   stub.restore()
 })

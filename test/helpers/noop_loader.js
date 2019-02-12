@@ -11,5 +11,5 @@ require('@babel/register')
 
 const logProcessErrors = require('../..')
 
-const removeAll = logProcessErrors()
-removeAll()
+const stopLogging = logProcessErrors()
+stopLogging()

@@ -17,8 +17,8 @@ const init = function(opts) {
 
   const listeners = addListeners({ opts: optsA })
 
-  const removeAll = undo.bind(null, listeners)
-  return removeAll
+  const stopLoggingA = stopLogging.bind(null, listeners)
+  return stopLoggingA
 }
 
 const addListeners = function({ opts }) {
@@ -48,7 +48,7 @@ const addListener = function({ opts, eventName, eventFunc }) {
 }
 
 // Remove all event handlers and restore previous `warning` listeners
-const undo = function(listeners) {
+const stopLogging = function(listeners) {
   listeners.forEach(removeListener)
   restoreWarningListener()
 }

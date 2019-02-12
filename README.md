@@ -43,6 +43,7 @@ $ node -r log-process-errors/register ...
 
 ```js
 const logProcessErrors = require('log-process-errors')
+
 logProcessErrors(options)
 ```
 

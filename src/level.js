@@ -8,7 +8,11 @@ const { circleFilled, info: infoSym, warning, cross } = require('figures')
 const getLevel = function({ opts, info }) {
   const level = opts.level(info)
 
-  if (LEVELS[level] !== undefined) {
+  if (level === undefined) {
+    return defaultLevel(info)
+  }
+
+  if (LEVELS[level] !== undefined || level === 'silent') {
     return level
   }
 

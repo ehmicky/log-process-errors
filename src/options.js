@@ -18,7 +18,6 @@ const getOptions = function({ opts = {} }) {
 }
 
 const DEFAULT_OPTS = {
-  skipEvent: () => false,
   level: defaultLevel,
   message: defaultMessage,
   log: defaultLog,

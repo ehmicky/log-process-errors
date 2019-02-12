@@ -37,18 +37,19 @@ const handleEvent = async function({
     return
   }
 
-  if (opts.skipEvent(info)) {
-    return
-  }
-
   await logEvent({ opts, info })
 
   await exitProcess({ eventName, opts })
 }
 
 const logEvent = async function({ opts, info }) {
-  const colors = getColors({ opts })
   const level = getLevel({ opts, info })
+
+  if (level === 'silent') {
+    return
+  }
+
+  const colors = getColors({ opts })
   const message = getMessage({ opts, info, level, colors })
 
   // We need to `await` it in case `opts.exitOn` exits the process.

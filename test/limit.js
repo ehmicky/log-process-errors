@@ -15,22 +15,15 @@ const {
   emitEvents,
 } = require('./helpers')
 
-const isLimitedWarning = function({ eventName, error: { name } = {} }) {
-  return eventName === 'warning' && name === 'LogProcessError'
-}
-
-const isNotLimitedWarning = function(info) {
-  return !isLimitedWarning(info)
-}
-
 /* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should limit events`, async t => {
     stubStackTraceRandom()
 
-    const skipEvent = info =>
-      info.eventName !== eventName || isLimitedWarning(info)
-    const { stopLogging, log } = startLogging({ log: 'spy', skipEvent })
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      level: onlyNotLimitedWarning.bind(null, eventName),
+    })
 
     await emitEvents(MAX_EVENTS, emitEvent)
 
@@ -50,7 +43,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      skipEvent: isNotLimitedWarning,
+      level: onlyLimited,
     })
 
     await emitEvents(MAX_EVENTS, emitEvent)
@@ -70,8 +63,8 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
-      skipEvent: isNotLimitedWarning,
       log: 'spy',
+      level: onlyLimited,
     })
 
     await emitEvents(MAX_EVENTS, emitEvent)
@@ -90,3 +83,19 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 })
 /* eslint-enable max-nested-callbacks */
+
+const onlyLimited = function(info) {
+  if (!isLimitedWarning(info)) {
+    return 'silent'
+  }
+}
+
+const onlyNotLimitedWarning = function(eventName, info) {
+  if (isLimitedWarning(info) || info.eventName !== eventName) {
+    return 'silent'
+  }
+}
+
+const isLimitedWarning = function({ eventName, error: { name } = {} }) {
+  return eventName === 'warning' && name === 'LogProcessError'
+}

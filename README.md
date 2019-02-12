@@ -49,7 +49,6 @@ logProcessErrors(options)
 - [`level` `{function}`](#log-level)
 - [`message` `{function}`](#log-message)
 - [`colors` `{boolean}`](#log-message) (default: `true`)
-- [`skipEvent` `{function}`](#skipping-events)
 - [`exitOn` `{string[]}`](#process-exit) (default: `['uncaughtException']`)
 
 # Duplicate events
@@ -102,13 +101,14 @@ By default the log level will be `warn` for `warning` events and `error` for
 the other events.
 
 This can be overridden by using the `level` option. It should be a function
-function using [`info` as argument](#event-info) and returning a string
-among `error`, `warn`, `info` or `debug`.
+function using [`info` as argument](#event-info) and returning either a string
+(among `error`, `warn`, `info`, `debug`, `silent`) or `undefined` (to use the
+default value).
 
 ```js
 logProcessErrors({
   level({ eventName }) {
-    return eventName === 'uncaughtException' ? 'error' : 'warn'
+    return eventName === 'uncaughtException' ? 'error' : 'silent'
   },
 })
 ```
@@ -126,26 +126,10 @@ The message generation can be overridden by using the `message` option. It
 should be a function using [`info` as argument](#event-info) and returning
 a string.
 
-# Skipping events
-
-Events can be skipped with the `skipEvent` option. It should be a function
-using [`info` as argument](#event-info) and returning `true` or `false`.
-
-For example to skip `warning` events:
-
-```js
-logProcessErrors({
-  skipEvent({ eventName }) {
-    return eventName === 'warning'
-  },
-})
-```
-
 # Event information
 
-The options `log`, `level`, `message` and `skipEvent` all receive as
-argument an `info` object with information about the event. It has the following
-properties:
+The options `log`, `level` and `message` all receive as argument an `info`
+object with information about the event. It has the following properties:
 
 - `eventName` `{string}`: can be `uncaughtException`, `unhandledRejection`,
   `rejectionHandled`, `multipleResolves` or `warning`

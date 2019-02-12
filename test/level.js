@@ -6,7 +6,7 @@ const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
-  test(`${prefix} should use default opts.level()`, async t => {
+  test(`${prefix} should use default opts.level() with undefined`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent()
@@ -16,7 +16,31 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     stopLogging()
   })
 
-  test(`${prefix} should use default opts.level() when returning a valid level`, async t => {
+  test(`${prefix} should use default opts.level() with function returning undefined`, async t => {
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      eventName,
+      level: () => undefined,
+    })
+
+    await emitEvent()
+
+    t.deepEqual(log.firstCall.args[1], defaultLevel)
+
+    stopLogging()
+  })
+
+  test(`${prefix} should allow 'silent' level`, async t => {
+    const { stopLogging, log } = startLogging({ log: 'spy', level: 'silent' })
+
+    await emitEvent()
+
+    t.true(log.notCalled)
+
+    stopLogging()
+  })
+
+  test(`${prefix} should use default opts.level() when returning an invalid level`, async t => {
     const { stopLogging, log, level } = startLogging({
       log: 'spy',
       level: 'invalid',
@@ -32,7 +56,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     stopLogging()
   })
 
-  test(`${prefix} should emit a warning when opts.level() when returns a valid level`, async t => {
+  test(`${prefix} should emit a warning when opts.level() when returning an invalid level`, async t => {
     const { stopLogging, level } = startLogging({ level: 'invalid', eventName })
 
     const { stopLogging: stopWarningLog, log } = startLogging({
@@ -60,7 +84,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
 
     await emitEvent()
 
-    t.is(levelA.callCount, 1)
+    t.true(levelA.called)
     t.is(log.callCount, 1)
     t.is(log.firstCall.args[1], level)
 

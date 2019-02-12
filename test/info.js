@@ -65,10 +65,10 @@ repeat(INFOS, (prefix, { name: eventName, arg, getInfo, expected }) => {
 
     await EVENTS[eventName](arg)
 
-    t.is(log.callCount, 1)
+    t.true(log.called)
 
     const {
-      firstCall: {
+      lastCall: {
         args: [, , info],
       },
     } = log

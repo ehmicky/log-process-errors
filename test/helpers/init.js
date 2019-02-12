@@ -12,22 +12,19 @@ const startLoggingNoOpts = function() {
 
 const startLogging = function({
   eventName,
-  skipEvent,
   log,
   level,
   message,
   ...opts
 } = {}) {
   const logA = getLog({ log })
-  const levelA = getLevel({ level })
+  const levelA = getLevel({ level, eventName })
   const messageA = getMessage({ message })
-  const skipEventA = getSkipEvent({ eventName, skipEvent })
 
   const stopLogging = logProcessErrors({
     log: logA,
     level: levelA,
     message: messageA,
-    skipEvent: skipEventA,
     exitOn: [],
     ...opts,
   })
@@ -55,16 +52,18 @@ const getLog = function({ log }) {
 const noop = function() {}
 
 // Get `opts.level()`
-const getLevel = function({ level }) {
-  if (typeof level === 'string') {
-    return sinon.spy(() => level)
+const getLevel = function({ level, eventName }) {
+  const levelA =
+    typeof level === 'string' || level === undefined ? () => level : level
+
+  // Invalid `opts.level`
+  if (typeof levelA !== 'function') {
+    return levelA
   }
 
-  if (typeof level !== 'function') {
-    return level
-  }
+  const levelB = addEventFilter({ level: levelA, eventName })
 
-  return sinon.spy(level)
+  return sinon.spy(levelB)
 }
 
 // Get `opts.message()`
@@ -73,6 +72,7 @@ const getMessage = function({ message }) {
     return sinon.spy(() => message)
   }
 
+  // Invalid `opts.message`
   if (typeof message !== 'function') {
     return message
   }
@@ -80,17 +80,21 @@ const getMessage = function({ message }) {
   return sinon.spy(message)
 }
 
-// Get `opts.skipEvent()`
-const getSkipEvent = function({ eventName, skipEvent }) {
+// Only print events a specific `eventName`
+const addEventFilter = function({ level, eventName }) {
   if (eventName === undefined) {
-    return skipEvent
+    return level
   }
 
-  return onlyEvent.bind(null, eventName)
+  return onlyEvent.bind(null, { level, eventName })
 }
 
-const onlyEvent = function(eventName, info) {
-  return info.eventName !== eventName
+const onlyEvent = function({ level, eventName }, info) {
+  if (info.eventName !== eventName) {
+    return 'silent'
+  }
+
+  return level(info)
 }
 
 module.exports = {

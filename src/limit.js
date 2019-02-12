@@ -11,7 +11,7 @@ const { MAX_EVENTS } = require('./constants')
 //   - `previousEvents` might otherwise take too much memory and/or create a
 //     memory leak.
 //  - it prevents infinite recursions if
-//    `opts.log|getLevel|getMessage|skipEvent()` triggers itself an event.
+//    `opts.log|getLevel|message|skipEvent()` triggers itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `error` or `[second]promiseValue` is not an `Error` instance
 //    and contain dynamic content.

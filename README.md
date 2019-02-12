@@ -47,7 +47,7 @@ logProcessErrors(options)
 
 - [`log` `{function}`](#custom-logging)
 - [`getLevel` `{function}`](#log-level)
-- [`getMessage` `{function}`](#log-message)
+- [`message` `{function}`](#log-message)
 - [`colors` `{boolean}`](#log-message) (default: `true`)
 - [`skipEvent` `{function}`](#skipping-events)
 - [`exitOn` `{string[]}`](#process-exit) (default: `['uncaughtException']`)
@@ -87,7 +87,7 @@ logProcessErrors({
 The function's arguments are:
 
 - `message` `{string}`: nice and detailed description of the event. Can be
-  customized with the [`getMessage` option](#log-message).
+  customized with the [`message` option](#log-message).
 - `level` `{string}`: log level. Can be customized with the
   [`getLevel` option](#log-level).
 - `info` `{object}`: [event information](#event-info)
@@ -122,7 +122,7 @@ The message will be colorized unless either:
 - the output [does not support colors](https://github.com/chalk/supports-color)
 - the option `colors` is set to `false`
 
-The message generation can be overridden by using the `getMessage` option. It
+The message generation can be overridden by using the `message` option. It
 should be a function using [`info` as argument](#event-info) and returning
 a string.
 
@@ -143,7 +143,7 @@ logProcessErrors({
 
 # Event information
 
-The options `log`, `getLevel`, `getMessage` and `skipEvent` all receive as
+The options `log`, `getLevel`, `message` and `skipEvent` all receive as
 argument an `info` object with information about the event. It has the following
 properties:
 
@@ -169,7 +169,7 @@ Whether the properties above are defined or not depends on the event name:
   `rejectionHandled` and `multipleResolves`
 - `secondPromiseState`, `secondPromiseValue`: only on `multipleResolves`
 
-The following properties are also defined with the `getMessage` option:
+The following properties are also defined with the `message` option:
 
 - `level` `{string}`
 - `colors` `{object}`: [Chalk instance](https://github.com/chalk/chalk#api)

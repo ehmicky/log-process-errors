@@ -12,7 +12,7 @@ const {
 
 /* eslint-disable max-nested-callbacks */
 repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
-  test(`${prefix} should fire opts.getMessage() with a default prettifier`, async t => {
+  test(`${prefix} should fire opts.message() with a default prettifier`, async t => {
     stubStackTrace()
 
     const { stopLogging, log } = startLogging({

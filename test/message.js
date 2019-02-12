@@ -8,7 +8,7 @@ const { startLogging, repeatEvents, repeatEventsLevels } = require('./helpers')
 /* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should allow customizing log message`, async t => {
-    const { stopLogging, log, getMessage } = startLogging({
+    const { stopLogging, log, message } = startLogging({
       log: 'spy',
       message: 'message',
       eventName,
@@ -16,17 +16,17 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     await emitEvent()
 
-    t.true(getMessage.calledOnce)
+    t.true(message.calledOnce)
     t.true(log.calledOnce)
     t.is(log.firstCall.args[0], 'message')
 
     stopLogging()
   })
 
-  test(`${prefix} should stringify opts.getMessage() return value`, async t => {
+  test(`${prefix} should stringify opts.message() return value`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      message: true,
+      message: () => true,
       eventName,
     })
 
@@ -40,8 +40,8 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 })
 
 repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
-  test(`${prefix} should fire opts.getMessage() with info`, async t => {
-    const { stopLogging, getMessage } = startLogging({
+  test(`${prefix} should fire opts.message() with info`, async t => {
+    const { stopLogging, message } = startLogging({
       message: 'message',
       level,
       eventName,
@@ -49,11 +49,11 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
 
     await emitEvent()
 
-    t.true(getMessage.calledOnce)
-    t.is(typeof getMessage.firstCall.args[0], 'object')
-    t.is(getMessage.firstCall.args[0].level, level)
+    t.true(message.calledOnce)
+    t.is(typeof message.firstCall.args[0], 'object')
+    t.is(message.firstCall.args[0].level, level)
     t.is(
-      getMessage.firstCall.args[0].colors.constructor.name,
+      message.firstCall.args[0].colors.constructor.name,
       chalk.constructor.name,
     )
 

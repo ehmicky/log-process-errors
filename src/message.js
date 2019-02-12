@@ -6,14 +6,14 @@ const { prettify } = require('./prettify')
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
 const getMessage = function({ opts, info, level, colors }) {
-  const message = opts.getMessage({ ...info, level, colors })
+  const message = opts.message({ ...info, level, colors })
   // Ensure this is a string
   const messageA = typeof message === 'string' ? message : serialize(message)
   return messageA
 }
 
-// Default `opts.getMessage()`
-const defaultGetMessage = function({
+// Default `opts.message()`
+const defaultMessage = function({
   eventName,
   promiseState,
   promiseValue,
@@ -83,5 +83,5 @@ const MESSAGES = {
 
 module.exports = {
   getMessage,
-  defaultGetMessage,
+  defaultMessage,
 }

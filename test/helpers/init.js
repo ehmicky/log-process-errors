@@ -20,18 +20,18 @@ const startLogging = function({
 } = {}) {
   const logA = getLog({ log })
   const getLevel = getLevelFunc({ level })
-  const getMessage = getMessageFunc({ message })
+  const messageA = getMessage({ message })
   const skipEventA = getSkipEvent({ eventName, skipEvent })
 
   const stopLogging = logProcessErrors({
     log: logA,
     getLevel,
-    getMessage,
+    message: messageA,
     skipEvent: skipEventA,
     exitOn: [],
     ...opts,
   })
-  return { stopLogging, log: logA, getLevel, getMessage }
+  return { stopLogging, log: logA, getLevel, message: messageA }
 }
 
 // Get `opts.log()`
@@ -63,13 +63,17 @@ const getLevelFunc = function({ level }) {
   return sinon.spy(() => level)
 }
 
-// Get `opts.getMessage()`
-const getMessageFunc = function({ message }) {
-  if (message === undefined) {
-    return
+// Get `opts.message()`
+const getMessage = function({ message }) {
+  if (typeof message === 'string') {
+    return sinon.spy(() => message)
   }
 
-  return sinon.spy(() => message)
+  if (typeof message !== 'function') {
+    return message
+  }
+
+  return sinon.spy(message)
 }
 
 // Get `opts.skipEvent()`

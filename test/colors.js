@@ -8,7 +8,7 @@ const { repeatEvents, startLogging } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
-  test(`${prefix} should colorize default opts.getMessage()`, async t => {
+  test(`${prefix} should colorize default opts.message()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent()
@@ -19,7 +19,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     stopLogging()
   })
 
-  test(`${prefix} should allow disabling colorizing default opts.getMessage()`, async t => {
+  test(`${prefix} should allow disabling colorizing default opts.message()`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       colors: false,

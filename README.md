@@ -134,9 +134,7 @@ object with information about the event. It has the following properties:
   `rejectionHandled`, `multipleResolves` or `warning`
 - `error` `{any}`:
   - either the value thrown by `uncaughtException`
-  - or the error emitted by `warning`.
-    [`error.code` and `error.detail`](https://nodejs.org/api/process.html#process_event_warning)
-    might be defined.
+  - or the error emitted by `warning`
   - it is usually an `Error` instance but could technically be anything
 - `promiseState` `{string}`: whether the promise was `resolved` or
   `rejected`

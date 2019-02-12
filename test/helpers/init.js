@@ -53,20 +53,28 @@ const noop = function() {}
 
 // Get `opts.level()`
 const getLevel = function({ level, eventName }) {
-  const levelA =
-    typeof level === 'string' || level === undefined ? () => level : level
-
   // Invalid `opts.level`
-  if (typeof levelA !== 'function') {
-    return levelA
+  if (typeof level === 'boolean') {
+    return level
   }
+
+  const levelA = getLevelFunc({ level })
 
   const levelB = addEventFilter({ level: levelA, eventName })
 
   return sinon.spy(levelB)
 }
 
-// Only print events a specific `eventName`
+// Always wrap in a function so we can spy it
+const getLevelFunc = function({ level }) {
+  if (typeof level === 'function') {
+    return level
+  }
+
+  return () => level
+}
+
+// If `eventName` is specified, only print those events
 const addEventFilter = function({ level, eventName }) {
   if (eventName === undefined) {
     return level

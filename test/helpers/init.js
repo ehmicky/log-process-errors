@@ -66,20 +66,6 @@ const getLevel = function({ level, eventName }) {
   return sinon.spy(levelB)
 }
 
-// Get `opts.message()`
-const getMessage = function({ message }) {
-  if (typeof message === 'string') {
-    return sinon.spy(() => message)
-  }
-
-  // Invalid `opts.message`
-  if (typeof message !== 'function') {
-    return message
-  }
-
-  return sinon.spy(message)
-}
-
 // Only print events a specific `eventName`
 const addEventFilter = function({ level, eventName }) {
   if (eventName === undefined) {
@@ -95,6 +81,20 @@ const onlyEvent = function({ level, eventName }, info) {
   }
 
   return level(info)
+}
+
+// Get `opts.message()`
+const getMessage = function({ message }) {
+  if (typeof message === 'string') {
+    return sinon.spy(() => message)
+  }
+
+  // Invalid `opts.message`
+  if (typeof message !== 'function') {
+    return message
+  }
+
+  return sinon.spy(message)
 }
 
 module.exports = {

@@ -4,9 +4,11 @@ const { emitWarning } = require('process')
 
 const { circleFilled, info: infoSym, warning, cross } = require('figures')
 
+const { result } = require('./utils')
+
 // Retrieve error's `level`
 const getLevel = function({ opts, info }) {
-  const level = opts.level(info)
+  const level = result(opts.level, info)
 
   if (level === undefined) {
     return defaultLevel(info)

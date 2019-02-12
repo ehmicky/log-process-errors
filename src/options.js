@@ -1,6 +1,6 @@
 'use strict'
 
-const { validate } = require('jest-validate')
+const { validate, multipleValidOptions } = require('jest-validate')
 
 const { defaultLevel } = require('./level')
 const { defaultMessage } = require('./message')
@@ -11,7 +11,7 @@ const { pickBy } = require('./utils')
 const getOptions = function({ opts = {} }) {
   const optsA = pickBy(opts, value => value !== undefined)
 
-  validate(optsA, { exampleConfig: DEFAULT_OPTS })
+  validate(optsA, { exampleConfig: EXAMPLE_OPTS })
 
   const optsB = { ...DEFAULT_OPTS, ...optsA }
   return optsB
@@ -23,6 +23,11 @@ const DEFAULT_OPTS = {
   log: defaultLog,
   colors: true,
   exitOn: ['uncaughtException'],
+}
+
+const EXAMPLE_OPTS = {
+  ...DEFAULT_OPTS,
+  level: multipleValidOptions(defaultLevel, 'warn'),
 }
 
 module.exports = {

@@ -100,10 +100,12 @@ If logging is asynchronous, the function should return a promise (or use
 By default the log level will be `warn` for `warning` events and `error` for
 the other events.
 
-This can be overridden by using the `level` option. It should be a function
-function using [`info` as argument](#event-info) and returning either a string
-(among `error`, `warn`, `info`, `debug`, `silent`) or `undefined` (to use the
-default value).
+This can be overridden by using the `level` option. It should either:
+
+- `undefined` to use the default value
+- a string among `error`, `warn`, `info`, `debug` or `silent`
+- a function using [`info` as argument](#event-info) and returning one of the
+  above
 
 ```js
 logProcessErrors({

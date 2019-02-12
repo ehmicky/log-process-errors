@@ -46,7 +46,7 @@ logProcessErrors(options)
 `options` is an optional object with the following properties:
 
 - [`log` `{function}`](#custom-logging)
-- [`getLevel` `{function}`](#log-level)
+- [`level` `{function}`](#log-level)
 - [`message` `{function}`](#log-message)
 - [`colors` `{boolean}`](#log-message) (default: `true`)
 - [`skipEvent` `{function}`](#skipping-events)
@@ -89,7 +89,7 @@ The function's arguments are:
 - `message` `{string}`: nice and detailed description of the event. Can be
   customized with the [`message` option](#log-message).
 - `level` `{string}`: log level. Can be customized with the
-  [`getLevel` option](#log-level).
+  [`level` option](#log-level).
 - `info` `{object}`: [event information](#event-info)
 
 If logging is asynchronous, the function should return a promise (or use
@@ -101,13 +101,13 @@ If logging is asynchronous, the function should return a promise (or use
 By default the log level will be `warn` for `warning` events and `error` for
 the other events.
 
-This can be overridden by using the `getLevel` option. It should be a function
+This can be overridden by using the `level` option. It should be a function
 function using [`info` as argument](#event-info) and returning a string
 among `error`, `warn`, `info` or `debug`.
 
 ```js
 logProcessErrors({
-  getLevel({ eventName }) {
+  level({ eventName }) {
     return eventName === 'uncaughtException' ? 'error' : 'warn'
   },
 })
@@ -143,7 +143,7 @@ logProcessErrors({
 
 # Event information
 
-The options `log`, `getLevel`, `message` and `skipEvent` all receive as
+The options `log`, `level`, `message` and `skipEvent` all receive as
 argument an `info` object with information about the event. It has the following
 properties:
 

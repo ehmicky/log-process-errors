@@ -7,7 +7,7 @@ const { repeat, startLogging } = require('./helpers')
 const OPTIONS = [
   { name: 'log', wrongValue: true },
   { name: 'skipEvent', wrongValue: true },
-  { name: 'getLevel', wrongValue: true },
+  { name: 'level', wrongValue: true },
   { name: 'message', wrongValue: true },
   { name: 'colors', wrongValue: 1 },
   { name: 'exitOn', wrongValue: true },

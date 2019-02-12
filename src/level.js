@@ -6,7 +6,7 @@ const { circleFilled, info: infoSym, warning, cross } = require('figures')
 
 // Retrieve error's `level`
 const getLevel = function({ opts, info }) {
-  const level = opts.getLevel(info)
+  const level = opts.level(info)
 
   if (LEVELS[level] !== undefined) {
     return level
@@ -15,7 +15,7 @@ const getLevel = function({ opts, info }) {
   const levels = Object.keys(LEVELS).join(', ')
   emitWarning(`Level ${level} is invalid. Must be one of: ${levels}`)
 
-  return defaultGetLevel(info)
+  return defaultLevel(info)
 }
 
 // Each level is printed in a different way
@@ -26,8 +26,8 @@ const LEVELS = {
   error: { COLOR: 'red', SIGN: cross },
 }
 
-// Default `opts.getLevel()`
-const defaultGetLevel = function({ eventName }) {
+// Default `opts.level()`
+const defaultLevel = function({ eventName }) {
   if (eventName === 'warning') {
     return 'warn'
   }
@@ -37,6 +37,6 @@ const defaultGetLevel = function({ eventName }) {
 
 module.exports = {
   getLevel,
-  defaultGetLevel,
+  defaultLevel,
   LEVELS,
 }

@@ -2,7 +2,7 @@
 
 const { validate } = require('jest-validate')
 
-const { defaultGetLevel } = require('./level')
+const { defaultLevel } = require('./level')
 const { defaultMessage } = require('./message')
 const { defaultLog } = require('./log')
 const { pickBy } = require('./utils')
@@ -19,7 +19,7 @@ const getOptions = function({ opts = {} }) {
 
 const DEFAULT_OPTS = {
   skipEvent: () => false,
-  getLevel: defaultGetLevel,
+  level: defaultLevel,
   message: defaultMessage,
   log: defaultLog,
   colors: true,

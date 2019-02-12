@@ -19,19 +19,19 @@ const startLogging = function({
   ...opts
 } = {}) {
   const logA = getLog({ log })
-  const getLevel = getLevelFunc({ level })
+  const levelA = getLevel({ level })
   const messageA = getMessage({ message })
   const skipEventA = getSkipEvent({ eventName, skipEvent })
 
   const stopLogging = logProcessErrors({
     log: logA,
-    getLevel,
+    level: levelA,
     message: messageA,
     skipEvent: skipEventA,
     exitOn: [],
     ...opts,
   })
-  return { stopLogging, log: logA, getLevel, message: messageA }
+  return { stopLogging, log: logA, level: levelA, message: messageA }
 }
 
 // Get `opts.log()`
@@ -54,13 +54,17 @@ const getLog = function({ log }) {
 // eslint-disable-next-line no-empty-function
 const noop = function() {}
 
-// Get `opts.getLevel()`
-const getLevelFunc = function({ level }) {
-  if (level === undefined) {
-    return
+// Get `opts.level()`
+const getLevel = function({ level }) {
+  if (typeof level === 'string') {
+    return sinon.spy(() => level)
   }
 
-  return sinon.spy(() => level)
+  if (typeof level !== 'function') {
+    return level
+  }
+
+  return sinon.spy(level)
 }
 
 // Get `opts.message()`

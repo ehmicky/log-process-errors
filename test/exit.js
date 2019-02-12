@@ -6,9 +6,10 @@ const test = require('ava')
 const sinon = require('sinon')
 const lolex = require('lolex')
 
-const {
-  constants: { EXIT_TIMEOUT, EXIT_STATUS },
-} = require('..')
+// Required directly inside `src` because this is exposed through
+// documentation, but not through code
+// eslint-disable-next-line import/no-internal-modules
+const { EXIT_TIMEOUT, EXIT_STATUS } = require('../src/constants')
 
 const { repeatEvents, startLogging } = require('./helpers')
 

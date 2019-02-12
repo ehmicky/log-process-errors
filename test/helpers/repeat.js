@@ -1,8 +1,9 @@
 'use strict'
 
-const {
-  constants: { LEVELS },
-} = require('../..')
+// Required directly inside `src` because this is exposed through
+// documentation, but not through code
+// eslint-disable-next-line import/no-internal-modules
+const { LEVELS } = require('../../src/constants')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')

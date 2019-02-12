@@ -2,9 +2,10 @@
 
 const test = require('ava')
 
-const {
-  constants: { MAX_EVENTS },
-} = require('..')
+// Required directly inside `src` because this is exposed through
+// documentation, but not through code
+// eslint-disable-next-line import/no-internal-modules
+const { MAX_EVENTS } = require('../src/constants')
 
 const {
   repeatEvents,

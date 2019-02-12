@@ -48,8 +48,8 @@ logProcessErrors(options)
 - [`log` `{function}`](#custom-logging)
 - [`level` `{function}`](#log-level)
 - [`message` `{function}`](#log-message)
-- [`colors` `{boolean}`](#log-message) (default: `true`)
-- [`exitOn` `{string[]}`](#process-exit) (default: `['uncaughtException']`)
+- [`colors` `{boolean}`](#log-message)
+- [`exitOn` `{string[]}`](#process-exit)
 
 # Duplicate events
 

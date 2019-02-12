@@ -5,42 +5,48 @@ const execa = require('execa')
 
 const { repeatEvents, normalizeMessage } = require('./helpers')
 
-const SIMPLE_LOADER_FILE = `${__dirname}/helpers/simple_loader`
-const NOOP_LOADER_FILE = `${__dirname}/helpers/noop_loader`
-
 /* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName }) => {
   test(`${prefix} should work using the -r flag`, async t => {
-    const { stdout, stderr, code } = await execa.shell(
-      `node ${SIMPLE_LOADER_FILE} ${eventName}`,
-      { env: { LOG_PROCESS_ERRORS_TEST: '1' } },
-    )
+    const returnValue = await callLoader({ eventName, loader: 'simple' })
 
-    const message = normalizeMessage(stderr)
-
-    t.snapshot({ code, message, stdout })
+    t.snapshot(returnValue)
   })
 
   test(`${prefix} should work with --no-warnings`, async t => {
-    const { stdout, stderr, code } = await execa.shell(
-      `node --no-warnings ${SIMPLE_LOADER_FILE} ${eventName}`,
-      { env: { LOG_PROCESS_ERRORS_TEST: '1' } },
-    )
+    const returnValue = await callLoader({
+      eventName,
+      loader: 'simple',
+      flags: '--no-warnings',
+    })
 
-    const message = normalizeMessage(stderr)
-
-    t.snapshot({ code, message, stdout })
+    t.snapshot(returnValue)
   })
 
   test(`${prefix} should work using both the -r flag and init()`, async t => {
-    const { stdout, stderr, code } = await execa.shell(
-      `node --no-warnings ${NOOP_LOADER_FILE} ${eventName}`,
-      {
-        env: { LOG_PROCESS_ERRORS_TEST: '1' },
-      },
-    )
+    const returnValue = await callLoader({
+      eventName,
+      loader: 'noop',
+      flags: '--no-warnings',
+    })
 
-    t.snapshot({ code, stdout, stderr })
+    t.snapshot(returnValue)
   })
 })
 /* eslint-enable max-nested-callbacks */
+
+const callLoader = async function({ eventName, loader, flags = '' }) {
+  const { stdout, stderr, code } = await execa.shell(
+    `node ${flags} ${LOADERS[loader]} ${eventName}`,
+    { env: { LOG_PROCESS_ERRORS_TEST: '1' } },
+  )
+
+  const message = normalizeMessage(stderr)
+
+  return { code, message, stdout }
+}
+
+const LOADERS = {
+  simple: `${__dirname}/helpers/simple_loader`,
+  noop: `${__dirname}/helpers/noop_loader`,
+}

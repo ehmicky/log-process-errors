@@ -10,26 +10,22 @@ const { result } = require('./utils')
 const getLevel = function({ opts, info }) {
   const level = result(opts.level, info)
 
-  if (level === undefined) {
-    return defaultLevel(info)
-  }
-
   if (LEVELS[level] !== undefined || level === 'silent') {
     return level
   }
 
-  const levels = Object.keys(LEVELS).join(', ')
-  emitWarning(`Level ${level} is invalid. Must be one of: ${levels}`)
+  validateLevel({ level })
 
   return defaultLevel(info)
 }
 
-// Each level is printed in a different way
-const LEVELS = {
-  debug: { COLOR: 'blue', SIGN: circleFilled },
-  info: { COLOR: 'green', SIGN: infoSym },
-  warn: { COLOR: 'yellow', SIGN: warning },
-  error: { COLOR: 'red', SIGN: cross },
+const validateLevel = function({ level }) {
+  if (level === undefined) {
+    return
+  }
+
+  const levels = Object.keys(LEVELS).join(', ')
+  emitWarning(`Level ${level} is invalid. Must be one of: ${levels}`)
 }
 
 // Default `opts.level()`
@@ -39,6 +35,14 @@ const defaultLevel = function({ eventName }) {
   }
 
   return 'error'
+}
+
+// Each level is printed in a different way
+const LEVELS = {
+  debug: { COLOR: 'blue', SIGN: circleFilled },
+  info: { COLOR: 'green', SIGN: infoSym },
+  warn: { COLOR: 'yellow', SIGN: warning },
+  error: { COLOR: 'red', SIGN: cross },
 }
 
 module.exports = {

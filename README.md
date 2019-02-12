@@ -104,8 +104,8 @@ This can be overridden by using the `level` option. It should either:
 
 - `undefined` to use the default value
 - a string among `error`, `warn`, `info`, `debug` or `silent`
-- a function using [`info` as argument](#event-info) and returning one of the
-  above
+- a function using [`info` as argument](#event-information) and returning one of
+  the above
 
 ```js
 logProcessErrors({
@@ -125,8 +125,8 @@ The message will be colorized unless either:
 - the option `colors` is set to `false`
 
 The message generation can be overridden by using the `message` option. It
-should be a function using [`info` as argument](#event-info) and returning
-a string.
+should be a function using [`info` as argument](#event-information) and
+returning a string.
 
 # Event information
 

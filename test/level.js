@@ -25,7 +25,8 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     await emitEvent()
 
-    t.deepEqual(log.firstCall.args[1], defaultLevel)
+    const [, level] = log.firstCall.args
+    t.deepEqual(level, defaultLevel)
 
     stopLogging()
   })

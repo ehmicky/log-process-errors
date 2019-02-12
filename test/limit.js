@@ -63,8 +63,8 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
-      log: 'spy',
       level: onlyLimited,
+      log: 'spy',
     })
 
     await emitEvents(MAX_EVENTS, emitEvent)

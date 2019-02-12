@@ -41,6 +41,10 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   })
 
   test(`${prefix} should keep existing process event handlers`, async t => {
+    if (eventName === 'warning') {
+      return t.pass()
+    }
+
     const processHandler = addProcessHandler(eventName)
 
     const { stopLogging } = startLogging()

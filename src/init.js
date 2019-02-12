@@ -5,6 +5,7 @@ const process = require('process')
 const moize = require('moize').default
 
 const { getOptions } = require('./options')
+const { removeWarningListener, restoreWarningListener } = require('./warnings')
 const EVENTS = require('./events')
 const { emitLimitedWarning } = require('./limit')
 
@@ -12,8 +13,11 @@ const { emitLimitedWarning } = require('./limit')
 const init = function(opts) {
   const optsA = getOptions({ opts })
 
+  removeWarningListener()
+
   const listeners = addListeners({ opts: optsA })
-  const removeAll = removeListeners.bind(null, listeners)
+
+  const removeAll = undo.bind(null, listeners)
   return removeAll
 }
 
@@ -43,9 +47,10 @@ const addListener = function({ opts, eventName, eventFunc }) {
   return { eventListener, eventName }
 }
 
-// Remove all event handlers
-const removeListeners = function(listeners) {
+// Remove all event handlers and restore previous `warning` listeners
+const undo = function(listeners) {
   listeners.forEach(removeListener)
+  restoreWarningListener()
 }
 
 const removeListener = function({ eventListener, eventName }) {

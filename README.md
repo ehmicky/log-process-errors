@@ -56,12 +56,6 @@ init(options)
 
 Duplicate events are only logged once.
 
-It is recommended to use the
-[`--no-warnings` CLI flag](https://nodejs.org/api/cli.html#cli_no_warnings) or
-the
-[`NODE_NO_WARNINGS=1`](https://nodejs.org/api/cli.html#cli_node_no_warnings_1)
-environment variable to prevent warnings being logged twice.
-
 # Process exit
 
 The `exitOn` option specifies which event should trigger `process.exit(1)`:

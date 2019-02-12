@@ -14,11 +14,12 @@ const startLogging = function({
   eventName,
   log,
   level,
+  rawLevel = false,
   message,
   ...opts
 } = {}) {
   const logA = getLog({ log })
-  const levelA = getLevel({ level, eventName })
+  const levelA = getLevel({ level, rawLevel, eventName })
   const messageA = getMessage({ message })
 
   const stopLogging = logProcessErrors({
@@ -52,9 +53,13 @@ const getLog = function({ log }) {
 const noop = function() {}
 
 // Get `opts.level()`
-const getLevel = function({ level, eventName }) {
+const getLevel = function({ level, rawLevel, eventName }) {
   // Invalid `opts.level`
   if (typeof level === 'boolean') {
+    return level
+  }
+
+  if (rawLevel) {
     return level
   }
 

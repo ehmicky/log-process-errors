@@ -92,6 +92,22 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     stopLogging()
   })
 
+  test(`${prefix} should allow string opts.level`, async t => {
+    const { stopLogging, log } = startLogging({
+      log: 'spy',
+      level,
+      rawLevel: true,
+      eventName,
+    })
+
+    await emitEvent()
+
+    t.true(log.called)
+    t.is(log.firstCall.args[1], level)
+
+    stopLogging()
+  })
+
   test(`${prefix} should fire opts.level() with info`, async t => {
     const { stopLogging, level: levelA } = startLogging({ level, eventName })
 

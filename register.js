@@ -1,6 +1,6 @@
 'use strict'
 
-const { init } = require('.')
+const logProcessErrors = require('.')
 
 // Logging init is automatically performed by
 // `node -r log-process-errors/register` or
@@ -14,5 +14,5 @@ const { init } = require('.')
 // Also it ensures this code is called as early as possible, to make sure early
 // events are caught.
 // To either defer the call or to pass options, one must use instead
-// `require('log-process-errors').init(options)`
-init()
+// `require('log-process-errors')(options)`
+logProcessErrors()

@@ -2,11 +2,11 @@
 
 const sinon = require('sinon')
 
-const { init } = require('../..')
+const logProcessErrors = require('../..')
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
 const startLoggingNoOpts = function() {
-  const stopLogging = init()
+  const stopLogging = logProcessErrors()
   return { stopLogging }
 }
 
@@ -23,7 +23,7 @@ const startLogging = function({
   const getMessage = getMessageFunc({ message })
   const skipEventA = getSkipEvent({ eventName, skipEvent })
 
-  const stopLogging = init({
+  const stopLogging = logProcessErrors({
     log: logA,
     getLevel,
     getMessage,

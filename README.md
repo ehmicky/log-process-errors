@@ -36,12 +36,12 @@ $ node -r log-process-errors/register ...
 # Usage (custom)
 
 ```js
-const { init } = require('log-process-errors')
+const logProcessErrors = require('log-process-errors')
 
-init(options)
+logProcessErrors(options)
 ```
 
-`init()` should be called as early as possible in the code.
+`logProcessErrors()` should be called as early as possible in the code.
 
 `options` is an optional object with the following properties:
 
@@ -180,9 +180,9 @@ The following properties are also defined with the `getMessage` option:
 Logging can be stopped by firing the function returned by `logProcessErrors()`
 
 ```js
-const { init } = require('log-process-errors')
+const logProcessErrors = require('log-process-errors')
 
-const stopLogging = init(options)
+const stopLogging = logProcessErrors(options)
 
 stopLogging()
 ```

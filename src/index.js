@@ -3,6 +3,4 @@
 // eslint-disable-next-line import/no-unassigned-import
 require('./node_compat')
 
-module.exports = {
-  ...require('./init'),
-}
+module.exports = require('./init')

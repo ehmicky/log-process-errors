@@ -2,7 +2,7 @@
 
 const { argv } = require('process')
 
-const { init } = require('../../..')
+const logProcessErrors = require('../../..')
 
 const { ALL_EVENTS } = require('./main')
 
@@ -11,7 +11,7 @@ const { ALL_EVENTS } = require('./main')
 const fireEvent = async function(typeName) {
   const emitEvent = getEmitEvent(typeName)
 
-  const stopLogging = init({ exitOn: [] })
+  const stopLogging = logProcessErrors({ exitOn: [] })
 
   await emitEvent()
 

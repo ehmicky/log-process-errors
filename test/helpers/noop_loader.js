@@ -9,7 +9,7 @@ require('../../register')
 // eslint-disable-next-line import/no-unassigned-import
 require('@babel/register')
 
-const { init } = require('../..')
+const logProcessErrors = require('../..')
 
-const removeAll = init()
+const removeAll = logProcessErrors()
 removeAll()

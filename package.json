@@ -18,7 +18,7 @@
       "pre-push": "gulp check"
     }
   },
-  "description": "Log all process errors: uncaught exceptions, warnings and improperly handled promises",
+  "description": "Show some ❤️ to process errors in Node.js",
   "keywords": [
     "process",
     "error-handling",

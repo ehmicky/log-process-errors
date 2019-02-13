@@ -4,7 +4,13 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
+const {
+  repeatEvents,
+  repeatEventsLevels,
+  startLogging,
+  stubStackTrace,
+  unstubStackTrace,
+} = require('./helpers')
 
 /* eslint-disable max-nested-callbacks, max-lines-per-function */
 repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
@@ -60,6 +66,8 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   })
 
   test(`${prefix} should emit a warning when opts.level() uses an invalid level`, async t => {
+    stubStackTrace()
+
     const { stopLogging } = startLogging({
       level: { default: 'invalid' },
       eventName,
@@ -77,6 +85,8 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     stopWarningLog()
     stopLogging()
+
+    unstubStackTrace()
   })
 
   test(`${prefix} should allow changing log level for a specific event`, async t => {

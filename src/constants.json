@@ -13,7 +13,7 @@
     "warning": "warn",
     "unhandledRejection": "error",
     "rejectionHandled": "error",
-    "multipleResolves": "error"
+    "multipleResolves": "info"
   },
   "EXIT_TIMEOUT": 3e3,
   "EXIT_STATUS": 1,

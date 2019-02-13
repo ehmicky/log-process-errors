@@ -42,8 +42,9 @@ const callLoader = async function({ eventName, loader, flags = '' }) {
   )
 
   const message = normalizeMessage(stderr)
+  const stdoutA = normalizeMessage(stdout)
 
-  return { code, message, stdout }
+  return { code, message, stdout: stdoutA }
 }
 
 const LOADERS = {

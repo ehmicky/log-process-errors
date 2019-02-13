@@ -91,21 +91,23 @@ not).
 
 # Log level
 
-By default the log level will be `warn` for
-[`warning`](https://nodejs.org/api/process.html#process_event_warning)
-events and `error` for the other events.
+The default log level is `warn` for
+[`warning`](https://nodejs.org/api/process.html#process_event_warning),
+`info` for
+[`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+and `error` for the other events.
 
 This can be overridden by using the `level` option. It should be an
 object whose:
 
-- keys can be `default`,
+- keys are the event names among `default`,
   [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
   [`warning`](https://nodejs.org/api/process.html#process_event_warning),
   [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   or
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
-- values can be:
+- values are the log level which can be:
   - a string among `debug`, `info`, `warn`, `error` or `silent`.
   - `undefined` to use the default value.
   - a function using [`info` as argument](#event-information) and

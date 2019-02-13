@@ -57,6 +57,8 @@ const rejectionHandled = function({ promiseValue }) {
 ${serialize(promiseValue)}`
 }
 
+// The default level is `info` because it does not always indicate an
+// error: https://github.com/nodejs/node/issues/24321
 const multipleResolves = function({
   promiseState,
   promiseValue,

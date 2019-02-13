@@ -13,17 +13,24 @@ const validateLevels = function({ level }) {
 }
 
 const validateLevel = function([eventName, level]) {
-  if (ALLOWED_LEVELS.includes(level) || typeof level === 'function') {
+  if (isValidLevel({ level })) {
     return
   }
 
-  const allowedLevels = ALLOWED_LEVELS.map(String).join(', ')
   throw new Error(
-    `Invalid option 'level.${eventName}' '${level}': must be a function or one of ${allowedLevels}`,
+    `Invalid option 'level.${eventName}' '${level}': must be a function, undefined or one of ${ALL_LEVELS.join(
+      ', ',
+    )}`,
   )
 }
 
-const ALLOWED_LEVELS = [...ALL_LEVELS, undefined]
+const isValidLevel = function({ level }) {
+  return (
+    ALL_LEVELS.includes(level) ||
+    level === undefined ||
+    typeof level === 'function'
+  )
+}
 
 const validateExitOn = function({ exitOn }) {
   if (exitOn === undefined) {

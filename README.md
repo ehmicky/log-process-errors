@@ -19,6 +19,8 @@ on the console which is very useful. Unfortunately those process errors:
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
 - are not human-friendly.
 
+![Screenshot before](docs/before.png)
+
 `log-process-errors` fixes those issues:
 
 ![Screenshot after](docs/after.png)

@@ -5,11 +5,11 @@ const { emitWarning } = require('process')
 const { MAX_EVENTS } = require('./constants')
 
 // We only allow 100 events (per `eventName`) for the global process because:
-//   - process errors are exceptional and if more than 100 happen, this is
-//     probably due to some infinite recursion.
-//   - the `repeated` logic should prevent reaching the threshold
-//   - `previousEvents` might otherwise take too much memory and/or create a
-//     memory leak.
+//  - process errors are exceptional and if more than 100 happen, this is
+//    probably due to some infinite recursion.
+//  - the `repeated` logic should prevent reaching the threshold
+//  - `previousEvents` might otherwise take too much memory and/or create a
+//    memory leak.
 //  - it prevents infinite recursions if
 //    `opts.log|level|message()` triggers itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still

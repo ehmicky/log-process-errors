@@ -3,6 +3,7 @@
 
 const test = require('ava')
 const sinon = require('sinon')
+const stripAnsi = require('strip-ansi')
 
 const {
   repeatEvents,
@@ -10,6 +11,7 @@ const {
   startLogging,
   stubStackTrace,
   unstubStackTrace,
+  normalizeMessage,
 } = require('./helpers')
 
 /* eslint-disable max-nested-callbacks, max-lines-per-function */
@@ -81,7 +83,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     await emitEvent()
 
     t.true(log.called)
-    t.snapshot(log.lastCall.args[0])
+    t.snapshot(normalizeMessage(stripAnsi(log.lastCall.args[0])))
 
     stopWarningLog()
     stopLogging()

@@ -28,7 +28,7 @@ INVALID_OPTIONS.forEach(({ name, value }) => {
   test(`${JSON.stringify({ name, value })} should validate options`, t => {
     const error = t.throws(startLogging.bind(null, { [name]: value }))
 
-    t.snapshot(stripAnsi(error.message))
+    t.snapshot(normalizeJestValidate(error.message))
   })
 })
 
@@ -48,3 +48,13 @@ WARNED_OPTIONS.forEach(({ name, value }) => {
   })
 })
 /* eslint-enable max-nested-callbacks */
+
+const normalizeJestValidate = function(message) {
+  // Windows does not use colors
+  const messageA = stripAnsi(message)
+  // When using nyc, example function body adds dynamic instrumentation code
+  const messageB = messageA.replace(FUNC_BODY_REGEXP, '$1$2')
+  return messageB
+}
+
+const FUNC_BODY_REGEXP = /(\(\)(?:=>)?\{)[^}]*(\})/gu

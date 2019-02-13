@@ -28,9 +28,15 @@ const DEFAULT_OPTS = {
   exitOn: ['uncaughtException'],
 }
 
+// `validate-jest` prints the function body
+// eslint-disable-next-line no-empty-function
+const exampleFunction = function() {}
+
 const EXAMPLE_OPTS = {
   ...DEFAULT_OPTS,
   level: getExampleLevels(),
+  message: exampleFunction,
+  log: exampleFunction,
 }
 
 module.exports = {

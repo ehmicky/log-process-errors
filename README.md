@@ -28,7 +28,7 @@ on the console which is very useful. Unfortunately those process errors:
 # Installation
 
 ```bash
-$ npm install -D log-process-errors
+$ npm install log-process-errors
 ```
 
 `log-process-errors` modifies logging globally. It should not be installed as

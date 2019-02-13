@@ -18,7 +18,7 @@
       "pre-push": "gulp check"
     }
   },
-  "description": "Show some ❤️ to process errors in Node.js",
+  "description": "Show some ❤️ to process errors",
   "keywords": [
     "process",
     "error-handling",

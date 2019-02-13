@@ -197,12 +197,12 @@ Only defined with the [`message` option](#log-message). Disabled if the
 The `exitOn` option specifies which event should trigger `process.exit(1)`:
 
 - the default value is `['uncaughtException']`. This is the default
-  behavior of Node.js. It's also recommended by the
+  behavior of Node.js. Recommended by the
   [official documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
 - we recommend using `['uncaughtException', 'unhandledRejection']`
   instead since this will be the [future default behavior of Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections).
-- to prevent any `process.exit(1)`, use `[]`. This is recommended if your
-  process is long-running and does not automatically restart on exit.
+- to prevent any `process.exit(1)`, use `[]`. Recommended if your process is
+  long-running and does not automatically restart on exit.
 
 `process.exit(1)` will only be fired after successfully logging the event.
 

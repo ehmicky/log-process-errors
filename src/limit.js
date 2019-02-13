@@ -10,8 +10,8 @@ const { MAX_EVENTS } = require('./constants')
 //  - the `repeated` logic should prevent reaching the threshold
 //  - `previousEvents` might otherwise take too much memory and/or create a
 //    memory leak.
-//  - it prevents infinite recursions if
-//    `opts.log|level|message()` triggers itself an event.
+//  - it prevents infinite recursions if `opts.log|level|message()` triggers
+//    itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `error` or `[second]promiseValue` is not an `Error` instance
 //    and contain dynamic content.

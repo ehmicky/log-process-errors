@@ -19,7 +19,7 @@ const validateLevel = function([eventName, level]) {
 
   const allowedLevels = ALLOWED_LEVELS.map(String).join(', ')
   throw new Error(
-    `Invalid option 'level.${eventName}' '${level}': must be one of ${allowedLevels}`,
+    `Invalid option 'level.${eventName}' '${level}': must be a function or one of ${allowedLevels}`,
   )
 }
 

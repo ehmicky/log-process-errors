@@ -57,4 +57,4 @@ const normalizeJestValidate = function(message) {
   return messageB
 }
 
-const FUNC_BODY_REGEXP = /(\(\)(?:=>)?\{)[^}]*(\})/gu
+const FUNC_BODY_REGEXP = /\s*(\(\)(?:=>)?\{)[^}]*(\})/gu

@@ -2,6 +2,7 @@
 
 const test = require('ava')
 const sinon = require('sinon')
+const stripAnsi = require('strip-ansi')
 
 const { repeat, startLogging } = require('./helpers')
 
@@ -37,7 +38,7 @@ repeat(WARNED_OPTIONS, (prefix, { name, value }) => {
     const { stopLogging } = startLogging({ [name]: value })
 
     t.is(stub.callCount, 1)
-    t.snapshot(stub.firstCall.args[0])
+    t.snapshot(stripAnsi(stub.firstCall.args[0]))
 
     stopLogging()
 

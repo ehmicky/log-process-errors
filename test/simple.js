@@ -38,7 +38,7 @@ repeatEvents((prefix, { eventName }) => {
 const callLoader = async function({ eventName, loader, flags = '' }) {
   const { stdout, stderr, code } = await execa.shell(
     `node ${flags} ${LOADERS[loader]} ${eventName}`,
-    { env: { LOG_PROCESS_ERRORS_TEST: '1' } },
+    { reject: false },
   )
 
   const message = normalizeMessage(stderr)

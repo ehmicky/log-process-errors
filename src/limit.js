@@ -52,7 +52,7 @@ const isLimitedWarning = function({ eventName, error: { name, code } = {} }) {
 
 const ERROR_MESSAGE = eventName =>
   `Cannot log more than ${MAX_EVENTS} '${eventName}' until process is restarted`
-const ERROR_NAME = 'LogProcessError'
+const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
 
 module.exports = {

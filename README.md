@@ -34,16 +34,16 @@ $ npm install log-process-errors
 `log-process-errors` modifies logging globally. It should not be installed as
 a production dependency inside libraries since users might not expect this side effect. Also this might lead to conflicts between libraries.
 
-# Usage (simple)
+# Usage
 
-The simplest way is to use the
+There are two ways to load this library. The first is to use the
 [`node -r` CLI flag](https://nodejs.org/api/cli.html#cli_r_require_module):
 
 ```bash
 node -r log-process-errors/register ...
 ```
 
-# Usage (custom)
+The second is:
 
 <!-- eslint-disable-next-line import/newline-after-import -->
 
@@ -78,11 +78,8 @@ logProcessErrors({
 })
 ```
 
-The function's arguments are:
-
-- [`message` `{string}`](#log-message)
-- [`level` `{string}`](#log-level)
-- [`info` `{object}`](#event-information)
+The function's arguments are [`message`](#log-message) (string),
+[`level`](#log-level) (string) and [`info`](#event-information) (object).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
@@ -207,19 +204,19 @@ Only defined with the [`message` option](#log-message). Disabled if the
 
 The `exitOn` option specifies which event should trigger `process.exit(1)`:
 
-- the default value is `['uncaughtException']`. This is the default
-  behavior of Node.js. Recommended by the
-  [official documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
+- the default value is `['uncaughtException']`. This is the
+  [default behavior](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly)
+  of Node.js.
 - we recommend using `['uncaughtException', 'unhandledRejection']`
   instead since this will be the [future default behavior of Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections).
-- to prevent any `process.exit(1)`, use `[]`. Recommended if your process is
+- to prevent any `process.exit(1)` use `[]`. Recommended if your process is
   long-running and does not automatically restart on exit.
 
 `process.exit(1)` will only be fired after successfully logging the event.
 
 # Stop logging
 
-Logging can be stopped by firing the function returned by `logProcessErrors()`
+Logging can be stopped by firing the function returned by `logProcessErrors()`.
 
 ```js
 const logProcessErrors = require('log-process-errors')

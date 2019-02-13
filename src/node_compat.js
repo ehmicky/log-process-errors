@@ -9,6 +9,7 @@ Array.prototype.flatMap = function(...args) {
   return [].concat(...this.map(...args))
 }
 
+// Like `Object.fromEntries()`
 const fromEntries = function(pairs) {
   const pairsA = pairs.map(([key, value]) => ({ [key]: value }))
   return Object.assign({}, ...pairsA)

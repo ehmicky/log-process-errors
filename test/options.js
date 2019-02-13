@@ -4,7 +4,7 @@ const test = require('ava')
 const sinon = require('sinon')
 const stripAnsi = require('strip-ansi')
 
-const { repeat, startLogging } = require('./helpers')
+const { startLogging } = require('./helpers')
 
 const INVALID_OPTIONS = [
   { name: 'log', value: true },
@@ -24,14 +24,16 @@ const WARNED_OPTIONS = [
 ]
 
 /* eslint-disable max-nested-callbacks */
-repeat(INVALID_OPTIONS, (prefix, { name, value }) => {
-  test(`${prefix} should validate options`, t => {
-    t.throws(startLogging.bind(null, { [name]: value }))
+INVALID_OPTIONS.forEach(({ name, value }) => {
+  test(`${JSON.stringify({ name, value })} should validate options`, t => {
+    const error = t.throws(startLogging.bind(null, { [name]: value }))
+
+    t.snapshot(stripAnsi(error.message))
   })
 })
 
-repeat(WARNED_OPTIONS, (prefix, { name, value }) => {
-  test(`${prefix} should warn on additional options`, t => {
+WARNED_OPTIONS.forEach(({ name, value }) => {
+  test(`${JSON.stringify({ name, value })} should warn on options`, t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, 'warn')
 

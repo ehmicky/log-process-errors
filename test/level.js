@@ -3,7 +3,6 @@
 
 const test = require('ava')
 const sinon = require('sinon')
-const stripAnsi = require('strip-ansi')
 
 const {
   repeatEvents,
@@ -83,7 +82,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     await emitEvent()
 
     t.true(log.called)
-    t.snapshot(normalizeMessage(stripAnsi(log.lastCall.args[0])))
+    t.snapshot(normalizeMessage(log.lastCall.args[0], { colors: false }))
 
     stopWarningLog()
     stopLogging()

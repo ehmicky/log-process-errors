@@ -1,8 +1,12 @@
 'use strict'
 
+const stripAnsi = require('strip-ansi')
+
 // Normalize console messages for testing
-const normalizeMessage = function(message) {
-  return message
+const normalizeMessage = function(message, { colors = true } = {}) {
+  // Windows does not use colors on CI
+  const messageA = colors ? message : stripAnsi(message)
+  return messageA
     .replace(FIRST_SIGN_REGEXP, '[]')
     .replace(WARNING_PID_REGEXP, '(node:PID)')
     .replace(WARNING_OLD_REGEXP, '$1$2')

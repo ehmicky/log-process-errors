@@ -4,7 +4,6 @@ const process = require('process')
 
 const test = require('ava')
 const sinon = require('sinon')
-const stripAnsi = require('strip-ansi')
 
 const {
   repeatEvents,
@@ -31,7 +30,9 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     await emitEvent()
 
-    const messages = stub.args.map(([arg]) => normalizeMessage(stripAnsi(arg)))
+    const messages = stub.args.map(([arg]) =>
+      normalizeMessage(arg, { colors: false }),
+    )
 
     stopLogging()
     stub.restore()

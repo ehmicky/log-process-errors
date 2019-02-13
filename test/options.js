@@ -2,9 +2,8 @@
 
 const test = require('ava')
 const sinon = require('sinon')
-const stripAnsi = require('strip-ansi')
 
-const { startLogging } = require('./helpers')
+const { startLogging, normalizeMessage } = require('./helpers')
 
 const INVALID_OPTIONS = [
   { name: 'log', value: true },
@@ -40,7 +39,7 @@ WARNED_OPTIONS.forEach(({ name, value }) => {
     const { stopLogging } = startLogging({ [name]: value })
 
     t.is(stub.callCount, 1)
-    t.snapshot(stripAnsi(stub.firstCall.args[0]))
+    t.snapshot(normalizeMessage(stub.firstCall.args[0], { colors: false }))
 
     stopLogging()
 
@@ -50,8 +49,7 @@ WARNED_OPTIONS.forEach(({ name, value }) => {
 /* eslint-enable max-nested-callbacks */
 
 const normalizeJestValidate = function(message) {
-  // Windows does not use colors
-  const messageA = stripAnsi(message)
+  const messageA = normalizeMessage(message, { colors: false })
   // When using nyc, example function body adds dynamic instrumentation code
   const messageB = messageA.replace(FUNC_BODY_REGEXP, '$1$2')
   return messageB

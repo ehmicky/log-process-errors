@@ -1,8 +1,8 @@
 'use strict'
 
-const { validate, multipleValidOptions } = require('jest-validate')
+const { validate } = require('jest-validate')
 
-const { defaultLevel } = require('./level')
+const { applyDefaultLevels, getExampleLevels } = require('./level')
 const { defaultMessage } = require('./message')
 const { defaultLog } = require('./log')
 const { pickBy } = require('./utils')
@@ -13,12 +13,12 @@ const getOptions = function({ opts = {} }) {
 
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
 
-  const optsB = { ...DEFAULT_OPTS, ...optsA }
+  const level = applyDefaultLevels({ opts: optsA })
+  const optsB = { ...DEFAULT_OPTS, ...optsA, level }
   return optsB
 }
 
 const DEFAULT_OPTS = {
-  level: defaultLevel,
   message: defaultMessage,
   log: defaultLog,
   colors: true,
@@ -27,7 +27,7 @@ const DEFAULT_OPTS = {
 
 const EXAMPLE_OPTS = {
   ...DEFAULT_OPTS,
-  level: multipleValidOptions(defaultLevel, 'warn'),
+  level: getExampleLevels(),
 }
 
 module.exports = {

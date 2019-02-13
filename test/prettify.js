@@ -17,7 +17,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
 
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      level,
+      level: { default: level },
       colors: false,
       eventName,
     })

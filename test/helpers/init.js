@@ -4,6 +4,8 @@ const sinon = require('sinon')
 
 const logProcessErrors = require('../..')
 
+const { mapValues } = require('./utils')
+
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
 const startLoggingNoOpts = function() {
   const stopLogging = logProcessErrors()
@@ -14,12 +16,11 @@ const startLogging = function({
   eventName,
   log,
   level,
-  rawLevel = false,
   message,
   ...opts
 } = {}) {
   const logA = getLog({ log })
-  const levelA = getLevel({ level, rawLevel, eventName })
+  const levelA = getLevel({ level, eventName })
   const messageA = getMessage({ message })
 
   const stopLogging = logProcessErrors({
@@ -52,45 +53,24 @@ const getLog = function({ log }) {
 // eslint-disable-next-line no-empty-function
 const noop = function() {}
 
-// Get `opts.level()`
-const getLevel = function({ level, rawLevel, eventName }) {
-  // Invalid `opts.level`
-  if (typeof level === 'boolean') {
-    return level
-  }
-
-  if (rawLevel) {
-    return level
-  }
-
-  const levelA = getLevelFunc({ level })
-
-  const levelB = addEventFilter({ level: levelA, eventName })
-
-  return sinon.spy(levelB)
-}
-
-// Always wrap in a function so we can spy it
-const getLevelFunc = function({ level }) {
-  if (typeof level === 'function') {
-    return level
-  }
-
-  return () => level
-}
-
 // If `eventName` is specified, only print those events
-const addEventFilter = function({ level, eventName }) {
+const getLevel = function({ level, eventName }) {
   if (eventName === undefined) {
     return level
   }
 
-  return onlyEvent.bind(null, { level, eventName })
+  const levelA = level === undefined ? { default: undefined } : level
+
+  return mapValues(levelA, levelB => onlyEvent.bind(null, levelB, eventName))
 }
 
-const onlyEvent = function({ level, eventName }, info) {
+const onlyEvent = function(level, eventName, info) {
   if (info.eventName !== eventName) {
     return 'silent'
+  }
+
+  if (typeof level !== 'function') {
+    return level
   }
 
   return level(info)

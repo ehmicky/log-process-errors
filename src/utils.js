@@ -1,11 +1,24 @@
 'use strict'
 
+const { fromEntries } = require('./node_compat')
+
+// Like Lodash pickBy()
 const pickBy = function(object, condition) {
-  const objectA = Object.entries(object)
-    .filter(([key, value]) => condition(value, key))
-    .map(([key, value]) => ({ [key]: value }))
-  const objectB = Object.assign({}, ...objectA)
-  return objectB
+  const pairs = Object.entries(object).filter(([key, value]) =>
+    condition(value, key),
+  )
+  const objectA = fromEntries(pairs)
+  return objectA
+}
+
+// Like Lodash mapValues()
+const mapValues = function(object, mapper) {
+  const pairs = Object.entries(object).map(([key, value]) => [
+    key,
+    mapper(value, key),
+  ])
+  const objectA = fromEntries(pairs)
+  return objectA
 }
 
 // Like Lodash result(), but faster
@@ -19,5 +32,6 @@ const result = function(val, ...args) {
 
 module.exports = {
   pickBy,
+  mapValues,
   result,
 }

@@ -22,7 +22,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      level: onlyNotLimitedWarning.bind(null, eventName),
+      level: { default: onlyNotLimitedWarning.bind(null, eventName) },
     })
 
     await emitEvents(MAX_EVENTS, emitEvent)
@@ -43,7 +43,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      level: onlyLimited,
+      level: { default: onlyLimited },
     })
 
     await emitEvents(MAX_EVENTS, emitEvent)
@@ -63,7 +63,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
-      level: onlyLimited,
+      level: { default: onlyLimited },
       log: 'spy',
     })
 

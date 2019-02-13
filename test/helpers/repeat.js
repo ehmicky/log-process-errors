@@ -3,7 +3,7 @@
 // Required directly inside `src` because this is exposed through
 // documentation, but not through code
 // eslint-disable-next-line import/no-internal-modules
-const { LEVELS } = require('../../src/constants')
+const { LEVELS, DEFAULT_LEVEL } = require('../../src/constants')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')
@@ -13,7 +13,7 @@ const getEvents = function() {
 }
 
 const getEvent = function([eventName, emitEvent]) {
-  const defaultLevel = eventName === 'warning' ? 'warn' : 'error'
+  const defaultLevel = DEFAULT_LEVEL[eventName]
   return { eventName, emitEvent, name: eventName, defaultLevel }
 }
 

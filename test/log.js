@@ -1,7 +1,7 @@
 'use strict'
 
-const test = require('ava')
 const sinon = require('sinon')
+const test = require('ava')
 
 const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
 
@@ -51,28 +51,14 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     await emitEvent()
 
-    t.is(typeof log.firstCall.args[2], 'object')
+    const [, , info] = log.firstCall.args
+    t.is(typeof info, 'object')
 
     stopLogging()
   })
 })
 
 repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
-  test(`${prefix} should fire opts.log() with level`, async t => {
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      level,
-      eventName,
-    })
-
-    await emitEvent()
-
-    t.is(log.callCount, 1)
-    t.true(typeof log.firstCall.args[1] === 'string')
-
-    stopLogging()
-  })
-
   test(`${prefix} should log on the console by default`, async t => {
     // `console.debug()` does not exist in Node.js <8
     // TODO: remove once dropping support for Node.js <8
@@ -85,7 +71,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     const { stopLogging } = startLogging({
       log: 'default',
       message: 'message',
-      level,
+      level: { default: level },
       eventName,
     })
 

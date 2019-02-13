@@ -92,34 +92,41 @@ not).
 # Log level
 
 By default the log level will be `warn` for
-[`warning`](https://nodejs.org/api/process.html#process_event_warning) events
-and `error` for the other events.
+[`warning`](https://nodejs.org/api/process.html#process_event_warning)
+events and `error` for the other events.
 
-This can be overridden by using the `level` option which can be:
+This can be overridden by using the `level` option. It should be an
+object whose:
 
-- a string among `debug`, `info`, `warn`, `error` or `silent`.
-- `undefined` to use the default value.
-- a function using [`info` as argument](#event-information) and returning one of
-  the above.
+- keys can be `default`,
+  [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+  [`warning`](https://nodejs.org/api/process.html#process_event_warning),
+  [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+  [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
+  or
+  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
+- values can be:
+  - a string among `debug`, `info`, `warn`, `error` or `silent`.
+  - `undefined` to use the default value.
+  - a function using [`info` as argument](#event-information) and
+    returning a string or `undefined` (as above).
 
 ```js
 logProcessErrors({
   // Use `debug` log level for `multipleResolves` instead of `info`
-  level({ eventName }) {
-    if (eventName === 'multipleResolves') {
-      return 'debug'
-    }
-  },
+  level: { multipleResolves: 'debug' },
 })
 ```
 
 ```js
 logProcessErrors({
   // Skip some logs based on a condition
-  level() {
-    if (shouldSkip()) {
-      return 'silent'
-    }
+  level: {
+    default() {
+      if (shouldSkip()) {
+        return 'silent'
+      }
+    },
   },
 })
 ```

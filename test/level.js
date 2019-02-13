@@ -73,6 +73,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     await emitEvent()
 
     t.true(log.called)
+    t.snapshot(log.lastCall.args[0])
 
     stopWarningLog()
     stopLogging()

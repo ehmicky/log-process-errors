@@ -15,18 +15,21 @@ const getLevel = function({ opts, info, info: { eventName } }) {
     return level
   }
 
-  validateLevel({ level })
+  validateLevel({ level, eventName })
 
   return DEFAULT_LEVEL[eventName]
 }
 
-const validateLevel = function({ level }) {
+const validateLevel = function({ level, eventName }) {
   if (level === undefined) {
     return
   }
 
-  const levels = Object.keys(ALL_LEVELS).join(', ')
-  emitWarning(`Level '${level}' is invalid. Must be one of: ${levels}`)
+  emitWarning(
+    `Invalid option 'level.${eventName}' returning '${level}': function must return undefined or one of ${ALL_LEVELS.join(
+      ', ',
+    )}`,
+  )
 }
 
 // Apply `opts.level.default` and default values to `opts.level`

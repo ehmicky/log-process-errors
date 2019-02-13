@@ -6,12 +6,15 @@ const { applyDefaultLevels, getExampleLevels } = require('./level')
 const { defaultMessage } = require('./message')
 const { defaultLog } = require('./log')
 const { pickBy } = require('./utils')
+const { validateOptions } = require('./validate')
 
 // Validate options and assign default options
 const getOptions = function({ opts = {} }) {
   const optsA = pickBy(opts, value => value !== undefined)
 
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
+
+  validateOptions(optsA)
 
   const level = applyDefaultLevels({ opts: optsA })
   const optsB = { ...DEFAULT_OPTS, ...optsA, level }

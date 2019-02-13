@@ -7,6 +7,7 @@
     "warning"
   ],
   "LEVELS": ["debug", "info", "warn", "error"],
+  "ALL_LEVELS": ["debug", "info", "warn", "error", "silent"],
   "DEFAULT_LEVEL": {
     "default": "error",
     "uncaughtException": "error",

@@ -9,14 +9,17 @@ const INVALID_OPTIONS = [
   { name: 'log', value: true },
   { name: 'level', value: true },
   { name: 'level', value: { warning: true } },
+  { name: 'level', value: 'invalid' },
+  { name: 'level', value: { warning: 'invalid' } },
   { name: 'message', value: true },
   { name: 'colors', value: 1 },
   { name: 'exitOn', value: true },
+  { name: 'exitOn', value: ['invalid'] },
 ]
 
 const WARNED_OPTIONS = [
   { name: 'unknown', value: true },
-  { name: 'level', value: { unknown: true } },
+  { name: 'level', value: { unknown: 'error' } },
 ]
 
 /* eslint-disable max-nested-callbacks */

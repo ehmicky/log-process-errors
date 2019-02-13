@@ -2,17 +2,16 @@
 
 const { emitWarning } = require('process')
 
-const { circleFilled, info: infoSym, warning, cross } = require('figures')
 const { multipleValidOptions } = require('jest-validate')
 
 const { result, mapValues } = require('./utils')
-const { DEFAULT_LEVEL } = require('./constants')
+const { DEFAULT_LEVEL, ALL_LEVELS } = require('./constants')
 
 // Retrieve error's `level`
 const getLevel = function({ opts, info, info: { eventName } }) {
   const level = result(opts.level[eventName], info)
 
-  if (LEVELS[level] !== undefined || level === 'silent') {
+  if (ALL_LEVELS.includes(level)) {
     return level
   }
 
@@ -26,7 +25,7 @@ const validateLevel = function({ level }) {
     return
   }
 
-  const levels = Object.keys(LEVELS).join(', ')
+  const levels = Object.keys(ALL_LEVELS).join(', ')
   emitWarning(`Level '${level}' is invalid. Must be one of: ${levels}`)
 }
 
@@ -52,17 +51,8 @@ const getExampleLevel = function(level) {
   return multipleValidOptions(level, () => {})
 }
 
-// Each level is printed in a different way
-const LEVELS = {
-  debug: { COLOR: 'blue', SIGN: circleFilled },
-  info: { COLOR: 'green', SIGN: infoSym },
-  warn: { COLOR: 'yellow', SIGN: warning },
-  error: { COLOR: 'red', SIGN: cross },
-}
-
 module.exports = {
   getLevel,
   applyDefaultLevels,
   getExampleLevels,
-  LEVELS,
 }

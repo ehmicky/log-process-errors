@@ -1,6 +1,6 @@
 'use strict'
 
-const { LEVELS } = require('./level')
+const { circleFilled, info: infoSym, warning, cross } = require('figures')
 
 const prettify = function({
   message,
@@ -25,6 +25,14 @@ const prettify = function({
 
   const messageA = [header, ...linesA].join('\n')
   return messageA
+}
+
+// Each level is printed in a different way
+const LEVELS = {
+  debug: { COLOR: 'blue', SIGN: circleFilled },
+  info: { COLOR: 'green', SIGN: infoSym },
+  warn: { COLOR: 'yellow', SIGN: warning },
+  error: { COLOR: 'red', SIGN: cross },
 }
 
 const INDENT_SIZE = 4

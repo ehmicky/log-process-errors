@@ -1,22 +1,44 @@
 'use strict'
 
 const test = require('ava')
+const sinon = require('sinon')
 
 const { repeat, startLogging } = require('./helpers')
 
-const OPTIONS = [
-  { name: 'log', wrongValue: true },
-  { name: 'level', wrongValue: true },
-  { name: 'level', wrongValue: { warning: true } },
-  { name: 'message', wrongValue: true },
-  { name: 'colors', wrongValue: 1 },
-  { name: 'exitOn', wrongValue: true },
+const INVALID_OPTIONS = [
+  { name: 'log', value: true },
+  { name: 'level', value: true },
+  { name: 'level', value: { warning: true } },
+  { name: 'message', value: true },
+  { name: 'colors', value: 1 },
+  { name: 'exitOn', value: true },
+]
+
+const WARNED_OPTIONS = [
+  { name: 'unknown', value: true },
+  { name: 'level', value: { unknown: true } },
 ]
 
 /* eslint-disable max-nested-callbacks */
-repeat(OPTIONS, (prefix, { name, wrongValue }) => {
+repeat(INVALID_OPTIONS, (prefix, { name, value }) => {
   test(`${prefix} should validate options`, t => {
-    t.throws(startLogging.bind(null, { [name]: wrongValue }))
+    t.throws(startLogging.bind(null, { [name]: value }))
+  })
+})
+
+repeat(WARNED_OPTIONS, (prefix, { name, value }) => {
+  test(`${prefix} should warn on additional options`, t => {
+    // eslint-disable-next-line no-restricted-globals
+    const stub = sinon.stub(console, 'warn')
+
+    const { stopLogging } = startLogging({ [name]: value })
+
+    t.is(stub.callCount, 1)
+    t.snapshot(stub.firstCall.args[0])
+
+    stopLogging()
+
+    stub.restore()
   })
 })
 /* eslint-enable max-nested-callbacks */

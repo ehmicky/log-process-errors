@@ -21,7 +21,7 @@ on the console which is very useful. Unfortunately those process errors:
 
 `log-process-errors` fixes those issues:
 
-![Screenshot](docs/screenshot.png)
+![Screenshot after](docs/after.png)
 
 # Installation
 

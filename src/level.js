@@ -4,7 +4,7 @@ const { emitWarning } = require('process')
 
 const { multipleValidOptions } = require('jest-validate')
 
-const { result, mapValues } = require('./utils')
+const { result, mapValues, pickBy } = require('./utils')
 const { DEFAULT_LEVEL, ALL_LEVELS } = require('./constants')
 
 // Retrieve error's `level`
@@ -33,12 +33,14 @@ const validateLevel = function({ level }) {
 const applyDefaultLevels = function({
   opts: { level: { default: defaultLevel, ...level } = {} },
 }) {
+  const levelA = pickBy(level, value => value !== undefined)
+
   if (defaultLevel === undefined) {
-    return { ...DEFAULT_LEVEL, ...level }
+    return { ...DEFAULT_LEVEL, ...levelA }
   }
 
   const defaultLevels = mapValues(DEFAULT_LEVEL, () => defaultLevel)
-  return { ...DEFAULT_LEVEL, ...defaultLevels, ...level }
+  return { ...DEFAULT_LEVEL, ...defaultLevels, ...levelA }
 }
 
 // Use during options validation

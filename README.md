@@ -34,7 +34,7 @@ a production dependency inside libraries since users might not expect this side 
 
 # Usage (simple)
 
-Use the
+The simplest way is to use the
 [`node -r` CLI flag](https://nodejs.org/api/cli.html#cli_r_require_module):
 
 ```bash
@@ -62,7 +62,8 @@ logProcessErrors(options)
 
 # Custom logging
 
-By default events will be logged to the console (e.g. `console.error()`).
+By default events will be logged to the console using `console.error()`,
+`console.warn()`, etc.
 
 This behavior can be overridden with the `log` option. For example to log events
 with [Winston](https://github.com/winstonjs/winston) instead:
@@ -79,7 +80,7 @@ The function's arguments are:
 
 - [`message` `{string}`](#log-message)
 - [`level` `{string}`](#log-level)
-- [`info` `{object}`](#event-info)
+- [`info` `{object}`](#event-information)
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
@@ -176,8 +177,8 @@ and
 
 ## `info.secondPromiseState`, `info.secondPromiseValue`
 
-Like [`promiseState`](#info-promisestate) and
-[`promiseValue`](#info-promisevalue) but for the second time the promise was
+Like [`promiseState`](#infopromisestate) and
+[`promiseValue`](#infopromisevalue) but for the second time the promise was
 resolved/rejected. Only defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
@@ -189,7 +190,7 @@ resolved/rejected. Only defined with
 
 [Chalk instance](https://github.com/chalk/chalk#api) to colorize strings.
 Only defined with the [`message` option](#log-message). Disabled if the
-[option `colors`](#log-message) is `false`.
+[`colors` option](#log-message) is `false`.
 
 # Process exit
 
@@ -200,7 +201,8 @@ The `exitOn` option specifies which event should trigger `process.exit(1)`:
   [official documentation](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
 - we recommend using `['uncaughtException', 'unhandledRejection']`
   instead since this will be the [future default behavior of Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections).
-- to prevent any `process.exit(1)`, use `[]`
+- to prevent any `process.exit(1)`, use `[]`. This is recommended if your
+  process is long-running and does not automatically restart on exit.
 
 `process.exit(1)` will only be fired after successfully logging the event.
 

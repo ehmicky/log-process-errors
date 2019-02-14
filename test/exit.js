@@ -2,9 +2,12 @@
 
 const process = require('process')
 
+const promisify = require('util.promisify')
 const test = require('ava')
 const sinon = require('sinon')
 const lolex = require('lolex')
+
+const pNextTick = promisify(process.nextTick)
 
 // Required directly inside `src` because this is exposed through
 // documentation, but not through code
@@ -79,5 +82,48 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 
     unstubProcessExit({ clock, processExit })
   })
+
+  test(`${prefix} should delay process.exit(1) with async opts.log()`, async t => {
+    const { clock, processExit } = stubProcessExit()
+
+    const { promise, resolve } = getPromise()
+
+    const { stopLogging } = startLogging({
+      exitOn: [eventName],
+      eventName,
+      log: () => promise,
+    })
+
+    await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+
+    t.true(processExit.notCalled)
+
+    await resolve()
+    clock.tick(EXIT_TIMEOUT)
+
+    t.true(processExit.called)
+
+    stopLogging()
+
+    unstubProcessExit({ clock, processExit })
+  })
 })
+
+// Returns a promise that can be triggered from outside
+const getPromise = function() {
+  // eslint-disable-next-line fp/no-let, init-declarations
+  let resolveA
+  // eslint-disable-next-line promise/avoid-new
+  const promise = new Promise(resolve => {
+    // eslint-disable-next-line fp/no-mutation
+    resolveA = getResolve.bind(null, resolve)
+  })
+  return { promise, resolve: resolveA }
+}
+
+const getResolve = async function(resolve) {
+  resolve()
+  await pNextTick()
+}
+
 /* eslint-enable max-nested-callbacks */

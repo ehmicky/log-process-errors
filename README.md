@@ -17,9 +17,11 @@ on the console which is very useful. Unfortunately those process errors:
   and
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves) making it hard to debug.
 - are inconvenient to [log to an external service](#custom-logging).
-- are printed each time the exact same error is repeated (except for
+- are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
 - are not human-friendly.
+
+Without `log-process-errors`:
 
 ![Screenshot before](docs/before.png)
 
@@ -30,11 +32,13 @@ on the console which is very useful. Unfortunately those process errors:
 # Installation
 
 ```bash
-$ npm install log-process-errors
+npm install -D log-process-errors
 ```
 
-`log-process-errors` modifies logging globally. It should not be installed as
-a production dependency inside libraries since users might not expect this side effect. Also this might lead to conflicts between libraries.
+This should only be installed as a production dependency for production code
+(e.g. a web server), not for libraries. This is because logging is modified
+globally and libraries users might not expect this side-effect. Also this might
+lead to conflicts between libraries.
 
 # Usage
 
@@ -101,15 +105,15 @@ and `error` for the other events.
 This can be overridden by using the `level` option. It should be an
 object whose:
 
-- keys are the event names among `default`,
-  [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-  [`warning`](https://nodejs.org/api/process.html#process_event_warning),
-  [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-  [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
+- keys are the event names among `"default"`,
+  [`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+  [`"warning"`](https://nodejs.org/api/process.html#process_event_warning),
+  [`"unhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+  [`"rejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   or
-  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
+  [`"multipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 - values are the log level which can be:
-  - a string among `debug`, `info`, `warn`, `error` or `silent`.
+  - a string among `"debug"`, `"info"`, `"warn"`, `"error"` or `"silent"`.
   - `undefined` to use the default value.
   - a function using [`info` as argument](#event-information) and
     returning a string or `undefined` (as above).
@@ -151,13 +155,13 @@ The [`log`](#custom-logging), [`level`](#log-level) and
 
 ## `info.eventName`
 
-String among
-[`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+Can be
+[`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`"unhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`"rejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
+[`"multipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves)
 or
-[`warning`](https://nodejs.org/api/process.html#process_event_warning).
+[`"warning"`](https://nodejs.org/api/process.html#process_event_warning).
 
 ## `info.error`
 
@@ -170,7 +174,7 @@ anything.
 
 ## `info.promiseState`
 
-String indicating whether the promise was `resolved` or `rejected`. Only
+String indicating whether the promise was `"resolved"` or `"rejected"`. Only
 defined with
 [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
@@ -206,10 +210,10 @@ Only defined with the [`message` option](#log-message). Disabled if the
 
 The `exitOn` option specifies which event should trigger `process.exit(1)`:
 
-- the default value is `['uncaughtException']`. This is the
+- the default value is `["uncaughtException"]`. This is the
   [default behavior](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly)
   of Node.js.
-- we recommend using `['uncaughtException', 'unhandledRejection']`
+- we recommend using `["uncaughtException", "unhandledRejection"]`
   instead since this will be the [future default behavior of Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections).
 - to prevent any `process.exit(1)` use `[]`. Recommended if your process is
   long-running and does not automatically restart on exit.

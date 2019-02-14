@@ -67,7 +67,9 @@ const multipleResolves = function({
 }) {
   const rejectedStr = REJECTED_NAME[rejected]
   const nextRejectedStr = REJECTED_NAME[nextRejected]
+  // istanbul ignore next
   const again = rejected === nextRejected ? ' again' : ''
+  // istanbul ignore next
   const state = again ? rejectedStr : 'resolved/rejected'
 
   return ` (a promise was ${state} multiple times)

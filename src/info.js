@@ -2,10 +2,9 @@
 
 const { pickBy } = require('./utils')
 
-// Retrieve `info` object representing the current error information
+// Retrieve `info` object representing the current event information
 const getInfo = async function({
   eventName,
-  error,
   promise,
   value,
   nextRejected,
@@ -17,24 +16,17 @@ const getInfo = async function({
     value,
   })
 
-  const info = {
-    eventName,
-    error,
-    rejected,
-    value: valueA,
-    nextRejected,
-    nextValue,
-  }
+  const info = { eventName, rejected, value: valueA, nextRejected, nextValue }
 
-  const infoA = pickBy(info, value => value !== undefined)
+  const infoA = pickBy(info, infoVal => infoVal !== undefined)
   return infoA
 }
 
 // Retrieve promise's resolved/rejected state and value.
 const parsePromise = async function({ eventName, promise, value }) {
-  // `uncaughtException` and `warning` events do not have `promise`.
+  // `uncaughtException` and `warning` events do not have `rejected`.
   if (promise === undefined) {
-    return {}
+    return { value }
   }
 
   // `unhandledRejection` should not use the following code because:

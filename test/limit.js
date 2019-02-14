@@ -96,6 +96,6 @@ const onlyNotLimitedWarning = function(eventName, info) {
   }
 }
 
-const isLimitedWarning = function({ eventName, error: { name } = {} }) {
+const isLimitedWarning = function({ eventName, value: { name } = {} }) {
   return eventName === 'warning' && name === 'LogProcessErrors'
 }

@@ -14,19 +14,17 @@ const handleEvent = async function({
   eventName,
   previousEvents,
   mEmitLimitedWarning,
-  error,
   promise,
   value,
   nextRejected,
   nextValue,
 }) {
-  if (isLimited({ previousEvents, mEmitLimitedWarning, eventName, error })) {
+  if (isLimited({ previousEvents, mEmitLimitedWarning, eventName, value })) {
     return
   }
 
   const info = await getInfo({
     eventName,
-    error,
     promise,
     value,
     nextRejected,

@@ -39,7 +39,7 @@ const getFingerprint = function({ info }) {
 // We do not serialize `info.eventName` since this is already `eventName-wise`
 // Key order matters since fingerprint might be truncated: we serialize short
 // and non-dynamic values first.
-const INFO_PROPS = ['nextRejected', 'rejected', 'error', 'nextValue', 'value']
+const INFO_PROPS = ['nextRejected', 'rejected', 'nextValue', 'value']
 
 const FINGERPRINT_MAX_LENGTH = 1e4
 
@@ -56,7 +56,7 @@ const serializeEntry = function({ info, propName }) {
 
 const serializeValue = function({ value }) {
   if (value instanceof Error) {
-    return serializeError({ error: value })
+    return serializeError(value)
   }
 
   return stableSerialize(value)
@@ -66,7 +66,7 @@ const serializeValue = function({ value }) {
 // timestamps. This means errors are only `error.name` + `error.stack`, which
 // should be a good fingerprint.
 // Also we only keep first 10 callsites in case of infinitely recursive stack.
-const serializeError = function({ error: { name, stack } }) {
+const serializeError = function({ name, stack }) {
   const stackA = filterErrorStack({ stack })
   return `${name}\n${stackA}`
 }

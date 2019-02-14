@@ -3,14 +3,13 @@
 const { handleEvent } = require('./handle')
 
 // List of all handled events
-// Each event must pass its related `error` or `promise` to the generic
-// `handleEvent()`
-const uncaughtException = function(context, error) {
-  handleEvent({ ...context, error })
+// Each event must pass its related `value` to the generic `handleEvent()`
+const uncaughtException = function(context, value) {
+  handleEvent({ ...context, value })
 }
 
-const warning = function(context, error) {
-  handleEvent({ ...context, error })
+const warning = function(context, value) {
+  handleEvent({ ...context, value })
 }
 
 const unhandledRejection = function(context, value, promise) {

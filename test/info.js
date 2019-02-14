@@ -8,7 +8,7 @@ const INFOS = [
   {
     name: 'uncaughtException',
     arg: () => true,
-    expected: { error: true },
+    expected: { value: true },
   },
   {
     name: 'warning',
@@ -18,12 +18,12 @@ const INFOS = [
       code: '500',
       detail: 'Detail',
     },
-    getInfo: ({ error, error: { message } = {}, ...info }) => ({
+    getInfo: ({ value, value: { message } = {}, ...info }) => ({
       ...info,
-      error: { ...error, message },
+      value: { ...value, message },
     }),
     expected: {
-      error: {
+      value: {
         message: 'message',
         name: 'WarningType',
         code: '500',

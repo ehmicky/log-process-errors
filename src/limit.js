@@ -19,9 +19,9 @@ const isLimited = function({
   previousEvents,
   mEmitLimitedWarning,
   eventName,
-  error,
+  value,
 }) {
-  if (isLimitedWarning({ eventName, error })) {
+  if (isLimitedWarning({ eventName, value })) {
     return false
   }
 
@@ -46,7 +46,7 @@ const emitLimitedWarning = function(eventName) {
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function({ eventName, error: { name, code } = {} }) {
+const isLimitedWarning = function({ eventName, value: { name, code } = {} }) {
   return eventName === 'warning' && name === ERROR_NAME && code === ERROR_CODE
 }
 

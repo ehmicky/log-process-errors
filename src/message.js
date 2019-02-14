@@ -19,7 +19,6 @@ const defaultMessage = function({
   value,
   nextRejected,
   nextValue,
-  error,
   level,
   colors,
 }) {
@@ -28,23 +27,22 @@ const defaultMessage = function({
     value,
     nextRejected,
     nextValue,
-    error,
   })
 
   const messageA = prettify({ message, eventName, level, colors })
   return messageA
 }
 
-const uncaughtException = function({ error }) {
+const uncaughtException = function({ value }) {
   return ` (an exception was thrown but not caught)
-${serialize(error)}`
+${serialize(value)}`
 }
 
-const warning = function({ error, error: { code, detail } }) {
+const warning = function({ value, value: { code, detail } }) {
   const codeMessage = code === undefined ? '' : `(${code}) `
   const detailMessage = detail === undefined ? '' : `${detail}\n`
   return `
-${codeMessage}${detailMessage}${serialize(error)}`
+${codeMessage}${detailMessage}${serialize(value)}`
 }
 
 const unhandledRejection = function({ value }) {
@@ -57,8 +55,8 @@ const rejectionHandled = function({ value }) {
 ${serialize(value)}`
 }
 
-// The default level is `info` because it does not always indicate an
-// error: https://github.com/nodejs/node/issues/24321
+// The default level is `info` because it does not always indicate an error:
+// https://github.com/nodejs/node/issues/24321
 const multipleResolves = function({
   rejected,
   value,

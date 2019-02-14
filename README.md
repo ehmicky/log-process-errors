@@ -172,10 +172,10 @@ or the error emitted by
 Not defined with other events. It is usually an `Error` instance but could be
 anything.
 
-## `info.promiseState`
+## `info.rejected`
 
-String indicating whether the promise was `"resolved"` or `"rejected"`. Only
-defined with
+Boolean indicating whether the promise was resolved or rejected. Only defined
+with
 [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 and
@@ -189,11 +189,10 @@ Value resolved/rejected by the promise. Only defined with
 and
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
-## `info.secondPromiseState`, `info.secondPromiseValue`
+## `info.nextRejected`, `info.secondPromiseValue`
 
-Like [`promiseState`](#infopromisestate) and
-[`promiseValue`](#infopromisevalue) but for the second time the promise was
-resolved/rejected. Only defined with
+Like [`rejected`](#inforejected) and [`promiseValue`](#infopromisevalue) but for
+the second time the promise was resolved/rejected. Only defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
 ## `info.level`

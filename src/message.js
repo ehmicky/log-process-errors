@@ -15,18 +15,18 @@ const getMessage = function({ opts, info, level, colors }) {
 // Default `opts.message()`
 const defaultMessage = function({
   eventName,
-  promiseState,
+  rejected,
   promiseValue,
-  secondPromiseState,
+  nextRejected,
   secondPromiseValue,
   error,
   level,
   colors,
 }) {
   const message = MESSAGES[eventName]({
-    promiseState,
+    rejected,
     promiseValue,
-    secondPromiseState,
+    nextRejected,
     secondPromiseValue,
     error,
   })
@@ -60,19 +60,24 @@ ${serialize(promiseValue)}`
 // The default level is `info` because it does not always indicate an
 // error: https://github.com/nodejs/node/issues/24321
 const multipleResolves = function({
-  promiseState,
+  rejected,
   promiseValue,
-  secondPromiseState,
+  nextRejected,
   secondPromiseValue,
 }) {
-  // istanbul ignore next
-  const again = promiseState === secondPromiseState ? ' again' : ''
-  // istanbul ignore next
-  const state = again ? promiseState : 'resolved/rejected'
+  const rejectedStr = REJECTED_NAME[rejected]
+  const nextRejectedStr = REJECTED_NAME[nextRejected]
+  const again = rejected === nextRejected ? ' again' : ''
+  const state = again ? rejectedStr : 'resolved/rejected'
 
   return ` (a promise was ${state} multiple times)
-Initially ${promiseState} with: ${serialize(promiseValue)}
-Then ${secondPromiseState}${again} with: ${serialize(secondPromiseValue)}`
+Initially ${rejectedStr} with: ${serialize(promiseValue)}
+Then ${nextRejectedStr}${again} with: ${serialize(secondPromiseValue)}`
+}
+
+const REJECTED_NAME = {
+  true: 'rejected',
+  false: 'resolved',
 }
 
 const MESSAGES = {

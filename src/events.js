@@ -23,13 +23,13 @@ const rejectionHandled = function(context, promise) {
 
 // eslint-disable-next-line max-params
 const multipleResolves = function(context, type, promise, secondPromiseValue) {
-  const secondPromiseState = TYPE_TO_STATE[type]
-  handleEvent({ ...context, promise, secondPromiseState, secondPromiseValue })
+  const nextRejected = TYPE_TO_REJECTED[type]
+  handleEvent({ ...context, promise, nextRejected, secondPromiseValue })
 }
 
-const TYPE_TO_STATE = {
-  resolve: 'resolved',
-  reject: 'rejected',
+const TYPE_TO_REJECTED = {
+  resolve: false,
+  reject: true,
 }
 
 module.exports = {

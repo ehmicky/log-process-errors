@@ -8,10 +8,10 @@ const getInfo = async function({
   error,
   promise,
   promiseValue,
-  secondPromiseState,
+  nextRejected,
   secondPromiseValue,
 }) {
-  const { promiseState, promiseValue: promiseValueA } = await parsePromise({
+  const { rejected, promiseValue: promiseValueA } = await parsePromise({
     eventName,
     promise,
     promiseValue,
@@ -20,9 +20,9 @@ const getInfo = async function({
   const info = {
     eventName,
     error,
-    promiseState,
+    rejected,
     promiseValue: promiseValueA,
-    secondPromiseState,
+    nextRejected,
     secondPromiseValue,
   }
 
@@ -38,17 +38,17 @@ const parsePromise = async function({ eventName, promise, promiseValue }) {
   }
 
   // `unhandledRejection` should not use the following code because:
-  //  - we already know `promiseState` and `promiseValue`
+  //  - we already know `rejected` and `promiseValue`
   //  - using `try/catch` will fire `rejectionHandled`
   if (eventName === 'unhandledRejection') {
-    return { promiseState: 'rejected', promiseValue }
+    return { rejected: true, promiseValue }
   }
 
   // `rejectionHandled` and `multipleResolves` use `await promise`
   try {
-    return { promiseState: 'resolved', promiseValue: await promise }
+    return { rejected: false, promiseValue: await promise }
   } catch (error) {
-    return { promiseState: 'rejected', promiseValue: error }
+    return { rejected: true, promiseValue: error }
   }
 }
 

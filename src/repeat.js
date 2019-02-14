@@ -40,8 +40,8 @@ const getFingerprint = function({ info }) {
 // Key order matters since fingerprint might be truncated: we serialize short
 // and non-dynamic values first.
 const INFO_PROPS = [
-  'secondPromiseState',
-  'promiseState',
+  'nextRejected',
+  'rejected',
   'error',
   'secondPromiseValue',
   'promiseValue',

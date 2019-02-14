@@ -13,8 +13,8 @@ const { MAX_EVENTS } = require('./constants')
 //  - it prevents infinite recursions if `opts.log|level|message()` triggers
 //    itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still
-//    happen when `error` or `[second]promiseValue` is not an `Error` instance
-//    and contain dynamic content.
+//    happen when `[next]Value` is not an `Error` instance and contain dynamic
+//    content.
 const isLimited = function({
   previousEvents,
   mEmitLimitedWarning,

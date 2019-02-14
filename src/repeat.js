@@ -39,13 +39,7 @@ const getFingerprint = function({ info }) {
 // We do not serialize `info.eventName` since this is already `eventName-wise`
 // Key order matters since fingerprint might be truncated: we serialize short
 // and non-dynamic values first.
-const INFO_PROPS = [
-  'nextRejected',
-  'rejected',
-  'error',
-  'nextValue',
-  'promiseValue',
-]
+const INFO_PROPS = ['nextRejected', 'rejected', 'error', 'nextValue', 'value']
 
 const FINGERPRINT_MAX_LENGTH = 1e4
 

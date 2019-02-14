@@ -13,8 +13,8 @@ const warning = function(context, error) {
   handleEvent({ ...context, error })
 }
 
-const unhandledRejection = function(context, promiseValue, promise) {
-  handleEvent({ ...context, promise, promiseValue })
+const unhandledRejection = function(context, value, promise) {
+  handleEvent({ ...context, promise, value })
 }
 
 const rejectionHandled = function(context, promise) {

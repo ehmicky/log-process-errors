@@ -34,19 +34,19 @@ const INFOS = [
   {
     name: 'unhandledRejection',
     arg: () => true,
-    expected: { rejected: true, promiseValue: true },
+    expected: { rejected: true, value: true },
   },
   {
     name: 'rejectionHandled',
     arg: () => true,
-    expected: { rejected: true, promiseValue: true },
+    expected: { rejected: true, value: true },
   },
   {
     name: 'multipleResolves',
     arg: [['resolve', () => true], ['reject', () => false]],
     expected: {
       rejected: false,
-      promiseValue: true,
+      value: true,
       nextRejected: true,
       nextValue: false,
     },

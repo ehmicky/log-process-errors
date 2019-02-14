@@ -16,7 +16,7 @@ const handleEvent = async function({
   mEmitLimitedWarning,
   error,
   promise,
-  promiseValue,
+  value,
   nextRejected,
   nextValue,
 }) {
@@ -28,7 +28,7 @@ const handleEvent = async function({
     eventName,
     error,
     promise,
-    promiseValue,
+    value,
     nextRejected,
     nextValue,
   })

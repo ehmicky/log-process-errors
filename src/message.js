@@ -16,7 +16,7 @@ const getMessage = function({ opts, info, level, colors }) {
 const defaultMessage = function({
   eventName,
   rejected,
-  promiseValue,
+  value,
   nextRejected,
   nextValue,
   error,
@@ -25,7 +25,7 @@ const defaultMessage = function({
 }) {
   const message = MESSAGES[eventName]({
     rejected,
-    promiseValue,
+    value,
     nextRejected,
     nextValue,
     error,
@@ -47,21 +47,21 @@ const warning = function({ error, error: { code, detail } }) {
 ${codeMessage}${detailMessage}${serialize(error)}`
 }
 
-const unhandledRejection = function({ promiseValue }) {
+const unhandledRejection = function({ value }) {
   return ` (a promise was rejected but not handled)
-${serialize(promiseValue)}`
+${serialize(value)}`
 }
 
-const rejectionHandled = function({ promiseValue }) {
+const rejectionHandled = function({ value }) {
   return ` (a promise was rejected and handled too late)
-${serialize(promiseValue)}`
+${serialize(value)}`
 }
 
 // The default level is `info` because it does not always indicate an
 // error: https://github.com/nodejs/node/issues/24321
 const multipleResolves = function({
   rejected,
-  promiseValue,
+  value,
   nextRejected,
   nextValue,
 }) {
@@ -73,7 +73,7 @@ const multipleResolves = function({
   const state = again ? rejectedStr : 'resolved/rejected'
 
   return ` (a promise was ${state} multiple times)
-Initially ${rejectedStr} with: ${serialize(promiseValue)}
+Initially ${rejectedStr} with: ${serialize(value)}
 Then ${nextRejectedStr}${again} with: ${serialize(nextValue)}`
 }
 

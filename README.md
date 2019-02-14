@@ -163,27 +163,26 @@ Can be
 or
 [`"warning"`](https://nodejs.org/api/process.html#process_event_warning).
 
-## `info.error`
+## `info.value`
 
-Either the value thrown by
-[`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception)
-or the error emitted by
-[`warning`](https://nodejs.org/api/process.html#process_event_warning).
-Not defined with other events. It is usually an `Error` instance but could be
-anything.
+Can be:
+
+- the value thrown by
+  [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception).
+- the value resolved/rejected by the promise with
+  [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+  [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
+  and
+  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
+- the error emitted by
+  [`warning`](https://nodejs.org/api/process.html#process_event_warning).
+
+It is usually an `Error` instance but could be anything.
 
 ## `info.rejected`
 
 Boolean indicating whether the promise was resolved or rejected. Only defined
 with
-[`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-and
-[`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
-
-## `info.promiseValue`
-
-Value resolved/rejected by the promise. Only defined with
 [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 and

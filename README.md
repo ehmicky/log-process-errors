@@ -165,16 +165,16 @@ or
 
 ## `info.value`
 
-Can be:
+Value:
 
-- the value thrown by
+- thrown by
   [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception).
-- the value resolved/rejected by the promise with
+- resolved/rejected by the promise with
   [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   and
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
-- the error emitted by
+- emitted by
   [`warning`](https://nodejs.org/api/process.html#process_event_warning).
 
 It is usually an `Error` instance but could be anything.
@@ -188,9 +188,9 @@ with
 and
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
-## `info.nextRejected`, `info.nextValue`
+## `info.nextValue`, `info.nextRejected`
 
-Like [`rejected`](#inforejected) and [`value`](#infovalue) but for
+Like [`value`](#infovalue) and [`rejected`](#inforejected) but for
 the second time the promise was resolved/rejected. Only defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 

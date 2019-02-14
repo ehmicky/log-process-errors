@@ -18,7 +18,7 @@ const defaultMessage = function({
   rejected,
   promiseValue,
   nextRejected,
-  secondPromiseValue,
+  nextValue,
   error,
   level,
   colors,
@@ -27,7 +27,7 @@ const defaultMessage = function({
     rejected,
     promiseValue,
     nextRejected,
-    secondPromiseValue,
+    nextValue,
     error,
   })
 
@@ -63,7 +63,7 @@ const multipleResolves = function({
   rejected,
   promiseValue,
   nextRejected,
-  secondPromiseValue,
+  nextValue,
 }) {
   const rejectedStr = REJECTED_NAME[rejected]
   const nextRejectedStr = REJECTED_NAME[nextRejected]
@@ -72,7 +72,7 @@ const multipleResolves = function({
 
   return ` (a promise was ${state} multiple times)
 Initially ${rejectedStr} with: ${serialize(promiseValue)}
-Then ${nextRejectedStr}${again} with: ${serialize(secondPromiseValue)}`
+Then ${nextRejectedStr}${again} with: ${serialize(nextValue)}`
 }
 
 const REJECTED_NAME = {

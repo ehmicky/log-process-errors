@@ -18,7 +18,7 @@ const handleEvent = async function({
   promise,
   promiseValue,
   nextRejected,
-  secondPromiseValue,
+  nextValue,
 }) {
   if (isLimited({ previousEvents, mEmitLimitedWarning, eventName, error })) {
     return
@@ -30,7 +30,7 @@ const handleEvent = async function({
     promise,
     promiseValue,
     nextRejected,
-    secondPromiseValue,
+    nextValue,
   })
 
   if (isRepeated({ info, previousEvents })) {

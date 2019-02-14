@@ -9,7 +9,7 @@ const getInfo = async function({
   promise,
   promiseValue,
   nextRejected,
-  secondPromiseValue,
+  nextValue,
 }) {
   const { rejected, promiseValue: promiseValueA } = await parsePromise({
     eventName,
@@ -23,7 +23,7 @@ const getInfo = async function({
     rejected,
     promiseValue: promiseValueA,
     nextRejected,
-    secondPromiseValue,
+    nextValue,
   }
 
   const infoA = pickBy(info, value => value !== undefined)

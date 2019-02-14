@@ -48,7 +48,7 @@ const INFOS = [
       rejected: false,
       promiseValue: true,
       nextRejected: true,
-      secondPromiseValue: false,
+      nextValue: false,
     },
   },
 ]

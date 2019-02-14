@@ -189,9 +189,9 @@ Value resolved/rejected by the promise. Only defined with
 and
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
-## `info.nextRejected`, `info.secondPromiseValue`
+## `info.nextRejected`, `info.nextValue`
 
-Like [`rejected`](#inforejected) and [`promiseValue`](#infopromisevalue) but for
+Like [`rejected`](#inforejected) and [`value`](#infovalue) but for
 the second time the promise was resolved/rejected. Only defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 

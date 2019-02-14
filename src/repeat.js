@@ -43,7 +43,7 @@ const INFO_PROPS = [
   'nextRejected',
   'rejected',
   'error',
-  'secondPromiseValue',
+  'nextValue',
   'promiseValue',
 ]
 

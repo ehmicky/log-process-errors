@@ -181,11 +181,8 @@ It is usually an `Error` instance but could be anything.
 
 ## `info.rejected`
 
-Boolean indicating whether the promise was resolved or rejected. Only defined
-with
-[`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-and
+Boolean indicating whether the promise was initially resolved or rejected. Only
+defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
 ## `info.nextValue`, `info.nextRejected`

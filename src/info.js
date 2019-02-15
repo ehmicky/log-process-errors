@@ -24,19 +24,29 @@ const getInfo = async function({
 
 // Retrieve promise's resolved/rejected state and value.
 const parsePromise = async function({ eventName, promise, value }) {
-  // `uncaughtException` and `warning` events do not have `rejected`.
-  if (promise === undefined) {
+  if (NO_PROMISE_EVENTS.includes(eventName)) {
     return { value }
   }
 
-  // `unhandledRejection` should not use the following code because:
-  //  - we already know `rejected` and `value`
-  //  - using `try/catch` will fire `rejectionHandled`
-  if (eventName === 'unhandledRejection') {
-    return { rejected: true, value }
+  const { rejected, value: valueA } = await getPromiseValue({ promise })
+
+  // `rejected` is always `true` with `rejectionHandled`, so we skip it
+  if (eventName === 'rejectionHandled') {
+    return { value: valueA }
   }
 
-  // `rejectionHandled` and `multipleResolves` use `await promise`
+  return { rejected, value: valueA }
+}
+
+// Those events do not try to get the promise value.
+// For `uncaughtException` and `warning`, they are not promise-specific.
+// For `unhandledRejection`:
+//  - we already know `rejected` and `value`
+//  - using `try/catch` will fire `rejectionHandled`
+const NO_PROMISE_EVENTS = ['uncaughtException', 'warning', 'unhandledRejection']
+
+// `rejectionHandled` and `multipleResolves` otherwise use `await promise`
+const getPromiseValue = async function({ promise }) {
   try {
     return { rejected: false, value: await promise }
   } catch (error) {

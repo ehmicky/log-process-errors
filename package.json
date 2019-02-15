@@ -51,7 +51,7 @@
   "dependencies": {
     "@babel/runtime": "^7.3.1",
     "chalk": "^2.4.2",
-    "core-js": "^2.6.4",
+    "core-js": "^2.6.5",
     "figures": "^2.0.0",
     "jest-validate": "^24.0.0",
     "moize": "^5.4.1",

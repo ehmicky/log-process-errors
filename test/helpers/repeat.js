@@ -1,9 +1,9 @@
 'use strict'
 
-// Required directly inside `src` because this is exposed through
+// Required directly inside `dist` because this is exposed through
 // documentation, but not through code
 // eslint-disable-next-line import/no-internal-modules
-const { LEVELS, DEFAULT_LEVEL } = require('../../src/constants')
+const { LEVELS, DEFAULT_LEVEL } = require('../../dist/constants')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')

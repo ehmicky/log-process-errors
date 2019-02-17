@@ -8,9 +8,8 @@
     "test",
     "*.md"
   ],
-  "BUILD": ["{index,register,gulpfile.babel,.babelrc}.js", "src"],
-  "BUILD_SRC": ["src"],
-  "BUILD_DIST": ["dist"],
+  "BUILD": "src",
+  "BUILD_DIST": "dist",
   "DEV": [
     "{index,register,gulpfile.babel,.babelrc}.js",
     "src",

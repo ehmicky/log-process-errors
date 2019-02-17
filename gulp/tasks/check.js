@@ -3,19 +3,23 @@
 const { src, series, parallel } = require('gulp')
 const jscpd = require('gulp-jscpd')
 
-const FILES = require('../files')
+const { CHECK } = require('../files')
 const { getWatchTask } = require('../utils')
 const gulpExeca = require('../exec')
 
 const format = () =>
-  gulpExeca(`prettier --write --loglevel warn ${FILES.CHECK.join(' ')}`)
+  gulpExeca(`prettier --write --loglevel warn ${CHECK.join(' ')}`)
 
 // We do not use `gulp-eslint` because it does not support --cache
 const eslint = function() {
-  const files = FILES.CHECK.map(pattern => `"${pattern}"`).join(' ')
+  const files = CHECK.map(escapePattern).join(' ')
   return gulpExeca(
     `eslint ${files} --ignore-path .gitignore --fix --cache --format codeframe --max-warnings 0 --report-unused-disable-directives`,
   )
+}
+
+const escapePattern = function(pattern) {
+  return `"${pattern}"`
 }
 
 const lint = series(format, eslint)
@@ -24,7 +28,7 @@ const lint = series(format, eslint)
 lint.description = 'Lint source files'
 
 const dup = () =>
-  src(FILES.CHECK).pipe(
+  src(CHECK).pipe(
     jscpd({
       verbose: true,
       blame: true,

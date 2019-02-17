@@ -1,6 +1,5 @@
 {
   "CHECK": ["{index,register,gulpfile.babel}.js", "{src,gulp,test}/**/*.js", "*.md"],
-  "UNIT": ["index.js", "src", "gulp", "test"],
   "TEST": [
     "{index,register,gulpfile.babel,.babelrc}.js",
     "src",

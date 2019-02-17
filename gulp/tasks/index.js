@@ -7,5 +7,5 @@ module.exports = {
   ...require('./unit'),
   ...require('./coverage'),
   ...require('./build'),
-  ...require('./emit'),
+  ...require('./start'),
 }

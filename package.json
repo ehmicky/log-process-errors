@@ -11,7 +11,7 @@
     "build": "gulp build",
     "test": "npm run build && gulp test",
     "release": "npm test && release-it",
-    "check-coverage": "gulp checkCoverage"
+    "coverage": "gulp coverage"
   },
   "husky": {
     "hooks": {

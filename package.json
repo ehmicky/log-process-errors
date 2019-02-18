@@ -67,7 +67,7 @@
     "eslint": "^5.13.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-config-standard-prettier-fp": "^15.0.0",
+    "eslint-config-standard-prettier-fp": "^15.0.3",
     "eslint-import-resolver-node": "^0.3.2",
     "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-eslint-comments": "^3.1.0",

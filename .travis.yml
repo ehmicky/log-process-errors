@@ -21,7 +21,7 @@ jobs:
     - stage: Coverage check
       os: linux
       node_js: 11
-      script: npm run coverage
+      script: gulp coverage
       # If CI fails, codecov does not post a bot comment on PR, so we skip it
       if: type != pull_request && (branch == master || tag is not blank)
     # Deployment must happen after tests for the whole matrix have been

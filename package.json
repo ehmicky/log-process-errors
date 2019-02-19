@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "build": "gulp build",
-    "test": "npm run build && gulp test",
-    "coverage": "gulp coverage"
+    "test": "npm run build && gulp test"
   },
   "husky": {
     "hooks": {

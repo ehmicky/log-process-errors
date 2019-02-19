@@ -92,6 +92,6 @@
     "util.promisify": "^1.0.0"
   },
   "engines": {
-    "node": ">=6.5.0"
+    "node": ">=8.10.0"
   }
 }

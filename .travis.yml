@@ -1,7 +1,6 @@
 language: node_js
 node_js:
-  - 6.5.0
-  - 8
+  - 8.10.0
   - 10
   - 11
 os:

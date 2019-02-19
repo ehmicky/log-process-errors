@@ -88,8 +88,7 @@
     "semver": "^5.6.0",
     "sinon": "^7.2.4",
     "source-map-support": "^0.5.10",
-    "strip-ansi": "^5.0.0",
-    "util.promisify": "^1.0.0"
+    "strip-ansi": "^5.0.0"
   },
   "engines": {
     "node": ">=8.10.0"

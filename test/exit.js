@@ -1,8 +1,8 @@
 'use strict'
 
 const process = require('process')
+const { promisify } = require('util')
 
-const promisify = require('util.promisify')
 const test = require('ava')
 const sinon = require('sinon')
 const lolex = require('lolex')

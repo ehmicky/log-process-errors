@@ -21,26 +21,26 @@ const getEventName = function() {
 
 const DEFAULT_EVENT = '-a'
 
-const start = emitEvent.bind(null, '')
+const runProd = emitEvent.bind(null, '')
 
 // eslint-disable-next-line fp/no-mutation
-start.description =
-  'Emit a process event. The event name (or just its first letter) must be passed as option, e.g. `gulp emit --uncaughtException`'
+runProd.description =
+  'Emit a process event, e.g. `gulp emit --uncaughtException`'
 
-const dev = emitEvent.bind(null, '--inspect ')
-
-// eslint-disable-next-line fp/no-mutation
-dev.description =
-  'Emit a process event in dev mode. The event name (or just its first letter) must be passed as option, e.g. `gulp emit --uncaughtException`'
-
-const debug = emitEvent.bind(null, '--inspect-brk ')
+const runDev = emitEvent.bind(null, '--inspect ')
 
 // eslint-disable-next-line fp/no-mutation
-debug.description =
-  'Emit a process event in debug mode. The event name (or just its first letter) must be passed as option, e.g. `gulp emit --uncaughtException`'
+runDev.description =
+  'Emit a process event in dev mode, e.g. `gulp emit --uncaughtException`'
+
+const runDebug = emitEvent.bind(null, '--inspect-brk ')
+
+// eslint-disable-next-line fp/no-mutation
+runDebug.description =
+  'Emit a process event in debug mode, e.g. `gulp emit --uncaughtException`'
 
 module.exports = {
-  start,
-  dev,
-  debug,
+  runProd,
+  runDev,
+  runDebug,
 }

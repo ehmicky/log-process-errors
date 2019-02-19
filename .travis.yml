@@ -30,7 +30,7 @@ jobs:
       os: linux
       node_js: 11
       # We have already run tests
-      script: npm run build
+      script: gulp build
       if: tag is not blank
       # We run `release-it` locally (which tagged the commit and create a
       # GitHub release) but we publish to npm only after CI success.

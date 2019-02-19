@@ -36,13 +36,7 @@ const isLimited = function({
 
 // Notify that limit has been reached with a `warning` event
 const emitLimitedWarning = function(eventName) {
-  // TODO: replace to:
-  //   emitWarning(ERROR_MESSAGE(eventName), ERROR_NAME, ERROR_CODE)
-  // once dropping support for Node.js <8
-  const error = new Error(ERROR_MESSAGE(eventName))
-  // eslint-disable-next-line fp/no-mutating-assign
-  Object.assign(error, { name: ERROR_NAME, code: ERROR_CODE })
-  emitWarning(error)
+  emitWarning(ERROR_MESSAGE(eventName), ERROR_NAME, ERROR_CODE)
 }
 
 // The `warning` itself should not be skipped

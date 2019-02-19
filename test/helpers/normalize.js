@@ -16,8 +16,8 @@ const normalizeMessage = function(message, { colors = true } = {}) {
 const FIRST_SIGN_REGEXP = /^ [^ ]+/gmu
 // Default Node.js warnings show PID, which we remove
 const WARNING_PID_REGEXP = /\(node:\d+\)/u
-// Default Node.js warnings <8 look different (no `code`, no `detail`)
-// TODO: remove when Node.js <8 is not supported anymore
+// Default Node.js warnings <10 look different (no `code`, no `detail`)
+// TODO: remove when Node.js <10 is not supported anymore
 const WARNING_OLD_REGEXP = /(\(node:PID\)) \[[^\]]+\](.*)\n.*/u
 
 module.exports = {

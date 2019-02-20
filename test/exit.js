@@ -83,7 +83,8 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     unstubProcessExit({ clock, processExit })
   })
 
-  test(`${prefix} should delay process.exit(1) with async opts.log()`, async t => {
+  // eslint-disable-next-line ava/no-skip-test
+  test.skip(`${prefix} should delay process.exit(1) with async opts.log()`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const { promise, resolve } = getPromise()
@@ -91,7 +92,9 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     const { stopLogging } = startLogging({
       exitOn: [eventName],
       eventName,
-      log: () => promise,
+      // We use `async` keyword to make sure they are validated correctly
+      // eslint-disable-next-line no-return-await
+      log: async () => await promise,
     })
 
     await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })

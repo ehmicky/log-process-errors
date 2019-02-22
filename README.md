@@ -31,14 +31,21 @@ Without `log-process-errors`:
 
 # Installation
 
+Production code (e.g. a web server) can install this either as a production or
+development dependency:
+
+```bash
+npm install log-process-errors
+```
+
+However libraries should install this as a development dependency:
+
 ```bash
 npm install -D log-process-errors
 ```
 
-This should only be installed as a production dependency for production code
-(e.g. a web server), not for libraries. This is because logging is modified
-globally and libraries users might not expect this side-effect. Also this might
-lead to conflicts between libraries.
+This is because logging is modified globally and libraries users might not
+expect this side-effect. Also this might lead to conflicts between libraries.
 
 # Usage
 
@@ -215,14 +222,12 @@ The `exitOn` option specifies which event should trigger `process.exit(1)`:
 
 `process.exit(1)` will only be fired after successfully logging the event.
 
-# Stop logging
+# Restoring default behavior
 
-Logging can be stopped by firing the function returned by `logProcessErrors()`.
+Node.js default behavior can be restored by firing the function returned by
+`logProcessErrors()`.
 
 ```js
-const logProcessErrors = require('log-process-errors')
-
-const stopLogging = logProcessErrors(options)
-
-stopLogging()
+const restore = logProcessErrors(options)
+restore()
 ```

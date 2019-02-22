@@ -3,15 +3,19 @@
 const { argv } = require('process')
 
 // eslint-disable-next-line import/no-internal-modules
-const gulpExeca = require('gulp-shared-tasks/dist/exec')
+const execa = require('gulp-shared-tasks/dist/exec')
 
 const EMIT_PATH = `${__dirname}/../test/helpers/emit/fire.js`
 
 const emitEvent = function(flags) {
   const eventName = getEventName()
-  return gulpExeca(
-    `node -r source-map-support/register ${flags}${EMIT_PATH} ${eventName}`,
-  )
+  return execa('node', [
+    '-r',
+    'source-map-support/register',
+    ...flags,
+    EMIT_PATH,
+    eventName,
+  ])
 }
 
 const getEventName = function() {
@@ -21,19 +25,19 @@ const getEventName = function() {
 
 const DEFAULT_EVENT = '-a'
 
-const runProd = emitEvent.bind(null, '')
+const runProd = emitEvent.bind(null, [])
 
 // eslint-disable-next-line fp/no-mutation
 runProd.description =
   'Emit a process event, e.g. `gulp emit --uncaughtException`'
 
-const runDev = emitEvent.bind(null, '--inspect ')
+const runDev = emitEvent.bind(null, ['--inspect'])
 
 // eslint-disable-next-line fp/no-mutation
 runDev.description =
   'Emit a process event in dev mode, e.g. `gulp emit --uncaughtException`'
 
-const runDebug = emitEvent.bind(null, '--inspect-brk ')
+const runDebug = emitEvent.bind(null, ['--inspect-brk'])
 
 // eslint-disable-next-line fp/no-mutation
 runDebug.description =

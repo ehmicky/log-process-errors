@@ -8,6 +8,5 @@ core
 .npmrc
 .yarn-error.log
 .nyc_output
-.jscpd
 coverage
 dist

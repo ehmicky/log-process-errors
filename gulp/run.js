@@ -7,14 +7,13 @@ const execa = require('gulp-shared-tasks/dist/exec')
 
 const EMIT_PATH = `${__dirname}/../test/helpers/emit/fire.js`
 
-const emitEvent = function(flags) {
-  const eventName = getEventName()
-  return execa('node', [
+const emitEvent = async function(flags) {
+  await execa('node', [
     '-r',
     'source-map-support/register',
     ...flags,
     EMIT_PATH,
-    eventName,
+    getEventName(),
   ])
 }
 
@@ -25,19 +24,19 @@ const getEventName = function() {
 
 const DEFAULT_EVENT = '-a'
 
-const runProd = emitEvent.bind(null, [])
+const runProd = () => emitEvent([])
 
 // eslint-disable-next-line fp/no-mutation
 runProd.description =
   'Emit a process event, e.g. `gulp emit --uncaughtException`'
 
-const runDev = emitEvent.bind(null, ['--inspect'])
+const runDev = () => emitEvent(['--inspect'])
 
 // eslint-disable-next-line fp/no-mutation
 runDev.description =
   'Emit a process event in dev mode, e.g. `gulp emit --uncaughtException`'
 
-const runDebug = emitEvent.bind(null, ['--inspect-brk'])
+const runDebug = () => emitEvent(['--inspect-brk'])
 
 // eslint-disable-next-line fp/no-mutation
 runDebug.description =

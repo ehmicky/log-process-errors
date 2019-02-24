@@ -3,12 +3,12 @@
 const { argv } = require('process')
 
 // eslint-disable-next-line import/no-internal-modules
-const execa = require('gulp-shared-tasks/dist/exec')
+const { exec } = require('gulp-shared-tasks/dist/exec')
 
 const EMIT_PATH = `${__dirname}/../test/helpers/emit/fire.js`
 
 const emitEvent = async function(flags) {
-  await execa('node', [
+  await exec('node', [
     '-r',
     'source-map-support/register',
     ...flags,

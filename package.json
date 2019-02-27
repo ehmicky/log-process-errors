@@ -62,7 +62,7 @@
     "@babel/register": "^7.0.0",
     "ava": "^1.2.1",
     "eslint": "^5.14.1",
-    "eslint-config-prettier": "^4.0.0",
+    "eslint-config-prettier": "^4.1.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-prettier-fp": "^15.2.0",
     "eslint-import-resolver-node": "^0.3.2",

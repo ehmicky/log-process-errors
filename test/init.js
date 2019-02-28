@@ -20,7 +20,10 @@ const addProcessHandler = function(eventName) {
   return processHandler
 }
 
-/* eslint-disable max-nested-callbacks */
+const normalizeArgs = function([arg]) {
+  return normalizeMessage(arg, { colors: false })
+}
+
 repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   test(`${prefix} should work with no options`, async t => {
     stubStackTrace()
@@ -30,9 +33,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     await emitEvent()
 
-    const messages = stub.args.map(([arg]) =>
-      normalizeMessage(arg, { colors: false }),
-    )
+    const messages = stub.args.map(normalizeArgs)
 
     stopLogging()
     stub.restore()
@@ -84,4 +85,3 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     process.removeListener(eventName, processHandler)
   })
 })
-/* eslint-enable max-nested-callbacks */

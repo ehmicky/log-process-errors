@@ -16,7 +16,6 @@ test('[all] events emitters should not throw', async t => {
   stopLogging()
 })
 
-/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { emitEvent }) => {
   test(`${prefix} events emitters should exist`, t => {
     t.is(typeof emitEvent, 'function')
@@ -30,4 +29,3 @@ repeatEvents((prefix, { emitEvent }) => {
     stopLogging()
   })
 })
-/* eslint-enable max-nested-callbacks */

@@ -53,7 +53,6 @@ const INFOS = [
   },
 ]
 
-/* eslint-disable max-nested-callbacks */
 repeat(INFOS, (prefix, { name: eventName, arg, getInfo, expected }) => {
   test(`${prefix} should set info properties`, async t => {
     // When testing `multipleResolves` on Node<10
@@ -79,4 +78,3 @@ repeat(INFOS, (prefix, { name: eventName, arg, getInfo, expected }) => {
     stopLogging()
   })
 })
-/* eslint-enable max-nested-callbacks */

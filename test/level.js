@@ -1,4 +1,4 @@
-/* eslint-disable max-lines */
+/* eslint-disable max-lines, max-lines-per-function */
 'use strict'
 
 const test = require('ava')
@@ -13,7 +13,6 @@ const {
   normalizeMessage,
 } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks, max-lines-per-function */
 repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
@@ -122,6 +121,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
   })
 
   test(`${prefix} should allow opts.level() as a function`, async t => {
+    // eslint-disable-next-line max-nested-callbacks
     const defaultLevel = sinon.spy(() => level)
 
     const { stopLogging, log } = startLogging({
@@ -140,5 +140,4 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     stopLogging()
   })
 })
-/* eslint-enable max-nested-callbacks, max-lines-per-function */
-/* eslint-enable max-lines */
+/* eslint-enable max-lines, max-lines-per-function */

@@ -5,7 +5,6 @@ const chalk = require('chalk')
 
 const { startLogging, repeatEvents, repeatEventsLevels } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should allow customizing log message`, async t => {
     const { stopLogging, log, message } = startLogging({
@@ -60,4 +59,3 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     stopLogging()
   })
 })
-/* eslint-enable max-nested-callbacks */

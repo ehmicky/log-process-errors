@@ -10,7 +10,6 @@ const {
   normalizeMessage,
 } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks */
 repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
   test(`${prefix} should fire opts.message() with a default prettifier`, async t => {
     stubStackTrace()
@@ -34,4 +33,3 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     unstubStackTrace()
   })
 })
-/* eslint-enable max-nested-callbacks */

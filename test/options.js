@@ -22,7 +22,6 @@ const WARNED_OPTIONS = [
   { name: 'level', value: { unknown: 'error' } },
 ]
 
-/* eslint-disable max-nested-callbacks */
 INVALID_OPTIONS.forEach(({ name, value }) => {
   test(`${JSON.stringify({ name, value })} should validate options`, t => {
     const error = t.throws(startLogging.bind(null, { [name]: value }))
@@ -46,7 +45,6 @@ WARNED_OPTIONS.forEach(({ name, value }) => {
     stub.restore()
   })
 })
-/* eslint-enable max-nested-callbacks */
 
 const normalizeJestValidate = function(message) {
   const messageA = normalizeMessage(message, { colors: false })

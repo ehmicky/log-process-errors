@@ -6,7 +6,6 @@ const supportsColor = require('supports-color')
 
 const { repeatEvents, startLogging } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should colorize default opts.message()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
@@ -34,4 +33,3 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     stopLogging()
   })
 })
-/* eslint-enable max-nested-callbacks */

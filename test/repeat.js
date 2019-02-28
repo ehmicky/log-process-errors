@@ -10,7 +10,6 @@ const {
   emitEvents,
 } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should not repeat identical events`, async t => {
     stubStackTrace()
@@ -26,4 +25,3 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     unstubStackTrace()
   })
 })
-/* eslint-enable max-nested-callbacks */

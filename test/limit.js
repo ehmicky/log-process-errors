@@ -15,7 +15,6 @@ const {
   emitEvents,
 } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should limit events`, async t => {
     stubStackTraceRandom()
@@ -82,7 +81,6 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     unstubStackTrace()
   })
 })
-/* eslint-enable max-nested-callbacks */
 
 const onlyLimited = function(info) {
   if (!isLimitedWarning(info)) {

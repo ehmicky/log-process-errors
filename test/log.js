@@ -5,7 +5,6 @@ const test = require('ava')
 
 const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should fire opts.log()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
@@ -80,4 +79,3 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     stub.restore()
   })
 })
-/* eslint-enable max-nested-callbacks */

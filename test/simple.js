@@ -5,7 +5,6 @@ const execa = require('execa')
 
 const { repeatEvents, normalizeMessage } = require('./helpers')
 
-/* eslint-disable max-nested-callbacks */
 repeatEvents((prefix, { eventName }) => {
   test(`${prefix} should work using the -r flag`, async t => {
     const returnValue = await callLoader({ eventName, loader: 'simple' })
@@ -33,7 +32,6 @@ repeatEvents((prefix, { eventName }) => {
     t.snapshot(returnValue)
   })
 })
-/* eslint-enable max-nested-callbacks */
 
 const callLoader = async function({ eventName, loader, flags = '' }) {
   const { stdout, stderr, code } = await execa.shell(

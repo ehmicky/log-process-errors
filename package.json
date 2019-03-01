@@ -4,8 +4,7 @@
   "main": "dist/index.js",
   "files": [
     "dist",
-    "register.js",
-    "!*~"
+    "register.js"
   ],
   "scripts": {
     "test": "gulp test"

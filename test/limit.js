@@ -5,7 +5,7 @@ const test = require('ava')
 // Required directly inside `dist` because this is exposed through
 // documentation, but not through code
 // eslint-disable-next-line import/no-internal-modules
-const { MAX_EVENTS } = require('../dist/constants')
+const { MAX_EVENTS } = require('../dist/src/constants')
 
 const {
   repeatEvents,

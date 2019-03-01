@@ -1,9 +1,9 @@
 {
   "name": "log-process-errors",
   "version": "3.0.0",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "files": [
-    "dist",
+    "dist/src",
     "register.js"
   ],
   "scripts": {

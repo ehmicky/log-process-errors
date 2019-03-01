@@ -3,7 +3,7 @@
 // Required directly inside `dist` because this is exposed through
 // documentation, but not through code
 // eslint-disable-next-line import/no-internal-modules
-const { LEVELS, DEFAULT_LEVEL } = require('../../dist/constants')
+const { LEVELS, DEFAULT_LEVEL } = require('../../dist/src/constants')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')

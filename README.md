@@ -2,6 +2,8 @@
 
 [![downloads](https://img.shields.io/npm/dt/log-process-errors.svg?logo=npm)](https://www.npmjs.com/package/log-process-errors) [![last commit](https://img.shields.io/github/last-commit/ehmicky/log-process-errors.svg?logo=github&logoColor=white)](https://github.com/ehmicky/log-process-errors/graphs/contributors) [![Coverage Status](https://img.shields.io/codecov/c/github/ehmicky/log-process-errors.svg?label=test%20coverage&logo=codecov)](https://codecov.io/gh/ehmicky/log-process-errors) [![travis](https://img.shields.io/travis/ehmicky/log-process-errors/master.svg?logo=travis)](https://travis-ci.org/ehmicky/log-process-errors/builds) [![node](https://img.shields.io/node/v/log-process-errors.svg?logo=node.js)](#) [![Gitter](https://img.shields.io/gitter/room/ehmicky/log-process-errors.svg?logo=gitter)](https://gitter.im/ehmicky/log-process-errors)
 
+Show some ❤️ to process errors in Node.js.
+
 By default Node.js prints
 [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`warning`](https://nodejs.org/api/process.html#process_event_warning) and

@@ -1,3 +1,3 @@
 'use strict'
 
-module.exports = require('eslint-config-standard-prettier-fp/dist/src/.prettierrc.json')
+module.exports = require('eslint-config-standard-prettier-fp/build/src/.prettierrc.json')

@@ -2,7 +2,7 @@
 
 const sinon = require('sinon')
 
-const logProcessErrors = require('../..')
+const logProcessErrors = require('../../src')
 // eslint-disable-next-line import/no-internal-modules
 const { mapValues } = require('../../build/src/utils')
 

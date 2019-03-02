@@ -2,8 +2,8 @@
 
 const { argv } = require('process')
 
-// eslint-disable-next-line import/no-unassigned-import
-require('../../register')
+// eslint-disable-next-line import/no-unassigned-import, node/no-missing-require, import/no-unresolved
+require('../../../register')
 
 // While Ava uses Babel by default, it does not do it on child processes,
 // i.e. this is needed.

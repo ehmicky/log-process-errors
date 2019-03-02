@@ -4,7 +4,7 @@ const sinon = require('sinon')
 
 const logProcessErrors = require('../..')
 // eslint-disable-next-line import/no-internal-modules
-const { mapValues } = require('../../dist/src/utils')
+const { mapValues } = require('../../build/src/utils')
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
 const startLoggingNoOpts = function() {

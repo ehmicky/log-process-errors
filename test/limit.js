@@ -2,10 +2,10 @@
 
 const test = require('ava')
 
-// Required directly inside `build` because this is exposed through
-// documentation, but not through code
+// Required directly because this is exposed through documentation, but not
+// through code
 // eslint-disable-next-line import/no-internal-modules
-const { MAX_EVENTS } = require('../build/src/constants')
+const { MAX_EVENTS } = require('../src/constants')
 
 const {
   repeatEvents,

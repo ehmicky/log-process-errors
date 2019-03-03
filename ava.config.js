@@ -1,5 +1,7 @@
-// eslint-disable-next-line filenames/match-regex, import/no-default-export
+import config from 'gulp-shared-tasks/ava.config'
+
 export default {
+  ...config,
   // Tests are setting listeners on `process` and stubbing global
   // `process.exit`, `console`, `setTimeout` and `Error.prepareStackTrace`,
   // so we cannot parallelize them.

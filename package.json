@@ -1,6 +1,6 @@
 {
   "name": "log-process-errors",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "build/src/index.js",
   "files": [
     "build/src",

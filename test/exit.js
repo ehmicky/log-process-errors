@@ -82,8 +82,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     unstubProcessExit({ clock, processExit })
   })
 
-  // eslint-disable-next-line ava/no-skip-test
-  test.skip(`${prefix} should delay process.exit(1) with async opts.log()`, async t => {
+  test(`${prefix} should delay process.exit(1) with async opts.log()`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const { promise, resolve } = getPromise()

@@ -27,7 +27,7 @@ jobs:
     # Deployment must happen after tests for the whole matrix have been
     # performed, so we use `jobs.include` with a different `stage`.
     - stage: Deploy
-      if: type != pull_request && branch == master && tag is not blank
+      if: type != pull_request && tag is not blank
       script: gulp publish
       # NPM_TOKEN environment variable
       env:

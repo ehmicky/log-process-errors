@@ -1,3 +1,4 @@
+// eslint-disable-next-line filenames/match-exported
 'use strict'
 
 const process = require('process')
@@ -10,15 +11,16 @@ const EVENTS = require('./events')
 const { emitLimitedWarning } = require('./limit')
 
 // Add event handling for all process-related errors
-const init = function(opts) {
+const logProcessErrors = function(opts) {
   const optsA = getOptions({ opts })
 
   removeWarningListener()
 
   const listeners = addListeners({ opts: optsA })
 
-  const stopLoggingA = stopLogging.bind(null, listeners)
-  return stopLoggingA
+  // Do not use `function.bind()` to keep the right `function.name`
+  const stopLogProcessErrors = () => stopLogging(listeners)
+  return stopLogProcessErrors
 }
 
 const addListeners = function({ opts }) {
@@ -59,4 +61,4 @@ const removeListener = function({ eventListener, eventName }) {
   process.removeListener(eventName, eventListener)
 }
 
-module.exports = init
+module.exports = logProcessErrors

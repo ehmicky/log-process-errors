@@ -1,47 +1,37 @@
 language: node_js
-node_js:
-  - 8.10.0
-  - 10
-  - 11
-os:
-  - windows
-  - osx
-  - linux
+node_js: '11'
 dist: xenial
-script: npm test
 # When pushing a tagged commit, Travis adds two builds: one with the tag, one
 # without. We only want to build the one with the tag, because it's the one
 # that runs the deployment stage
 if: '!(commit_message =~ /^Release/ && tag is blank)'
 jobs:
   include:
+    # Test on Windows/Mac/Linux using latest Node.js.
+    # Also test on Linux with older Node.js versions.
+    # We do not run each possible combination to make CI faster.
+    - os: windows
+    - os: osx
+    - node_js: '8.10.0'
+    - node_js: '10'
+    - node_js: '11'
     # Test coverage check must happen after tests for the whole matrix have
     # been performed, so we get the merged coverage map
     - stage: Coverage check
-      os: linux
-      node_js: 11
+      # If this fails during a PR, CI will fail. However when CI fails, codecov
+      # does not post any comment. Since codecov comments are nicer than
+      # Travis Buddy comments for this, we skip it during PRs. Also this makes
+      # PRs checks faster.
+      if: type != pull_request
       script: gulp coverage
-      # If CI fails, codecov does not post a bot comment on PR, so we skip it
-      if: type != pull_request && (branch == master || tag is not blank)
     # Deployment must happen after tests for the whole matrix have been
-    # performed, so we use `jobs.include` with a different `stage`
+    # performed, so we use `jobs.include` with a different `stage`.
     - stage: Deploy
-      os: linux
-      node_js: 11
-      # We have already run tests
-      script: gulp build
-      if: tag is not blank
-      # We run `release-it` locally (which tagged the commit and create a
-      # GitHub release) but we publish to npm only after CI success.
-      deploy:
-        provider: npm
-        email: ehmicky@gmail.com
-        api_key:
-          secure: KyZ9E2N+Tt7fh6cI4HmjTC+Ra/HCLhu0WsWIRmSnJW0K6VaLbXzrKX7YcgALanbiMhSUEQynU+zdMMK351+bdkksi6H5FqXWfQ//Lf8WiyDwTbpMloPAxkclnJYMc10iZgc98AnkzrZU5qRM70MrJ9hM0d9aRq1GDm80Us6buoobMubj2d4wG/0y5c78dxajkFW300AWgM0Z/gJNSsY7l9qtOI4jrKrpoi3Zitd2SUDXoxzFsngsx2+4LpjLjUMljo3KSMmExbqGdK927KuNCIFIuuLoYussPgftrym2zZZ19XLQNpnJcEmynuwsZLAK9O/2kEo6AkqRF1OYe28sVgu1caLz2L3CilL/tK6r+QCxa4bR3G2ybBu+MEO9zh2oAOOF21YcAt3mOaozNPBwlY8hhKrsbjt9TGaR6S6vv8k3XNDAbet/2FJHcgecmc3gKFski6xkl1U0rOow8ES4BSiKp+QNBiLs01aze+wmYQoKTHA/XdegMK0lCaSk1IjYFMoO6I9ZAeTThdaXPhtqnoD15lp9W4CnPyFIR6FICenwLjFufrvcaPfD33Os35nFAdAJGhWOEDko27EkT+GP5ziMhmdzQm1exrdkPi6vAxBpY3dd2Mp2Svnm1ww0b/r7jtEgY8yAvmQLQX6ZqgUalFcX5A88f5tcIQrPDizRS8Y=
-        on:
-          tags: true
-        # We want to run install step and keep built files for release
-        skip_cleanup: true
+      if: type != pull_request && branch == master && tag is not blank
+      script: gulp publish
+      # NPM_TOKEN environment variable
+      env:
+        secure: "GOX/5ZEXx52rOuEE3ZIuLkeFawahndkPyhkJihHWiXkUDfwIqy7TAS+opPPwFp41WTEoJMwFs8mhgTHEG6P3NkDI6EhuKgke3ynvIdLE/kmB6RFzXjJrco76OFcE/gv9+w/245GULv66RRX3iEs+8oExthZvD0TxE2kmCMVfP08XKS6n+BdsM77+FDx5wArxr5nQ67Ho4iefvHQtiDSjDIbMDgvH/VFEXEUqznwgh4YiUkx8yfiO3Kr/Xc8C09+mSJsoXyYN0xcug35NXxya7unC33ws0Dc+Lw5X2NFu1jfqS6say2Zgl3+WRGSyixOMgS/bOuwkGqVwNOnwgQWWQwqQEbg+y3UpOb+bIdWQimun5oNzfzSG+WxmjTIqHi+OVhoPUIN0INwymksP2llAWrJb8dKUUh/0yYkAevdfBelULJ1aI6k2xNQgNPw8wT62ukPygRtroYJ/GFJBf3G5OKFUUVgNYE4qVTdUz+3XlUEbGCELp4Fgbzh5QTkmuUgHJAVAYhckx7Z7ggAyz0x5RkdlOu0bgj9vFXDMLA5bZatJ5NvUWDpcZ2cY9mwHC44A7KRZYnhKauBVjSH2yYU4bTJFQ8s7JWLxzh2gWpXGGZCOj14c1o3Kzs865X91I+2T2EJsS+N3NLWcL5YWtDS7TVuyTUNAZW0bUTucdnh3RiI="
 notifications:
   webhooks:
     - https://www.travisbuddy.com?only=failed,errored&insertMode=update

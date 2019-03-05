@@ -19,6 +19,7 @@ on the console which is very useful. Unfortunately those process errors:
   and
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves) making it hard to debug.
 - are inconvenient to [log to an external service](#custom-logging).
+- cannot be conditionally skipped
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
 - are not human-friendly.

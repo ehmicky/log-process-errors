@@ -25,8 +25,9 @@ logProcessErrors({
 })
 ```
 
-The function's arguments are [`message`](#log-message) (string),
-[`level`](#log-level) (string) and [`info`](#event-information) (object).
+The function's arguments are [`message`](#optionsmessage-function) (string),
+[`level`](#optionslevel-object) (string) and [`info`](#event-information)
+(object).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
@@ -83,7 +84,7 @@ By default a nice-looking and descriptive log message is generated.
 
 ## options.colors `{boolean}`
 
-Colorize the default [`options.message`](#optionsmessagefunction). Default:
+Colorize the default [`options.message`](#optionsmessage-function). Default:
 `true`.
 
 ## options.exitOn `{string[]}`
@@ -102,8 +103,9 @@ Which events should trigger `process.exit(1)`:
 
 # Event information
 
-The [`log`](#custom-logging), [`level`](#log-level) and
-[`message`](#log-message) options all receive as argument an `info` object.
+The [`log`](#optionslog-string), [`level`](#optionslevel-object) and
+[`message`](#optionsmessage-function) options all receive as argument an `info`
+object.
 
 ## `info.eventName`
 
@@ -145,10 +147,11 @@ the second time the promise was resolved/rejected. Only defined with
 
 ## `info.level`
 
-[Log level](#log-level). Only defined with the [`message` option](#log-message).
+[Log level](#optionslevel-object). Only defined with the
+[`message` option](#optionsmessage-function).
 
 ## `info.colors`
 
 [Chalk instance](https://github.com/chalk/chalk#api) to colorize strings.
-Only defined with the [`message` option](#log-message). Disabled if the
-[`colors` option](#log-message) is `false`.
+Only defined with the [`message` option](#optionsmessage-function). Disabled if
+the [`colors` option](#optionscolors-boolean) is `false`.

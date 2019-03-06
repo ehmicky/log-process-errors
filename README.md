@@ -18,7 +18,8 @@ on the console which is very useful. Unfortunately those process errors:
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   and
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves) making it hard to debug.
-- are inconvenient to [log to an external service](#custom-logging).
+- are inconvenient to
+  [log to an external service](docs/options.md#optionslog-string).
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
@@ -76,16 +77,16 @@ logProcessErrors(options)
 
 `options` is an optional object with the following properties:
 
-- [`log` `{function}`](#custom-logging): override how events are logged.
-  Default: use `console.warn()`, `console.error()`, etc.
-- [`level` `{object}`](#log-level): which log level to use. Default:
-  `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
-- [`message` `{function}`](#log-message): override the default message
-  generation.
-- [`colors` `{boolean}`](#log-message): colorize the default message. Default:
-  `true`.
-- [`exitOn` `{string[]}`](#process-exit): which events should trigger
-  `process.exit(1)`. Default: `['uncaughtException']`.
+- [`log` `{function}`](docs/options.md#optionslog-string): override how events
+  are logged. Default: use `console.warn()`, `console.error()`, etc.
+- [`level` `{object}`](docs/options.md#optionslevel-object): which log level to
+  use. Default: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
+- [`message` `{function}`](docs/options.md#optionsmessage-function): override
+  the default message generation.
+- [`colors` `{boolean}`](docs/options.md#optionscolors-boolean): colorize the
+  default message. Default: `true`.
+- [`exitOn` `{string[]}`](docs/options.md#optionsexiton-string): which events
+  should trigger `process.exit(1)`. Default: `['uncaughtException']`.
 
 Please see the [options full documentation](docs/options.md).
 

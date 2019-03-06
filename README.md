@@ -89,6 +89,8 @@ Please see the [options full documentation](options.md).
 
 Example:
 
+<!-- eslint-disable no-empty-function -->
+
 ```js
 logProcessErrors({
   log(message, level, info) {
@@ -104,6 +106,8 @@ logProcessErrors({
   exitOn: ['uncaughtException', 'unhandledRejection'],
 })
 ```
+
+<!-- eslint-enable no-empty-function -->
 
 # Restoring default behavior
 

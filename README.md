@@ -19,16 +19,18 @@ on the console which is very useful. Unfortunately those process errors:
   and
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves) making it hard to debug.
 - are inconvenient to [log to an external service](#custom-logging).
-- cannot be conditionally skipped
+- cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
 - are not human-friendly.
+
+`log-process-errors` fixes all those issues.
 
 Without `log-process-errors`:
 
 ![Screenshot before](docs/before.png)
 
-`log-process-errors` fixes those issues:
+With `log-process-errors`:
 
 ![Screenshot after](docs/after.png)
 
@@ -85,9 +87,9 @@ logProcessErrors(options)
 - [`exitOn` `{string[]}`](#process-exit): which events should trigger
   `process.exit(1)`. Default: `['uncaughtException']`.
 
-Please see the [options full documentation](options.md).
+Please see the [options full documentation](docs/options.md).
 
-Example:
+Full example:
 
 <!-- eslint-disable no-empty-function -->
 
@@ -97,7 +99,7 @@ logProcessErrors({
     winstonLogger[level](message)
   },
 
-  level: { multiResolves: 'debug' },
+  level: { multipleResolves: 'debug' },
 
   message(info) {},
 

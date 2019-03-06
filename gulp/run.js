@@ -5,7 +5,7 @@ const { argv } = require('process')
 // eslint-disable-next-line import/no-internal-modules
 const { exec } = require('gulp-shared-tasks/build/src/exec')
 
-const EMIT_PATH = `${__dirname}/../test/helpers/emit/fire.js`
+const EMIT_PATH = `${__dirname}/../build/test/helpers/emit/fire.js`
 
 const emitEvent = flags =>
   exec(

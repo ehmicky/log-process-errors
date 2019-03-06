@@ -17,9 +17,15 @@ const getEvent = function([eventName, emitEvent]) {
   return { eventName, emitEvent, name: eventName, defaultLevel }
 }
 
+const isNormalLevel = function(level) {
+  return level !== 'silent' && level !== 'default'
+}
+
+const NORMAL_LEVELS = LEVELS.filter(isNormalLevel)
+
 const repeatEvents = repeat.bind(null, getEvents())
-const repeatLevels = repeat.bind(null, LEVELS)
-const repeatEventsLevels = repeat.bind(null, getEvents(), LEVELS)
+const repeatLevels = repeat.bind(null, NORMAL_LEVELS)
+const repeatEventsLevels = repeat.bind(null, getEvents(), NORMAL_LEVELS)
 
 module.exports = {
   repeatEvents,

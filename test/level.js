@@ -17,7 +17,8 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
     { level: { default: undefined }, exitOn: [] },
-    { level: { default: () => undefined } },
+    { level: { default: 'default' }, exitOn: [] },
+    { level: { default: () => 'default' } },
   ]
   OPTIONS.forEach(options => {
     test(`${prefix} ${JSON.stringify(

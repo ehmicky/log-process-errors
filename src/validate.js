@@ -1,6 +1,6 @@
 'use strict'
 
-const { EVENTS, ALL_LEVELS } = require('./constants')
+const { EVENTS, LEVELS } = require('./constants')
 
 // Validation beyond what `jest-validate` can do
 const validateOptions = function({ exitOn, level = {} }) {
@@ -18,7 +18,7 @@ const validateLevel = function([eventName, level]) {
   }
 
   throw new Error(
-    `Invalid option 'level.${eventName}' '${level}': must be a function, undefined or one of ${ALL_LEVELS.join(
+    `Invalid option 'level.${eventName}' '${level}': must be a function or one of ${LEVELS.join(
       ', ',
     )}`,
   )
@@ -26,9 +26,7 @@ const validateLevel = function([eventName, level]) {
 
 const isValidLevel = function({ level }) {
   return (
-    ALL_LEVELS.includes(level) ||
-    level === undefined ||
-    typeof level === 'function'
+    LEVELS.includes(level) || level === undefined || typeof level === 'function'
   )
 }
 

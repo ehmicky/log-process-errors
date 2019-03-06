@@ -9,12 +9,8 @@ LEVELS:
   - info
   - warn
   - error
-ALL_LEVELS:
-  - debug
-  - info
-  - warn
-  - error
   - silent
+  - default
 DEFAULT_LEVEL:
   default: error
   uncaughtException: error

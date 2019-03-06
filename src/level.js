@@ -5,31 +5,27 @@ const { emitWarning } = require('process')
 const { multipleValidOptions } = require('jest-validate')
 
 const { result, mapValues, pickBy } = require('./utils')
-const { DEFAULT_LEVEL, ALL_LEVELS } = require('./constants')
+const { DEFAULT_LEVEL, LEVELS } = require('./constants')
 
 // Retrieve event's log level
 const getLevel = function({ opts, info, info: { eventName } }) {
   const level = result(opts.level[eventName], info)
 
-  if (ALL_LEVELS.includes(level)) {
+  if (level === 'default') {
+    return DEFAULT_LEVEL[eventName]
+  }
+
+  if (LEVELS.includes(level)) {
     return level
   }
 
-  validateLevel({ level, eventName })
-
-  return DEFAULT_LEVEL[eventName]
-}
-
-const validateLevel = function({ level, eventName }) {
-  if (level === undefined) {
-    return
-  }
-
   emitWarning(
-    `Invalid option 'level.${eventName}' returning '${level}': function must return undefined or one of ${ALL_LEVELS.join(
+    `Invalid option 'level.${eventName}' returning '${level}': function must return one of ${LEVELS.join(
       ', ',
     )}`,
   )
+
+  return DEFAULT_LEVEL[eventName]
 }
 
 // Apply `opts.level.default` and default values to `opts.level`
@@ -43,7 +39,7 @@ const applyDefaultLevels = function({
   }
 
   const defaultLevels = mapValues(DEFAULT_LEVEL, () => defaultLevel)
-  return { ...DEFAULT_LEVEL, ...defaultLevels, ...levelA }
+  return { ...defaultLevels, ...levelA }
 }
 
 // Use during options validation

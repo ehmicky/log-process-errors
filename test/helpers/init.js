@@ -59,7 +59,7 @@ const getLevel = function({ level, eventName }) {
     return level
   }
 
-  const levelA = level === undefined ? { default: undefined } : level
+  const levelA = level === undefined ? { default: 'default' } : level
 
   return mapValues(levelA, levelB => onlyEvent.bind(null, levelB, eventName))
 }

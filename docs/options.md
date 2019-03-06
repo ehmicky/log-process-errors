@@ -40,36 +40,32 @@ not).
 
 Which log level to use. It should be an object whose:
 
-- keys are the event names among `"default"`,
-  [`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-  [`"warning"`](https://nodejs.org/api/process.html#process_event_warning),
-  [`"unhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-  [`"rejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-  or
-  [`"multipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves).
-- values are the log level which can be:
-  - a string among `"debug"`, `"info"`, `"warn"`, `"error"` or `"silent"`.
-  - `undefined` to use the default value.
-  - a function using [`info` as argument](#event-information) and
-    returning a string or `undefined` (as above).
+- keys are the event names
+  ([`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+  [`warning`](https://nodejs.org/api/process.html#process_event_warning),
+  [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+  [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
+  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+  or `default`)
+- values are the log level (`"debug"`, `"info"`, `"warn"`, `"error"`,
+  `"silent"` or `"default"`). It can also be a function using
+  [`info` as argument](#event-information) and returning one of those log levels.
 
 Default: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
 
 ```js
+// Use `debug` log level for `multipleResolves` instead of `info`
 logProcessErrors({
-  // Use `debug` log level for `multipleResolves` instead of `info`
   level: { multipleResolves: 'debug' },
 })
 ```
 
 ```js
+// Skip some logs based on a condition
 logProcessErrors({
-  // Skip some logs based on a condition
   level: {
     default() {
-      if (shouldSkip()) {
-        return 'silent'
-      }
+      return shouldSkip() ? 'silent' : 'default'
     },
   },
 })

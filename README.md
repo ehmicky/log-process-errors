@@ -95,13 +95,13 @@ Full example:
 
 ```js
 logProcessErrors({
-  log(message, level, info) {
+  log(message, level, event) {
     winstonLogger[level](message)
   },
 
   level: { multipleResolves: 'debug' },
 
-  message(info) {},
+  message(event) {},
 
   colors: false,
 

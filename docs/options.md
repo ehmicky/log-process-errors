@@ -19,15 +19,14 @@ with [Winston](https://github.com/winstonjs/winston) instead:
 
 ```js
 logProcessErrors({
-  log(message, level, info) {
+  log(message, level, event) {
     winstonLogger[level](message)
   },
 })
 ```
 
 The function's arguments are [`message`](#optionsmessage-function) (string),
-[`level`](#optionslevel-object) (string) and [`info`](#event-information)
-(object).
+[`level`](#optionslevel-object) (string) and [`event`](#event) (object).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
@@ -49,7 +48,7 @@ Which log level to use. It should be an object whose:
   or `default`)
 - values are the log level (`"debug"`, `"info"`, `"warn"`, `"error"`,
   `"silent"` or `"default"`). It can also be a function using
-  [`info` as argument](#event-information) and returning one of those log levels.
+  [`event` as argument](#event) and returning one of those log levels.
 
 Default: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
 
@@ -74,7 +73,7 @@ logProcessErrors({
 ## options.message `{function}`
 
 Override the default message generation. It should be a function using
-[`info` as argument](#event-information) and returning a string.
+[`event` as argument](#event) and returning a string.
 
 By default a nice-looking and descriptive log message is generated.
 
@@ -97,13 +96,13 @@ Which events should trigger `process.exit(1)`:
 
 `process.exit(1)` will only be fired after successfully logging the event.
 
-# Event information
+# Event
 
 The [`log`](#optionslog-string), [`level`](#optionslevel-object) and
-[`message`](#optionsmessage-function) options all receive as argument an `info`
+[`message`](#optionsmessage-function) options all receive as argument an `event`
 object.
 
-## info.eventName
+## event.eventName
 
 Can be
 [`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
@@ -113,7 +112,7 @@ Can be
 or
 [`"warning"`](https://nodejs.org/api/process.html#process_event_warning).
 
-## info.value
+## event.value
 
 Value:
 
@@ -129,24 +128,24 @@ Value:
 
 It is usually an `Error` instance but could be anything.
 
-## info.rejected
+## event.rejected
 
 Boolean indicating whether the promise was initially resolved or rejected. Only
 defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
-## info.nextValue, info.nextRejected
+## event.nextValue, event.nextRejected
 
-Like [`value`](#infovalue) and [`rejected`](#inforejected) but for
+Like [`value`](#eventvalue) and [`rejected`](#eventrejected) but for
 the second time the promise was resolved/rejected. Only defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
-## info.level
+## event.level
 
 [Log level](#optionslevel-object). Only defined with the
 [`message` option](#optionsmessage-function).
 
-## info.colors
+## event.colors
 
 [Chalk instance](https://github.com/chalk/chalk#api) to colorize strings.
 Only defined with the [`message` option](#optionsmessage-function). Disabled if

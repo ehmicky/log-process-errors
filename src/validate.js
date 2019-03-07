@@ -12,13 +12,13 @@ const validateLevels = function({ level }) {
   Object.entries(level).forEach(validateLevel)
 }
 
-const validateLevel = function([eventName, level]) {
+const validateLevel = function([name, level]) {
   if (isValidLevel({ level })) {
     return
   }
 
   throw new Error(
-    `Invalid option 'level.${eventName}' '${level}': must be a function or one of ${LEVELS.join(
+    `Invalid option 'level.${name}' '${level}': must be a function or one of ${LEVELS.join(
       ', ',
     )}`,
   )
@@ -35,7 +35,7 @@ const validateExitOn = function({ exitOn }) {
     return
   }
 
-  const invalidEvents = exitOn.filter(eventName => !EVENTS.includes(eventName))
+  const invalidEvents = exitOn.filter(name => !EVENTS.includes(name))
 
   if (invalidEvents.length === 0) {
     return

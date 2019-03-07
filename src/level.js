@@ -8,11 +8,11 @@ const { result, mapValues, pickBy } = require('./utils')
 const { DEFAULT_LEVEL, LEVELS } = require('./constants')
 
 // Retrieve event's log level
-const getLevel = function({ opts, event, event: { eventName } }) {
-  const level = result(opts.level[eventName], event)
+const getLevel = function({ opts, event, event: { name } }) {
+  const level = result(opts.level[name], event)
 
   if (level === 'default') {
-    return DEFAULT_LEVEL[eventName]
+    return DEFAULT_LEVEL[name]
   }
 
   if (LEVELS.includes(level)) {
@@ -20,12 +20,12 @@ const getLevel = function({ opts, event, event: { eventName } }) {
   }
 
   emitWarning(
-    `Invalid option 'level.${eventName}' returning '${level}': function must return one of ${LEVELS.join(
+    `Invalid option 'level.${name}' returning '${level}': function must return one of ${LEVELS.join(
       ', ',
     )}`,
   )
 
-  return DEFAULT_LEVEL[eventName]
+  return DEFAULT_LEVEL[name]
 }
 
 // Apply `opts.level.default` and default values to `opts.level`

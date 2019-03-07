@@ -15,13 +15,13 @@ const {
   emitEvents,
 } = require('./helpers')
 
-repeatEvents((prefix, { eventName, emitEvent }) => {
+repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should limit events`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      level: { default: onlyNotLimitedWarning.bind(null, eventName) },
+      level: { default: onlyNotLimitedWarning.bind(null, name) },
     })
 
     await emitEvents(MAX_EVENTS, emitEvent)
@@ -88,12 +88,12 @@ const onlyLimited = function(event) {
   }
 }
 
-const onlyNotLimitedWarning = function(eventName, event) {
-  if (isLimitedWarning(event) || event.eventName !== eventName) {
+const onlyNotLimitedWarning = function(name, event) {
+  if (isLimitedWarning(event) || event.name !== name) {
     return 'silent'
   }
 }
 
-const isLimitedWarning = function({ eventName, value: { name } = {} }) {
-  return eventName === 'warning' && name === 'LogProcessErrors'
+const isLimitedWarning = function({ name, value = {} }) {
+  return name === 'warning' && value.name === 'LogProcessErrors'
 }

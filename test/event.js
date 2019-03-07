@@ -53,31 +53,28 @@ const EVENT_OBJECTS = [
   },
 ]
 
-repeat(
-  EVENT_OBJECTS,
-  (prefix, { name: eventName, arg, getEvent, expected }) => {
-    test(`${prefix} should set event properties`, async t => {
-      // When testing `multipleResolves` on Node<10
-      if (EVENTS[eventName] === undefined) {
-        return t.pass()
-      }
+repeat(EVENT_OBJECTS, (prefix, { name, arg, getEvent, expected }) => {
+  test(`${prefix} should set event properties`, async t => {
+    // When testing `multipleResolves` on Node<10
+    if (EVENTS[name] === undefined) {
+      return t.pass()
+    }
 
-      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+    const { stopLogging, log } = startLogging({ log: 'spy', name })
 
-      await EVENTS[eventName](arg)
+    await EVENTS[name](arg)
 
-      t.true(log.called)
+    t.true(log.called)
 
-      const {
-        lastCall: {
-          args: [, , event],
-        },
-      } = log
-      const eventA = getEvent === undefined ? event : getEvent(event)
+    const {
+      lastCall: {
+        args: [, , event],
+      },
+    } = log
+    const eventA = getEvent === undefined ? event : getEvent(event)
 
-      t.deepEqual(eventA, { ...expected, eventName })
+    t.deepEqual(eventA, { ...expected, name })
 
-      stopLogging()
-    })
-  },
-)
+    stopLogging()
+  })
+})

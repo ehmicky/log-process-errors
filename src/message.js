@@ -14,7 +14,7 @@ const getMessage = function({ opts, event, level, colors }) {
 
 // Default `opts.message()`
 const defaultMessage = function({
-  eventName,
+  name,
   rejected,
   value,
   nextRejected,
@@ -22,14 +22,9 @@ const defaultMessage = function({
   level,
   colors,
 }) {
-  const message = MESSAGES[eventName]({
-    rejected,
-    value,
-    nextRejected,
-    nextValue,
-  })
+  const message = MESSAGES[name]({ rejected, value, nextRejected, nextValue })
 
-  const messageA = prettify({ message, eventName, level, colors })
+  const messageA = prettify({ message, name, level, colors })
   return messageA
 }
 

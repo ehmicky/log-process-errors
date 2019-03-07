@@ -5,16 +5,16 @@ const execa = require('execa')
 
 const { repeatEvents, normalizeMessage } = require('./helpers')
 
-repeatEvents((prefix, { eventName }) => {
+repeatEvents((prefix, { name }) => {
   test(`${prefix} should work using the -r flag`, async t => {
-    const returnValue = await callLoader({ eventName, loader: 'simple' })
+    const returnValue = await callLoader({ name, loader: 'simple' })
 
     t.snapshot(returnValue)
   })
 
   test(`${prefix} should work with --no-warnings`, async t => {
     const returnValue = await callLoader({
-      eventName,
+      name,
       loader: 'simple',
       flags: '--no-warnings',
     })
@@ -24,7 +24,7 @@ repeatEvents((prefix, { eventName }) => {
 
   test(`${prefix} should work using both the -r flag and init()`, async t => {
     const returnValue = await callLoader({
-      eventName,
+      name,
       loader: 'noop',
       flags: '--no-warnings',
     })
@@ -33,9 +33,9 @@ repeatEvents((prefix, { eventName }) => {
   })
 })
 
-const callLoader = async function({ eventName, loader, flags = '' }) {
+const callLoader = async function({ name, loader, flags = '' }) {
   const { stdout, stderr, code } = await execa.shell(
-    `node ${flags} ${LOADERS[loader]} ${eventName}`,
+    `node ${flags} ${LOADERS[loader]} ${name}`,
     { reject: false },
   )
 

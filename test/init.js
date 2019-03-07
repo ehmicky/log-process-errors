@@ -14,9 +14,9 @@ const {
   normalizeMessage,
 } = require('./helpers')
 
-const addProcessHandler = function(eventName) {
+const addProcessHandler = function(name) {
   const processHandler = sinon.spy()
-  process.on(eventName, processHandler)
+  process.on(name, processHandler)
   return processHandler
 }
 
@@ -24,7 +24,7 @@ const normalizeArgs = function([arg]) {
   return normalizeMessage(arg, { colors: false })
 }
 
-repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
+repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
   test(`${prefix} should work with no options`, async t => {
     stubStackTrace()
     // eslint-disable-next-line no-restricted-globals
@@ -43,11 +43,11 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   })
 
   test(`${prefix} should keep existing process event handlers`, async t => {
-    if (eventName === 'warning') {
+    if (name === 'warning') {
       return t.pass()
     }
 
-    const processHandler = addProcessHandler(eventName)
+    const processHandler = addProcessHandler(name)
 
     const { stopLogging } = startLogging()
 
@@ -61,11 +61,11 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     // TODO: use `process.off()` instead of `process.removeListener()`
     // after dropping Node.js <10 support
-    process.removeListener(eventName, processHandler)
+    process.removeListener(name, processHandler)
   })
 
   test(`${prefix} should allow disabling logging`, async t => {
-    const processHandler = addProcessHandler(eventName)
+    const processHandler = addProcessHandler(name)
 
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -82,6 +82,6 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     // TODO: use `process.off()` instead of `process.removeListener()`
     // after dropping Node.js <10 support
-    process.removeListener(eventName, processHandler)
+    process.removeListener(name, processHandler)
   })
 })

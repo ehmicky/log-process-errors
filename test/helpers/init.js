@@ -12,15 +12,9 @@ const startLoggingNoOpts = function() {
   return { stopLogging }
 }
 
-const startLogging = function({
-  eventName,
-  log,
-  level,
-  message,
-  ...opts
-} = {}) {
+const startLogging = function({ name, log, level, message, ...opts } = {}) {
   const logA = getLog({ log })
-  const levelA = getLevel({ level, eventName })
+  const levelA = getLevel({ level, name })
   const messageA = getMessage({ message })
 
   const stopLogging = logProcessErrors({
@@ -53,19 +47,19 @@ const getLog = function({ log }) {
 // eslint-disable-next-line no-empty-function
 const noop = function() {}
 
-// If `eventName` is specified, only print those events
-const getLevel = function({ level, eventName }) {
-  if (eventName === undefined) {
+// If `event.name` is specified, only print those events
+const getLevel = function({ level, name }) {
+  if (name === undefined) {
     return level
   }
 
   const levelA = level === undefined ? { default: 'default' } : level
 
-  return mapValues(levelA, levelB => onlyEvent.bind(null, levelB, eventName))
+  return mapValues(levelA, levelB => onlyEvent.bind(null, levelB, name))
 }
 
-const onlyEvent = function(level, eventName, event) {
-  if (event.eventName !== eventName) {
+const onlyEvent = function(level, name, event) {
+  if (event.name !== name) {
     return 'silent'
   }
 

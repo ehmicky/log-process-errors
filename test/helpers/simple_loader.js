@@ -10,5 +10,5 @@ const { EVENTS } = require('./emit')
 
 stubStackTrace()
 
-const [, , eventName] = argv
-EVENTS[eventName]()
+const [, , name] = argv
+EVENTS[name]()

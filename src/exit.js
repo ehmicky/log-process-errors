@@ -12,8 +12,8 @@ const { EXIT_STATUS, EXIT_TIMEOUT } = require('./constants')
 //    See https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections
 // By default `unhandledRejection` is opt-in so that using this library does not
 // decrease stability (if the application does not restart on exit).
-const exitProcess = function({ eventName, opts: { exitOn } }) {
-  if (!exitOn.includes(eventName)) {
+const exitProcess = function({ name, opts: { exitOn } }) {
+  if (!exitOn.includes(name)) {
     return
   }
 

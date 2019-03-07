@@ -12,8 +12,8 @@ const emitEvent = flags =>
   )
 
 const getEventName = function() {
-  const [, , , eventName = DEFAULT_EVENT] = argv
-  return eventName.replace(/^--?/u, '')
+  const [, , , name = DEFAULT_EVENT] = argv
+  return name.replace(/^--?/u, '')
 }
 
 const DEFAULT_EVENT = '-a'

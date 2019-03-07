@@ -4,20 +4,18 @@ const { circleFilled, info, warning, cross } = require('figures')
 
 const prettify = function({
   message,
-  eventName,
+  name,
   level,
   colors,
   colors: { bold, dim, inverse, italic },
 }) {
   const [explanation, firstLine, ...lines] = message.split('\n')
 
-  // Add color, sign and `eventName` to first message line, and concatenate
+  // Add color, sign and `event.name` to first message line, and concatenate
   // `firstLine`
   const { COLOR, SIGN } = LEVELS[level]
   const header = colors[COLOR](
-    `${inverse(
-      bold(` ${SIGN}  ${eventName}${italic(explanation)} `),
-    )} ${firstLine}`,
+    `${inverse(bold(` ${SIGN}  ${name}${italic(explanation)} `))} ${firstLine}`,
   )
 
   // Add gray color and indentation to other lines.

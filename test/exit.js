@@ -33,12 +33,12 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-repeatEvents((prefix, { eventName, emitEvent }) => {
+repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should call process.exit(1) if inside opts.exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
 
-    const exitOn = [eventName]
-    const { stopLogging } = startLogging({ exitOn, eventName })
+    const exitOn = [name]
+    const { stopLogging } = startLogging({ exitOn, name })
 
     await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
@@ -54,7 +54,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     const { clock, processExit } = stubProcessExit()
 
     const exitOn = []
-    const { stopLogging } = startLogging({ exitOn, eventName })
+    const { stopLogging } = startLogging({ exitOn, name })
 
     await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
@@ -68,7 +68,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   test(`${prefix} should delay process.exit(1)`, async t => {
     const { clock, processExit } = stubProcessExit()
 
-    const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
+    const { stopLogging } = startLogging({ exitOn: [name], name })
 
     await emitEventAndWait(EXIT_TIMEOUT - 1, { clock, emitEvent })
 
@@ -88,8 +88,8 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     const { promise, resolve } = getPromise()
 
     const { stopLogging } = startLogging({
-      exitOn: [eventName],
-      eventName,
+      exitOn: [name],
+      name,
       // We use `async` keyword to make sure they are validated correctly
       // eslint-disable-next-line no-return-await
       log: async () => await promise,

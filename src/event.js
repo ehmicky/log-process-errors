@@ -4,34 +4,34 @@ const { pickBy } = require('./utils')
 
 // Retrieve `event` object representing the current event information
 const getEvent = async function({
-  eventName,
+  name,
   promise,
   value,
   nextRejected,
   nextValue,
 }) {
   const { rejected, value: valueA } = await parsePromise({
-    eventName,
+    name,
     promise,
     value,
   })
 
-  const event = { eventName, rejected, value: valueA, nextRejected, nextValue }
+  const event = { name, rejected, value: valueA, nextRejected, nextValue }
 
   const eventA = pickBy(event, eventVal => eventVal !== undefined)
   return eventA
 }
 
 // Retrieve promise's resolved/rejected state and value.
-const parsePromise = async function({ eventName, promise, value }) {
-  if (NO_PROMISE_EVENTS.includes(eventName)) {
+const parsePromise = async function({ name, promise, value }) {
+  if (NO_PROMISE_EVENTS.includes(name)) {
     return { value }
   }
 
   const { rejected, value: valueA } = await getPromiseValue({ promise })
 
   // `rejected` is always `true` with `rejectionHandled`, so we skip it
-  if (eventName === 'rejectionHandled') {
+  if (name === 'rejectionHandled') {
     return { value: valueA }
   }
 

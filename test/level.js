@@ -13,7 +13,7 @@ const {
   normalizeMessage,
 } = require('./helpers')
 
-repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
+repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
     { level: { default: undefined }, exitOn: [] },
@@ -26,7 +26,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     )} should use default opts.level()`, async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
-        eventName,
+        name,
         ...options,
       })
 
@@ -55,7 +55,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: 'invalid' },
-      eventName,
+      name,
     })
 
     await emitEvent()
@@ -71,12 +71,12 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
 
     const { stopLogging } = startLogging({
       level: { default: 'invalid' },
-      eventName,
+      name,
     })
 
     const { stopLogging: stopWarningLog, log } = startLogging({
       log: 'spy',
-      eventName: 'warning',
+      name: 'warning',
     })
 
     await emitEvent()
@@ -93,8 +93,8 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   test(`${prefix} should allow changing log level for a specific event`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      level: { default: 'error', [eventName]: 'silent' },
-      eventName,
+      level: { default: 'error', [name]: 'silent' },
+      name,
     })
 
     await emitEvent()
@@ -105,12 +105,12 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   })
 })
 
-repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+repeatEventsLevels((prefix, { name, emitEvent }, level) => {
   test(`${prefix} should allow changing log level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: level },
-      eventName,
+      name,
     })
 
     await emitEvent()
@@ -128,7 +128,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: defaultLevel },
-      eventName,
+      name,
     })
 
     await emitEvent()

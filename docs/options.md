@@ -102,7 +102,7 @@ The [`log`](#optionslog-string), [`level`](#optionslevel-object) and
 [`message`](#optionsmessage-function) options all receive as argument an `event`
 object.
 
-## event.eventName
+## event.name
 
 Can be
 [`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),

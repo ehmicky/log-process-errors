@@ -11,7 +11,7 @@ const { exitProcess } = require('./exit')
 // Generic event handler for all events.
 const handleEvent = async function({
   opts,
-  eventName,
+  name,
   previousEvents,
   mEmitLimitedWarning,
   promise,
@@ -19,12 +19,12 @@ const handleEvent = async function({
   nextRejected,
   nextValue,
 }) {
-  if (isLimited({ previousEvents, mEmitLimitedWarning, eventName, value })) {
+  if (isLimited({ previousEvents, mEmitLimitedWarning, name, value })) {
     return
   }
 
   const event = await getEvent({
-    eventName,
+    name,
     promise,
     value,
     nextRejected,
@@ -37,7 +37,7 @@ const handleEvent = async function({
 
   await logEvent({ opts, event })
 
-  await exitProcess({ eventName, opts })
+  await exitProcess({ name, opts })
 }
 
 const logEvent = async function({ opts, event }) {

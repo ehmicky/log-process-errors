@@ -4,7 +4,7 @@ const { emitWarning } = require('process')
 
 const { MAX_EVENTS } = require('./constants')
 
-// We only allow 100 events (per `eventName`) for the global process because:
+// We only allow 100 events (per `event.name`) for the global process because:
 //  - process errors are exceptional and if more than 100 happen, this is
 //    probably due to some infinite recursion.
 //  - the `repeated` logic should prevent reaching the threshold
@@ -18,34 +18,36 @@ const { MAX_EVENTS } = require('./constants')
 const isLimited = function({
   previousEvents,
   mEmitLimitedWarning,
-  eventName,
+  name,
   value,
 }) {
-  if (isLimitedWarning({ eventName, value })) {
+  if (isLimitedWarning({ name, value })) {
     return false
   }
 
   const isLimitedEvent = [...previousEvents].length >= MAX_EVENTS
 
   if (isLimitedEvent) {
-    mEmitLimitedWarning(eventName)
+    mEmitLimitedWarning(name)
   }
 
   return isLimitedEvent
 }
 
 // Notify that limit has been reached with a `warning` event
-const emitLimitedWarning = function(eventName) {
-  emitWarning(ERROR_MESSAGE(eventName), ERROR_NAME, ERROR_CODE)
+const emitLimitedWarning = function(name) {
+  emitWarning(ERROR_MESSAGE(name), ERROR_NAME, ERROR_CODE)
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function({ eventName, value: { name, code } = {} }) {
-  return eventName === 'warning' && name === ERROR_NAME && code === ERROR_CODE
+const isLimitedWarning = function({ name, value = {} }) {
+  return (
+    name === 'warning' && value.name === ERROR_NAME && value.code === ERROR_CODE
+  )
 }
 
-const ERROR_MESSAGE = eventName =>
-  `Cannot log more than ${MAX_EVENTS} '${eventName}' until process is restarted`
+const ERROR_MESSAGE = name =>
+  `Cannot log more than ${MAX_EVENTS} '${name}' until process is restarted`
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
 

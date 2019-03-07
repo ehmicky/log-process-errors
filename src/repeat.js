@@ -38,7 +38,7 @@ const getFingerprint = function({ event }) {
   return fingerprintA
 }
 
-// We do not serialize `event.eventName` since this is already `eventName-wise`
+// We do not serialize `event.name` since this is already `event.name-wise`
 // Key order matters since fingerprint might be truncated: we serialize short
 // and non-dynamic values first.
 const EVENT_PROPS = ['nextRejected', 'rejected', 'nextValue', 'value']

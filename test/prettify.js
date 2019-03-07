@@ -10,7 +10,7 @@ const {
   normalizeMessage,
 } = require('./helpers')
 
-repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+repeatEventsLevels((prefix, { name, emitEvent }, level) => {
   test(`${prefix} should fire opts.message() with a default prettifier`, async t => {
     stubStackTrace()
 
@@ -18,7 +18,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
       log: 'spy',
       level: { default: level },
       colors: false,
-      eventName,
+      name,
     })
 
     await emitEvent()

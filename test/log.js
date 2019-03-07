@@ -5,7 +5,7 @@ const test = require('ava')
 
 const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
 
-repeatEvents((prefix, { eventName, emitEvent }) => {
+repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should fire opts.log()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -19,7 +19,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 
   test(`${prefix} should fire opts.log() once`, async t => {
-    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+    const { stopLogging, log } = startLogging({ log: 'spy', name })
 
     t.true(log.notCalled)
 
@@ -34,7 +34,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       message: 'message',
-      eventName,
+      name,
     })
 
     await emitEvent()
@@ -46,7 +46,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 
   test(`${prefix} should fire opts.log() with event`, async t => {
-    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+    const { stopLogging, log } = startLogging({ log: 'spy', name })
 
     await emitEvent()
 
@@ -57,7 +57,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 })
 
-repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+repeatEventsLevels((prefix, { name, emitEvent }, level) => {
   test(`${prefix} should log on the console by default`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, level)
@@ -66,7 +66,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
       log: 'default',
       message: 'message',
       level: { default: level },
-      eventName,
+      name,
     })
 
     await emitEvent()

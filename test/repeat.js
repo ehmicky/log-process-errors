@@ -10,11 +10,11 @@ const {
   emitEvents,
 } = require('./helpers')
 
-repeatEvents((prefix, { eventName, emitEvent }) => {
+repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should not repeat identical events`, async t => {
     stubStackTrace()
 
-    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+    const { stopLogging, log } = startLogging({ log: 'spy', name })
 
     await emitEvents(2, emitEvent)
 

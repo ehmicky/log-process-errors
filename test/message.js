@@ -5,12 +5,12 @@ const chalk = require('chalk')
 
 const { startLogging, repeatEvents, repeatEventsLevels } = require('./helpers')
 
-repeatEvents((prefix, { eventName, emitEvent }) => {
+repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should allow customizing log message`, async t => {
     const { stopLogging, log, message } = startLogging({
       log: 'spy',
       message: 'message',
-      eventName,
+      name,
     })
 
     await emitEvent()
@@ -26,7 +26,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       message: () => true,
-      eventName,
+      name,
     })
 
     await emitEvent()
@@ -38,12 +38,12 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 })
 
-repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
+repeatEventsLevels((prefix, { name, emitEvent }, level) => {
   test(`${prefix} should fire opts.message() with event`, async t => {
     const { stopLogging, message } = startLogging({
       message: 'message',
       level: { default: level },
-      eventName,
+      name,
     })
 
     await emitEvent()

@@ -80,7 +80,7 @@ By default a nice-looking and descriptive log message is generated.
 ## options.colors `{boolean}`
 
 Colorize the default [`options.message`](#optionsmessage-function). Default:
-`true`.
+`true` if the output is a terminal.
 
 ## options.exitOn `{string[]}`
 

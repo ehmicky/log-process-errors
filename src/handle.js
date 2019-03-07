@@ -3,7 +3,6 @@
 const { getEvent } = require('./event')
 const { isLimited } = require('./limit')
 const { isRepeated } = require('./repeat')
-const { getColors } = require('./colors')
 const { getLevel } = require('./level')
 const { getMessage } = require('./message')
 const { exitProcess } = require('./exit')
@@ -47,8 +46,7 @@ const logEvent = async function({ opts, event }) {
     return
   }
 
-  const colors = getColors({ opts })
-  const message = getMessage({ opts, event, level, colors })
+  const message = getMessage({ opts, event, level })
 
   // We need to `await` it in case `opts.exitOn` exits the process.
   // Without `await` Node.js would still wait until most async tasks (including

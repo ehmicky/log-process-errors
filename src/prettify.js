@@ -2,19 +2,20 @@
 
 const { circleFilled, info, warning, cross } = require('figures')
 
-const prettify = function({
-  message,
-  name,
-  level,
-  colors,
-  colors: { bold, dim, inverse, italic },
-}) {
+const { getChalk } = require('./colors')
+
+const prettify = function({ message, name, level, opts: { colors } }) {
   const [explanation, firstLine, ...lines] = message.split('\n')
+
+  // Can disable colors with `opts.colors`.
+  // chalk will automatically disable colors if output does not support it.
+  const chalk = getChalk(colors)
+  const { bold, dim, inverse, italic } = chalk
 
   // Add color, sign and `event.name` to first message line, and concatenate
   // `firstLine`
   const { COLOR, SIGN } = LEVELS[level]
-  const header = colors[COLOR](
+  const header = chalk[COLOR](
     `${inverse(bold(` ${SIGN}  ${name}${italic(explanation)} `))} ${firstLine}`,
   )
 

@@ -74,7 +74,7 @@ logProcessErrors({
 
 Override the default message generation. It should be a function returning a
 string and whose arguments are [`level`](#optionslevel-object),
-[`event`](#event) and `chalk`.
+[`event`](#event) and [`options`](#options).
 
 By default a nice-looking and descriptive log message is generated.
 

@@ -80,7 +80,8 @@ logProcessErrors(options)
 - [`level` `{object}`](docs/API.md#level): which log level to use. Default:
   `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
 - [`message` `{function}`](docs/API.md#message): customize messages.
-- [`colors` `{boolean}`](docs/API.md#colors): colorize messages. Default: `true`.
+- [`colors` `{boolean}`](docs/API.md#colors): colorize messages. Default: `true`
+  if the output is a terminal.
 - [`exitOn` `{string[]}`](docs/API.md#exiton): which events should trigger
   `process.exit(1)`. Default: `['uncaughtException']`.
 

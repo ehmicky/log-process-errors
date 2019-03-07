@@ -95,8 +95,8 @@ Override the default message generation. Arguments are [`level`](#level),
 _Type_: `boolean`<br>
 _Default_: `true` if the output is a terminal.
 
-Colorize the [`message`](#message). Does not do anything if the
-[`message`](#message) option is defined.
+Colorize messages. Does not do anything if the [`message`](#message) option is
+defined.
 
 #### exitOn
 

@@ -18,7 +18,7 @@ on the console which is very useful. Unfortunately those errors:
   and
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves) making it hard to debug.
 - are inconvenient to
-  [log to an external service](docs/options.md#optionslog-string).
+  [log to an external service](docs/API.md#optionslog-string).
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
@@ -76,18 +76,18 @@ logProcessErrors(options)
 
 `options` is an optional object with the following properties:
 
-- [`log` `{function}`](docs/options.md#optionslog-string): customize how events
+- [`log` `{function}`](docs/API.md#optionslog-string): customize how events
   are logged. Default: use `console.warn()`, `console.error()`, etc.
-- [`level` `{object}`](docs/options.md#optionslevel-object): which log level to
+- [`level` `{object}`](docs/API.md#optionslevel-object): which log level to
   use. Default: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
-- [`message` `{function}`](docs/options.md#optionsmessage-function): customize
+- [`message` `{function}`](docs/API.md#optionsmessage-function): customize
   messages.
-- [`colors` `{boolean}`](docs/options.md#optionscolors-boolean): colorize
+- [`colors` `{boolean}`](docs/API.md#optionscolors-boolean): colorize
   messages. Default: `true`.
-- [`exitOn` `{string[]}`](docs/options.md#optionsexiton-string): which events
+- [`exitOn` `{string[]}`](docs/API.md#optionsexiton-string): which events
   should trigger `process.exit(1)`. Default: `['uncaughtException']`.
 
-Please see the [options full documentation](docs/options.md).
+Please see the [options full documentation](docs/API.md).
 
 Full example:
 

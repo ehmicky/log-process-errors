@@ -1,6 +1,6 @@
 'use strict'
 
-const { getInfo } = require('./info')
+const { getInfo } = require('./event')
 const { isLimited } = require('./limit')
 const { isRepeated } = require('./repeat')
 const { getColors } = require('./colors')

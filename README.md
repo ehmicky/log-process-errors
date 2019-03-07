@@ -17,8 +17,7 @@ on the console which is very useful. Unfortunately those errors:
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   and
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves) making it hard to debug.
-- are inconvenient to
-  [log to an external service](docs/API.md#optionslog-string).
+- are inconvenient to [log to an external service](docs/API.md#log).
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
@@ -76,16 +75,14 @@ logProcessErrors(options)
 
 `options` is an optional object with the following properties:
 
-- [`log` `{function}`](docs/API.md#optionslog-string): customize how events
-  are logged. Default: use `console.warn()`, `console.error()`, etc.
-- [`level` `{object}`](docs/API.md#optionslevel-object): which log level to
-  use. Default: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
-- [`message` `{function}`](docs/API.md#optionsmessage-function): customize
-  messages.
-- [`colors` `{boolean}`](docs/API.md#optionscolors-boolean): colorize
-  messages. Default: `true`.
-- [`exitOn` `{string[]}`](docs/API.md#optionsexiton-string): which events
-  should trigger `process.exit(1)`. Default: `['uncaughtException']`.
+- [`log` `{function}`](docs/API.md#log): customize how events are logged.
+  Default: use `console.warn()`, `console.error()`, etc.
+- [`level` `{object}`](docs/API.md#level): which log level to use. Default:
+  `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
+- [`message` `{function}`](docs/API.md#message): customize messages.
+- [`colors` `{boolean}`](docs/API.md#colors): colorize messages. Default: `true`.
+- [`exitOn` `{string[]}`](docs/API.md#exiton): which events should trigger
+  `process.exit(1)`. Default: `['uncaughtException']`.
 
 Please see the [options full documentation](docs/API.md).
 

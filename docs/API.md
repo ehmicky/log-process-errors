@@ -35,8 +35,8 @@ logProcessErrors({
 })
 ```
 
-The function's arguments are [`message`](#optionsmessage-function) (string),
-[`level`](#optionslevel-object) (string) and [`event`](#event) (object).
+The function's arguments are [`message`](#message) (string), [`level`](#level)
+(string) and [`event`](#event) (object).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
@@ -87,15 +87,15 @@ logProcessErrors({
 _Type_: `function(level, event, options) => string`<br>
 _Default_: generate a nice-looking and descriptive log message.
 
-Override the default message generation. Arguments are
-[`level`](#optionslevel-object), [`event`](#event) and [`options`](#options).
+Override the default message generation. Arguments are [`level`](#level),
+[`event`](#event) and [`options`](#options).
 
 #### colors
 
 _Type_: `boolean`<br>
 _Default_: `true` if the output is a terminal.
 
-Colorize the default [`options.message`](#optionsmessage-function).
+Colorize the default [`options.message`](#message).
 
 #### exitOn
 
@@ -117,9 +117,8 @@ Which events should trigger `process.exit(1)`:
 
 _Type_: `object`
 
-The [`log`](#optionslog-string), [`level`](#optionslevel-object) and
-[`message`](#optionsmessage-function) options all receive as argument an `event`
-object.
+The [`log`](#log), [`level`](#level) and [`message`](#message) options all
+receive as argument an `event` object.
 
 #### event.name
 

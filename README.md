@@ -4,14 +4,13 @@
 
 Show some ❤️ to process errors in Node.js.
 
-By default Node.js prints
-[`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`warning`](https://nodejs.org/api/process.html#process_event_warning) and
-mishandled promises
-([`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+Node.js prints process errors
+([`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`warning`](https://nodejs.org/api/process.html#process_event_warning),
+[`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves))
-on the console which is very useful. Unfortunately those process errors:
+on the console which is very useful. Unfortunately those errors:
 
 - show neither stack traces nor promise values for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning),
@@ -77,14 +76,14 @@ logProcessErrors(options)
 
 `options` is an optional object with the following properties:
 
-- [`log` `{function}`](docs/options.md#optionslog-string): override how events
+- [`log` `{function}`](docs/options.md#optionslog-string): customize how events
   are logged. Default: use `console.warn()`, `console.error()`, etc.
 - [`level` `{object}`](docs/options.md#optionslevel-object): which log level to
   use. Default: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
-- [`message` `{function}`](docs/options.md#optionsmessage-function): override
-  the default message generation.
-- [`colors` `{boolean}`](docs/options.md#optionscolors-boolean): colorize the
-  default message. Default: `true`.
+- [`message` `{function}`](docs/options.md#optionsmessage-function): customize
+  messages.
+- [`colors` `{boolean}`](docs/options.md#optionscolors-boolean): colorize
+  messages. Default: `true`.
 - [`exitOn` `{string[]}`](docs/options.md#optionsexiton-string): which events
   should trigger `process.exit(1)`. Default: `['uncaughtException']`.
 

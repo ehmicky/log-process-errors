@@ -9,7 +9,7 @@ const logProcessErrors = require('log-process-errors')
 logProcessErrors(options)
 ```
 
-## options.log `{string}`
+## options.log `{function}`
 
 By default events will be logged to the console using `console.error()`,
 `console.warn()`, etc.
@@ -103,7 +103,7 @@ The [`log`](#optionslog-string), [`level`](#optionslevel-object) and
 [`message`](#optionsmessage-function) options all receive as argument an `info`
 object.
 
-## `info.eventName`
+## info.eventName
 
 Can be
 [`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
@@ -113,7 +113,7 @@ Can be
 or
 [`"warning"`](https://nodejs.org/api/process.html#process_event_warning).
 
-## `info.value`
+## info.value
 
 Value:
 
@@ -129,24 +129,24 @@ Value:
 
 It is usually an `Error` instance but could be anything.
 
-## `info.rejected`
+## info.rejected
 
 Boolean indicating whether the promise was initially resolved or rejected. Only
 defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
-## `info.nextValue`, `info.nextRejected`
+## info.nextValue, info.nextRejected
 
 Like [`value`](#infovalue) and [`rejected`](#inforejected) but for
 the second time the promise was resolved/rejected. Only defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 
-## `info.level`
+## info.level
 
 [Log level](#optionslevel-object). Only defined with the
 [`message` option](#optionsmessage-function).
 
-## `info.colors`
+## info.colors
 
 [Chalk instance](https://github.com/chalk/chalk#api) to colorize strings.
 Only defined with the [`message` option](#optionsmessage-function). Disabled if

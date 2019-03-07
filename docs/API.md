@@ -61,7 +61,7 @@ Object keys are the event names:
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
 or `default`.
 
-Object values are the log levelL `"debug"`, `"info"`, `"warn"`, `"error"`,
+Object values are the log level: `"debug"`, `"info"`, `"warn"`, `"error"`,
 `"silent"` or `"default"`. It can also be a function using
 [`event` as argument](#event) and returning one of those log levels.
 

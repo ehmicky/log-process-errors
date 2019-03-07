@@ -47,8 +47,7 @@ not).
 
 #### level
 
-_Type_: `object`
-
+_Type_: `object`<br>
 _Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
 
 Which log level to use.
@@ -85,8 +84,7 @@ logProcessErrors({
 
 #### message
 
-_Type_: `function(level, event, options) => string`
-
+_Type_: `function(level, event, options) => string`<br>
 _Default_: generate a nice-looking and descriptive log message.
 
 Override the default message generation. Arguments are
@@ -94,16 +92,14 @@ Override the default message generation. Arguments are
 
 #### colors
 
-_Type_: `boolean`
-
+_Type_: `boolean`<br>
 _Default_: `true` if the output is a terminal.
 
 Colorize the default [`options.message`](#optionsmessage-function).
 
 #### exitOn
 
-_Type_: `string[]`
-
+_Type_: `string[]`<br>
 _Default_: `["uncaughtException"]`
 
 Which events should trigger `process.exit(1)`:

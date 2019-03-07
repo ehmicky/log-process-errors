@@ -7,10 +7,10 @@ const { getChalk } = require('./colors')
 const prettify = function({ message, name, level, opts: { colors } }) {
   const [explanation, firstLine, ...lines] = message.split('\n')
 
-  // Can disable colors with `opts.colors`.
-  // chalk will automatically disable colors if output does not support it.
-  const chalk = getChalk(colors)
-  const { bold, dim, inverse, italic } = chalk
+  const {
+    chalk,
+    chalk: { bold, dim, inverse, italic },
+  } = getChalk(colors)
 
   // Add color, sign and `event.name` to first message line, and concatenate
   // `firstLine`

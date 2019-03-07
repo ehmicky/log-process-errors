@@ -48,9 +48,7 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     await emitEvent()
 
     t.true(message.calledOnce)
-    t.is(message.firstCall.args[0], level)
-    t.is(typeof message.firstCall.args[1], 'object')
-    t.is(typeof message.firstCall.args[2], 'object')
+    t.snapshot(message.firstCall.args)
 
     stopLogging()
   })

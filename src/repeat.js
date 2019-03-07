@@ -2,15 +2,15 @@
 
 const { stableSerialize } = require('./serialize')
 
-// Events with the same `info` are only logged once because:
+// Events with the same `event` are only logged once because:
 //  - it makes logs clearer
 //  - it prevents creating too much CPU load or too many microtasks
 //  - it prevents creating too many logs, which can be expensive if logs are
 //    hosted remotely
 //  - it prevents infinite recursions if `opts.log|level|message()` triggers
 //    itself an event (while still reporting that event once)
-const isRepeated = function({ info, previousEvents }) {
-  const fingerprint = getFingerprint({ info })
+const isRepeated = function({ event, previousEvents }) {
+  const fingerprint = getFingerprint({ event })
 
   const isRepeatedEvent = previousEvents.has(fingerprint)
 
@@ -21,30 +21,32 @@ const isRepeated = function({ info, previousEvents }) {
   return isRepeatedEvent
 }
 
-// Serialize `info` into a short fingerprint
-const getFingerprint = function({ info }) {
-  const entries = INFO_PROPS.map(propName => serializeEntry({ info, propName }))
-  const infoA = Object.assign({}, ...entries)
+// Serialize `event` into a short fingerprint
+const getFingerprint = function({ event }) {
+  const entries = EVENT_PROPS.map(propName =>
+    serializeEntry({ event, propName }),
+  )
+  const eventA = Object.assign({}, ...entries)
 
-  const fingerprint = JSON.stringify(infoA)
+  const fingerprint = JSON.stringify(eventA)
 
   // We truncate fingerprints to prevent consuming too much memory in case some
-  // `info` properties are huge.
+  // `event` properties are huge.
   // This introduces higher risk of false positives (see comment below).
   // We do not hash as it would be too CPU-intensive if the value is huge.
   const fingerprintA = fingerprint.slice(0, FINGERPRINT_MAX_LENGTH)
   return fingerprintA
 }
 
-// We do not serialize `info.eventName` since this is already `eventName-wise`
+// We do not serialize `event.eventName` since this is already `eventName-wise`
 // Key order matters since fingerprint might be truncated: we serialize short
 // and non-dynamic values first.
-const INFO_PROPS = ['nextRejected', 'rejected', 'nextValue', 'value']
+const EVENT_PROPS = ['nextRejected', 'rejected', 'nextValue', 'value']
 
 const FINGERPRINT_MAX_LENGTH = 1e4
 
-const serializeEntry = function({ info, propName }) {
-  const value = info[propName]
+const serializeEntry = function({ event, propName }) {
+  const value = event[propName]
 
   if (value === undefined) {
     return

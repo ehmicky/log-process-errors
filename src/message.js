@@ -5,8 +5,8 @@ const { prettify } = require('./prettify')
 
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
-const getMessage = function({ opts, info, level, colors }) {
-  const message = opts.message({ ...info, level, colors })
+const getMessage = function({ opts, event, level, colors }) {
+  const message = opts.message({ ...event, level, colors })
   // Ensure this is a string
   const messageA = typeof message === 'string' ? message : serialize(message)
   return messageA
@@ -55,7 +55,7 @@ const rejectionHandled = function({ value }) {
 ${serialize(value)}`
 }
 
-// The default level is `info` because it does not always indicate an error:
+// The default level is `event` because it does not always indicate an error:
 // https://github.com/nodejs/node/issues/24321
 const multipleResolves = function({
   rejected,

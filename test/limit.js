@@ -82,14 +82,14 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 })
 
-const onlyLimited = function(info) {
-  if (!isLimitedWarning(info)) {
+const onlyLimited = function(event) {
+  if (!isLimitedWarning(event)) {
     return 'silent'
   }
 }
 
-const onlyNotLimitedWarning = function(eventName, info) {
-  if (isLimitedWarning(info) || info.eventName !== eventName) {
+const onlyNotLimitedWarning = function(eventName, event) {
+  if (isLimitedWarning(event) || event.eventName !== eventName) {
     return 'silent'
   }
 }

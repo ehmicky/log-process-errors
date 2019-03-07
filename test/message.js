@@ -39,7 +39,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
 })
 
 repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
-  test(`${prefix} should fire opts.message() with info`, async t => {
+  test(`${prefix} should fire opts.message() with event`, async t => {
     const { stopLogging, message } = startLogging({
       message: 'message',
       level: { default: level },

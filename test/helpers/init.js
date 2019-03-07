@@ -64,8 +64,8 @@ const getLevel = function({ level, eventName }) {
   return mapValues(levelA, levelB => onlyEvent.bind(null, levelB, eventName))
 }
 
-const onlyEvent = function(level, eventName, info) {
-  if (info.eventName !== eventName) {
+const onlyEvent = function(level, eventName, event) {
+  if (event.eventName !== eventName) {
     return 'silent'
   }
 
@@ -73,7 +73,7 @@ const onlyEvent = function(level, eventName, info) {
     return level
   }
 
-  return level(info)
+  return level(event)
 }
 
 // Get `opts.message()`

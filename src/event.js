@@ -2,8 +2,8 @@
 
 const { pickBy } = require('./utils')
 
-// Retrieve `info` object representing the current event information
-const getInfo = async function({
+// Retrieve `event` object representing the current event information
+const getEvent = async function({
   eventName,
   promise,
   value,
@@ -16,10 +16,10 @@ const getInfo = async function({
     value,
   })
 
-  const info = { eventName, rejected, value: valueA, nextRejected, nextValue }
+  const event = { eventName, rejected, value: valueA, nextRejected, nextValue }
 
-  const infoA = pickBy(info, infoVal => infoVal !== undefined)
-  return infoA
+  const eventA = pickBy(event, eventVal => eventVal !== undefined)
+  return eventA
 }
 
 // Retrieve promise's resolved/rejected state and value.
@@ -55,5 +55,5 @@ const getPromiseValue = async function({ promise }) {
 }
 
 module.exports = {
-  getInfo,
+  getEvent,
 }

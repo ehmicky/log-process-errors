@@ -4,7 +4,7 @@ const test = require('ava')
 
 const { repeat, startLogging, EVENTS } = require('./helpers')
 
-const INFOS = [
+const EVENT_OBJECTS = [
   {
     name: 'uncaughtException',
     arg: () => true,
@@ -18,8 +18,8 @@ const INFOS = [
       code: '500',
       detail: 'Detail',
     },
-    getInfo: ({ value, value: { message } = {}, ...info }) => ({
-      ...info,
+    getEvent: ({ value, value: { message } = {}, ...event }) => ({
+      ...event,
       value: { ...value, message },
     }),
     expected: {
@@ -53,28 +53,31 @@ const INFOS = [
   },
 ]
 
-repeat(INFOS, (prefix, { name: eventName, arg, getInfo, expected }) => {
-  test(`${prefix} should set info properties`, async t => {
-    // When testing `multipleResolves` on Node<10
-    if (EVENTS[eventName] === undefined) {
-      return t.pass()
-    }
+repeat(
+  EVENT_OBJECTS,
+  (prefix, { name: eventName, arg, getEvent, expected }) => {
+    test(`${prefix} should set event properties`, async t => {
+      // When testing `multipleResolves` on Node<10
+      if (EVENTS[eventName] === undefined) {
+        return t.pass()
+      }
 
-    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+      const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
-    await EVENTS[eventName](arg)
+      await EVENTS[eventName](arg)
 
-    t.true(log.called)
+      t.true(log.called)
 
-    const {
-      lastCall: {
-        args: [, , info],
-      },
-    } = log
-    const infoA = getInfo === undefined ? info : getInfo(info)
+      const {
+        lastCall: {
+          args: [, , event],
+        },
+      } = log
+      const eventA = getEvent === undefined ? event : getEvent(event)
 
-    t.deepEqual(infoA, { ...expected, eventName })
+      t.deepEqual(eventA, { ...expected, eventName })
 
-    stopLogging()
-  })
-})
+      stopLogging()
+    })
+  },
+)

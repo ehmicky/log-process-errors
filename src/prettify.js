@@ -1,6 +1,6 @@
 'use strict'
 
-const { circleFilled, info: infoSym, warning, cross } = require('figures')
+const { circleFilled, info, warning, cross } = require('figures')
 
 const prettify = function({
   message,
@@ -30,7 +30,7 @@ const prettify = function({
 // Each level is printed in a different way
 const LEVELS = {
   debug: { COLOR: 'blue', SIGN: circleFilled },
-  info: { COLOR: 'green', SIGN: infoSym },
+  info: { COLOR: 'green', SIGN: info },
   warn: { COLOR: 'yellow', SIGN: warning },
   error: { COLOR: 'red', SIGN: cross },
 }

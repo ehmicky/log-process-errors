@@ -30,7 +30,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
     stopLogging()
   })
 
-  test(`${prefix} should fire opts.log() with message`, async t => {
+  test(`${prefix} should fire opts.log() with arguments`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       message: 'message',
@@ -40,18 +40,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
     await emitEvent()
 
     t.is(log.callCount, 1)
-    t.is(log.firstCall.args[0], 'message')
-
-    stopLogging()
-  })
-
-  test(`${prefix} should fire opts.log() with event`, async t => {
-    const { stopLogging, log } = startLogging({ log: 'spy', name })
-
-    await emitEvent()
-
-    const [, , event] = log.firstCall.args
-    t.is(typeof event, 'object')
+    t.snapshot(log.firstCall.args)
 
     stopLogging()
   })

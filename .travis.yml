@@ -13,7 +13,6 @@ jobs:
     - os: windows
     - os: osx
     - node_js: '8.10.0'
-    - node_js: '10'
     - node_js: '11'
     # Test coverage check must happen after tests for the whole matrix have
     # been performed, so we get the merged coverage map

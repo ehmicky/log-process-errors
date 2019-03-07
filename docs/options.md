@@ -72,8 +72,9 @@ logProcessErrors({
 
 ## options.message `{function}`
 
-Override the default message generation. It should be a function using
-[`event` as argument](#event) and returning a string.
+Override the default message generation. It should be a function returning a
+string and whose arguments are [`level`](#optionslevel-object),
+[`event`](#event) and `chalk`.
 
 By default a nice-looking and descriptive log message is generated.
 
@@ -139,14 +140,3 @@ defined with
 Like [`value`](#eventvalue) and [`rejected`](#eventrejected) but for
 the second time the promise was resolved/rejected. Only defined with
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
-
-## event.level
-
-[Log level](#optionslevel-object). Only defined with the
-[`message` option](#optionsmessage-function).
-
-## event.colors
-
-[Chalk instance](https://github.com/chalk/chalk#api) to colorize strings.
-Only defined with the [`message` option](#optionsmessage-function). Disabled if
-the [`colors` option](#optionscolors-boolean) is `false`.

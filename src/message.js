@@ -6,22 +6,18 @@ const { prettify } = require('./prettify')
 // Retrieve `message` which sums up all information that can be gathered about
 // the event.
 const getMessage = function({ opts, event, level, colors }) {
-  const message = opts.message({ ...event, level, colors })
+  const message = opts.message(level, event, colors)
   // Ensure this is a string
   const messageA = typeof message === 'string' ? message : serialize(message)
   return messageA
 }
 
 // Default `opts.message()`
-const defaultMessage = function({
-  name,
-  rejected,
-  value,
-  nextRejected,
-  nextValue,
+const defaultMessage = function(
   level,
+  { name, rejected, value, nextRejected, nextValue },
   colors,
-}) {
+) {
   const message = MESSAGES[name]({ rejected, value, nextRejected, nextValue })
 
   const messageA = prettify({ message, name, level, colors })

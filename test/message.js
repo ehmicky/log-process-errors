@@ -39,7 +39,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
 })
 
 repeatEventsLevels((prefix, { name, emitEvent }, level) => {
-  test(`${prefix} should fire opts.message() with event`, async t => {
+  test(`${prefix} should fire opts.message() with arguments`, async t => {
     const { stopLogging, message } = startLogging({
       message: 'message',
       level: { default: level },
@@ -49,12 +49,9 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     await emitEvent()
 
     t.true(message.calledOnce)
-    t.is(typeof message.firstCall.args[0], 'object')
-    t.is(message.firstCall.args[0].level, level)
-    t.is(
-      message.firstCall.args[0].colors.constructor.name,
-      chalk.constructor.name,
-    )
+    t.is(message.firstCall.args[0], level)
+    t.is(typeof message.firstCall.args[1], 'object')
+    t.is(message.firstCall.args[2].constructor.name, chalk.constructor.name)
 
     stopLogging()
   })

@@ -101,7 +101,7 @@ logProcessErrors({
 
   level: { multipleResolves: 'debug' },
 
-  message(event) {},
+  message(level, event, chalk) {},
 
   colors: false,
 

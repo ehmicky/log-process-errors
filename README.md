@@ -108,15 +108,3 @@ logProcessErrors({
   exitOn: ['uncaughtException', 'unhandledRejection'],
 })
 ```
-
-<!-- eslint-enable no-empty-function -->
-
-# Restoring default behavior
-
-Node.js default behavior can be restored by firing the function returned by
-`logProcessErrors()`.
-
-```js
-const restore = logProcessErrors(options)
-restore()
-```

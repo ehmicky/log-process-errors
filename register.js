@@ -1,6 +1,10 @@
 'use strict'
 
-const logProcessErrors = require('.')
+// We need to use this syntax to avoid linting issues: different ESLint
+// rules are reported whether `build` is present or not.
+const pkgDir = '.'
+// eslint-disable-next-line import/no-dynamic-require
+const logProcessErrors = require(pkgDir)
 
 // Logging init is automatically performed by
 // `node -r log-process-errors/register` or

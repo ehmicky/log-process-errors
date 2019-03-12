@@ -33,6 +33,12 @@ With `log-process-errors`:
 
 ![Screenshot after](docs/after.png)
 
+# Use cases
+
+- Proper **logging** of process errors on a **production server**.
+- Enhanced stack traces when **debugging** process errors.
+- Ensuring no process errors are fired during automated **testing**.
+
 # Install
 
 Production code (e.g. a web server) can install this either as a production or

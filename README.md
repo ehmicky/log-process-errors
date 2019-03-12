@@ -8,15 +8,16 @@ Node.js prints process errors
 ([`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`warning`](https://nodejs.org/api/process.html#process_event_warning),
 [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves))
+[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled))
 on the console which is very useful. Unfortunately those errors:
 
-- show neither stack traces nor promise values for
-  [`warning`](https://nodejs.org/api/process.html#process_event_warning),
+- do not show stack traces for
+  [`warning`](https://nodejs.org/api/process.html#process_event_warning) and
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-  and
-  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves) making it hard to debug.
+  making them hard to debug.
+- do not include
+  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+  errors (when a promise is resolved/rejected twice).
 - are inconvenient to [log to an external service](docs/API.md#log).
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for

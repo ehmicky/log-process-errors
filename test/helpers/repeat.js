@@ -2,7 +2,6 @@
 
 // Required directly because this is exposed through documentation, but not
 // through code
-// eslint-disable-next-line import/no-internal-modules
 const { LEVELS, DEFAULT_LEVEL } = require('../../src/constants')
 
 const { EVENTS } = require('./emit')

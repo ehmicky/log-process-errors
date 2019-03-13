@@ -4,7 +4,6 @@ const test = require('ava')
 
 // Required directly because this is exposed through documentation, but not
 // through code
-// eslint-disable-next-line import/no-internal-modules
 const { MAX_EVENTS } = require('../src/constants')
 
 const {

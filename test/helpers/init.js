@@ -3,7 +3,6 @@
 const sinon = require('sinon')
 
 const logProcessErrors = require('../../src')
-// eslint-disable-next-line import/no-internal-modules
 const { mapValues } = require('../../src/utils')
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`

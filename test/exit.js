@@ -11,7 +11,6 @@ const pNextTick = promisify(process.nextTick)
 
 // Required directly because this is exposed through documentation, but not
 // through code
-// eslint-disable-next-line import/no-internal-modules
 const { EXIT_TIMEOUT, EXIT_STATUS } = require('../src/constants')
 
 const { repeatEvents, startLogging } = require('./helpers')

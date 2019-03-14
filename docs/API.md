@@ -98,6 +98,10 @@ _Default_: `true` if the output is a terminal.
 Colorize messages. Does not do anything if the [`message`](#message) option is
 defined.
 
+```js
+logProcessErrors({ colors: false })
+```
+
 #### exitOn
 
 _Type_: `string[]`<br>
@@ -113,6 +117,10 @@ Which events should trigger `process.exit(1)`:
   long-running and does not automatically restart on exit.
 
 `process.exit(1)` will only be fired after successfully logging the event.
+
+```js
+logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
+```
 
 ### event
 
@@ -133,6 +141,16 @@ Can be
 or
 [`"warning"`](https://nodejs.org/api/process.html#process_event_warning).
 
+```js
+logProcessErrors({
+  level: {
+    log(message, level, event) {
+      console[level](event.name, event.value)
+    },
+  },
+})
+```
+
 #### event.value
 
 _Type_: `any` (usually an `Error` instance but not always)
@@ -148,6 +166,20 @@ Value:
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
 - emitted by
   [`warning`](https://nodejs.org/api/process.html#process_event_warning).
+
+```js
+// Do not log deprecation warnings as errors
+logProcessErrors({
+  level: {
+    warning(event) {
+      const error = event.value
+      return error instanceof Error && error.message.includes('Deprecation')
+        ? 'warn'
+        : 'error'
+    },
+  },
+})
+```
 
 #### event.rejected
 

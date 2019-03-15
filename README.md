@@ -114,6 +114,34 @@ logProcessErrors({
 })
 ```
 
+# Questions and feedback
+
+Feel free to
+[chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors) if you're
+unclear on how to use this project.
+
+If you found a bug or would like to request a feature, please
+[submit an issue on GitHub](issues) instead. Don't hesitate to do so: this
+project needs bug reports and feature requests to improve.
+
+# Contributing
+
+This project was made with love–it needs your love back!
+
+The best way to help this project is by starring it and sharing it online.
+
+If you found a typo please click on the `Edit` button (pencil icon) of the page
+and submit a correction.
+
+Pull requests are appreciated!
+
+# Code of conduct
+
+You are welcome to contribute to this project regardless of personal
+background. We enforce a [Code of conduct](CODE_OF_CONDUCT.md) in order to
+promote a positive and inclusive environment. Please read it before submitting
+an issue or pull request.
+
 # Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START -->

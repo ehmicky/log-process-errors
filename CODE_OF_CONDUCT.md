@@ -1,5 +1,8 @@
 # Code of Conduct
 
+This text is available in
+[many other languages](https://www.contributor-covenant.org/translations).
+
 ## Our Pledge
 
 In the interest of fostering an open and welcoming environment, we as

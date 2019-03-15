@@ -126,9 +126,8 @@ needs bug reports and feature requests to improve.
 
 # Contributing
 
-This project was made with love–it needs your love back!
-
-The best way to give back is by starring this project and sharing it online.
+This project was made with love–it needs your love back! The best way to give
+back is by starring this project and sharing it online.
 
 If you found a typo please click on the `Edit` button (pencil icon) of the page
 and submit a correction.

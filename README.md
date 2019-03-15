@@ -121,8 +121,8 @@ Feel free to
 unclear about how to use this project.
 
 If you found a bug or would like to request a feature, please
-[submit an issue on GitHub](../../issues) instead. Don't hesitate to do so: this
-project needs bug reports and feature requests to improve.
+[submit an issue on GitHub](../../issues) instead. Don't hesitate: this project
+needs bug reports and feature requests to improve.
 
 # Contributing
 

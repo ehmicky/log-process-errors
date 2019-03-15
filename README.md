@@ -118,7 +118,7 @@ logProcessErrors({
 
 Feel free to
 [chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors) if you're
-unclear on how to use this project.
+unclear about how to use this project.
 
 If you found a bug or would like to request a feature, please
 [submit an issue on GitHub](issues) instead. Don't hesitate to do so: this

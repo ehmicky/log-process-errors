@@ -128,7 +128,7 @@ needs bug reports and feature requests to improve.
 
 This project was made with love–it needs your love back!
 
-The best way to help this project is by starring it and sharing it online.
+The best way to give back is by starring this project and sharing it online.
 
 If you found a typo please click on the `Edit` button (pencil icon) of the page
 and submit a correction.

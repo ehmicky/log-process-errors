@@ -94,26 +94,6 @@ logProcessErrors(options)
 
 Please see the [options full documentation](docs/API.md).
 
-Full example:
-
-<!-- eslint-disable no-empty-function -->
-
-```js
-logProcessErrors({
-  log(message, level, event) {
-    winstonLogger[level](message)
-  },
-
-  level: { multipleResolves: 'debug' },
-
-  message(level, event, options) {},
-
-  colors: false,
-
-  exitOn: ['uncaughtException', 'unhandledRejection'],
-})
-```
-
 # Questions and feedback
 
 Feel free to

@@ -13,6 +13,26 @@ const restore = logProcessErrors(options)
 restore()
 ```
 
+Full example:
+
+<!-- eslint-disable no-empty-function -->
+
+```js
+logProcessErrors({
+  log(message, level, event) {
+    winstonLogger[level](message)
+  },
+
+  level: { multipleResolves: 'debug' },
+
+  message(level, event, options) {},
+
+  colors: false,
+
+  exitOn: ['uncaughtException', 'unhandledRejection'],
+})
+```
+
 ### options
 
 _Type_: `object`

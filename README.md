@@ -36,13 +36,13 @@ With `log-process-errors`:
 
 # Use cases
 
-- Proper **logging** of process errors on a **production server**.
-- Enhanced stack traces when **debugging** process errors.
-- Ensuring no process errors are fired during automated **testing**.
+- Proper **logging** of process errors in production.
+- **Debugging** of process errors in development.
+- Automated **testing** of process errors.
 
 # Install
 
-Production code (e.g. a web server) can install this either as a production or
+Production code (e.g. a server) can install this either as a production or
 development dependency:
 
 ```bash

@@ -80,19 +80,43 @@ logProcessErrors(options)
 
 # Options
 
-`options` is an optional object with the following properties:
+`options` is an optional object with the following properties.
 
-- [`log` `{function}`](docs/API.md#log): customize how events are logged.
-  Default: use `console.warn()`, `console.error()`, etc.
-- [`level` `{object}`](docs/API.md#level): which log level to use. Default:
-  `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
-- [`message` `{function}`](docs/API.md#message): customize messages.
-- [`colors` `{boolean}`](docs/API.md#colors): colorize messages. Default: `true`
-  if the output is a terminal.
-- [`exitOn` `{string[]}`](docs/API.md#exiton): which events should trigger
-  `process.exit(1)`. Default: `['uncaughtException']`.
+Please see the [options full documentation](docs/API.md) for more information
+and examples.
 
-Please see the [options full documentation](docs/API.md).
+## [log](docs/API.md#log)
+
+_Type_: `function(message, level, event)`<br>
+
+Customize how events are logged.
+
+## [level](docs/API.md#level)
+
+_Type_: `object`<br>
+_Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
+
+Which log level to use.
+
+## [message](docs/API.md#message)
+
+_Type_: `function(level, event, options) => string`
+
+Customize messages.
+
+## [colors](docs/API.md#colors)
+
+_Type_: `boolean`<br>
+_Default_: `true` if the output is a terminal.
+
+Colorize messages.
+
+## [exitOn](docs/API.md#exiton)
+
+_Type_: `string[]`<br>
+_Default_: `["uncaughtException"]`
+
+Which events should trigger `process.exit(1)`.
 
 # Questions and feedback
 

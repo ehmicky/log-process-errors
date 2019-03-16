@@ -2,7 +2,7 @@
 
 [![Codecov](https://img.shields.io/codecov/c/github/ehmicky/log-process-errors.svg?label=tested&logo=codecov)](https://codecov.io/gh/ehmicky/log-process-errors) [![Travis](https://img.shields.io/badge/cross-platform-4cc61e.svg?logo=travis)](https://travis-ci.org/ehmicky/log-process-errors) [![Node](https://img.shields.io/node/v/log-process-errors.svg?logo=node.js)](https://www.npmjs.com/package/log-process-errors) [![Gitter](https://img.shields.io/gitter/room/ehmicky/log-process-errors.svg?logo=gitter)](https://gitter.im/ehmicky/log-process-errors)
 
-Show some ❤️ to process errors in Node.js.
+Show some ❤️ to Node.js process errors.
 
 Node.js prints process errors
 ([`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),

@@ -95,8 +95,8 @@ logProcessErrors({
 // Skip some logs based on a condition
 logProcessErrors({
   level: {
-    default() {
-      return shouldSkip() ? 'silent' : 'default'
+    default(event) {
+      return shouldSkip(event) ? 'silent' : 'default'
     },
   },
 })

@@ -82,8 +82,8 @@ logProcessErrors(options)
 
 `options` is an optional object with the following properties.
 
-Please see the [options full documentation](docs/API.md) for more information
-and examples.
+This is a quick summary. Please see the
+[options full documentation](docs/API.md) for more information and examples.
 
 ## [log](docs/API.md#log)
 

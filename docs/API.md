@@ -68,7 +68,7 @@ not).
 #### level
 
 _Type_: `object`<br>
-_Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`.
+_Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
 
 Which log level to use.
 

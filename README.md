@@ -128,13 +128,14 @@ For other questions, feel free to
 
 # Contributing
 
-This project was made with ❤️. The simplest way to give back is by starring
-this project and sharing it online.
+This project was made with ❤️. The simplest way to give back is by starring and
+sharing it online.
 
-If you found a typo, please click on the page's `Edit` button (pencil icon) and
-submit a correction.
+If the documentation is unclear or has a typo, please click on the page's `Edit`
+button (pencil icon) and submit a correction.
 
-Pull requests are appreciated!
+If you would like to fix a bug or add a new feature, please check our
+[guidelines](CONTRIBUTING.md). Pull requests are welcome!
 
 # Code of conduct
 

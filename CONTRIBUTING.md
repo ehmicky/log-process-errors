@@ -23,13 +23,13 @@ if you're not sure how to do this.
 
 Then run:
 
-```js
+```bash
 npm install
 ```
 
 Make sure everything is correctly setup with:
 
-```js
+```bash
 npm test
 ```
 

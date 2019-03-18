@@ -66,7 +66,7 @@
     "semver": "^5.6.0",
     "sinon": "^7.2.7",
     "source-map-support": "^0.5.11",
-    "strip-ansi": "^5.1.0"
+    "strip-ansi": "^5.2.0"
   },
   "engines": {
     "node": ">=8.10.0"

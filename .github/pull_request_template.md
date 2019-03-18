@@ -1,40 +1,37 @@
 ---
-name: Bug report
+name: Pull request
 about: Create a report to help us improve
-title: '[BUG] Please replace with a clear and descriptive title'
-labels: bug
+title: 'Please replace with a clear and descriptive title'
 assignees: ''
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+🎉 Thanks for sending this pull request! 🎉
 
-**To Reproduce**
-Steps to reproduce the behavior:
+Please fill in the sections below.
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Which problem is this pull request solving?**
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+Example: I'm always frustrated when [...]
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**List other issues or pull requests opened for this problem**
 
-**Desktop (please complete the following information):**
+Example: This fixes #0
 
-- OS: [e.g. iOS]
-- Browser [e.g. chrome, safari]
-- Version [e.g. 22]
+**Describe the solution you've chosen**
 
-**Smartphone (please complete the following information):**
+Example: I've fixed this by [...]
 
-- Device: [e.g. iPhone6]
-- OS: [e.g. iOS8.1]
-- Browser [e.g. stock browser, safari]
-- Version [e.g. 22]
+**Describe alternatives you've considered**
 
-**Additional context**
-Add any other context about the problem here.
+Example: Another solution would be [...]
+
+**Checklist**
+
+Please add a `x` inside each box:
+
+[ ] I have read the [contribution guidelines](CONTRIBUTING.md)
+[ ] I have added tests. We are enforcing 100% test coverage.
+[ ] I have added documentation in the `README.md`, the `docs` folder (if any)
+and the `examples` folder (if any).
+[ ] The status checks are successful (continuous integration). Those can be seen
+below.

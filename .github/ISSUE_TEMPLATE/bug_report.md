@@ -6,35 +6,38 @@ labels: bug
 assignees: ''
 ---
 
+Thanks for reporting this bug!
+
+Please fill in the sections below.
+
 **Describe the bug**
+
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+**Steps to reproduce**
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+Step-by-step intructions on how to reproduce the behavior.
+
+Example:
+
+1. Use the default configuration.
+2. Type the following command: [...]
+3. etc.
 
 **Expected behavior**
+
 A clear and concise description of what you expected to happen.
 
+**Configuration**
+
+CLI options and configuration file, if any.
+
+**Environment**
+
+- _Library version_: Version you are using for this project.
+- _Node.js version_: Output of `node --version`.
+- _Operating system_: Your OS and its version.
+
 **Screenshots**
+
 If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
-
-- OS: [e.g. iOS]
-- Browser [e.g. chrome, safari]
-- Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
-
-- Device: [e.g. iPhone6]
-- OS: [e.g. iOS8.1]
-- Browser [e.g. stock browser, safari]
-- Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.

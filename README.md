@@ -128,7 +128,7 @@ For other questions, feel free to
 
 # Contributing
 
-This project was made with ❤️! The simplest way to give back is by starring
+This project was made with ❤️. The simplest way to give back is by starring
 this project and sharing it online.
 
 If you found a typo, please click on the page's `Edit` button (pencil icon) and

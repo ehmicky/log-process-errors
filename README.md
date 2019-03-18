@@ -138,7 +138,7 @@ Pull requests are appreciated!
 
 # Code of conduct
 
-This projects welcomes anyone regardless of personal background. We enforce a
+This project welcomes anyone regardless of personal background. We enforce a
 [Code of conduct](CODE_OF_CONDUCT.md) in order to promote a positive and
 inclusive environment.
 

@@ -118,20 +118,18 @@ _Default_: `["uncaughtException"]`
 
 Which events should trigger `process.exit(1)`.
 
-# Questions and feedback
+# Support
 
-Feel free to
-[chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors) if you're
-unclear about how to use this project.
+If you found a bug or would like a new feature, _don't hesitate_ to
+[submit an issue on GitHub](../../issues).
 
-If you found a bug or would like to request a new feature, please
-[submit an issue on GitHub](../../issues) instead. Don't hesitate: this project
-needs bug reports and feature requests to improve.
+For other questions, feel free to
+[chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors).
 
 # Contributing
 
-This project was made with love–it needs your love back! The best way to give
-back is by starring this project and sharing it online.
+This project was made with love! The simplest way to give back is by starring
+this project and sharing it online.
 
 If you found a typo, please click on the page's `Edit` button (pencil icon) and
 submit a correction.
@@ -140,10 +138,9 @@ Pull requests are appreciated!
 
 # Code of conduct
 
-You are welcome to contribute to this project regardless of personal
-background. We enforce a [Code of conduct](CODE_OF_CONDUCT.md) in order to
-promote a positive and inclusive environment. Please read it before submitting
-an issue or pull request.
+This projects welcomes anyone regardless of personal background. We enforce a
+[Code of conduct](CODE_OF_CONDUCT.md) in order to promote a positive and
+inclusive environment.
 
 # Contributors
 

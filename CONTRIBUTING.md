@@ -4,8 +4,9 @@
 
 This document will help you send a pull request.
 
-If the documentation is unclear or has a typo, please click on the page's
-`Edit` button (pencil icon) and directly submit a correction instead.
+If your pull request is related to a typo or the documentation being unclear,
+please click on the page's `Edit` button (pencil icon) and directly submit a
+correction instead.
 
 This project was made with ❤️. The simplest way to give back is by starring and
 sharing it online.

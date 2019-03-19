@@ -8,6 +8,9 @@ assignees: ''
 
 Thanks for reporting this bug!
 
+If this is related to a typo or the documentation is unclear, please click on
+the page's `Edit` button (pencil icon) and submit a correction instead.
+
 Please [search other issues](issues) to make sure this bug has not already been
 reported.
 

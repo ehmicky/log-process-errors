@@ -7,7 +7,9 @@ assignees: ''
 
 🎉 Thanks for sending this pull request! 🎉
 
-Please fill in the sections below.
+If this is fixing a typo or documentation, you can skip these instructions.
+
+Otherwise please fill in the sections below.
 
 **Which problem is this pull request solving?**
 
@@ -30,8 +32,11 @@ Example: Another solution would be [...]
 Please add a `x` inside each box:
 
 [ ] I have read the [contribution guidelines](CONTRIBUTING.md)
+
 [ ] I have added tests. We are enforcing 100% test coverage.
+
 [ ] I have added documentation in the `README.md`, the `docs` folder (if any)
 and the `examples` folder (if any).
+
 [ ] The status checks are successful (continuous integration). Those can be seen
 below.

@@ -4,7 +4,7 @@
 
 This document will help you send a pull request.
 
-If you're submitting an issue instead, you can skip this.
+If you're submitting an issue instead, you can skip this document.
 
 If your pull request is related to a typo or the documentation being unclear,
 please click on the page's `Edit` button (pencil icon) and directly submit a

@@ -8,10 +8,10 @@ send a pull request.
 This project was made with ❤️. The simplest way to give back is by starring and
 sharing it online.
 
-If you found a bug or would like a new feature, please
+If you found a bug or would like a new feature, _don't hesitate_ to
 [submit an issue on GitHub](../../issues).
 
-If you have any other questions, feel free to
+For other questions, feel free to
 [chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors).
 
 If the documentation is unclear or has a typo, please click on the page's `Edit`

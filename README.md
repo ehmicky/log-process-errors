@@ -138,7 +138,7 @@ sharing it online.
 If the documentation is unclear or has a typo, please click on the page's `Edit`
 button (pencil icon) and submit a correction.
 
-If you would like to fix a bug or add a new feature, please check our
+If you would like to help us fix a bug or add a new feature, please check our
 [guidelines](CONTRIBUTING.md). Pull requests are welcome!
 
 Thanks goes to our wonderful contributors:

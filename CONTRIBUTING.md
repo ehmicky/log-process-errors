@@ -33,8 +33,8 @@ npm test
 ```
 
 We use Gulp tasks to lint, test and build this project. Please check
-[gulp-shared-tasks](https://github.com/ehmicky/gulp-shared-tasks) to learn how
-to use them. You don't need to know Gulp to use these tasks.
+[gulp-shared-tasks](https://github.com/ehmicky/gulp-shared-tasks/blob/master/README.md)
+to learn how to use them. You don't need to know Gulp to use these tasks.
 
 # Requirements
 

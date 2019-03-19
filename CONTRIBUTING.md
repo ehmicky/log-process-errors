@@ -17,9 +17,9 @@ inclusive environment.
 
 # Development process
 
-First fork and clone the repository. Please see
-[here](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
-if you're not sure how to do this.
+First fork and clone the repository. If you're not sure how to do this, please
+watch
+[these videos](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github).
 
 Run:
 

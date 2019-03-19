@@ -4,7 +4,8 @@
   "main": "build/src/index.js",
   "files": [
     "build/src",
-    "register.js"
+    "register.js",
+    "!~"
   ],
   "scripts": {
     "test": "gulp test"

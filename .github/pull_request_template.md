@@ -5,7 +5,7 @@ If you are fixing a typo or documentation, please skip these instructions.
 Otherwise please:
 
 - add a clear and descriptive title.
-- then fill in the sections below.
+- fill in the sections below.
 
 **Which problem is this pull request solving?**
 

@@ -8,7 +8,10 @@ assignees: ''
 
 Thanks for reporting this bug!
 
-Please fill in the sections below.
+Please [search other issues](issues) to make sure this bug has not already been
+reported.
+
+Then fill in the sections below.
 
 **Describe the bug**
 
@@ -34,7 +37,7 @@ CLI options and configuration file, if any.
 
 **Environment**
 
-Copy/paste the output of:
+Enter the following command in a terminal and copy/paste its output:
 
 ```bash
 npx envinfo --system --binaries --browsers --npmPackages log-process-errors

@@ -46,3 +46,10 @@ npx envinfo --system --binaries --browsers --npmPackages log-process-errors
 **Screenshots**
 
 If applicable, add screenshots to help explain your problem.
+
+**Can you submit a pull request?**
+
+Yes/No.
+
+Pull requests are welcome! If you would like to help us fix this bug, please
+check our [contributions guidelines](CONTRIBUTING.md).

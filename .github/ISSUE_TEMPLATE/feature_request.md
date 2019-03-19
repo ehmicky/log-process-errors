@@ -21,3 +21,10 @@ Example: This could be fixed by [...]
 **Describe alternatives you've considered**
 
 Example: Another solution would be [...]
+
+**Can you submit a pull request?**
+
+Yes/No.
+
+Pull requests are welcome! If you would like to help us add this feature, please
+check our [contributions guidelines](CONTRIBUTING.md).

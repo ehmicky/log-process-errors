@@ -20,7 +20,7 @@ First fork and clone the repository. Please see
 [here](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
 if you're not sure how to do this.
 
-Then run:
+Run:
 
 ```bash
 npm install
@@ -34,7 +34,7 @@ npm test
 
 We use Gulp tasks to lint, test and build this project. Please check
 [gulp-shared-tasks](https://github.com/ehmicky/gulp-shared-tasks) to learn how
-to use them. You don't need to know Gulp to use them.
+to use them. You don't need to know Gulp to use these tasks.
 
 # Requirements
 

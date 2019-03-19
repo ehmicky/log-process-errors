@@ -39,7 +39,7 @@ to learn how to use them. You don't need to know Gulp to use these tasks.
 
 # Requirements
 
-We enforce 100% test coverage, i.e. each line of code must be tested.
+We enforce 100% test coverage: each line of code must be tested.
 
 Documentation must be added for any new feature in all of these:
 

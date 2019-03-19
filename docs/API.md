@@ -135,7 +135,7 @@ Which events should trigger `process.exit(1)`:
   [default behavior](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
 - we recommend using `["uncaughtException", "unhandledRejection"]`
   instead since this will be [Node.js future default behavior](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections).
-- to prevent any `process.exit(1)` use `[]`. Recommended if your process is
+- use `[]` to prevent any `process.exit(1)`. Recommended if your process is
   long-running and does not automatically restart on exit.
 
 `process.exit(1)` will only be fired after successfully logging the event.

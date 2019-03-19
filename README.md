@@ -126,6 +126,10 @@ If you found a bug or would like a new feature, _don't hesitate_ to
 For other questions, feel free to
 [chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors).
 
+This project welcomes anyone regardless of personal background. We enforce a
+[Code of conduct](CODE_OF_CONDUCT.md) in order to promote a positive and
+inclusive environment.
+
 # Contributing
 
 This project was made with ❤️. The simplest way to give back is by starring and
@@ -136,12 +140,6 @@ button (pencil icon) and submit a correction.
 
 If you would like to fix a bug or add a new feature, please check our
 [guidelines](CONTRIBUTING.md). Pull requests are welcome!
-
-# Code of conduct
-
-This project welcomes anyone regardless of personal background. We enforce a
-[Code of conduct](CODE_OF_CONDUCT.md) in order to promote a positive and
-inclusive environment.
 
 # Contributors
 

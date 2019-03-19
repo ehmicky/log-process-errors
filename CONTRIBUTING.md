@@ -2,20 +2,21 @@
 
 🎉 Thanks for considering contributing to this project! 🎉
 
-This document will help you
-send a pull request.
-
 This project was made with ❤️. The simplest way to give back is by starring and
 sharing it online.
 
-If you found a bug or would like a new feature, _don't hesitate_ to
-[submit an issue on GitHub](../../issues).
+This document will help you send a pull request.
 
-For other questions, feel free to
-[chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors).
+- If you found a bug or would like a new feature, _don't hesitate_ to
+  [submit an issue on GitHub](../../issues).
+- For other questions, feel free to
+  [chat with us on Gitter](https://gitter.im/ehmicky/log-process-errors).
+- If the documentation is unclear or has a typo, please click on the page's
+  `Edit` button (pencil icon) and submit a correction.
 
-If the documentation is unclear or has a typo, please click on the page's `Edit`
-button (pencil icon) and submit a correction.
+This project welcomes anyone regardless of personal background. We enforce a
+[Code of conduct](CODE_OF_CONDUCT.md) in order to promote a positive and
+inclusive environment.
 
 # Development process
 

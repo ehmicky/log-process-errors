@@ -1,15 +1,9 @@
----
-name: Pull request
-about: Create a report to help us improve
-title: 'Please replace with a clear and descriptive title'
-assignees: ''
----
-
 🎉 Thanks for sending this pull request! 🎉
 
 If this is fixing a typo or documentation, you can skip these instructions.
 
-Otherwise please fill in the sections below.
+Otherwise please add a clear and descriptive title then fill in the sections
+below.
 
 **Which problem is this pull request solving?**
 

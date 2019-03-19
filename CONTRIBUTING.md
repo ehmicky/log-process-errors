@@ -1,6 +1,8 @@
 # Contributions
 
-Thanks for considering contributing to this project! This document will help you
+🎉 Thanks for considering contributing to this project! 🎉
+
+This document will help you
 send a pull request.
 
 This project was made with ❤️. The simplest way to give back is by starring and

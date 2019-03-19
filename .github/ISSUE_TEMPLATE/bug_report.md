@@ -34,9 +34,11 @@ CLI options and configuration file, if any.
 
 **Environment**
 
-- _Library version_: Version you are using for this project.
-- _Node.js version_: Output of `node --version`.
-- _Operating system_: Your OS and its version.
+Copy/paste the output of:
+
+```bash
+npx envinfo --system --binaries --browsers --npmPackages log-process-errors
+```
 
 **Screenshots**
 

@@ -8,11 +8,10 @@ assignees: ''
 
 Thanks for reporting this bug!
 
-If this is related to a typo or the documentation is unclear, please click on
+If this is related to a typo or the documentation being unclear, please click on
 the page's `Edit` button (pencil icon) and submit a correction instead.
 
-Please [search other issues](issues) to make sure this bug has not already been
-reported.
+Please search other issues to make sure this bug has not already been reported.
 
 Then fill in the sections below.
 
@@ -22,7 +21,7 @@ A clear and concise description of what the bug is.
 
 **Steps to reproduce**
 
-Step-by-step intructions on how to reproduce the behavior.
+Step-by-step instructions on how to reproduce the behavior.
 
 Example:
 
@@ -36,7 +35,7 @@ A clear and concise description of what you expected to happen.
 
 **Configuration**
 
-CLI options and configuration file, if any.
+Command line options and/or configuration file, if any.
 
 **Environment**
 

@@ -29,7 +29,7 @@ Please add a `x` inside each checkbox:
 
 - [ ] I have read the [contribution guidelines](CONTRIBUTING.md)
 - [ ] I have added tests (we are enforcing 100% test coverage).
-- [ ] I have added documentation in the `README.md`, the `docs` folder (if any)
-      and the `examples` folder (if any).
+- [ ] I have added documentation in the `README.md`, the `docs` directory (if
+      any) and the `examples` directory (if any).
 - [ ] The status checks are successful (continuous integration). Those can be seen
       below.

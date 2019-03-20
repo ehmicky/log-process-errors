@@ -46,8 +46,8 @@ We enforce 100% test coverage: each line of code must be tested.
 Documentation must be added for any new feature in all of these:
 
 - the `README.md`
-- the `docs` folder (if any)
-- the `examples` folder (if any)
+- the `docs` directory (if any)
+- the `examples` directory (if any)
 
 After submitting the pull request, please make sure the Continuous Integration
 checks are passing.

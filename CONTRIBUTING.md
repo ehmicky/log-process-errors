@@ -2,13 +2,13 @@
 
 🎉 Thanks for considering contributing to this project! 🎉
 
-This document will help you send a pull request.
+These guidelines will help you send a pull request.
 
-If you're submitting an issue instead, you can skip this.
+If you're submitting an issue instead, please skip this document.
 
 If your pull request is related to a typo or the documentation being unclear,
-please click on the page's `Edit` button (pencil icon) and directly submit a
-correction instead.
+please click on the relevant page's `Edit` button (pencil icon) and directly
+suggest a correction instead.
 
 This project was made with ❤️. The simplest way to give back is by starring and
 sharing it online.
@@ -41,13 +41,16 @@ to learn how to use them. You don't need to know Gulp to use these tasks.
 
 # Requirements
 
+After submitting the pull request, please make sure the Continuous Integration
+checks are passing.
+
 We enforce 100% test coverage: each line of code must be tested.
 
-Documentation must be added for any new feature in all of these:
+New options, methods, properties, configuration and behavior must be documented
+in all of these:
 
 - the `README.md`
 - the `docs` directory (if any)
 - the `examples` directory (if any)
 
-After submitting the pull request, please make sure the Continuous Integration
-checks are passing.
+Please use the same style as the rest of the documentation and examples.

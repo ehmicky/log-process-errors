@@ -1,11 +1,10 @@
 🎉 Thanks for sending this pull request! 🎉
 
+Please make sure the title is clear and descriptive.
+
 If you are fixing a typo or documentation, please skip these instructions.
 
-Otherwise please:
-
-- add a clear and descriptive title.
-- fill in the sections below.
+Otherwise please fill in the sections below.
 
 **Which problem is this pull request solving?**
 

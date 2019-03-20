@@ -9,7 +9,8 @@ assignees: ''
 Thanks for reporting this bug!
 
 If this is related to a typo or the documentation being unclear, please click on
-the page's `Edit` button (pencil icon) and submit a correction instead.
+the relevant page's `Edit` button (pencil icon) and suggest a correction
+instead.
 
 Please search other issues to make sure this bug has not already been reported.
 
@@ -25,9 +26,8 @@ Step-by-step instructions on how to reproduce the behavior.
 
 Example:
 
-1. Use the default configuration.
-2. Type the following command: [...]
-3. etc.
+1. Type the following command: [...]
+2. etc.
 
 **Expected behavior**
 

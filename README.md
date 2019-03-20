@@ -136,7 +136,7 @@ This project was made with ❤️. The simplest way to give back is by starring 
 sharing it online.
 
 If the documentation is unclear or has a typo, please click on the page's `Edit`
-button (pencil icon) and submit a correction.
+button (pencil icon) and suggest a correction.
 
 If you would like to help us fix a bug or add a new feature, please check our
 [guidelines](CONTRIBUTING.md). Pull requests are welcome!

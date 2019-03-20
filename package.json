@@ -47,7 +47,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.0",
+    "@babel/runtime": "^7.3.4",
     "chalk": "^2.4.2",
     "core-js": "^2.6.5",
     "figures": "^2.0.0",

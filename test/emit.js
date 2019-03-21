@@ -2,19 +2,7 @@
 
 const test = require('ava')
 
-const {
-  repeatEvents,
-  startLogging,
-  ALL_EVENTS: { all },
-} = require('./helpers')
-
-test('[all] events emitters should not throw', async t => {
-  const { stopLogging } = startLogging()
-
-  await t.notThrowsAsync(all)
-
-  stopLogging()
-})
+const { repeatEvents, startLogging } = require('./helpers')
 
 repeatEvents((prefix, { emitEvent }) => {
   test(`${prefix} events emitters should exist`, t => {

@@ -1,6 +1,3 @@
 'use strict'
 
-module.exports = {
-  ...require('gulp-shared-tasks'),
-  ...require('./gulp'),
-}
+module.exports = require('gulp-shared-tasks')

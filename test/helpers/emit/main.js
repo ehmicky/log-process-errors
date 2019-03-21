@@ -15,19 +15,6 @@ const EVENTS = {
   warning,
 }
 
-// Emit all process error events
-const all = async function() {
-  // eslint-disable-next-line fp/no-loops
-  for (const emitEvent of Object.values(EVENTS)) {
-    // eslint-disable-next-line no-await-in-loop
-    await emitEvent()
-  }
-}
-
-const ALL_EVENTS = { ...EVENTS, all }
-
 module.exports = {
-  all,
   EVENTS,
-  ALL_EVENTS,
 }

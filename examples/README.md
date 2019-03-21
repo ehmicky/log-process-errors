@@ -17,5 +17,6 @@ They can also be run directly
 
 - Process errors without `log-process-errors`:
   [JavaScript](before.js), [command line](before.sh).
-- Process errors with `log-process-errors`:
+- Process errors
+  [with `log-process-errors`](../docs/API.md#logprocesserrorsoptions):
   [JavaScript](after.js), [command line](after.sh).

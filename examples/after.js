@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Demo of process errors when `log-process-errors` is used in JavaScript.
+// This demonstrates how process errors look when `log-process-errors` is used,
+// in JavaScript.
 // This file can be directly run:
 //   - first install `log-process-errors`
 //   - then `node node_modules/log-process-errors/examples/after.js`

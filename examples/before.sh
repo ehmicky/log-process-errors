@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Demo of process errors when `log-process-errors` is not used in the terminal
-# (Bash).
+# This demonstrates how process errors look when `log-process-errors` is not
+# used, in the terminal (Bash).
 # This file can be directly run:
 #   - first install `log-process-errors`
 #   - then `bash node_modules/log-process-errors/examples/before.sh`

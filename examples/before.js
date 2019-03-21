@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// This demonstrates how process errors look when `log-process-errors` is not
+// Demonstrates how process errors look when `log-process-errors` is not
 // used, in JavaScript.
 // This file can be directly run:
 //   - first install `log-process-errors`

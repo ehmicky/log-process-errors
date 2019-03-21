@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// This demonstrates how process errors look when `log-process-errors` is used,
+// Demonstrates how process errors look when `log-process-errors` is used,
 // in JavaScript.
 // This file can be directly run:
 //   - first install `log-process-errors`
@@ -15,15 +15,15 @@ require('./utils')
 
 const logProcessErrors = require('log-process-errors')
 
+// Initialization
+logProcessErrors()
+
 const {
   uncaughtException,
   unhandledRejection,
   warning,
   multipleResolves,
 } = require('./errors')
-
-// Initialization
-logProcessErrors()
 
 // Emit different types of process errors.
 uncaughtException()

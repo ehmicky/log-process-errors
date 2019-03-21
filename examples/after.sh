@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This demonstrates how process errors look when `log-process-errors` is used,
+# Demonstrates how process errors look when `log-process-errors` is used,
 # in the terminal (Bash).
 # This file can be directly run:
 #   - first install `log-process-errors`

@@ -3,7 +3,7 @@
 # (Bash).
 # This file can be directly run:
 #   - first install `log-process-errors`
-#   - then `bash node_modules/log-process-errors/examples/after.sh`
+#   - then `bash node_modules/log-process-errors/examples/before.sh`
 # An online demo is also available at:
 #   https://repl.it/@ehmicky/log-process-errors
 

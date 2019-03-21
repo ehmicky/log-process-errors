@@ -8,8 +8,8 @@ You can try all the examples below:
 
 ## logProcessErrors([options])
 
-Initialize `log-process-errors`. Returns a function that can be fired to restore
-Node.js default behavior.
+Initializes `log-process-errors`. Returns a function that can be fired to
+restore Node.js default behavior.
 
 <!-- eslint-disable-next-line import/newline-after-import -->
 
@@ -113,7 +113,7 @@ logProcessErrors({
 _Type_: `function(level, event, options) => string`<br>
 _Default_: generate a nice-looking and descriptive log message.
 
-Override the default message generation. Arguments are [`level`](#level),
+Overrides the default message generation. Arguments are [`level`](#level),
 [`event`](#event) and [`options`](#options).
 
 #### colors
@@ -121,7 +121,7 @@ Override the default message generation. Arguments are [`level`](#level),
 _Type_: `boolean`<br>
 _Default_: `true` if the output is a terminal.
 
-Colorize messages.
+Colorizes messages.
 
 Does not do anything if the default message has been overridden using the
 [`message`](#message) option.

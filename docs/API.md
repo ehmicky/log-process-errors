@@ -1,5 +1,11 @@
 # API
 
+You can try all the examples below:
+
+- either directly
+  [in your browser](https://repl.it/@ehmicky/log-process-errors).
+- or by executing the [`examples` files](../examples/README.md) in a terminal.
+
 ## logProcessErrors([options])
 
 Initialize `log-process-errors`. Returns a function that can be fired to restore

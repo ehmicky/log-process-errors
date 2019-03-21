@@ -5,6 +5,7 @@
   "files": [
     "build/src",
     "register.js",
+    "examples",
     "!~"
   ],
   "scripts": {

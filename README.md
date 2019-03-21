@@ -40,6 +40,14 @@ With `log-process-errors`:
 - **Debugging** of process errors in development.
 - Automated **testing** of process errors.
 
+# Demo
+
+You can try this library:
+
+- either directly
+  [in your browser](https://repl.it/@ehmicky/log-process-errors).
+- or by executing the [`examples` files](examples/README.md) in a terminal.
+
 # Install
 
 Production code (e.g. a server) can install this either as a production or
@@ -80,43 +88,43 @@ logProcessErrors(options)
 
 # Options
 
-`options` is an optional object with the following properties.
-
-This is a quick summary. Please see the
-[options full documentation](docs/API.md) for more information and examples.
-
-## [log](docs/API.md#log)
+## log
 
 _Type_: `function(message, level, event)`<br>
 
 Customize how events are logged.
+[Full documentation](docs/API.md#log).
 
-## [level](docs/API.md#level)
+## level
 
 _Type_: `object`<br>
 _Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
 
 Which log level to use.
+[Full documentation](docs/API.md#level).
 
-## [message](docs/API.md#message)
+## message
 
 _Type_: `function(level, event, options) => string`
 
 Customize messages.
+[Full documentation](docs/API.md#message).
 
-## [colors](docs/API.md#colors)
+## colors
 
 _Type_: `boolean`<br>
 _Default_: `true` if the output is a terminal.
 
 Colorize messages.
+[Full documentation](docs/API.md#colors).
 
-## [exitOn](docs/API.md#exiton)
+## exitOn
 
 _Type_: `string[]`<br>
 _Default_: `["uncaughtException"]`
 
 Which events should trigger `process.exit(1)`.
+[Full documentation](docs/API.md#exiton).
 
 # Support
 

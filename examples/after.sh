@@ -10,4 +10,5 @@
 # Ignore the following line: this is only needed for internal purposes.
 . "$(dirname "$BASH_SOURCE")/utils.sh"
 
+# Emits different types of process errors.
 node -r log-process-errors/register "$dir/before.js"

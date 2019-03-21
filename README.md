@@ -88,6 +88,8 @@ logProcessErrors(options)
 
 # Options
 
+`options` is an optional object with the following properties.
+
 ## log
 
 _Type_: `function(message, level, event)`<br>

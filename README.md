@@ -92,7 +92,7 @@ logProcessErrors(options)
 
 _Type_: `function(message, level, event)`<br>
 
-Customize how events are logged.
+Customize how events are logged.<br>
 [Full documentation](docs/API.md#log).
 
 ## level
@@ -100,14 +100,14 @@ Customize how events are logged.
 _Type_: `object`<br>
 _Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
 
-Which log level to use.
+Which log level to use.<br>
 [Full documentation](docs/API.md#level).
 
 ## message
 
 _Type_: `function(level, event, options) => string`
 
-Customize messages.
+Customize messages.<br>
 [Full documentation](docs/API.md#message).
 
 ## colors
@@ -115,7 +115,7 @@ Customize messages.
 _Type_: `boolean`<br>
 _Default_: `true` if the output is a terminal.
 
-Colorize messages.
+Colorize messages.<br>
 [Full documentation](docs/API.md#colors).
 
 ## exitOn
@@ -123,7 +123,7 @@ Colorize messages.
 _Type_: `string[]`<br>
 _Default_: `["uncaughtException"]`
 
-Which events should trigger `process.exit(1)`.
+Which events should trigger `process.exit(1)`.<br>
 [Full documentation](docs/API.md#exiton).
 
 # Support

@@ -91,16 +91,12 @@ Object values are the log level: `"debug"`, `"info"`, `"warn"`, `"error"`,
 [`event` as argument](#event) and returning one of those log levels.
 
 ```js
-// Use `debug` log level for `multipleResolves` instead of `info`
-logProcessErrors({
-  level: { multipleResolves: 'debug' },
-})
-```
-
-```js
-// Skip some logs based on a condition
 logProcessErrors({
   level: {
+    // Use `debug` log level for `multipleResolves` instead of `info`
+    multipleResolves: 'debug',
+
+    // Skip some logs based on a condition
     default(event) {
       return shouldSkip(event) ? 'silent' : 'default'
     },
@@ -115,6 +111,15 @@ _Default_: generate a nice-looking and descriptive log message.
 
 Overrides the default message generation. Arguments are [`level`](#level),
 [`event`](#event) and [`options`](#options).
+
+```js
+logProcessErrors({
+  // Log events as JSON instead
+  message(level, event) {
+    return JSON.stringify(event)
+  },
+})
+```
 
 #### colors
 
@@ -201,7 +206,7 @@ logProcessErrors({
   level: {
     warning(event) {
       const error = event.value
-      return error instanceof Error && error.message.includes('Deprecation')
+      return error instanceof Error && error.name.includes('Deprecation')
         ? 'warn'
         : 'error'
     },

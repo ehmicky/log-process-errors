@@ -20,3 +20,13 @@ They can also be run directly
 - How process errors look **with**
   [`log-process-errors`](../docs/API.md#logprocesserrorsoptions):
   [JavaScript](after.js), [command line](after.sh).
+- [Restoring](../docs/API.md#logprocesserrorsoptions) Node.js default behavior:
+  [JavaScript](restore.js).
+
+## Options
+
+- [`log`](../docs/API.md#log): [JavaScript](log.js).
+- [`level`](../docs/API.md#level): [JavaScript](level.js).
+- [`message`](../docs/API.md#message): [JavaScript](message.js).
+- [`colors`](../docs/API.md#colors): [JavaScript](colors.js).
+- [`exit`](../docs/API.md#exit): [JavaScript](exit.js).

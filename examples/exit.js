@@ -1,8 +1,7 @@
-// Demonstrates how process errors look **with** `log-process-errors`,
-// in JavaScript.
+// Demo of the `exitOn` option.
 // This file can be directly run:
 //   - first install `log-process-errors`
-//   - then `node node_modules/log-process-errors/examples/after.js`
+//   - then `node node_modules/log-process-errors/examples/exit.js`
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
@@ -15,17 +14,10 @@ require('./utils')
 const logProcessErrors = require('log-process-errors')
 
 // Initialization
-logProcessErrors()
+// Changes which events should trigger `process.exit(1)`
+logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
 
-const {
-  uncaughtException,
-  unhandledRejection,
-  warning,
-  multipleResolves,
-} = require('./errors')
+const { unhandledRejection } = require('./errors')
 
-// Emit different types of process errors
-uncaughtException()
+// Emitting a `unhandledRejection` process error will exit the process
 unhandledRejection()
-warning()
-multipleResolves()

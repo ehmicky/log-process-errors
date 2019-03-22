@@ -1,8 +1,7 @@
-// Demonstrates how process errors look **with** `log-process-errors`,
-// in JavaScript.
+// Demo of the `log` option.
 // This file can be directly run:
 //   - first install `log-process-errors`
-//   - then `node node_modules/log-process-errors/examples/after.js`
+//   - then `node node_modules/log-process-errors/examples/log.js`
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
@@ -15,17 +14,14 @@ require('./utils')
 const logProcessErrors = require('log-process-errors')
 
 // Initialization
-logProcessErrors()
+// Customizes how events are logged
+logProcessErrors({
+  log(message, level, event) {
+    console[level](event.name, event.value)
+  },
+})
 
-const {
-  uncaughtException,
-  unhandledRejection,
-  warning,
-  multipleResolves,
-} = require('./errors')
+const { warning } = require('./errors')
 
-// Emit different types of process errors
-uncaughtException()
-unhandledRejection()
+// Emit a `warning` process error
 warning()
-multipleResolves()

@@ -12,12 +12,22 @@ const { EXIT_STATUS, EXIT_TIMEOUT } = require('./constants')
 //    See https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections
 // By default `unhandledRejection` is opt-in so that using this library does not
 // decrease stability (if the application does not restart on exit).
+// `process.exit()` unfortunately aborts any current async operations and
+// streams are not flushed (including stdout/stderr):
+//  - https://github.com/nodejs/node/issues/784
+//  - https://github.com/nodejs/node/issues/6456
+// We go around this problem by:
+//  - await promise returned by `opts.log()`
+//  - waiting for few seconds (EXIT_TIMEOUT)
+// This last one is a hack. We should instead allow `opts.log()` to return a
+// stream, and keep track of all unique returned streams. On exit, we should
+// then close then and wait for them to flush. We should then always wait for
+// process.stdout|stderr as well.
 const exitProcess = function({ name, opts: { exitOn } }) {
   if (!exitOn.includes(name)) {
     return
   }
 
-  // This is only needed as a safety measure
   // TODO: use `promisify` instead after
   // https://github.com/sinonjs/lolex/issues/223 is fixed
   setTimeout(() => {

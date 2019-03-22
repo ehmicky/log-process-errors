@@ -48,11 +48,7 @@ const logEvent = async function({ opts, event }) {
 
   const message = getMessage({ opts, event, level })
 
-  // We need to `await` it in case `opts.exitOn` exits the process.
-  // Without `await` Node.js would still wait until most async tasks (including
-  // stream draining for logging libraries like Winston) have completed.
-  // But there are some cases where it will not. In those cases, `opts.log()`
-  // should be either synchronous or return a promise.
+  // See `exit.js` on why we need to `await`
   await opts.log(message, level, event)
 }
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // Demonstrates how process errors look when `log-process-errors` is used,
 // in JavaScript.
 // This file can be directly run:

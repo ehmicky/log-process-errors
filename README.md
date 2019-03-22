@@ -125,7 +125,7 @@ Colorizes messages.<br>
 _Type_: `string[]`<br>
 _Default_: `["uncaughtException"]`
 
-Which events should trigger `process.exit(1)`.
+Which events should trigger `process.exit(1)`.<br>
 [Full documentation](docs/API.md#exiton).
 
 # Support

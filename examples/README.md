@@ -15,8 +15,8 @@ They can also be run directly
 
 ## Main usage
 
-- How process errors look without `log-process-errors`:
+- How process errors look by default **without** `log-process-errors`:
   [JavaScript](before.js), [command line](before.sh).
-- Hos process errors look
-  [with `log-process-errors`](../docs/API.md#logprocesserrorsoptions):
+- How process errors look **with**
+  [`log-process-errors`](../docs/API.md#logprocesserrorsoptions):
   [JavaScript](after.js), [command line](after.sh).

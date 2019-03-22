@@ -5,8 +5,7 @@ const pickBy = function(object, condition) {
   const pairs = Object.entries(object).filter(([key, value]) =>
     condition(value, key),
   )
-  const objectA = Object.fromEntries(pairs)
-  return objectA
+  return Object.fromEntries(pairs)
 }
 
 // Like Lodash mapValues()
@@ -15,8 +14,7 @@ const mapValues = function(object, mapper) {
     key,
     mapper(value, key),
   ])
-  const objectA = Object.fromEntries(pairs)
-  return objectA
+  return Object.fromEntries(pairs)
 }
 
 // Like Lodash result(), but faster

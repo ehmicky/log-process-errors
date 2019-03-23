@@ -11,4 +11,4 @@
 . "$(dirname "$BASH_SOURCE")/utils.sh"
 
 # Emits different types of process errors.
-node "$dir/before.js"
+node before.js

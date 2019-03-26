@@ -6,41 +6,41 @@ const sinon = require('sinon')
 const { startLogging, normalizeMessage } = require('./helpers')
 
 const INVALID_OPTIONS = [
-  { name: 'log', value: true },
-  { name: 'level', value: true },
-  { name: 'level', value: { warning: true } },
-  { name: 'level', value: 'invalid' },
-  { name: 'level', value: { warning: 'invalid' } },
-  { name: 'message', value: true },
-  { name: 'colors', value: 1 },
-  { name: 'exitOn', value: true },
-  { name: 'exitOn', value: ['invalid'] },
+  { log: true },
+  { level: true },
+  { level: { warning: true } },
+  { level: 'invalid' },
+  { level: { warning: 'invalid' } },
+  { message: true },
+  { colors: 1 },
+  { exitOn: true },
+  { exitOn: ['invalid'] },
+  { test: true },
+  { test: 'invalid' },
+  // eslint-disable-next-line no-empty-function
+  { test: 'ava', log() {} },
 ]
 
-const WARNED_OPTIONS = [
-  { name: 'unknown', value: true },
-  { name: 'level', value: { unknown: 'error' } },
-]
+const WARNED_OPTIONS = [{ unknown: true }, { level: { unknown: 'error' } }]
 
-INVALID_OPTIONS.forEach(({ name, value }) => {
-  test(`${JSON.stringify({ name, value })} should validate options`, t => {
-    const error = t.throws(startLogging.bind(null, { [name]: value }))
+INVALID_OPTIONS.forEach(options => {
+  test(`${JSON.stringify(options)} should validate options`, t => {
+    const error = t.throws(startLogging.bind(null, options))
 
     t.snapshot(normalizeJestValidate(error.message))
   })
 })
 
-WARNED_OPTIONS.forEach(({ name, value }) => {
-  test(`${JSON.stringify({ name, value })} should warn on options`, t => {
+WARNED_OPTIONS.forEach(options => {
+  test(`${JSON.stringify(options)} should warn on options`, t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, 'warn')
 
-    const { stopLogging } = startLogging({ [name]: value })
+    const { stopLogging } = startLogging(options)
+    stopLogging()
 
     t.is(stub.callCount, 1)
     t.snapshot(normalizeMessage(stub.firstCall.args[0], { colors: false }))
-
-    stopLogging()
 
     stub.restore()
   })

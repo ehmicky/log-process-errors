@@ -35,10 +35,9 @@ const callLoader = async function({ name, loader, flags = '' }) {
     { reject: false },
   )
 
-  const message = normalizeMessage(stderr)
   const stdoutA = normalizeMessage(stdout)
-
-  return { code, message, stdout: stdoutA }
+  const stderrA = normalizeMessage(stderr)
+  return { code, stdout: stdoutA, stderr: stderrA }
 }
 
 const LOADERS = {

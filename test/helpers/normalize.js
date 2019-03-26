@@ -26,7 +26,13 @@ const normalizeUnicodeChar = function(message, [before, after]) {
   return message.replace(regExp, after)
 }
 
-const UNICODE_CHARS = [['✔', '√'], ['✖', '×'], ['◉', '(*)'], ['ℹ', 'i']]
+const UNICODE_CHARS = [
+  ['✔', '√'],
+  ['✖', '×'],
+  ['◉', '(*)'],
+  ['ℹ', 'i'],
+  ['⚠', '‼'],
+]
 
 // Default Node.js warnings show PID, which we remove
 const WARNING_PID_REGEXP = /\(node:\d+\)/u

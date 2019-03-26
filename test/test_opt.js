@@ -3,7 +3,7 @@
 const test = require('ava')
 const execa = require('execa')
 
-const { repeatEventsRunners } = require('./helpers')
+const { repeatEventsRunners, normalizeMessage } = require('./helpers')
 
 const HELPER_DIR = `${__dirname}/helpers/test_opt`
 
@@ -21,6 +21,21 @@ repeatEventsRunners((prefix, testRunner, { name }) => {
       reject: false,
       env: { EVENT_NAME: name },
     })
-    t.snapshot({ stdout, stderr, code })
+
+    const stdoutA = normalizeOutput(stdout)
+    const stderrA = normalizeOutput(stderr)
+    t.snapshot({ stdout: stdoutA, stderr: stderrA, code })
   })
 })
+
+const normalizeOutput = function(output) {
+  const outputA = output
+    .trim()
+    .replace(WINDOWS_EOL_REGEXP, '\n')
+    .replace(WINDOWS_PATH_REGEXP, '/')
+  const outputB = normalizeMessage(outputA)
+  return outputB
+}
+
+const WINDOWS_EOL_REGEXP = /\r\n/gu
+const WINDOWS_PATH_REGEXP = /\\\\/gu

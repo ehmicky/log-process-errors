@@ -16,6 +16,6 @@ stubStackTrace()
 logProcessErrors({ test: 'ava' })
 
 test(`should make tests fail on ${EVENT_NAME}`, async t => {
-  await EVENTS[EVENT_NAME]()
   t.pass()
+  await EVENTS[EVENT_NAME]()
 })

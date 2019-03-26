@@ -1,6 +1,19 @@
 'use strict'
 
+const execa = require('execa')
 const stripAnsi = require('strip-ansi')
+
+// Call process and normalize its output for testing
+const normalizeCall = async function(command, args, opts) {
+  const { stdout, stderr, code } = await execa(command, args, {
+    reject: false,
+    ...opts,
+  })
+
+  const stdoutA = normalizeMessage(stdout)
+  const stderrA = normalizeMessage(stderr)
+  return { code, stdout: stdoutA, stderr: stderrA }
+}
 
 // Normalize console messages for testing
 const normalizeMessage = function(message, { colors = true } = {}) {
@@ -43,5 +56,6 @@ const WINDOWS_EOL_REGEXP = /\r\n/gu
 const WINDOWS_PATH_REGEXP = /\\/gu
 
 module.exports = {
+  normalizeCall,
   normalizeMessage,
 }

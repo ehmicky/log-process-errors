@@ -4,7 +4,7 @@
   "main": "build/src/index.js",
   "files": [
     "build/src",
-    "register.js",
+    "register",
     "examples",
     "!~"
   ],

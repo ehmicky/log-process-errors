@@ -11,6 +11,7 @@ const normalizeMessage = function(message, { colors = true } = {}) {
     .replace(WARNING_PID_REGEXP, '(node:PID)')
     .replace(WARNING_OLD_REGEXP, '$1$2')
     .trim()
+    .replace(WINDOWS_EOL_REGEXP, '\n')
 }
 
 // Our library and ava prints the symbol before test names differently
@@ -31,6 +32,7 @@ const WARNING_PID_REGEXP = /\(node:\d+\)/u
 // Default Node.js warnings <10 look different (no `code`, no `detail`)
 // TODO: remove when Node.js <10 is not supported anymore
 const WARNING_OLD_REGEXP = /(\(node:PID\)) \[[^\]]+\](.*)\n.*/u
+const WINDOWS_EOL_REGEXP = /\r\n/gu
 
 module.exports = {
   normalizeMessage,

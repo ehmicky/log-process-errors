@@ -29,12 +29,9 @@ repeatEventsRunners((prefix, testRunner, { name }) => {
 })
 
 const normalizeOutput = function(output) {
-  const outputA = output
-    .replace(WINDOWS_EOL_REGEXP, '\n')
-    .replace(WINDOWS_PATH_REGEXP, '/')
+  const outputA = output.replace(WINDOWS_PATH_REGEXP, '/')
   const outputB = normalizeMessage(outputA)
   return outputB
 }
 
-const WINDOWS_EOL_REGEXP = /\r\n/gu
 const WINDOWS_PATH_REGEXP = /\\\\/gu

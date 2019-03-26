@@ -40,7 +40,7 @@ const WARNING_PID_REGEXP = /\(node:\d+\)/u
 // TODO: remove when Node.js <10 is not supported anymore
 const WARNING_OLD_REGEXP = /(\(node:PID\)) \[[^\]]+\](.*)\n.*/u
 const WINDOWS_EOL_REGEXP = /\r\n/gu
-const WINDOWS_PATH_REGEXP = /\\\\/gu
+const WINDOWS_PATH_REGEXP = /\\/gu
 
 module.exports = {
   normalizeMessage,

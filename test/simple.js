@@ -16,7 +16,7 @@ repeatEvents((prefix, { name }) => {
     const returnValue = await callLoader({
       name,
       loader: 'simple',
-      flags: '--no-warnings',
+      flags: ['--no-warnings'],
     })
 
     t.snapshot(returnValue)
@@ -29,9 +29,10 @@ repeatEvents((prefix, { name }) => {
   })
 })
 
-const callLoader = async function({ name, loader, flags = '' }) {
-  const { stdout, stderr, code } = await execa.shell(
-    `node ${flags} ${LOADERS[loader]} ${name}`,
+const callLoader = async function({ name, loader, flags = [] }) {
+  const { stdout, stderr, code } = await execa(
+    'node',
+    [...flags, LOADERS[loader], name],
     { reject: false },
   )
 

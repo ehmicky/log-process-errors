@@ -15,7 +15,8 @@ stubStackTrace()
 
 logProcessErrors({ test: 'ava' })
 
-test(`should make tests fail on ${EVENT_NAME}`, async t => {
+test(`should make tests fail on ${EVENT_NAME}`, t => {
+  // eslint-disable-next-line no-empty-function
+  EVENTS[EVENT_NAME]().catch(() => {})
   t.pass()
-  await EVENTS[EVENT_NAME]()
 })

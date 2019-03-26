@@ -15,15 +15,24 @@ const getHelperFile = function(testRunner) {
 }
 
 repeatEventsRunners((prefix, testRunner, { name }) => {
-  test(`${prefix} should make tests fails`, async t => {
-    const helperFile = getHelperFile(testRunner)
-    const { stdout, stderr, code } = await execa(testRunner, [helperFile], {
-      reject: false,
-      env: { EVENT_NAME: name },
-    })
+  // `defaultLevel` tests whether `opts.level` can be overridden
+  ;['error', 'silent'].forEach(defaultLevel => {
+    // eslint-disable-next-line max-nested-callbacks
+    test(`${prefix} [${defaultLevel}] should make tests fails`, async t => {
+      const helperFile = getHelperFile(testRunner)
+      const options = {
+        name,
+        test: testRunner,
+        level: { default: defaultLevel },
+      }
+      const { stdout, stderr, code } = await execa(testRunner, [helperFile], {
+        reject: false,
+        env: { OPTIONS: JSON.stringify(options) },
+      })
 
-    const stdoutA = normalizeMessage(stdout)
-    const stderrA = normalizeMessage(stderr)
-    t.snapshot({ stdout: stdoutA, stderr: stderrA, code })
+      const stdoutA = normalizeMessage(stdout)
+      const stderrA = normalizeMessage(stderr)
+      t.snapshot({ stdout: stdoutA, stderr: stderrA, code })
+    })
   })
 })

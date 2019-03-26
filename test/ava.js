@@ -5,13 +5,13 @@
 // this is called through a child process and must be defined in `./helpers`.
 // We solve this by `require()` a helper from this file.
 const {
-  env: { EVENT_NAME },
+  env: { OPTIONS },
 } = require('process')
 
 const test = require('ava')
 
 // This file should not be fired as a normal test file, it's actually a helper
-if (EVENT_NAME === undefined) {
+if (OPTIONS === undefined) {
   // Otherwise `ava` complains
   test('Dummy test', t => t.pass())
 } else {

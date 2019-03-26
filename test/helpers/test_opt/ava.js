@@ -2,7 +2,7 @@
 'use strict'
 
 const {
-  env: { EVENT_NAME },
+  env: { OPTIONS },
 } = require('process')
 
 const test = require('ava')
@@ -13,10 +13,11 @@ const { stubStackTrace } = require('../stack')
 
 stubStackTrace()
 
-logProcessErrors({ test: 'ava' })
+const { name, ...options } = JSON.parse(OPTIONS)
+logProcessErrors(options)
 
-test(`should make tests fail on ${EVENT_NAME}`, t => {
+test(`should make tests fail on ${name}`, t => {
   // eslint-disable-next-line no-empty-function
-  EVENTS[EVENT_NAME]().catch(() => {})
+  EVENTS[name]().catch(() => {})
   t.pass()
 })

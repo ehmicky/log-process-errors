@@ -23,11 +23,7 @@ repeatEvents((prefix, { name }) => {
   })
 
   test(`${prefix} should work using both the -r flag and init()`, async t => {
-    const returnValue = await callLoader({
-      name,
-      loader: 'noop',
-      flags: '--no-warnings',
-    })
+    const returnValue = await callLoader({ name, loader: 'noop' })
 
     t.snapshot(returnValue)
   })

@@ -14,16 +14,27 @@ const getHelperFile = function(testRunner) {
   return `${helperDir}/${testRunner}.js`
 }
 
-// eslint-disable-next-line max-params
-repeatEventsRunners((prefix, testRunner, { name }, defaultLevel) => {
+repeatEventsRunners((prefix, testRunner, { name }) => {
   test(`${prefix} should make tests fails`, async t => {
+    const options = { name, test: testRunner }
     const helperFile = getHelperFile(testRunner)
+    const { stdout, stderr, code } = await execa(testRunner, [helperFile], {
+      reject: false,
+      env: { OPTIONS: JSON.stringify(options) },
+    })
+
+    const stdoutA = normalizeMessage(stdout)
+    const stderrA = normalizeMessage(stderr)
+    t.snapshot({ stdout: stdoutA, stderr: stderrA, code })
+  })
+
+  test(`${prefix} should allow overriding 'opts.level'`, async t => {
     const options = {
       name,
       test: testRunner,
-      // Tests whether `opts.level` can be overridden
-      level: { default: defaultLevel },
+      level: { default: 'silent' },
     }
+    const helperFile = getHelperFile(testRunner)
     const { stdout, stderr, code } = await execa(testRunner, [helperFile], {
       reject: false,
       env: { OPTIONS: JSON.stringify(options) },

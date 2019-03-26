@@ -14,7 +14,6 @@ const propagateError = function(message) {
 const DEFAULT_LEVELS = {
   uncaughtException: 'silent',
   unhandledRejection: 'silent',
-  default: 'error',
 }
 
 const TEST_RUNNERS = {

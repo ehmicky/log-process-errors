@@ -15,7 +15,12 @@ const applyTestOpt = function({ opts, opts: { test: testName, level } }) {
   validateTestName({ testOpt, testName })
   validateTestOpts({ opts, testOpt, testName })
 
-  return { ...opts, ...testOpt, level: { ...level, ...testOpt.level } }
+  return {
+    ...opts,
+    ...testOpt,
+    // Users can override `level.default` but not the ones defined in `testOpt`
+    level: { default: 'error', ...level, ...testOpt.level },
+  }
 }
 
 const validateTestName = function({ testOpt, testName }) {

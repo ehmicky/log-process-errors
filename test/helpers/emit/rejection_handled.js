@@ -10,7 +10,8 @@ const pSetImmediate = promisify(setImmediate)
 const rejectionHandled = async function(getError = defaultGetError) {
   const promise = Promise.reject(getError())
 
-  await promisify(setImmediate)()
+  await pSetImmediate()
+  await pSetImmediate()
 
   // eslint-disable-next-line no-empty-function
   promise.catch(() => {})

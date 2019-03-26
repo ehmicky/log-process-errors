@@ -30,7 +30,6 @@ repeatEventsRunners((prefix, testRunner, { name }) => {
 
 const normalizeOutput = function(output) {
   const outputA = output
-    .trim()
     .replace(WINDOWS_EOL_REGEXP, '\n')
     .replace(WINDOWS_PATH_REGEXP, '/')
   const outputB = normalizeMessage(outputA)

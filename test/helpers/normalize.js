@@ -10,6 +10,7 @@ const normalizeMessage = function(message, { colors = true } = {}) {
   return messageB
     .replace(WARNING_PID_REGEXP, '(node:PID)')
     .replace(WARNING_OLD_REGEXP, '$1$2')
+    .trim()
 }
 
 // Our library and ava prints the symbol before test names differently

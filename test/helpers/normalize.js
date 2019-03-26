@@ -12,6 +12,7 @@ const normalizeMessage = function(message, { colors = true } = {}) {
     .replace(WARNING_OLD_REGEXP, '$1$2')
     .trim()
     .replace(WINDOWS_EOL_REGEXP, '\n')
+    .replace(WINDOWS_PATH_REGEXP, '/')
 }
 
 // Our library and ava prints the symbol before test names differently
@@ -33,6 +34,7 @@ const WARNING_PID_REGEXP = /\(node:\d+\)/u
 // TODO: remove when Node.js <10 is not supported anymore
 const WARNING_OLD_REGEXP = /(\(node:PID\)) \[[^\]]+\](.*)\n.*/u
 const WINDOWS_EOL_REGEXP = /\r\n/gu
+const WINDOWS_PATH_REGEXP = /\\\\/gu
 
 module.exports = {
   normalizeMessage,

@@ -22,16 +22,8 @@ repeatEventsRunners((prefix, testRunner, { name }) => {
       env: { EVENT_NAME: name },
     })
 
-    const stdoutA = normalizeOutput(stdout)
-    const stderrA = normalizeOutput(stderr)
+    const stdoutA = normalizeMessage(stdout)
+    const stderrA = normalizeMessage(stderr)
     t.snapshot({ stdout: stdoutA, stderr: stderrA, code })
   })
 })
-
-const normalizeOutput = function(output) {
-  const outputA = output.replace(WINDOWS_PATH_REGEXP, '/')
-  const outputB = normalizeMessage(outputA)
-  return outputB
-}
-
-const WINDOWS_PATH_REGEXP = /\\\\/gu

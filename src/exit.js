@@ -3,7 +3,7 @@
 // Do not destructure so tests can stub it
 const process = require('process')
 
-const { EXIT_STATUS, EXIT_TIMEOUT } = require('./constants')
+const { EXIT_STATUS, EXIT_TIMEOUT, EVENTS } = require('./constants')
 
 // Exit process according to `opts.exitOn` (default: ['uncaughtException']):
 //  - `uncaughtException`: default behavior of Node.js and recommended by
@@ -36,6 +36,25 @@ const exitProcess = function({ name, opts: { exitOn } }) {
   }, EXIT_TIMEOUT)
 }
 
+const validateExitOn = function({ exitOn }) {
+  if (exitOn === undefined) {
+    return
+  }
+
+  const invalidEvents = exitOn.filter(name => !EVENTS.includes(name))
+
+  if (invalidEvents.length === 0) {
+    return
+  }
+
+  throw new Error(
+    `Invalid option 'exitOn' '${invalidEvents.join(
+      ', ',
+    )}': must be one of ${EVENTS.join(', ')}`,
+  )
+}
+
 module.exports = {
   exitProcess,
+  validateExitOn,
 }

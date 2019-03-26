@@ -52,8 +52,31 @@ const getExampleLevel = function(level) {
   return multipleValidOptions(level, () => {})
 }
 
+const validateLevels = function({ level }) {
+  Object.entries(level).forEach(validateLevel)
+}
+
+const validateLevel = function([name, level]) {
+  if (isValidLevel({ level })) {
+    return
+  }
+
+  throw new Error(
+    `Invalid option 'level.${name}' '${level}': must be a function or one of ${LEVELS.join(
+      ', ',
+    )}`,
+  )
+}
+
+const isValidLevel = function({ level }) {
+  return (
+    LEVELS.includes(level) || level === undefined || typeof level === 'function'
+  )
+}
+
 module.exports = {
   getLevel,
   applyDefaultLevels,
   getExampleLevels,
+  validateLevels,
 }

@@ -30,6 +30,7 @@ const repeatEventsRunners = repeat.bind(
   null,
   Object.keys(TEST_RUNNERS),
   getEvents(),
+  ['error', 'silent'],
 )
 
 module.exports = {

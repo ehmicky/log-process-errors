@@ -5,7 +5,10 @@ const { multipleValidOptions } = require('jest-validate')
 const { TEST_RUNNERS } = require('./test_runners')
 
 // Apply `options.test` which is basically a preset of options.
-const applyTestOpt = function({ opts, opts: { test: testRunner, level } }) {
+const applyTestOpt = function({
+  opts,
+  opts: { test: testRunner, level, ...optsA },
+}) {
   if (testRunner === undefined) {
     return opts
   }
@@ -13,10 +16,10 @@ const applyTestOpt = function({ opts, opts: { test: testRunner, level } }) {
   const testOpt = TEST_RUNNERS[testRunner]
 
   validateTestRunner({ testOpt, testRunner })
-  validateTestOpts({ opts, testOpt, testRunner })
+  validateTestOpts({ opts: optsA, testOpt, testRunner })
 
   return {
-    ...opts,
+    ...optsA,
     ...testOpt,
     // Users can override `level.default` but not the ones defined in `testOpt`
     level: { default: 'error', ...level, ...testOpt.level },
@@ -45,7 +48,7 @@ const validateTestOpts = function({ opts, testOpt, testRunner }) {
 }
 
 const validateTestOpt = function({ optName, testOpt, testRunner }) {
-  if (testOpt[optName] === undefined || optName === 'level') {
+  if (testOpt[optName] === undefined) {
     return
   }
 

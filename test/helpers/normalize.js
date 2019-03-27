@@ -4,7 +4,10 @@ const execa = require('execa')
 const stripAnsi = require('strip-ansi')
 
 // Call process and normalize its output for testing
-const normalizeCall = async function(command, args, opts) {
+const normalizeCall = async function(input, opts) {
+  // TODO: remove once https://github.com/sindresorhus/execa/pull/182 is merged
+  const [command, ...args] = input.split(' ')
+
   const { stdout, stderr, code } = await execa(command, args, {
     reject: false,
     ...opts,

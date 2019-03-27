@@ -35,7 +35,7 @@ repeatEventsRunners((prefix, testRunner, { name }) => {
 const callRunner = async function({ testRunner, name }, opts) {
   const helperFile = getHelperFile(testRunner)
   const optsA = { name, test: testRunner, ...opts }
-  const returnValue = await normalizeCall(testRunner, [helperFile], {
+  const returnValue = await normalizeCall(`${testRunner} ${helperFile}`, {
     env: { OPTIONS: JSON.stringify(optsA) },
   })
   return returnValue

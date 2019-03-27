@@ -36,6 +36,8 @@ logProcessErrors({
   colors: false,
 
   exitOn: ['uncaughtException', 'unhandledRejection'],
+
+  testing: 'ava',
 })
 ```
 
@@ -153,6 +155,71 @@ Which events should trigger `process.exit(1)`:
 
 ```js
 logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
+```
+
+#### testing
+
+_Type_: `string`<br>
+_Value_: `"ava"`<br>
+_Default_: `undefined`
+
+When running tests, this option will make them fail if there are any process
+errors.
+
+Example with [Ava](https://github.com/avajs/ava):
+
+```js
+const logProcessErrors = require('log-process-errors')
+// Should be initialized before requiring other dependencies
+logProcessErrors({ testing: 'ava' })
+
+const test = require('ava')
+
+// Tests will fail because a warning is triggered
+test('Example test', t => {
+  process.emitWarning('Example warning')
+  t.pass()
+})
+```
+
+Alternatively, you can just require
+`log-process-errors/register/{testRunnerName}`:
+
+```js
+// Should be initialized before requiring other dependencies
+require('log-process-errors/register/ava')
+
+const test = require('ava')
+
+// Tests will fail because a warning is triggered
+test('Example test', t => {
+  process.emitWarning('Example warning')
+  t.pass()
+})
+```
+
+This can also be used with
+[`node -r`](https://nodejs.org/api/cli.html#cli_r_require_module) or any
+equivalent CLI flag for your test runner:
+
+```bash
+ava --require log-process-errors/register/ava
+```
+
+To ignore specific process errors, use the [`level` option](#level):
+
+```js
+const logProcessErrors = require('log-process-errors')
+// Should be initialized before requiring other dependencies
+logProcessErrors({ testing: 'ava', level: { warning: 'silent' } })
+
+const test = require('ava')
+
+// Tests will not fail because warnings are `silent`
+test('Example test', t => {
+  process.emitWarning('Example warning')
+  t.pass()
+})
 ```
 
 ### event

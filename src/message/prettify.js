@@ -2,7 +2,7 @@
 
 const { circleFilled, info, warning, cross } = require('figures')
 
-const { getChalk } = require('./colors')
+const { getChalk } = require('../colors')
 
 const prettify = function({ message, name, level, opts: { colors } }) {
   const [explanation, firstLine, ...lines] = message.split('\n')

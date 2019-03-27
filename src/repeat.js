@@ -1,6 +1,6 @@
 'use strict'
 
-const { stableSerialize } = require('./serialize')
+const { stableSerialize } = require('./message/serialize')
 
 // Events with the same `event` are only logged once because:
 //  - it makes logs clearer

@@ -163,8 +163,7 @@ _Type_: `string`<br>
 _Value_: `"ava"`<br>
 _Default_: `undefined`
 
-When running tests, this option will make them fail if there are any process
-errors.
+When running tests, make them fail if there are any process errors.
 
 Example with [Ava](https://github.com/avajs/ava):
 

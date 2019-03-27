@@ -128,6 +128,15 @@ _Default_: `["uncaughtException"]`
 Which events should trigger `process.exit(1)`.<br>
 [Full documentation](docs/API.md#exiton).
 
+## testing
+
+_Type_: `string`<br>
+_Value_: `"ava"`<br>
+_Default_: `undefined`
+
+When running tests, make them fail if there are any process errors.<br>
+[Full documentation](docs/API.md#testing).
+
 # Support
 
 If you found a bug or would like a new feature, _don't hesitate_ to

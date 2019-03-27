@@ -19,41 +19,32 @@ const normalizeCall = async function(command, args, opts) {
 const normalizeMessage = function(message, { colors = true } = {}) {
   // Windows does not use colors on CI
   const messageA = colors ? message : stripAnsi(message)
-  const messageB = normalizeUnicode(messageA)
-  return messageB
-    .replace(WARNING_PID_REGEXP, '(node:PID)')
-    .replace(WARNING_OLD_REGEXP, '$1$2')
-    .trim()
-    .replace(WINDOWS_EOL_REGEXP, '\n')
-    .replace(WINDOWS_PATH_REGEXP, '/')
+  const messageB = messageA.trim()
+  const messageC = REPLACEMENTS.reduce(replacePart, messageB)
+  return messageC
 }
 
-// Our library and ava prints the symbol before test names differently
-// on Windows
-const normalizeUnicode = function(message) {
-  return UNICODE_CHARS.reduce(normalizeUnicodeChar, message)
+const replacePart = function(message, [before, after]) {
+  return message.replace(before, after)
 }
 
-const normalizeUnicodeChar = function(message, [before, after]) {
-  const regExp = new RegExp(before, 'gu')
-  return message.replace(regExp, after)
-}
-
-const UNICODE_CHARS = [
-  ['✔', '√'],
-  ['✖', '×'],
-  ['◉', '(*)'],
-  ['ℹ', 'i'],
-  ['⚠', '‼'],
+const REPLACEMENTS = [
+  // Windows specifics
+  [/\r\n/gu, '\n'],
+  [/\\/gu, '/'],
+  // Our library and ava prints the symbol before test names differently
+  // on Windows
+  [/✔/gu, '√'],
+  [/✖/gu, '×'],
+  [/◉/gu, '(*)'],
+  [/ℹ/gu, 'i'],
+  [/⚠/gu, '‼'],
+  // Default Node.js warnings show PID, which we remove
+  [/\(node:\d+\)/gu, '(node:PID)'],
+  // Default Node.js warnings <10 look different (no `code`, no `detail`)
+  // TODO: remove when Node.js <10 is not supported anymore
+  [/(\(node:PID\)) \[[^\]]+\](.*)\n.*/gu, '$1$2'],
 ]
-
-// Default Node.js warnings show PID, which we remove
-const WARNING_PID_REGEXP = /\(node:\d+\)/u
-// Default Node.js warnings <10 look different (no `code`, no `detail`)
-// TODO: remove when Node.js <10 is not supported anymore
-const WARNING_OLD_REGEXP = /(\(node:PID\)) \[[^\]]+\](.*)\n.*/u
-const WINDOWS_EOL_REGEXP = /\r\n/gu
-const WINDOWS_PATH_REGEXP = /\\/gu
 
 module.exports = {
   normalizeCall,

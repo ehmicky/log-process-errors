@@ -1,3 +1,3 @@
 'use strict'
 
-module.exports = require('./init')
+module.exports = require('./main')

@@ -1,11 +1,12 @@
 'use strict'
 
+const { isLimited } = require('../limit')
+const { isRepeated } = require('../repeat')
+const { getLevel } = require('../level')
+const { getMessage } = require('../message')
+const { exitProcess } = require('../exit')
+
 const { getEvent } = require('./event')
-const { isLimited } = require('./limit')
-const { isRepeated } = require('./repeat')
-const { getLevel } = require('./level')
-const { getMessage } = require('./message')
-const { exitProcess } = require('./exit')
 
 // Generic event handler for all events.
 const handleEvent = async function({

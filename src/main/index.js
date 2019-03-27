@@ -5,10 +5,11 @@ const process = require('process')
 
 const moize = require('moize').default
 
-const { getOptions } = require('./options')
-const { removeWarningListener, restoreWarningListener } = require('./warnings')
+const { getOptions } = require('../options')
+const { removeWarningListener, restoreWarningListener } = require('../warnings')
+const { emitLimitedWarning } = require('../limit')
+
 const EVENTS = require('./events')
-const { emitLimitedWarning } = require('./limit')
 
 // Add event handling for all process-related errors
 const logProcessErrors = function(opts) {

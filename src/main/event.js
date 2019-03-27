@@ -1,6 +1,6 @@
 'use strict'
 
-const { pickBy } = require('./utils')
+const { pickBy } = require('../utils')
 
 // Retrieve `event` object representing the current event information
 const getEvent = async function({

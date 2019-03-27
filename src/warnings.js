@@ -5,7 +5,7 @@ const process = require('process')
 // By default Node.js adds a `warning` listener that prints `warning` events
 // on the console. This leads to duplicated events printing with this module.
 // So we remove it.
-// Alternative ways to do it would be to aski users to pass `--no-warnings`
+// Alternative ways to do it would be to ask users to pass `--no-warnings`
 // CLI flag or `NODE_NO_WARNINGS=1` environment variable. But this is not as
 // developer-friendly.
 const removeWarningListener = function() {

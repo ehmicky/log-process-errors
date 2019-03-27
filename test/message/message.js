@@ -2,7 +2,7 @@
 
 const test = require('ava')
 
-const { startLogging, repeatEvents, repeatEventsLevels } = require('./helpers')
+const { startLogging, repeatEvents, repeatEventsLevels } = require('../helpers')
 
 repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should allow customizing log message`, async t => {

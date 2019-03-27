@@ -8,7 +8,7 @@ const {
   stubStackTrace,
   unstubStackTrace,
   normalizeMessage,
-} = require('./helpers')
+} = require('../helpers')
 
 repeatEventsLevels((prefix, { name, emitEvent }, level) => {
   test(`${prefix} should fire opts.message() with a default prettifier`, async t => {

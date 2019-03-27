@@ -14,13 +14,15 @@ const { stubStackTrace } = require('../stack')
 
 stubStackTrace()
 
-const { name, ...options } = JSON.parse(OPTIONS)
+const { name, message, ...options } = JSON.parse(OPTIONS)
+// Functions cannot be serialized in JSON
+const messageA = message === undefined ? message : () => message
 
 if (options.register) {
   // eslint-disable-next-line import/no-dynamic-require
   require(REGISTER_PATH)
 } else {
-  logProcessErrors(options)
+  logProcessErrors({ ...options, message: messageA })
 }
 
 test(`should make tests fail on ${name}`, t => {

@@ -3,7 +3,7 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const { startLogging, normalizeMessage } = require('./helpers')
+const { startLogging, normalizeMessage } = require('../helpers')
 
 const INVALID_OPTIONS = [
   { log: true },

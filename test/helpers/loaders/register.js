@@ -3,10 +3,10 @@
 const { argv } = require('process')
 
 // eslint-disable-next-line import/no-unassigned-import, node/no-missing-require, import/no-unresolved
-require('../../../register')
+require('../../../../register')
 
-const { stubStackTrace } = require('./stack')
-const { EVENTS } = require('./emit')
+const { stubStackTrace } = require('../stack')
+const { EVENTS } = require('../emit')
 
 stubStackTrace()
 

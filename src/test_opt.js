@@ -5,15 +5,15 @@ const { multipleValidOptions } = require('jest-validate')
 const { TEST_RUNNERS } = require('./test_runners')
 
 // Apply `options.test` which is basically a preset of options.
-const applyTestOpt = function({ opts, opts: { test: testName, level } }) {
-  if (testName === undefined) {
+const applyTestOpt = function({ opts, opts: { test: testRunner, level } }) {
+  if (testRunner === undefined) {
     return opts
   }
 
-  const testOpt = TEST_RUNNERS[testName]
+  const testOpt = TEST_RUNNERS[testRunner]
 
-  validateTestName({ testOpt, testName })
-  validateTestOpts({ opts, testOpt, testName })
+  validateTestRunner({ testOpt, testRunner })
+  validateTestOpts({ opts, testOpt, testRunner })
 
   return {
     ...opts,
@@ -23,13 +23,13 @@ const applyTestOpt = function({ opts, opts: { test: testName, level } }) {
   }
 }
 
-const validateTestName = function({ testOpt, testName }) {
+const validateTestRunner = function({ testOpt, testRunner }) {
   if (testOpt !== undefined) {
     return
   }
 
   throw new Error(
-    `Invalid option 'test' '${testName}': must be one of ${Object.keys(
+    `Invalid option 'test' '${testRunner}': must be one of ${Object.keys(
       TEST_RUNNERS,
     ).join(', ')}`,
   )
@@ -38,19 +38,19 @@ const validateTestName = function({ testOpt, testName }) {
 // Presets override other options. We make sure users do not assume their
 // options are used when they are actually overriden.
 // However we allow overriding preset's `level` so users can filter events.
-const validateTestOpts = function({ opts, testOpt, testName }) {
+const validateTestOpts = function({ opts, testOpt, testRunner }) {
   Object.keys(opts).forEach(optName =>
-    validateTestOpt({ optName, testOpt, testName }),
+    validateTestOpt({ optName, testOpt, testRunner }),
   )
 }
 
-const validateTestOpt = function({ optName, testOpt, testName }) {
+const validateTestOpt = function({ optName, testOpt, testRunner }) {
   if (testOpt[optName] === undefined || optName === 'level') {
     return
   }
 
   throw new Error(
-    `Invalid option '${optName}': it must not be defined together with the option 'test' '${testName}'`,
+    `Invalid option '${optName}': it must not be defined together with the option 'test' '${testRunner}'`,
   )
 }
 

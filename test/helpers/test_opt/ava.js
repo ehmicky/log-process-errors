@@ -14,7 +14,13 @@ const { stubStackTrace } = require('../stack')
 stubStackTrace()
 
 const { name, ...options } = JSON.parse(OPTIONS)
-logProcessErrors(options)
+
+if (options.register) {
+  // eslint-disable-next-line import/no-dynamic-require
+  require(`${__dirname}/../../../../register/ava`)
+} else {
+  logProcessErrors(options)
+}
 
 test(`should make tests fail on ${name}`, t => {
   // eslint-disable-next-line no-empty-function

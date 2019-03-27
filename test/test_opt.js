@@ -29,7 +29,7 @@ repeatEventsRunners((prefix, testRunner, { name }) => {
 
   test(`${prefix} should work with the -r flag`, async t => {
     const helperFile = getHelperFile(testRunner)
-    const options = { name, test: testRunner, level: { default: 'silent' } }
+    const options = { name, test: testRunner, register: true }
     const returnValue = await normalizeCall(testRunner, [helperFile], {
       env: { OPTIONS: JSON.stringify(options) },
     })

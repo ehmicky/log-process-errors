@@ -6,12 +6,13 @@ const {
   applyDefaultLevels,
   getExampleLevels,
   validateLevels,
-} = require('./level')
-const { validateExitOn } = require('./exit')
-const { defaultMessage } = require('./message')
-const { defaultLog } = require('./log')
+} = require('../level')
+const { validateExitOn } = require('../exit')
+const { defaultMessage } = require('../message')
+const { defaultLog } = require('../log')
+const { pickBy } = require('../utils')
+
 const { applyTesting, getExampleTesting } = require('./testing')
-const { pickBy } = require('./utils')
 
 // Validate options and assign default options
 const getOptions = function({ opts = {} }) {

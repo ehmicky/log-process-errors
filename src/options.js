@@ -10,7 +10,7 @@ const {
 const { validateExitOn } = require('./exit')
 const { defaultMessage } = require('./message')
 const { defaultLog } = require('./log')
-const { applyTestOpt, getExampleTestOpt } = require('./test_opt')
+const { applyTestOpt, getExampleTestOpt } = require('./testing')
 const { pickBy } = require('./utils')
 
 // Validate options and assign default options

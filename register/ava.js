@@ -4,4 +4,4 @@
 
 const logProcessErrors = require('./main')
 
-logProcessErrors({ test: 'ava' })
+logProcessErrors({ testing: 'ava' })

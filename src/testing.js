@@ -2,38 +2,35 @@
 
 const { multipleValidOptions } = require('jest-validate')
 
-const { TEST_RUNNERS } = require('./test_runners')
+const { RUNNERS } = require('./runners')
 
-// Apply `options.test` which is basically a preset of options.
-const applyTestOpt = function({
-  opts,
-  opts: { test: testRunner, level, ...optsA },
-}) {
-  if (testRunner === undefined) {
+// Apply `options.testing` which is basically a preset of options.
+const applyTesting = function({ opts, opts: { testing, level, ...optsA } }) {
+  if (testing === undefined) {
     return opts
   }
 
-  const testOpt = TEST_RUNNERS[testRunner]
+  const testOpts = RUNNERS[testing]
 
-  validateTestRunner({ testOpt, testRunner })
-  validateTestOpts({ opts: optsA, testOpt, testRunner })
+  validateTesting({ testOpts, testing })
+  validateTestOpts({ opts: optsA, testOpts, testing })
 
   return {
     ...optsA,
-    ...testOpt,
-    // Users can override `level.default` but not the ones defined in `testOpt`
-    level: { default: 'error', ...level, ...testOpt.level },
+    ...testOpts,
+    // Users can override `level.default` but not the ones defined in `testOpts`
+    level: { default: 'error', ...level, ...testOpts.level },
   }
 }
 
-const validateTestRunner = function({ testOpt, testRunner }) {
-  if (testOpt !== undefined) {
+const validateTesting = function({ testOpts, testing }) {
+  if (testOpts !== undefined) {
     return
   }
 
   throw new Error(
-    `Invalid option 'test' '${testRunner}': must be one of ${Object.keys(
-      TEST_RUNNERS,
+    `Invalid option 'testing' '${testing}': must be one of ${Object.keys(
+      RUNNERS,
     ).join(', ')}`,
   )
 }
@@ -41,28 +38,28 @@ const validateTestRunner = function({ testOpt, testRunner }) {
 // Presets override other options. We make sure users do not assume their
 // options are used when they are actually overriden.
 // However we allow overriding preset's `level` so users can filter events.
-const validateTestOpts = function({ opts, testOpt, testRunner }) {
+const validateTestOpts = function({ opts, testOpts, testing }) {
   Object.keys(opts).forEach(optName =>
-    validateTestOpt({ optName, testOpt, testRunner }),
+    validateTestOpt({ optName, testOpts, testing }),
   )
 }
 
-const validateTestOpt = function({ optName, testOpt, testRunner }) {
-  if (testOpt[optName] === undefined) {
+const validateTestOpt = function({ optName, testOpts, testing }) {
+  if (testOpts[optName] === undefined) {
     return
   }
 
   throw new Error(
-    `Invalid option '${optName}': it must not be defined together with the option 'test' '${testRunner}'`,
+    `Invalid option '${optName}': it must not be defined together with the option 'testing' '${testing}'`,
   )
 }
 
 // Use during options validation
-const getExampleTestOpt = function() {
-  return multipleValidOptions(...Object.keys(TEST_RUNNERS))
+const getExampleTesting = function() {
+  return multipleValidOptions(...Object.keys(RUNNERS))
 }
 
 module.exports = {
-  applyTestOpt,
-  getExampleTestOpt,
+  applyTesting,
+  getExampleTesting,
 }

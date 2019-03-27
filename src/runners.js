@@ -16,7 +16,7 @@ const DEFAULT_LEVELS = {
   unhandledRejection: 'silent',
 }
 
-const TEST_RUNNERS = {
+const RUNNERS = {
   ava: {
     log: propagateError,
     level: DEFAULT_LEVELS,
@@ -28,5 +28,5 @@ const TEST_RUNNERS = {
 }
 
 module.exports = {
-  TEST_RUNNERS,
+  RUNNERS,
 }

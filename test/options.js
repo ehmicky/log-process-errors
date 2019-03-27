@@ -15,10 +15,10 @@ const INVALID_OPTIONS = [
   { colors: 1 },
   { exitOn: true },
   { exitOn: ['invalid'] },
-  { test: true },
-  { test: 'invalid' },
+  { testing: true },
+  { testing: 'invalid' },
   // eslint-disable-next-line no-empty-function
-  { test: 'ava', log() {} },
+  { testing: 'ava', log() {} },
 ]
 
 const WARNED_OPTIONS = [{ unknown: true }, { level: { unknown: 'error' } }]

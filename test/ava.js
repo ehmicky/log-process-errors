@@ -17,5 +17,5 @@ if (OPTIONS === undefined) {
 } else {
   // We do not require `./helpers` so that `./helpers/remove` is not executed.
   // eslint-disable-next-line import/no-unassigned-import
-  require('./helpers/test_opt/ava')
+  require('./helpers/testing/ava')
 }

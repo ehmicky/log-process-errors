@@ -11,7 +11,7 @@ You can try all the examples below:
 Initializes `log-process-errors`. Returns a function that can be fired to
 restore Node.js default behavior.
 
-<!-- eslint-disable-next-line import/newline-after-import -->
+<!-- eslint-disable import/newline-after-import -->
 
 ```js
 const logProcessErrors = require('log-process-errors')
@@ -168,6 +168,8 @@ errors.
 
 Example with [Ava](https://github.com/avajs/ava):
 
+<!-- eslint-disable node/prefer-global/process, ava/no-ignored-test-files, import/order -->
+
 ```js
 const logProcessErrors = require('log-process-errors')
 // Should be initialized before requiring other dependencies
@@ -184,6 +186,8 @@ test('Example test', t => {
 
 Alternatively, you can just require
 `log-process-errors/register/{testRunnerName}`:
+
+<!-- eslint-disable node/prefer-global/process, ava/no-ignored-test-files, import/no-unassigned-import -->
 
 ```js
 // Should be initialized before requiring other dependencies
@@ -207,6 +211,8 @@ ava --require log-process-errors/register/ava
 ```
 
 To ignore specific process errors, use the [`level` option](#level):
+
+<!-- eslint-disable node/prefer-global/process, ava/no-ignored-test-files, import/order -->
 
 ```js
 const logProcessErrors = require('log-process-errors')

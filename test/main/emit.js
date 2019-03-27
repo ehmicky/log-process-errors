@@ -2,7 +2,7 @@
 
 const test = require('ava')
 
-const { repeatEvents, startLogging } = require('./helpers')
+const { repeatEvents, startLogging } = require('../helpers')
 
 repeatEvents((prefix, { emitEvent }) => {
   test(`${prefix} events emitters should exist`, t => {

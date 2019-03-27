@@ -12,7 +12,7 @@ const {
   stubStackTrace,
   unstubStackTrace,
   normalizeMessage,
-} = require('./helpers')
+} = require('../helpers')
 
 const addProcessHandler = function(name) {
   const processHandler = sinon.spy()

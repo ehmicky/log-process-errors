@@ -2,7 +2,7 @@
 
 const test = require('ava')
 
-const { repeat, startLogging, EVENTS } = require('./helpers')
+const { repeat, startLogging, EVENTS } = require('../helpers')
 
 const EVENT_OBJECTS = [
   {

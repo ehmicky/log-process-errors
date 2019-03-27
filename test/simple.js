@@ -16,9 +16,9 @@ repeatEvents((prefix, { name }) => {
 
   test(`${prefix} should work with --no-warnings`, async t => {
     const returnValue = await normalizeCall('node', [
+      '--no-warnings',
       SIMPLE_LOADER,
       name,
-      '--no-warnings',
     ])
 
     t.snapshot(returnValue)

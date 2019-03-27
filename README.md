@@ -19,6 +19,7 @@ on the console which is very useful. Unfortunately those errors:
   [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
   errors (when a promise is resolved/rejected twice).
 - are inconvenient to [log to an external service](docs/API.md#log).
+- are cumbersome to [test](docs/API.md#testing).
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).

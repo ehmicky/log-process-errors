@@ -7,6 +7,7 @@ const {
 
 const test = require('ava')
 
+const REGISTER_PATH = `${__dirname}/../../../../register/ava`
 const logProcessErrors = require('../../../src')
 const { EVENTS } = require('../emit')
 const { stubStackTrace } = require('../stack')
@@ -17,7 +18,7 @@ const { name, ...options } = JSON.parse(OPTIONS)
 
 if (options.register) {
   // eslint-disable-next-line import/no-dynamic-require
-  require(`${__dirname}/../../../../register/ava`)
+  require(REGISTER_PATH)
 } else {
   logProcessErrors(options)
 }

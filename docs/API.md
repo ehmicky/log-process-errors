@@ -49,11 +49,11 @@ _Type_: `object`
 
 _Type_: `function(message, level, event)`
 
-By default events will be logged to the console using `console.error()`,
+By default process errors will be logged to the console using `console.error()`,
 `console.warn()`, etc.
 
-This behavior can be overridden with the `log` option. For example to log events
-with [Winston](https://github.com/winstonjs/winston) instead:
+This behavior can be overridden with the `log` option. For example to log
+process errors with [Winston](https://github.com/winstonjs/winston) instead:
 
 ```js
 logProcessErrors({
@@ -70,8 +70,8 @@ If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
 [Winston](https://github.com/winstonjs/winston)).
 
-Duplicate events are only logged once (whether the `log` option is defined or
-not).
+Duplicate process errors are only logged once (whether the `log` option is
+defined or not).
 
 #### level
 
@@ -116,7 +116,7 @@ Overrides the default message generation. Arguments are [`level`](#level),
 
 ```js
 logProcessErrors({
-  // Log events as JSON instead
+  // Log process errors as JSON instead
   message(level, event) {
     return JSON.stringify(event)
   },
@@ -142,7 +142,7 @@ logProcessErrors({ colors: false })
 _Type_: `string[]`<br>
 _Default_: `["uncaughtException"]`
 
-Which events should trigger `process.exit(1)`:
+Which process errors should trigger `process.exit(1)`:
 
 - `["uncaughtException"]` is Node.js
   [default behavior](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
@@ -151,7 +151,8 @@ Which events should trigger `process.exit(1)`:
 - use `[]` to prevent any `process.exit(1)`. Recommended if your process is
   long-running and does not automatically restart on exit.
 
-`process.exit(1)` will only be fired after successfully logging the event.
+`process.exit(1)` will only be fired after successfully logging the process
+error.
 
 ```js
 logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })

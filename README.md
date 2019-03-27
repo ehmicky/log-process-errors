@@ -95,7 +95,7 @@ logProcessErrors(options)
 
 _Type_: `function(message, level, event)`<br>
 
-Customizes how events are logged.<br>
+Customizes how process errors are logged.<br>
 [Full documentation](docs/API.md#log).
 
 ## level
@@ -126,7 +126,7 @@ Colorizes messages.<br>
 _Type_: `string[]`<br>
 _Default_: `["uncaughtException"]`
 
-Which events should trigger `process.exit(1)`.<br>
+Which process errors should trigger `process.exit(1)`.<br>
 [Full documentation](docs/API.md#exiton).
 
 ## testing

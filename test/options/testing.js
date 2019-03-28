@@ -56,6 +56,8 @@ const getHelperFile = function(testing) {
   return `${helperDir}/${testing}.js`
 }
 
+// By default we call each test runner with `PROGRAM FILE`.
+// However some test runners need some configuration.
 const COMMANDS = {
   // Jasmine add random seeds to output otherwise
   // eslint-disable-next-line unicorn/no-unused-properties

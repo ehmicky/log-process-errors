@@ -47,6 +47,11 @@ const REPLACEMENTS = [
   // Default Node.js warnings <10 look different (no `code`, no `detail`)
   // TODO: remove when Node.js <10 is not supported anymore
   [/(\(node:PID\)) \[[^\]]+\](.*)\n.*/gu, '$1$2'],
+  // Durations in test runners:
+  //  - Mocha
+  [/ \([\d.]+ms\)/gu, ''],
+  //  - Jasmine
+  [/[\d.]+ seconds/gu, ''],
 ]
 
 module.exports = {

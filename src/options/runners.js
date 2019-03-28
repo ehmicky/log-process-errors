@@ -10,18 +10,25 @@ const propagateError = function(message) {
   })
 }
 
-// Most test runners already handle `uncaughtException` and `unhandledRejection`
-const DEFAULT_LEVELS = {
-  uncaughtException: 'silent',
-  unhandledRejection: 'silent',
+// Options common to most runners
+const LOOSE_OPTIONS = {
+  log: propagateError,
+  // All runners need to report `uncaughtException` for `propagateError()` to
+  // work
+  level: { uncaughtException: 'silent' },
+  // Other tests should keep running
+  exitOn: [],
+}
+
+// Same but for runners that also report `unhandleRejection`
+const STRICT_OPTIONS = {
+  ...LOOSE_OPTIONS,
+  level: { ...LOOSE_OPTIONS.level, unhandledRejection: 'silent' },
 }
 
 const RUNNERS = {
   ava: {
-    log: propagateError,
-    level: DEFAULT_LEVELS,
-    // Other tests should keep running
-    exitOn: [],
+    ...STRICT_OPTIONS,
     // Using `colors: true` somehow messes up Ava output
     colors: false,
   },

@@ -10,6 +10,14 @@ const propagateError = function(message) {
   })
 }
 
+// Some test runners like Jasmine print both `Error.message` and `Error.stack`,
+// which leads to duplicate stack traces.
+const propagatePlainError = function(message) {
+  nextTick(() => {
+    throw message
+  })
+}
+
 // Options common to most runners
 const LOOSE_OPTIONS = {
   log: propagateError,
@@ -29,6 +37,7 @@ const STRICT_OPTIONS = {
 const RUNNERS = {
   // Using `colors: true` somehow messes up Ava output
   ava: { ...STRICT_OPTIONS, colors: false },
+  jasmine: { ...STRICT_OPTIONS, log: propagatePlainError },
 }
 
 module.exports = {

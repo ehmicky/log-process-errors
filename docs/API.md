@@ -161,7 +161,7 @@ logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
 #### testing
 
 _Type_: `string`<br>
-_Value_: `"ava"`<br>
+_Value_: `"ava"` or `"jasmine"`<br>
 _Default_: `undefined`
 
 When running tests, makes them fail if there are any process errors.

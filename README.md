@@ -135,7 +135,7 @@ _Type_: `string`<br>
 _Value_: `"ava"`<br>
 _Default_: `undefined`
 
-When running tests, make them fail if there are any process errors.<br>
+When running tests, makes them fail if there are any process errors.<br>
 [Full documentation](docs/API.md#testing).
 
 # Support

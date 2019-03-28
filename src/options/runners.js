@@ -12,9 +12,19 @@ const propagateError = function(message) {
 
 // Some test runners like Jasmine print both `Error.message` and `Error.stack`,
 // which leads to duplicate stack traces.
-const propagatePlainError = function(message) {
+const propagateString = function(message) {
   nextTick(() => {
     throw message
+  })
+}
+
+// Same but for test runners that do not print Error strings nicely.
+const propagateStack = function(message) {
+  nextTick(() => {
+    const error = new Error('')
+    // eslint-disable-next-line fp/no-mutation
+    error.stack = message
+    throw error
   })
 }
 
@@ -37,7 +47,8 @@ const STRICT_OPTIONS = {
 const RUNNERS = {
   // Using `colors: true` somehow messes up Ava output
   ava: { ...STRICT_OPTIONS, colors: false },
-  jasmine: { ...STRICT_OPTIONS, log: propagatePlainError },
+  mocha: { ...LOOSE_OPTIONS, log: propagateStack, colors: false },
+  jasmine: { ...STRICT_OPTIONS, log: propagateString },
 }
 
 module.exports = {

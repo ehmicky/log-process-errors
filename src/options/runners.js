@@ -27,11 +27,8 @@ const STRICT_OPTIONS = {
 }
 
 const RUNNERS = {
-  ava: {
-    ...STRICT_OPTIONS,
-    // Using `colors: true` somehow messes up Ava output
-    colors: false,
-  },
+  // Using `colors: true` somehow messes up Ava output
+  ava: { ...STRICT_OPTIONS, colors: false },
 }
 
 module.exports = {

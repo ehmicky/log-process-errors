@@ -23,10 +23,18 @@ const isNormalLevel = function(level) {
 
 const NORMAL_LEVELS = LEVELS.filter(isNormalLevel)
 
+const getRunners = function() {
+  return Object.entries(RUNNERS).map(getRunner)
+}
+
+const getRunner = function([testing, testOpts]) {
+  return { ...testOpts, testing, name: testing }
+}
+
 const repeatEvents = repeat.bind(null, getEvents())
 const repeatLevels = repeat.bind(null, NORMAL_LEVELS)
 const repeatEventsLevels = repeat.bind(null, getEvents(), NORMAL_LEVELS)
-const repeatEventsRunners = repeat.bind(null, Object.keys(RUNNERS), getEvents())
+const repeatEventsRunners = repeat.bind(null, getRunners(), getEvents())
 
 module.exports = {
   repeatEvents,

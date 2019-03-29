@@ -28,6 +28,8 @@ const RUNNERS = [
     command: file => `jasmine --seed=0 ${file}`,
   },
 
+  { name: 'tape', command: file => `tape ${file}` },
+
   {
     name: 'node-tap:classic',
     command: file => `tap -R=classic ${file.replace('node-tap', 'node_tap')}`,
@@ -38,8 +40,6 @@ const RUNNERS = [
     command: file => `tap -R=tap ${file.replace('node-tap', 'node_tap')}`,
     skip: usesSpawnWrap,
   },
-
-  { name: 'tape', command: file => `tape ${file}` },
 ].filter(shouldKeep)
 
 module.exports = {

@@ -6,7 +6,9 @@ const { repeatEventsRunners, normalizeCall } = require('../helpers')
 
 const HELPER_DIR = `${__dirname}/../helpers/testing`
 
-repeatEventsRunners((prefix, { testing, command }, { name }) => {
+repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
+  const [testing] = testName.split(':')
+
   test(`${prefix} should make tests fails`, async t => {
     const returnValue = await callRunner({ testing, command, name })
 

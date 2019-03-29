@@ -18,31 +18,24 @@ const usesSpawnWrap = function() {
 
 // We test each runner + reporter combination
 const RUNNERS = [
-  { name: 'ava', testing: 'ava', command: helperFile => `ava ${helperFile}` },
+  { name: 'ava', command: helperFile => `ava ${helperFile}` },
 
-  {
-    name: 'mocha',
-    testing: 'mocha',
-    command: helperFile => `mocha ${helperFile}`,
-  },
+  { name: 'mocha', command: helperFile => `mocha ${helperFile}` },
 
-  // Jasmine adds random seeds to output otherwise
   {
     name: 'jasmine',
-    testing: 'jasmine',
+    // Jasmine adds random seeds to output otherwise
     command: helperFile => `jasmine --seed=0 ${helperFile}`,
   },
 
   {
     name: 'node-tap:classic',
-    testing: 'node-tap',
     command: helperFile =>
       `tap -R=classic ${helperFile.replace('node-tap', 'node_tap')}`,
     skip: usesSpawnWrap,
   },
   {
     name: 'node-tap:tap',
-    testing: 'node-tap',
     command: helperFile =>
       `tap -R=tap ${helperFile.replace('node-tap', 'node_tap')}`,
     skip: usesSpawnWrap,

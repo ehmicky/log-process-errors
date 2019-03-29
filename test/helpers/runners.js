@@ -38,6 +38,8 @@ const RUNNERS = [
     command: file => `tap -R=tap ${file.replace('node-tap', 'node_tap')}`,
     skip: usesSpawnWrap,
   },
+
+  { name: 'tape', command: file => `tape ${file}` },
 ].filter(shouldKeep)
 
 module.exports = {

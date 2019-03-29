@@ -23,6 +23,12 @@ const RUNNERS = [
     command: helperFile =>
       `tap -R=classic ${helperFile.replace('node-tap', 'node_tap')}`,
   },
+  {
+    name: 'node-tap:tap',
+    testing: 'node-tap',
+    command: helperFile =>
+      `tap -R=tap ${helperFile.replace('node-tap', 'node_tap')}`,
+  },
 ]
 
 module.exports = {

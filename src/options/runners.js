@@ -4,9 +4,15 @@ const { nextTick } = require('process')
 
 // Make `opts.log()` propagate an `uncaughtException` so that test runner
 // reports the original process error as a test failure.
+// `message` is a stringified `Error`. We parse it back to an `Error` object.
 const propagateError = function(message) {
   nextTick(() => {
-    throw new Error(message)
+    const [messageA, ...stack] = message.split('\n')
+    const stackA = stack.join('\n')
+    const error = new Error(messageA)
+    // eslint-disable-next-line fp/no-mutation
+    error.stack = stackA
+    throw error
   })
 }
 
@@ -18,19 +24,9 @@ const propagateString = function(message) {
   })
 }
 
-// Same but for test runners that do not print Error strings nicely.
-const propagateStack = function(message) {
-  nextTick(() => {
-    const error = new Error('')
-    // eslint-disable-next-line fp/no-mutation
-    error.stack = message
-    throw error
-  })
-}
-
 // Options common to most runners
 const COMMON_OPTIONS = {
-  log: propagateStack,
+  log: propagateError,
   // Most runners do their own colorization
   colors: false,
   // Other tests should keep running

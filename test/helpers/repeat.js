@@ -3,8 +3,8 @@
 // Required directly because this is exposed through documentation, but not
 // through code
 const { LEVELS, DEFAULT_LEVEL } = require('../../src/constants')
-const { RUNNERS } = require('../options/runners')
 
+const { RUNNERS } = require('./runners')
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')
 

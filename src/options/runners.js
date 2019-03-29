@@ -30,7 +30,9 @@ const propagateStack = function(message) {
 
 // Options common to most runners
 const LOOSE_OPTIONS = {
-  log: propagateError,
+  log: propagateStack,
+  // Most runners do their own colorization
+  colors: false,
   // All runners need to report `uncaughtException` for `propagateError()` to
   // work
   level: { uncaughtException: 'silent' },
@@ -45,10 +47,10 @@ const STRICT_OPTIONS = {
 }
 
 const RUNNERS = {
-  ava: { ...STRICT_OPTIONS, log: propagateStack, colors: false },
-  mocha: { ...LOOSE_OPTIONS, log: propagateStack, colors: false },
-  jasmine: { ...STRICT_OPTIONS, log: propagateString },
-  'node-tap': { ...STRICT_OPTIONS, log: propagateStack },
+  ava: STRICT_OPTIONS,
+  mocha: LOOSE_OPTIONS,
+  jasmine: { ...STRICT_OPTIONS, log: propagateString, colors: true },
+  'node-tap': STRICT_OPTIONS,
 }
 
 module.exports = {

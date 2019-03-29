@@ -29,28 +29,23 @@ const propagateStack = function(message) {
 }
 
 // Options common to most runners
-const LOOSE_OPTIONS = {
+const COMMON_OPTIONS = {
   log: propagateStack,
   // Most runners do their own colorization
   colors: false,
-  // All runners need to report `uncaughtException` for `propagateError()` to
-  // work
-  level: { uncaughtException: 'silent' },
   // Other tests should keep running
   exitOn: [],
-}
-
-// Same but for runners that also report `unhandleRejection`
-const STRICT_OPTIONS = {
-  ...LOOSE_OPTIONS,
-  level: { ...LOOSE_OPTIONS.level, unhandledRejection: 'silent' },
+  // All runners need to report `uncaughtException` for `propagateError()` to
+  // work. Most also report `unhandledRejection`
+  level: { uncaughtException: 'silent', unhandledRejection: 'silent' },
 }
 
 const RUNNERS = {
-  ava: STRICT_OPTIONS,
-  mocha: LOOSE_OPTIONS,
-  jasmine: { ...STRICT_OPTIONS, log: propagateString, colors: true },
-  'node-tap': STRICT_OPTIONS,
+  ava: COMMON_OPTIONS,
+  // Mocha does not report `unhandleRejection`
+  mocha: { ...COMMON_OPTIONS, level: { uncaughtException: 'silent' } },
+  jasmine: { ...COMMON_OPTIONS, log: propagateString, colors: true },
+  'node-tap': COMMON_OPTIONS,
 }
 
 module.exports = {

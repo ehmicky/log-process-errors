@@ -44,7 +44,7 @@ const RUNNERS = {
   ava: COMMON_OPTIONS,
   // Mocha does not report `unhandleRejection`
   mocha: { ...COMMON_OPTIONS, level: { uncaughtException: 'silent' } },
-  jasmine: { ...COMMON_OPTIONS, log: propagateString, colors: true },
+  jasmine: { ...COMMON_OPTIONS, log: propagateString },
   'node-tap': COMMON_OPTIONS,
 }
 

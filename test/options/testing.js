@@ -46,7 +46,8 @@ const callRunner = async function({ testing, command, name }, opts) {
   const optsA = { name, testing, ...opts }
   const commandA = command(helperFile)
   const returnValue = await normalizeCall(commandA, {
-    env: { OPTIONS: JSON.stringify(optsA) },
+    // Test runners have different CI output sometimes.
+    env: { OPTIONS: JSON.stringify(optsA), CI: '1' },
   })
   return returnValue
 }

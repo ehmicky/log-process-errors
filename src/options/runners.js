@@ -45,10 +45,10 @@ const STRICT_OPTIONS = {
 }
 
 const RUNNERS = {
-  // Using `colors: true` somehow messes up Ava output
   ava: { ...STRICT_OPTIONS, colors: false },
   mocha: { ...LOOSE_OPTIONS, log: propagateStack, colors: false },
   jasmine: { ...STRICT_OPTIONS, log: propagateString },
+  'node-tap': { ...STRICT_OPTIONS, log: propagateStack },
 }
 
 module.exports = {

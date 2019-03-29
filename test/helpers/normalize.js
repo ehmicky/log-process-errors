@@ -47,11 +47,18 @@ const REPLACEMENTS = [
   // Default Node.js warnings <10 look different (no `code`, no `detail`)
   // TODO: remove when Node.js <10 is not supported anymore
   [/(\(node:PID\)) \[[^\]]+\](.*)\n.*/gu, '$1$2'],
+  // File paths
+  [/[^ (]+\/[^ )]+/gu, ''],
   // Durations in test runners:
-  //  - Mocha
+  //  - Mocha, node-tap `classic` reporter
   [/ \([\d.]+ms\)/gu, ''],
   //  - Jasmine
   [/[\d.]+ seconds/gu, ''],
+  //  - node-tap `classic` reporter
+  [/ [\d.]+ms/gu, ''],
+  [/(line|column): \d+/gu, ''],
+  //  - TAP
+  [/time=[\d.]+ms/gu, ''],
 ]
 
 module.exports = {

@@ -42,7 +42,7 @@ const callRunner = async function({ testing, name }, opts) {
   const helperFile = getHelperFile(testing)
   const optsA = { name, testing, ...opts }
   const { [testing]: command = defaultGetCommand } = COMMANDS
-  const commandA = command(testing, helperFile)
+  const commandA = command(helperFile, testing)
   const returnValue = await normalizeCall(commandA, {
     env: { OPTIONS: JSON.stringify(optsA) },
   })
@@ -58,14 +58,18 @@ const getHelperFile = function(testing) {
 
 // By default we call each test runner with `PROGRAM FILE`.
 // However some test runners need some configuration.
+/* eslint-disable unicorn/no-unused-properties */
 const COMMANDS = {
   // Jasmine add random seeds to output otherwise
-  // eslint-disable-next-line unicorn/no-unused-properties
-  jasmine(testing, helperFile) {
-    return `${testing} --seed=0 ${helperFile}`
+  jasmine(helperFile) {
+    return `jasmine --seed=0 ${helperFile}`
+  },
+  'node-tap'(helperFile) {
+    return `tap -R=classic ${helperFile.replace('node-tap', 'node_tap')}`
   },
 }
+/* eslint-enable unicorn/no-unused-properties */
 
-const defaultGetCommand = function(testing, helperFile) {
+const defaultGetCommand = function(helperFile, testing) {
   return `${testing} ${helperFile}`
 }

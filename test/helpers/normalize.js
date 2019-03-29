@@ -38,6 +38,7 @@ const REPLACEMENTS = [
   // Our library and ava prints the symbol before test names differently
   // on Windows
   [/✔/gu, '√'],
+  [/✓/gu, '√'],
   [/✖/gu, '×'],
   [/◉/gu, '(*)'],
   [/ℹ/gu, 'i'],

@@ -45,7 +45,7 @@ const STRICT_OPTIONS = {
 }
 
 const RUNNERS = {
-  ava: { ...STRICT_OPTIONS, colors: false },
+  ava: { ...STRICT_OPTIONS, log: propagateStack, colors: false },
   mocha: { ...LOOSE_OPTIONS, log: propagateStack, colors: false },
   jasmine: { ...STRICT_OPTIONS, log: propagateString },
   'node-tap': { ...STRICT_OPTIONS, log: propagateStack },

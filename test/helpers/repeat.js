@@ -3,7 +3,7 @@
 // Required directly because this is exposed through documentation, but not
 // through code
 const { LEVELS, DEFAULT_LEVEL } = require('../../src/constants')
-const { RUNNERS } = require('../../src/options/runners')
+const { RUNNERS } = require('../options/runners')
 
 const { EVENTS } = require('./emit')
 const { repeat } = require('./data_driven')
@@ -26,7 +26,7 @@ const NORMAL_LEVELS = LEVELS.filter(isNormalLevel)
 const repeatEvents = repeat.bind(null, getEvents())
 const repeatLevels = repeat.bind(null, NORMAL_LEVELS)
 const repeatEventsLevels = repeat.bind(null, getEvents(), NORMAL_LEVELS)
-const repeatEventsRunners = repeat.bind(null, Object.keys(RUNNERS), getEvents())
+const repeatEventsRunners = repeat.bind(null, RUNNERS, getEvents())
 
 module.exports = {
   repeatEvents,

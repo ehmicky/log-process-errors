@@ -3,7 +3,7 @@
 const { isLimited } = require('../limit')
 const { isRepeated } = require('../repeat')
 const { getLevel } = require('../level')
-const { getMessage } = require('../message')
+const { getError } = require('../error')
 const { exitProcess } = require('../exit')
 
 const { getEvent } = require('./event')
@@ -47,10 +47,10 @@ const logEvent = async function({ opts, event }) {
     return
   }
 
-  const message = getMessage({ opts, event, level })
+  const error = getError({ opts, level, event })
 
   // See `exit.js` on why we need to `await`
-  await opts.log(message, level, event)
+  await opts.log(error, level, event)
 }
 
 module.exports = {

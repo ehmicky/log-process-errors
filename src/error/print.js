@@ -4,8 +4,16 @@ const { circleFilled, info, warning, cross } = require('figures')
 
 const { getChalk } = require('../colors')
 
-const prettify = function({ message, name, level, opts: { colors } }) {
-  const [explanation, firstLine, ...lines] = message.split('\n')
+// Pretty-print error on the console (which uses `util.inspect()`)
+const printError = function({
+  opts: { colors },
+  level,
+  name,
+  error: { message },
+  stack,
+}) {
+  const [messageA, ...details] = message.split(':')
+  const detailsA = details.join(':')
 
   const {
     chalk,
@@ -16,14 +24,14 @@ const prettify = function({ message, name, level, opts: { colors } }) {
   // `firstLine`
   const { COLOR, SIGN } = LEVELS[level]
   const header = chalk[COLOR](
-    `${inverse(bold(` ${SIGN}  ${name}${italic(explanation)} `))} ${firstLine}`,
+    `${inverse(
+      bold(` ${SIGN}  ${name} ${italic(`(${messageA})`)} `),
+    )}${detailsA}`,
   )
 
-  // Add gray color and indentation to other lines.
-  const linesA = lines.map(line => dim(`${INDENT}${line}`))
+  const stackA = dim(stack)
 
-  const messageA = [header, ...linesA].join('\n')
-  return messageA
+  return `${header}\n${stackA}`
 }
 
 // Each level is printed in a different way
@@ -34,9 +42,6 @@ const LEVELS = {
   error: { COLOR: 'red', SIGN: cross },
 }
 
-const INDENT_SIZE = 4
-const INDENT = ' '.repeat(INDENT_SIZE)
-
 module.exports = {
-  prettify,
+  printError,
 }

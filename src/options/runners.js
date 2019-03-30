@@ -4,28 +4,15 @@ const { nextTick } = require('process')
 
 // Make `opts.log()` propagate an `uncaughtException` so that test runner
 // reports the original process error as a test failure.
-const throwUncaughtException = function(message) {
+const throwUncaughtException = function(error) {
   nextTick(() => {
-    const error = messageToError({ message })
     throw error
   })
 }
 
-// `message` is a stringified `Error`. We parse it back to an `Error` object.
-const messageToError = function({ message }) {
-  const [messageA, ...stack] = message.split('\n')
-  const stackA = stack.join('\n')
-  const error = new Error(messageA)
-  // eslint-disable-next-line fp/no-mutation
-  error.stack = stackA
-  return error
-}
-
 // `tape` does not handle `uncaughtExceptions`. We create a new failing test
 // to do it instead.
-const tapeFailingTest = function(message) {
-  const error = messageToError({ message })
-
+const tapeFailingTest = function(error) {
   // This is an optional peerDependency. `package.json` does not support those.
   // eslint-disable-next-line import/no-extraneous-dependencies
   const tape = require('tape')

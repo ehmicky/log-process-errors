@@ -1,40 +1,27 @@
 'use strict'
 
-const { serialize } = require('./serialize')
-const { prettify } = require('./prettify')
+const { inspect } = require('util')
 
-// Retrieve `message` which sums up all information that can be gathered about
-// the event.
-const getMessage = function({
-  opts,
-  event: { name, rejected, value, nextRejected, nextValue },
-  level,
-}) {
-  const message = MESSAGES[name]({ rejected, value, nextRejected, nextValue })
-  const messageA = prettify({ message, name, level, opts })
-  return messageA
+const getMessage = function({ event, name }) {
+  return MESSAGES[name](event)
 }
 
 const uncaughtException = function({ value }) {
-  return ` (an exception was thrown but not caught)
-${serialize(value)}`
+  return `an exception was thrown but not caught: ${serialize(value)}`
 }
 
 const warning = function({ value, value: { code, detail } }) {
-  const codeMessage = code === undefined ? '' : `(${code}) `
-  const detailMessage = detail === undefined ? '' : `${detail}\n`
-  return `
-${codeMessage}${detailMessage}${serialize(value)}`
+  const codeMessage = code === undefined ? '' : `${code}: `
+  const detailMessage = detail === undefined ? '' : `\n${detail}`
+  return `${codeMessage}${serialize(value)}${detailMessage}`
 }
 
 const unhandledRejection = function({ value }) {
-  return ` (a promise was rejected but not handled)
-${serialize(value)}`
+  return `a promise was rejected but not handled: ${serialize(value)}`
 }
 
 const rejectionHandled = function({ value }) {
-  return ` (a promise was rejected and handled too late)
-${serialize(value)}`
+  return `a promise was rejected and handled too late: ${serialize(value)}`
 }
 
 // The default level is `event` because it does not always indicate an error:
@@ -52,7 +39,7 @@ const multipleResolves = function({
   // istanbul ignore next
   const state = again ? rejectedStr : 'resolved/rejected'
 
-  return ` (a promise was ${state} multiple times)
+  return `a promise was ${state} multiple times:
 Initially ${rejectedStr} with: ${serialize(value)}
 Then ${nextRejectedStr}${again} with: ${serialize(nextValue)}`
 }
@@ -69,6 +56,20 @@ const MESSAGES = {
   rejectionHandled,
   multipleResolves,
 }
+
+// We use `util.inspect()` instead of `JSON.stringify()` or a third-party
+// library because it has nice output.
+const serialize = function(value) {
+  // Do not print `Error.stack`, but print `Error.name` + `Error.message`
+  if (value instanceof Error) {
+    return String(value)
+  }
+
+  return inspect(value, INSPECT_OPTS)
+}
+
+// Default `depth` changes from Node.js 11.0 to 11.3
+const INSPECT_OPTS = { depth: 2, getters: true }
 
 module.exports = {
   getMessage,

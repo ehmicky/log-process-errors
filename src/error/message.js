@@ -2,6 +2,7 @@
 
 const { inspect } = require('util')
 
+// Retrieve the `error.message` using the `event` information
 const getMessage = function({ event, name }) {
   return MESSAGES[name](event)
 }

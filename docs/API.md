@@ -123,20 +123,6 @@ logProcessErrors({
 })
 ```
 
-#### colors
-
-_Type_: `boolean`<br>
-_Default_: `true` if the output is a terminal.
-
-Colorizes messages.
-
-Does not do anything if the default message has been overridden using the
-[`message`](#message) option.
-
-```js
-logProcessErrors({ colors: false })
-```
-
 #### exitOn
 
 _Type_: `string[]`<br>
@@ -226,6 +212,20 @@ test('Example test', t => {
   process.emitWarning('Example warning')
   t.pass()
 })
+```
+
+#### colors
+
+_Type_: `boolean`<br>
+_Default_: `true` if the output is a terminal.
+
+Colorizes messages.
+
+Does not do anything if the default message has been overridden using the
+[`message`](#message) option.
+
+```js
+logProcessErrors({ colors: false })
 ```
 
 ### event

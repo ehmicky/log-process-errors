@@ -118,14 +118,6 @@ _Type_: `function(level, event, options) => string`
 Customizes messages.<br>
 [Full documentation](docs/API.md#message).
 
-## colors
-
-_Type_: `boolean`<br>
-_Default_: `true` if the output is a terminal.
-
-Colorizes messages.<br>
-[Full documentation](docs/API.md#colors).
-
 ## exitOn
 
 _Type_: `string[]`<br>
@@ -142,6 +134,14 @@ _Default_: `undefined`
 
 When running tests, makes them fail if there are any process errors.<br>
 [Full documentation](docs/API.md#testing).
+
+## colors
+
+_Type_: `boolean`<br>
+_Default_: `true` if the output is a terminal.
+
+Colorizes messages.<br>
+[Full documentation](docs/API.md#colors).
 
 # Support
 

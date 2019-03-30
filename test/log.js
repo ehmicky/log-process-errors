@@ -47,7 +47,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
     t.is(log.callCount, 1)
 
     const [message, level, event] = log.firstCall.args
-    const messageA = normalizeMessage(message)
+    const messageA = normalizeMessage(message, { colors: false })
     t.snapshot([messageA, level, event])
 
     stopLogging()

@@ -11,19 +11,17 @@ const startLoggingNoOpts = function() {
   return { stopLogging }
 }
 
-const startLogging = function({ name, log, level, message, ...opts } = {}) {
+const startLogging = function({ name, log, level, ...opts } = {}) {
   const logA = getLog({ log })
   const levelA = getLevel({ level, name })
-  const messageA = getMessage({ message })
 
   const stopLogging = logProcessErrors({
     log: logA,
     level: levelA,
-    message: messageA,
     exitOn: [],
     ...opts,
   })
-  return { stopLogging, log: logA, level: levelA, message: messageA }
+  return { stopLogging, log: logA, level: levelA }
 }
 
 // Get `opts.log()`
@@ -67,20 +65,6 @@ const onlyEvent = function(level, name, event) {
   }
 
   return level(event)
-}
-
-// Get `opts.message()`
-const getMessage = function({ message }) {
-  if (typeof message === 'string') {
-    return sinon.spy(() => message)
-  }
-
-  // Invalid `opts.message`
-  if (typeof message !== 'function') {
-    return message
-  }
-
-  return sinon.spy(message)
 }
 
 module.exports = {

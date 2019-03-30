@@ -24,15 +24,6 @@ repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
     t.snapshot(returnValue)
   })
 
-  test(`${prefix} should allow overriding options not specified by runner`, async t => {
-    const returnValue = await callRunner(
-      { testing, command, name },
-      { message: 'test message' },
-    )
-
-    t.snapshot(returnValue)
-  })
-
   test(`${prefix} should work with the -r flag`, async t => {
     const returnValue = await callRunner(
       { testing, command, name },

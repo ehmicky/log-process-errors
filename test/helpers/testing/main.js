@@ -14,23 +14,21 @@ const REGISTER_DIR = `${__dirname}/../../../../register`
 const callMain = function() {
   stubStackTrace()
 
-  const { name, message, testing, register, ...options } = JSON.parse(OPTIONS)
-  // Functions cannot be serialized in JSON
-  const messageA = message === undefined ? message : () => message
+  const { name, register, ...options } = JSON.parse(OPTIONS)
 
-  callRegister({ register, testing, message: messageA, options })
+  callRegister({ register, options })
 
   return name
 }
 
-const callRegister = function({ register, testing, message, options }) {
+const callRegister = function({ register, options, options: { testing } }) {
   if (register) {
     // eslint-disable-next-line import/no-dynamic-require
     require(`${REGISTER_DIR}/${testing}`)
     return
   }
 
-  logProcessErrors({ ...options, testing, message })
+  logProcessErrors(options)
 }
 
 module.exports = {

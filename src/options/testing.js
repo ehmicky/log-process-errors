@@ -13,7 +13,7 @@ const applyTesting = function({ opts, opts: { testing, level, ...optsA } }) {
   const testOpts = RUNNERS[testing]
 
   validateTesting({ testOpts, testing })
-  validateTestOpts({ opts: optsA, testOpts, testing })
+  validateTestOpts({ opts: optsA, testing })
 
   return {
     ...optsA,
@@ -38,14 +38,10 @@ const validateTesting = function({ testOpts, testing }) {
 // Presets override other options. We make sure users do not assume their
 // options are used when they are actually overriden.
 // However we allow overriding preset's `level` so users can filter events.
-const validateTestOpts = function({ opts, testOpts, testing }) {
-  Object.keys(opts).forEach(optName =>
-    validateTestOpt({ optName, testOpts, testing }),
-  )
-}
+const validateTestOpts = function({ opts, testing }) {
+  const [optName] = Object.keys(opts)
 
-const validateTestOpt = function({ optName, testOpts, testing }) {
-  if (testOpts[optName] === undefined) {
+  if (optName === undefined) {
     return
   }
 

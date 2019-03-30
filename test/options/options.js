@@ -11,7 +11,6 @@ const INVALID_OPTIONS = [
   { level: { warning: true } },
   { level: 'invalid' },
   { level: { warning: 'invalid' } },
-  { message: true },
   { colors: 1 },
   { exitOn: true },
   { exitOn: ['invalid'] },

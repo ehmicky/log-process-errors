@@ -3,7 +3,12 @@
 const sinon = require('sinon')
 const test = require('ava')
 
-const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
+const {
+  repeatEvents,
+  repeatEventsLevels,
+  startLogging,
+  normalizeMessage,
+} = require('./helpers')
 
 repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should fire opts.log()`, async t => {
@@ -31,16 +36,15 @@ repeatEvents((prefix, { name, emitEvent }) => {
   })
 
   test(`${prefix} should fire opts.log() with arguments`, async t => {
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      message: 'message',
-      name,
-    })
+    const { stopLogging, log } = startLogging({ log: 'spy', name })
 
     await emitEvent()
 
     t.is(log.callCount, 1)
-    t.snapshot(log.firstCall.args)
+
+    const [message, level, event] = log.firstCall.args
+    const messageA = normalizeMessage(message)
+    t.snapshot([messageA, level, event])
 
     stopLogging()
   })
@@ -53,7 +57,6 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
 
     const { stopLogging } = startLogging({
       log: 'default',
-      message: 'message',
       level: { default: level },
       name,
     })
@@ -61,7 +64,6 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     await emitEvent()
 
     t.is(stub.callCount, 1)
-    t.is(stub.firstCall.args[0], 'message')
 
     stopLogging()
 

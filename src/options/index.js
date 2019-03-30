@@ -8,7 +8,6 @@ const {
   validateLevels,
 } = require('../level')
 const { validateExitOn } = require('../exit')
-const { defaultMessage } = require('../message')
 const { defaultLog } = require('../log')
 const { pickBy } = require('../utils')
 
@@ -28,10 +27,9 @@ const getOptions = function({ opts = {} }) {
 }
 
 const DEFAULT_OPTS = {
-  message: defaultMessage,
   log: defaultLog,
-  colors: true,
   exitOn: ['uncaughtException'],
+  colors: true,
 }
 
 // `validate-jest` prints the function body
@@ -40,9 +38,8 @@ const exampleFunction = function() {}
 
 const EXAMPLE_OPTS = {
   ...DEFAULT_OPTS,
-  level: getExampleLevels(),
-  message: exampleFunction,
   log: exampleFunction,
+  level: getExampleLevels(),
   testing: getExampleTesting(),
 }
 

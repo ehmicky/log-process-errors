@@ -7,6 +7,8 @@ const {
   repeatEvents,
   repeatEventsLevels,
   startLogging,
+  stubStackTrace,
+  unstubStackTrace,
   normalizeMessage,
 } = require('./helpers')
 
@@ -36,6 +38,8 @@ repeatEvents((prefix, { name, emitEvent }) => {
   })
 
   test(`${prefix} should fire opts.log() with arguments`, async t => {
+    stubStackTrace()
+
     const { stopLogging, log } = startLogging({ log: 'spy', name })
 
     await emitEvent()
@@ -47,6 +51,8 @@ repeatEvents((prefix, { name, emitEvent }) => {
     t.snapshot([messageA, level, event])
 
     stopLogging()
+
+    unstubStackTrace()
   })
 })
 

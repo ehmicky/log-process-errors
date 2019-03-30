@@ -27,6 +27,5 @@ They can also be run directly
 
 - [`log`](../docs/API.md#log): [JavaScript](log.js).
 - [`level`](../docs/API.md#level): [JavaScript](level.js).
-- [`message`](../docs/API.md#message): [JavaScript](message.js).
 - [`exitOn`](../docs/API.md#exit): [JavaScript](exit.js).
 - [`colors`](../docs/API.md#colors): [JavaScript](colors.js).

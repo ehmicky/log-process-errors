@@ -111,13 +111,6 @@ _Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
 Which log level to use.<br>
 [Full documentation](docs/API.md#level).
 
-## message
-
-_Type_: `function(level, event, options) => string`
-
-Customizes messages.<br>
-[Full documentation](docs/API.md#message).
-
 ## exitOn
 
 _Type_: `string[]`<br>

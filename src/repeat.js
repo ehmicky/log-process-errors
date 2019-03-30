@@ -7,8 +7,8 @@ const { stableSerialize } = require('./message/serialize')
 //  - it prevents creating too much CPU load or too many microtasks
 //  - it prevents creating too many logs, which can be expensive if logs are
 //    hosted remotely
-//  - it prevents infinite recursions if `opts.log|level|message()` triggers
-//    itself an event (while still reporting that event once)
+//  - it prevents infinite recursions if `opts.log|level()` triggers itself an
+//    event (while still reporting that event once)
 const isRepeated = function({ event, previousEvents }) {
   const fingerprint = getFingerprint({ event })
 

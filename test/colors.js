@@ -7,7 +7,7 @@ const supportsColor = require('supports-color')
 const { repeatEvents, startLogging } = require('./helpers')
 
 repeatEvents((prefix, { name, emitEvent }) => {
-  test(`${prefix} should colorize default opts.message()`, async t => {
+  test(`${prefix} should colorize the error message`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', name })
 
     await emitEvent()
@@ -18,7 +18,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
     stopLogging()
   })
 
-  test(`${prefix} should allow disabling colorizing default opts.message()`, async t => {
+  test(`${prefix} should allow disabling colorizing the error message`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       colors: false,

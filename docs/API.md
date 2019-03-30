@@ -31,13 +31,11 @@ logProcessErrors({
 
   level: { multipleResolves: 'debug' },
 
-  message(level, event, options) {},
-
-  colors: false,
-
   exitOn: ['uncaughtException', 'unhandledRejection'],
 
   testing: 'ava',
+
+  colors: false,
 })
 ```
 
@@ -63,7 +61,7 @@ logProcessErrors({
 })
 ```
 
-The function's arguments are [`message`](#message) (string), [`level`](#level)
+The function's arguments are the error `message` (string), [`level`](#level)
 (string) and [`event`](#event) (object).
 
 If logging is asynchronous, the function should return a promise (or use
@@ -102,23 +100,6 @@ logProcessErrors({
     default(event) {
       return shouldSkip(event) ? 'silent' : 'default'
     },
-  },
-})
-```
-
-#### message
-
-_Type_: `function(level, event, options) => string`<br>
-_Default_: generate a nice-looking and descriptive log message.
-
-Overrides the default message generation. Arguments are [`level`](#level),
-[`event`](#event) and [`options`](#options).
-
-```js
-logProcessErrors({
-  // Log process errors as JSON instead
-  message(level, event) {
-    return JSON.stringify(event)
   },
 })
 ```
@@ -221,9 +202,6 @@ _Default_: `true` if the output is a terminal.
 
 Colorizes messages.
 
-Does not do anything if the default message has been overridden using the
-[`message`](#message) option.
-
 ```js
 logProcessErrors({ colors: false })
 ```
@@ -232,8 +210,8 @@ logProcessErrors({ colors: false })
 
 _Type_: `object`
 
-The [`log`](#log), [`level`](#level) and [`message`](#message) options all
-receive as argument an `event` object.
+The [`log`](#log) and [`level`](#level) options receive as argument an `event`
+object.
 
 #### event.name
 

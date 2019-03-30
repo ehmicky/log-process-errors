@@ -25,7 +25,7 @@ const buildError = function({ opts, level, name, message, stack }) {
   // eslint-disable-next-line fp/no-mutation
   error.stack = `${error}\n${stack}`
   // eslint-disable-next-line fp/no-mutation
-  error[custom] = printError.bind(null, { opts, level, name, error, stack })
+  error[custom] = printError.bind(null, { opts, level, name, message, stack })
   return error
 }
 

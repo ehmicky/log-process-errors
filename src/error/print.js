@@ -5,13 +5,7 @@ const { circleFilled, info, warning, cross } = require('figures')
 const { getChalk } = require('../colors')
 
 // Pretty-print error on the console (which uses `util.inspect()`)
-const printError = function({
-  opts: { colors },
-  level,
-  name,
-  error: { message },
-  stack,
-}) {
+const printError = function({ opts: { colors }, level, name, message, stack }) {
   const [messageA, ...details] = message.split(':')
   const detailsA = details.join(':')
 

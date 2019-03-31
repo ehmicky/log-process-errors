@@ -5,15 +5,11 @@ const sinon = require('sinon')
 
 const {
   startLogging,
-  stubStackTrace,
-  unstubStackTrace,
   normalizeMessage,
   EVENTS: { warning: emitWarning },
 } = require('./helpers')
 
 test('[warning] should disable default event handlers', async t => {
-  stubStackTrace()
-
   // eslint-disable-next-line no-restricted-globals
   const stub = sinon.stub(console, 'error')
 
@@ -29,8 +25,6 @@ test('[warning] should disable default event handlers', async t => {
   stopLogging()
 
   stub.restore()
-
-  unstubStackTrace()
 })
 
 test('[warning] should restore default event handlers', async t => {

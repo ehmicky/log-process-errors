@@ -50,7 +50,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
 
     const [error, level, event] = log.firstCall.args
     t.snapshot([
-      normalizeMessage(inspect(error)),
+      normalizeMessage(inspect(error), { colors: false }),
       String(error.stack),
       String(error),
       level,

@@ -1,9 +1,18 @@
 'use strict'
 
+const { inspect } = require('util')
+
 const sinon = require('sinon')
 const test = require('ava')
 
-const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
+const {
+  repeatEvents,
+  repeatEventsLevels,
+  startLogging,
+  stubStackTrace,
+  unstubStackTrace,
+  normalizeMessage,
+} = require('./helpers')
 
 repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should fire opts.log()`, async t => {
@@ -31,16 +40,26 @@ repeatEvents((prefix, { name, emitEvent }) => {
   })
 
   test(`${prefix} should fire opts.log() with arguments`, async t => {
+    stubStackTrace()
+
     const { stopLogging, log } = startLogging({ log: 'spy', name })
 
     await emitEvent()
 
     t.is(log.callCount, 1)
 
-    const [message, level, event] = log.firstCall.args
-    t.snapshot([String(message), level, event])
+    const [error, level, event] = log.firstCall.args
+    t.snapshot([
+      normalizeMessage(inspect(error)),
+      String(error.stack),
+      String(error),
+      level,
+      event,
+    ])
 
     stopLogging()
+
+    unstubStackTrace()
   })
 })
 

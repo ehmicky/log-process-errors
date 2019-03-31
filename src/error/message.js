@@ -79,8 +79,7 @@ const serialize = function(value) {
   return inspect(value, INSPECT_OPTS)
 }
 
-// Default `depth` changes from Node.js 11.0 to 11.3
-const INSPECT_OPTS = { depth: 2, getters: true }
+const INSPECT_OPTS = { getters: true }
 
 module.exports = {
   getMessage,

@@ -29,8 +29,8 @@ const COMMON_OPTIONS = {
   colors: false,
   // Other tests should keep running
   exitOn: [],
-  // All runners need to report `uncaughtException` for `propagateError()` to
-  // work. Most also report `unhandledRejection`.
+  // All runners need to report `uncaughtException` for
+  // `throwUncaughtException()` to work. Most also report `unhandledRejection`.
   level: { uncaughtException: 'silent', unhandledRejection: 'silent' },
 }
 

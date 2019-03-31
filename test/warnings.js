@@ -22,7 +22,7 @@ test('[warning] should disable default event handlers', async t => {
   await emitWarning()
 
   t.true(log.calledOnce)
-  t.snapshot(normalizeMessage(log.lastCall.args[0]))
+  t.snapshot(String(log.lastCall.args[0]))
 
   t.true(stub.notCalled)
 
@@ -43,7 +43,7 @@ test('[warning] should restore default event handlers', async t => {
   await emitWarning()
 
   t.true(stub.calledOnce)
-  const message = normalizeMessage(stub.lastCall.args[0])
+  const message = normalizeMessage(String(stub.lastCall.args[0]))
   t.snapshot(message)
 
   stub.restore()
@@ -65,7 +65,7 @@ test('[warning] should multiply restore default event handlers', async t => {
   await emitWarning()
 
   t.true(stub.calledOnce)
-  t.snapshot(normalizeMessage(stub.lastCall.args[0]))
+  t.snapshot(normalizeMessage(String(stub.lastCall.args[0])))
 
   stub.restore()
 })

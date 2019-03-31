@@ -10,7 +10,6 @@ const {
   startLogging,
   stubStackTrace,
   unstubStackTrace,
-  normalizeMessage,
 } = require('./helpers')
 
 repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
@@ -82,7 +81,7 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
     await emitEvent()
 
     t.true(log.called)
-    t.snapshot(normalizeMessage(log.lastCall.args[0], { colors: false }))
+    t.snapshot(String(log.lastCall.args[0]))
 
     stopWarningLog()
     stopLogging()

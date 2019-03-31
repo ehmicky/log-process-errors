@@ -5,14 +5,7 @@ const process = require('process')
 const test = require('ava')
 const sinon = require('sinon')
 
-const {
-  repeatEvents,
-  startLogging,
-  startLoggingNoOpts,
-  stubStackTrace,
-  unstubStackTrace,
-  normalizeMessage,
-} = require('../helpers')
+const { repeatEvents, startLogging, startLoggingNoOpts } = require('../helpers')
 
 const addProcessHandler = function(name) {
   const processHandler = sinon.spy()
@@ -20,13 +13,12 @@ const addProcessHandler = function(name) {
   return processHandler
 }
 
-const normalizeArgs = function([arg]) {
-  return normalizeMessage(arg, { colors: false })
+const normalizeArgs = function([error]) {
+  return String(error)
 }
 
 repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
   test(`${prefix} should work with no options`, async t => {
-    stubStackTrace()
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)
     const { stopLogging } = startLoggingNoOpts()
@@ -37,7 +29,6 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
 
     stopLogging()
     stub.restore()
-    unstubStackTrace()
 
     t.snapshot(messages)
   })

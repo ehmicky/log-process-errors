@@ -12,9 +12,19 @@ const uncaughtException = function({ value }) {
 }
 
 const warning = function({ value, value: { code, detail } }) {
-  const codeMessage = code === undefined ? '' : `${code}: `
-  const detailMessage = detail === undefined ? '' : `\n${detail}`
-  return `${codeMessage}${serialize(value)}${detailMessage}`
+  return `${serialize(value)}${getWarningDetails({ code, detail })}`
+}
+
+const getWarningDetails = function({ code, detail = '' }) {
+  if (code !== undefined) {
+    return `\n[${code}] ${detail}`
+  }
+
+  if (detail !== '') {
+    return `\n${detail}`
+  }
+
+  return ''
 }
 
 const unhandledRejection = function({ value }) {

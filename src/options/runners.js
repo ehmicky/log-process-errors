@@ -39,7 +39,7 @@ const RUNNERS = {
   // Mocha does not report `unhandleRejection`
   mocha: { ...COMMON_OPTIONS, level: { uncaughtException: 'silent' } },
   jasmine: COMMON_OPTIONS,
-  // Mocha does not report `uncaughtException` nor `unhandleRejection`
+  // Tape does not report `uncaughtException` nor `unhandleRejection`
   tape: { ...COMMON_OPTIONS, level: {}, log: tapeFailingTest },
   'node-tap': COMMON_OPTIONS,
 }

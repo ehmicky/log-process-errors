@@ -8,15 +8,19 @@ const pSetImmediate = promisify(setImmediate)
 
 // Emit a `multipleResolves` event
 const multipleResolves = async function() {
+  createPromise(STEPS)
+
+  await pSetImmediate()
+}
+
+const createPromise = function(steps) {
   // eslint-disable-next-line no-new, promise/avoid-new
   new Promise((resolve, reject) => {
-    STEPS.forEach(([type, value]) => {
+    steps.forEach(([type, value]) => {
       const func = type === 'resolve' ? resolve : reject
       func(value())
     })
   })
-
-  await pSetImmediate()
 }
 
 const getSuccess = function() {

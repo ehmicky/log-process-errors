@@ -55,8 +55,8 @@ process errors with [Winston](https://github.com/winstonjs/winston) instead:
 
 ```js
 logProcessErrors({
-  log(message, level, event) {
-    winstonLogger[level](message)
+  log(error, level) {
+    winstonLogger[level](error.stack)
   },
 })
 ```

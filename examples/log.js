@@ -16,8 +16,8 @@ const logProcessErrors = require('log-process-errors')
 // Initialization
 // Customizes how events are logged
 logProcessErrors({
-  log(message, level, event) {
-    console[level](event.name, event.value)
+  log(error, level) {
+    console[level](error)
   },
 })
 

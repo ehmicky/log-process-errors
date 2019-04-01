@@ -21,16 +21,15 @@ logProcessErrors({
     multipleResolves: 'debug',
 
     // Skip some logs based on a condition
-    default(event) {
-      return shouldSkip(event) ? 'silent' : 'default'
+    default(error) {
+      return shouldSkip(error) ? 'silent' : 'default'
     },
   },
 })
 
 // Skip deprecation warnings
-const shouldSkip = function(event) {
-  const error = event.value
-  return error instanceof Error && error.name.includes('Deprecation')
+const shouldSkip = function({ message }) {
+  return message.includes('Deprecation')
 }
 
 const { multipleResolves, warning } = require('./errors')

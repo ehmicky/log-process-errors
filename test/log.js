@@ -14,6 +14,15 @@ const {
   normalizeMessage,
 } = require('./helpers')
 
+const snapshotArgs = function([error, level]) {
+  return [
+    normalizeMessage(inspect(error), { colors: false }),
+    String(error.stack),
+    String(error),
+    level,
+  ]
+}
+
 repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should fire opts.log()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
@@ -48,14 +57,8 @@ repeatEvents((prefix, { name, emitEvent }) => {
 
     t.true(log.called)
 
-    const [error, level, event] = log.firstCall.args
-    t.snapshot([
-      normalizeMessage(inspect(error), { colors: false }),
-      String(error.stack),
-      String(error),
-      level,
-      event,
-    ])
+    const snapshot = log.args.flatMap(snapshotArgs)
+    t.snapshot(snapshot)
 
     stopLogging()
 

@@ -11,7 +11,7 @@ const { DEFAULT_LEVEL, LEVELS } = require('./constants')
 const getLevel = function({ opts, name, error }) {
   const level = result(opts.level[name], error)
 
-  if (level === 'default') {
+  if (level === 'default' || level === undefined) {
     return DEFAULT_LEVEL[name]
   }
 

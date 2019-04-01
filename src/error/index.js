@@ -14,7 +14,7 @@ const getError = function({ name, event }) {
   const message = getMessage({ event, name })
   const stack = getStack({ event })
   const error = buildError({ name, message, stack })
-  return { error, message, stack }
+  return { error, stack }
 }
 
 const buildError = function({ name, message, stack }) {
@@ -33,7 +33,14 @@ const capitalize = function(string) {
 }
 
 // This needs to be done later because `error` is used by `level`
-const addErrorPrint = function({ error, opts, level, name, message, stack }) {
+const addErrorPrint = function({
+  error,
+  error: { message },
+  opts,
+  level,
+  name,
+  stack,
+}) {
   // eslint-disable-next-line fp/no-mutation, no-param-reassign
   error[custom] = printError.bind(null, { opts, level, name, message, stack })
 }

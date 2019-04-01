@@ -24,12 +24,12 @@ const getHeader = function({
   name,
   message,
   chalk,
-  chalk: { italic, inverse, bold, visible },
+  chalk: { italic, inverse, bold },
 }) {
   const { message: messageA, details } = splitMessage({ message })
 
   const { COLOR, SIGN } = LEVELS[level]
-  const prefix = ` ${SIGN}  ${name} ${italic(`(${messageA})`)}${visible(' ')}`
+  const prefix = ` ${SIGN}  ${name} ${italic(`(${messageA})`)} `
   const header = `${inverse(bold(prefix))}${details}`
   const headerA = chalk[COLOR](header)
   return headerA

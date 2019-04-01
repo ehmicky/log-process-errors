@@ -98,7 +98,7 @@ logProcessErrors(options)
 
 ## log
 
-_Type_: `function(message, level, event)`<br>
+_Type_: `function(error, level)`<br>
 
 Customizes how process errors are logged.<br>
 [Full documentation](docs/API.md#log).

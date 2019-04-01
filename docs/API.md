@@ -25,8 +25,8 @@ Full example:
 
 ```js
 logProcessErrors({
-  log(message, level, event) {
-    winstonLogger[level](message)
+  log(error, level) {
+    winstonLogger[level](error.stack)
   },
 
   level: { multipleResolves: 'debug' },
@@ -45,7 +45,7 @@ _Type_: `object`
 
 #### log
 
-_Type_: `function(message, level, event)`
+_Type_: `function(error, level)`
 
 By default process errors will be logged to the console using `console.error()`,
 `console.warn()`, etc.
@@ -61,8 +61,7 @@ logProcessErrors({
 })
 ```
 
-The function's arguments are the error `message` (string), [`level`](#level)
-(string) and [`event`](#event) (object).
+The function's arguments are the [`error`](#error) and [`level`](#level).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
@@ -78,7 +77,7 @@ _Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
 
 Which log level to use.
 
-Object keys are the event names:
+Object keys are the error names:
 [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`warning`](https://nodejs.org/api/process.html#process_event_warning),
 [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
@@ -88,7 +87,7 @@ or `default`.
 
 Object values are the log level: `"debug"`, `"info"`, `"warn"`, `"error"`,
 `"silent"` or `"default"`. It can also be a function using
-[`event` as argument](#event) and returning one of those log levels.
+[`error` as argument](#error) and returning one of those log levels.
 
 ```js
 logProcessErrors({
@@ -97,8 +96,8 @@ logProcessErrors({
     multipleResolves: 'debug',
 
     // Skip some logs based on a condition
-    default(event) {
-      return shouldSkip(event) ? 'silent' : 'default'
+    default(error) {
+      return shouldSkip(error) ? 'silent' : 'default'
     },
   },
 })
@@ -206,74 +205,40 @@ Colorizes messages.
 logProcessErrors({ colors: false })
 ```
 
-### event
+### error
 
-_Type_: `object`
+_Type_: `Error`
 
-The [`log`](#log) and [`level`](#level) options receive as argument an `event`
+The [`log`](#log) and [`level`](#level) options receive as argument an `error`
 object.
 
-#### event.name
+#### error.name
 
-_Type_: `string`
-
-Can be
-[`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`"unhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`"rejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`"multipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+_Type_: `string`<br>
+_Value_: [`"UncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`"UnhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`"RejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
+[`"MultipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves)
 or
-[`"warning"`](https://nodejs.org/api/process.html#process_event_warning).
+[`"Warning"`](https://nodejs.org/api/process.html#process_event_warning)
+
+#### error.stack
+
+`error` is prettified when using
+[`console`](https://nodejs.org/api/console.html#console_console_log_data_args)
+or
+[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options):
 
 ```js
-logProcessErrors({
-  level: {
-    log(message, level, event) {
-      console[level](event.name, event.value)
-    },
-  },
-})
+console.log(error)
 ```
 
-#### event.value
+![Error prettified](error_pretty.png)
 
-_Type_: `any` (usually an `Error` instance but not always)
-
-Value:
-
-- thrown by
-  [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception).
-- resolved/rejected by the promise with
-  [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-  [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-  and
-  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
-- emitted by
-  [`warning`](https://nodejs.org/api/process.html#process_event_warning).
+But not when using `error.stack` instead:
 
 ```js
-// Do not log deprecation warnings as errors
-logProcessErrors({
-  level: {
-    warning(event) {
-      const error = event.value
-      return error instanceof Error && error.name.includes('Deprecation')
-        ? 'warn'
-        : 'error'
-    },
-  },
-})
+console.log(error.stack)
 ```
 
-#### event.rejected
-
-_Type_: `boolean`
-
-Whether the promise was initially resolved or rejected. Only defined with
-[`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
-
-#### event.nextValue, event.nextRejected
-
-Like [`value`](#eventvalue) and [`rejected`](#eventrejected) but for
-the second time the promise was resolved/rejected. Only defined with
-[`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves).
+![Error raw](error_raw.png)

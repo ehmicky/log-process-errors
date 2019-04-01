@@ -16,7 +16,7 @@ const getEvent = async function({
     value,
   })
 
-  const event = { name, rejected, value: valueA, nextRejected, nextValue }
+  const event = { rejected, value: valueA, nextRejected, nextValue }
 
   const eventA = pickBy(event, eventVal => eventVal !== undefined)
   return eventA

@@ -81,18 +81,21 @@ repeatEvents((prefix, { name, emitEvent }) => {
   })
 })
 
-const onlyLimited = function(event) {
-  if (!isLimitedWarning(event)) {
+const onlyLimited = function(error) {
+  if (!isLimitedWarning(error)) {
     return 'silent'
   }
 }
 
-const onlyNotLimitedWarning = function(name, event) {
-  if (isLimitedWarning(event) || event.name !== name) {
+const onlyNotLimitedWarning = function(name, error) {
+  if (
+    isLimitedWarning(error) ||
+    error.name.toLowerCase() !== name.toLowerCase()
+  ) {
     return 'silent'
   }
 }
 
-const isLimitedWarning = function({ name, value = {} }) {
-  return name === 'warning' && value.name === 'LogProcessErrors'
+const isLimitedWarning = function({ name, message }) {
+  return name === 'Warning' && message.includes('LogProcessErrors')
 }

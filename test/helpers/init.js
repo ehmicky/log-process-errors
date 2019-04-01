@@ -44,7 +44,7 @@ const getLog = function({ log }) {
 // eslint-disable-next-line no-empty-function
 const noop = function() {}
 
-// If `event.name` is specified, only print those events
+// If `name` is specified, only print those events
 const getLevel = function({ level, name }) {
   if (name === undefined) {
     return level
@@ -55,8 +55,8 @@ const getLevel = function({ level, name }) {
   return mapValues(levelA, levelB => onlyEvent.bind(null, levelB, name))
 }
 
-const onlyEvent = function(level, name, event) {
-  if (event.name !== name) {
+const onlyEvent = function(level, name, error) {
+  if (error.name.toLowerCase() !== name.toLowerCase()) {
     return 'silent'
   }
 
@@ -64,7 +64,7 @@ const onlyEvent = function(level, name, event) {
     return level
   }
 
-  return level(event)
+  return level(error)
 }
 
 module.exports = {

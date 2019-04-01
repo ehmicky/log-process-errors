@@ -8,8 +8,8 @@ const { result, mapValues, pickBy } = require('./utils')
 const { DEFAULT_LEVEL, LEVELS } = require('./constants')
 
 // Retrieve event's log level
-const getLevel = function({ opts, event, event: { name } }) {
-  const level = result(opts.level[name], event)
+const getLevel = function({ opts, name, error }) {
+  const level = result(opts.level[name], error)
 
   if (level === 'default') {
     return DEFAULT_LEVEL[name]

@@ -10,22 +10,20 @@ const { printError } = require('./print')
 
 // Retrieve `error` which sums up all information that can be gathered about
 // the event.
-const getError = function({ opts, level, event: { name, ...event } }) {
+const getError = function({ name, event }) {
   const message = getMessage({ event, name })
   const stack = getStack({ event })
-  const error = buildError({ opts, level, name, message, stack })
-  return error
+  const error = buildError({ name, message, stack })
+  return { error, message, stack }
 }
 
-const buildError = function({ opts, level, name, message, stack }) {
+const buildError = function({ name, message, stack }) {
   const error = new Error(message)
   // eslint-disable-next-line fp/no-mutation
   error.name = capitalize(name)
   // We removed the first line of `stack`, now we substitute it
   // eslint-disable-next-line fp/no-mutation
   error.stack = `${error}\n${stack}`
-  // eslint-disable-next-line fp/no-mutation
-  error[custom] = printError.bind(null, { opts, level, name, message, stack })
   return error
 }
 
@@ -34,6 +32,13 @@ const capitalize = function(string) {
   return [firstLetter.toUpperCase(), ...rest].join('')
 }
 
+// This needs to be done later because `error` is used by `level`
+const addErrorPrint = function({ error, opts, level, name, message, stack }) {
+  // eslint-disable-next-line fp/no-mutation, no-param-reassign
+  error[custom] = printError.bind(null, { opts, level, name, message, stack })
+}
+
 module.exports = {
   getError,
+  addErrorPrint,
 }

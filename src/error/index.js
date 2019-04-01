@@ -19,8 +19,14 @@ const getError = function({ name, event }) {
 
 const buildError = function({ name, message, stack }) {
   const error = new Error(message)
-  // eslint-disable-next-line fp/no-mutation
-  error.name = capitalize(name)
+  // `error.name` should not be enumerable, to ensure it is correctly printed.
+  // eslint-disable-next-line fp/no-mutating-methods
+  Object.defineProperty(error, 'name', {
+    value: capitalize(name),
+    enumerable: false,
+    writable: true,
+    configurable: true,
+  })
   // We removed the first line of `stack`, now we substitute it
   // eslint-disable-next-line fp/no-mutation
   error.stack = `${error}\n${stack}`

@@ -61,7 +61,7 @@ logProcessErrors({
 })
 ```
 
-The function's arguments are the [`error`](#error) and [`level`](#level).
+The function's arguments are [`error`](#error) and [`level`](#level).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like

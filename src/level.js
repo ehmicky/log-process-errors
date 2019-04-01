@@ -7,7 +7,7 @@ const { multipleValidOptions } = require('jest-validate')
 const { result, mapValues, pickBy } = require('./utils')
 const { DEFAULT_LEVEL, LEVELS } = require('./constants')
 
-// Retrieve event's log level
+// Retrieve error's log level
 const getLevel = function({ opts, name, error }) {
   const level = result(opts.level[name], error)
 

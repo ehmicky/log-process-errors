@@ -3,14 +3,12 @@
 const { nextTick } = require('process')
 const { promisify } = require('util')
 
-const { defaultGetError } = require('./default')
-
 const pSetImmediate = promisify(setImmediate)
 
 // Emit an `uncaughtException` event
-const uncaughtException = async function(getError = defaultGetError) {
+const uncaughtException = async function() {
   nextTick(() => {
-    throw getError()
+    throw new Error('message')
   })
 
   await pSetImmediate()

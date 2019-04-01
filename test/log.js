@@ -44,9 +44,9 @@ repeatEvents((prefix, { name, emitEvent }) => {
 
     const { stopLogging, log } = startLogging({ log: 'spy', name })
 
-    await emitEvent()
+    await emitEvent({ all: true })
 
-    t.is(log.callCount, 1)
+    t.true(log.called)
 
     const [error, level, event] = log.firstCall.args
     t.snapshot([

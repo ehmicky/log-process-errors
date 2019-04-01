@@ -2,13 +2,12 @@
 
 const { promisify } = require('util')
 
-const { defaultGetError } = require('./default')
-
 const pSetImmediate = promisify(setImmediate)
 
 // Emit a `multipleResolves` event
-const multipleResolves = async function() {
-  createPromise(STEPS)
+const multipleResolves = async function({ all = false } = {}) {
+  const allSteps = all ? STEPS : [STEPS[0]]
+  allSteps.forEach(createPromise)
 
   await pSetImmediate()
 }
@@ -27,10 +26,19 @@ const getSuccess = function() {
   return { success: true }
 }
 
-const resolveStep = ['resolve', getSuccess]
-const rejectStep = ['reject', defaultGetError]
+const getError = function() {
+  return new Error('message')
+}
 
-const STEPS = [resolveStep, rejectStep]
+const resolveStep = ['resolve', getSuccess]
+const rejectStep = ['reject', getError]
+
+const STEPS = [
+  [resolveStep, rejectStep],
+  [resolveStep, resolveStep],
+  [rejectStep, resolveStep],
+  [rejectStep, rejectStep],
+]
 
 module.exports = {
   multipleResolves,

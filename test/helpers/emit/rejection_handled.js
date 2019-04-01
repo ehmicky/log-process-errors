@@ -2,13 +2,11 @@
 
 const { promisify } = require('util')
 
-const { defaultGetError } = require('./default')
-
 const pSetImmediate = promisify(setImmediate)
 
 // Emit a `rejectionHandled` event
-const rejectionHandled = async function(getError = defaultGetError) {
-  const promise = Promise.reject(getError())
+const rejectionHandled = async function() {
+  const promise = Promise.reject(new Error('message'))
 
   await pSetImmediate()
   await pSetImmediate()

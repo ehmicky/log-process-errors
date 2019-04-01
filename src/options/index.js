@@ -9,6 +9,7 @@ const {
 } = require('../level')
 const { validateExitOn } = require('../exit')
 const { defaultLog } = require('../log')
+const { addChalk } = require('../colors')
 const { pickBy } = require('../utils')
 
 const { applyTesting, getExampleTesting } = require('./testing')
@@ -23,7 +24,9 @@ const getOptions = function({ opts = {} }) {
   const optsB = applyTesting({ opts: optsA })
   const level = applyDefaultLevels({ opts: optsB })
   const optsC = { ...DEFAULT_OPTS, ...optsB, level }
-  return optsC
+
+  const optsD = addChalk(optsC)
+  return optsD
 }
 
 const DEFAULT_OPTS = {

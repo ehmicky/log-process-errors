@@ -1,17 +1,18 @@
 'use strict'
 
 const Chalk = require('chalk')
-const moize = require('moize').default
 
 // Can disable colors with `opts.colors`.
 // chalk will automatically disable colors if output does not support it.
-const getChalk = function(enabled) {
-  const chalk = new Chalk.constructor({ enabled })
-  return { chalk }
+const addChalk = function(opts) {
+  const chalk = getChalk(opts)
+  return { ...opts, chalk }
 }
 
-const mGetChalk = moize(getChalk)
+const getChalk = function({ colors }) {
+  return new Chalk.constructor({ enabled: colors })
+}
 
 module.exports = {
-  getChalk: mGetChalk,
+  addChalk,
 }

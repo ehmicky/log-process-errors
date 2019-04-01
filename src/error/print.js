@@ -2,15 +2,17 @@
 
 const { circleFilled, info, warning, cross } = require('figures')
 
-const { getChalk } = require('../colors')
-
 // Pretty-print error on the console (which uses `util.inspect()`)
-const printError = function({ opts: { colors }, level, name, message, stack }) {
-  const {
+const printError = function({
+  opts: {
     chalk,
     chalk: { dim },
-  } = getChalk(colors)
-
+  },
+  level,
+  name,
+  message,
+  stack,
+}) {
   const header = getHeader({ level, name, message, chalk })
   const stackA = dim(stack)
   return `${header}\n${stackA}`

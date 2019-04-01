@@ -13,16 +13,8 @@ const defaultSteps = [
   ['reject', defaultGetError],
 ]
 
-const defaultWarning = {
-  message: 'message',
-  type: 'WarningType',
-  code: '500',
-  detail: 'Detail',
-}
-
 module.exports = {
   defaultGetError,
   defaultGetSuccess,
   defaultSteps,
-  defaultWarning,
 }

@@ -111,7 +111,7 @@ _Value_: array of [`"uncaughtException"`](https://nodejs.org/api/process.html#pr
 [`"rejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
 [`"multipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves)
 or
-[`"warning"`](https://nodejs.org/api/process.html#process_event_warning)
+[`"warning"`](https://nodejs.org/api/process.html#process_event_warning)<br>
 _Default_: `["uncaughtException"]`
 
 Which process errors should trigger `process.exit(1)`:

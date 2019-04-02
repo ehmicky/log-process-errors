@@ -9,6 +9,8 @@
 
 Show some ❤️ to Node.js process errors.
 
+[📰 Medium article.](https://medium.com/@ehmicky/node-js-process-errors-are-broken-193980f0a77b)
+
 Node.js prints process errors
 ([`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`warning`](https://nodejs.org/api/process.html#process_event_warning),

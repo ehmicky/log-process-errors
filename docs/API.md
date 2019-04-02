@@ -106,6 +106,12 @@ logProcessErrors({
 #### exitOn
 
 _Type_: `string[]`<br>
+_Value_: array of [`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`"unhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`"rejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
+[`"multipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+or
+[`"warning"`](https://nodejs.org/api/process.html#process_event_warning)
 _Default_: `["uncaughtException"]`
 
 Which process errors should trigger `process.exit(1)`:

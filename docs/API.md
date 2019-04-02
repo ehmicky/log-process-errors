@@ -216,7 +216,7 @@ logProcessErrors({ colors: false })
 _Type_: `Error`
 
 The [`log`](#log) and [`level`](#level) options receive as argument an `error`
-object.
+instance.
 
 #### error.name
 

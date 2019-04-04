@@ -33,7 +33,10 @@
     "uncaughtException",
     "unhandledRejection",
     "rejectionHandled",
-    "multipleResolves"
+    "multipleResolves",
+    "debugging",
+    "testing",
+    "test"
   ],
   "license": "Apache-2.0",
   "homepage": "https://git.io/fhSGY",

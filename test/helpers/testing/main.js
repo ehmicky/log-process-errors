@@ -7,7 +7,7 @@ const {
 const logProcessErrors = require('../../../src')
 const { stubStackTrace } = require('../stack')
 
-const REGISTER_DIR = `${__dirname}/../../../../register`
+const REGISTER_DIR = `${__dirname}/../../../register`
 
 // Call `log-process-errors` with the options passed as environment variable
 // `OPTIONS`. Also mock stack traces.

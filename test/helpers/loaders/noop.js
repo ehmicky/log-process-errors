@@ -1,7 +1,7 @@
 'use strict'
 
-// eslint-disable-next-line import/no-unassigned-import, node/no-missing-require, import/no-unresolved
-require('../../../../register')
+// eslint-disable-next-line import/no-unassigned-import
+require('../../../register')
 
 const logProcessErrors = require('../../../src')
 

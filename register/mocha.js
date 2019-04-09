@@ -1,7 +1,7 @@
-// Meant to be performed as `node -r log-process-errors/register/mocha`
-// or `require('log-process-errors/register/mocha')`.
+// Meant to be performed as `node -r log-process-errors/build/register/mocha`
+// or `require('log-process-errors/build/register/mocha')`.
 'use strict'
 
-const logProcessErrors = require('./main')
+const logProcessErrors = require('../src')
 
 logProcessErrors({ testing: 'mocha' })

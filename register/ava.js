@@ -1,7 +1,7 @@
-// Meant to be performed as `node -r log-process-errors/register/ava`
-// or `require('log-process-errors/register/ava')`.
+// Meant to be performed as `node -r log-process-errors/build/register/ava`
+// or `require('log-process-errors/build/register/ava')`.
 'use strict'
 
-const logProcessErrors = require('./main')
+const logProcessErrors = require('../src')
 
 logProcessErrors({ testing: 'ava' })

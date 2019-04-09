@@ -11,4 +11,4 @@
 . "$(dirname "$BASH_SOURCE")/utils.sh"
 
 # Emits different types of process errors.
-node -r log-process-errors/register before.js
+node -r log-process-errors/build/register before.js

@@ -1,10 +1,8 @@
-'use strict'
-
-const execa = require('execa')
-const stripAnsi = require('strip-ansi')
+import execa from 'execa'
+import stripAnsi from 'strip-ansi'
 
 // Call process and normalize its output for testing
-const normalizeCall = async function(input, opts) {
+export const normalizeCall = async function(input, opts) {
   // TODO: remove once https://github.com/sindresorhus/execa/pull/182 is merged
   const [command, ...args] = input.split(' ')
 
@@ -19,7 +17,7 @@ const normalizeCall = async function(input, opts) {
 }
 
 // Normalize console messages for testing
-const normalizeMessage = function(message, { colors = true } = {}) {
+export const normalizeMessage = function(message, { colors = true } = {}) {
   // Windows does not use colors on CI
   const messageA = colors ? message : stripAnsi(message)
   const messageB = messageA.trim()
@@ -61,8 +59,3 @@ const REPLACEMENTS = [
   //  - TAP
   [/time=[\d.]+ms/gu, ''],
 ]
-
-module.exports = {
-  normalizeCall,
-  normalizeMessage,
-}

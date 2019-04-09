@@ -1,9 +1,7 @@
-'use strict'
-
-const { circleFilled, info, warning, cross } = require('figures')
+import { circleFilled, info, warning, cross } from 'figures'
 
 // Pretty-print error on the console (which uses `util.inspect()`)
-const printError = function({
+export const printError = function({
   opts: {
     chalk,
     chalk: { dim },
@@ -47,8 +45,4 @@ const LEVELS = {
   info: { COLOR: 'green', SIGN: info },
   warn: { COLOR: 'yellow', SIGN: warning },
   error: { COLOR: 'red', SIGN: cross },
-}
-
-module.exports = {
-  printError,
 }

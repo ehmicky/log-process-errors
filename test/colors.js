@@ -1,12 +1,14 @@
-'use strict'
+import { inspect } from 'util'
 
-const { inspect } = require('util')
+import test from 'ava'
+import hasAnsi from 'has-ansi'
+import supportsColor from 'supports-color'
 
-const test = require('ava')
-const hasAnsi = require('has-ansi')
-const supportsColor = require('supports-color')
+import { repeatEvents } from './helpers/repeat.js'
+import { startLogging } from './helpers/init.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
-const { repeatEvents, startLogging } = require('./helpers')
+removeProcessListeners()
 
 repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should colorize the error`, async t => {

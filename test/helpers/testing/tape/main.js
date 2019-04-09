@@ -1,12 +1,9 @@
-'use strict'
+import tape from 'tape'
 
-const tape = require('tape')
+import { EVENTS } from '../../emit/main.js'
+import { getOptions } from '../options.js'
 
-const { EVENTS } = require('../emit')
-
-const { callMain } = require('./main')
-
-const name = callMain()
+const { name } = getOptions()
 
 tape.test(`should make tests fail on ${name}`, t => {
   t.plan(1)

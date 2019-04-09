@@ -1,7 +1,5 @@
-'use strict'
-
-const { getPrefixes } = require('./prefix')
-const { cartesianProduct } = require('./utils')
+import { getPrefixes } from './prefix.js'
+import { cartesianProduct } from './utils.js'
 
 // Repeat a function with a combination of arguments.
 // Meant for test-driven development.
@@ -12,7 +10,7 @@ const { cartesianProduct } = require('./utils')
 // TODO: extract this library
 //  - check other data-driven test libraries for features
 //  - allow values to be generating functions
-const repeat = function(...args) {
+export const repeat = function(...args) {
   const arrays = args.slice(0, -1)
   const func = args[args.length - 1]
 
@@ -21,8 +19,4 @@ const repeat = function(...args) {
   const prefixes = getPrefixes(arraysA)
 
   return arraysA.map((values, index) => func(prefixes[index], ...values))
-}
-
-module.exports = {
-  repeat,
 }

@@ -1,18 +1,15 @@
-'use strict'
+import { inspect } from 'util'
 
-const { inspect } = require('util')
+import sinon from 'sinon'
+import test from 'ava'
 
-const sinon = require('sinon')
-const test = require('ava')
+import { repeatEvents, repeatEventsLevels } from './helpers/repeat.js'
+import { startLogging } from './helpers/init.js'
+import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
+import { normalizeMessage } from './helpers/normalize.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
-const {
-  repeatEvents,
-  repeatEventsLevels,
-  startLogging,
-  stubStackTrace,
-  unstubStackTrace,
-  normalizeMessage,
-} = require('./helpers')
+removeProcessListeners()
 
 const snapshotArgs = function([error, level]) {
   return [

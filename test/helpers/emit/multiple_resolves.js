@@ -1,11 +1,9 @@
-'use strict'
-
-const { promisify } = require('util')
+import { promisify } from 'util'
 
 const pSetImmediate = promisify(setImmediate)
 
 // Emit a `multipleResolves` event
-const multipleResolves = async function({ all = false } = {}) {
+export const multipleResolves = async function({ all = false } = {}) {
   const allSteps = all ? STEPS : [STEPS[0]]
   allSteps.forEach(createPromise)
 
@@ -17,7 +15,8 @@ const createPromise = function(steps) {
   new Promise((resolve, reject) => {
     steps.forEach(([type, value]) => {
       const func = type === 'resolve' ? resolve : reject
-      func(value())
+      const valueA = value()
+      func(valueA)
     })
   })
 }
@@ -39,7 +38,3 @@ const STEPS = [
   [rejectStep, resolveStep],
   [rejectStep, rejectStep],
 ]
-
-module.exports = {
-  multipleResolves,
-}

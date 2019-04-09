@@ -1,10 +1,12 @@
-'use strict'
+import test from 'ava'
 
-const test = require('ava')
-
-const { repeatEvents, normalizeCall } = require('./helpers')
+import { repeatEvents } from './helpers/repeat.js'
+import { normalizeCall } from './helpers/normalize.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
 const LOADERS = `${__dirname}/helpers/loaders/`
+
+removeProcessListeners()
 
 repeatEvents((prefix, { name }) => {
   test(`${prefix} should work using the -r flag`, async t => {

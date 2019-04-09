@@ -1,14 +1,12 @@
-'use strict'
+import { emitWarning } from 'process'
 
-const { emitWarning } = require('process')
+import { multipleValidOptions } from 'jest-validate'
 
-const { multipleValidOptions } = require('jest-validate')
-
-const { result, mapValues, pickBy } = require('./utils')
-const { DEFAULT_LEVEL, LEVELS } = require('./constants')
+import { result, mapValues, pickBy } from './utils.js'
+import { DEFAULT_LEVEL, LEVELS } from './constants'
 
 // Retrieve error's log level
-const getLevel = function({ opts, name, error }) {
+export const getLevel = function({ opts, name, error }) {
   const level = result(opts.level[name], error)
 
   if (level === 'default' || level === undefined) {
@@ -29,7 +27,7 @@ const getLevel = function({ opts, name, error }) {
 }
 
 // Apply `opts.level.default` and default values to `opts.level`
-const applyDefaultLevels = function({
+export const applyDefaultLevels = function({
   opts: { level: { default: defaultLevel, ...level } = {} },
 }) {
   const levelA = pickBy(level, value => value !== undefined)
@@ -43,7 +41,7 @@ const applyDefaultLevels = function({
 }
 
 // Use during options validation
-const getExampleLevels = function() {
+export const getExampleLevels = function() {
   return mapValues(DEFAULT_LEVEL, getExampleLevel)
 }
 
@@ -52,7 +50,7 @@ const getExampleLevel = function(level) {
   return multipleValidOptions(level, () => {})
 }
 
-const validateLevels = function({ level }) {
+export const validateLevels = function({ level }) {
   Object.entries(level).forEach(validateLevel)
 }
 
@@ -72,11 +70,4 @@ const isValidLevel = function({ level }) {
   return (
     LEVELS.includes(level) || level === undefined || typeof level === 'function'
   )
-}
-
-module.exports = {
-  getLevel,
-  applyDefaultLevels,
-  getExampleLevels,
-  validateLevels,
 }

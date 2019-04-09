@@ -1,7 +1,5 @@
 // Meant to be performed as `node -r log-process-errors/build/register/ava`
-// or `require('log-process-errors/build/register/ava')`.
-'use strict'
-
-const logProcessErrors = require('../src')
+// or `import 'log-process-errors/build/register/ava'`.
+import logProcessErrors from '../src/main.js'
 
 logProcessErrors({ testing: 'ava' })

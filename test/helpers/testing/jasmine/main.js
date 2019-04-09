@@ -1,13 +1,10 @@
-'use strict'
+import { EVENTS } from '../../emit/main.js'
+import { getOptions } from '../options.js'
 
-const { EVENTS } = require('../emit')
-
-const { callMain } = require('./main')
-
-const name = callMain()
+const { name } = getOptions()
 
 // eslint-disable-next-line no-undef
-describe('should make tests fail', function testSuite() {
+describe('should make tests fail', () => {
   // eslint-disable-next-line no-undef
   it(`on ${name}`, () => {
     // eslint-disable-next-line no-empty-function, max-nested-callbacks

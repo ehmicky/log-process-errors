@@ -1,9 +1,11 @@
-'use strict'
+import test from 'ava'
+import sinon from 'sinon'
 
-const test = require('ava')
-const sinon = require('sinon')
+import { startLogging } from '../helpers/init.js'
+import { normalizeMessage } from '../helpers/normalize.js'
+import { removeProcessListeners } from '../helpers/remove.js'
 
-const { startLogging, normalizeMessage } = require('../helpers')
+removeProcessListeners()
 
 const INVALID_OPTIONS = [
   { log: true },

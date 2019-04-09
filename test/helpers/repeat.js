@@ -1,12 +1,10 @@
-'use strict'
-
 // Required directly because this is exposed through documentation, but not
 // through code
-const { LEVELS, DEFAULT_LEVEL } = require('../../src/constants')
+import { LEVELS, DEFAULT_LEVEL } from '../../src/constants'
 
-const { RUNNERS } = require('./runners')
-const { EVENTS } = require('./emit')
-const { repeat } = require('./data_driven')
+import { RUNNERS } from './runners.js'
+import { EVENTS } from './emit/main.js'
+import { repeat } from './data_driven/main.js'
 
 const getEvents = function() {
   return Object.entries(EVENTS).map(getEvent)
@@ -23,14 +21,7 @@ const isNormalLevel = function(level) {
 
 const NORMAL_LEVELS = LEVELS.filter(isNormalLevel)
 
-const repeatEvents = repeat.bind(null, getEvents())
-const repeatLevels = repeat.bind(null, NORMAL_LEVELS)
-const repeatEventsLevels = repeat.bind(null, getEvents(), NORMAL_LEVELS)
-const repeatEventsRunners = repeat.bind(null, RUNNERS, getEvents())
-
-module.exports = {
-  repeatEvents,
-  repeatLevels,
-  repeatEventsLevels,
-  repeatEventsRunners,
-}
+export const repeatEvents = repeat.bind(null, getEvents())
+export const repeatLevels = repeat.bind(null, NORMAL_LEVELS)
+export const repeatEventsLevels = repeat.bind(null, getEvents(), NORMAL_LEVELS)
+export const repeatEventsRunners = repeat.bind(null, RUNNERS, getEvents())

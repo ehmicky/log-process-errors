@@ -1,7 +1,7 @@
 {
   "name": "log-process-errors",
   "version": "4.0.0",
-  "main": "build/src/index.js",
+  "main": "build/src/main.js",
   "files": [
     "build/src",
     "build/register",

@@ -1,9 +1,7 @@
-'use strict'
-
-const { pickBy } = require('../utils')
+import { pickBy } from '../utils.js'
 
 // Retrieve `event` object representing the current event information
-const getEvent = async function({
+export const getEvent = async function({
   name,
   promise,
   value,
@@ -52,8 +50,4 @@ const getPromiseValue = async function({ promise }) {
   } catch (error) {
     return { rejected: true, value: error }
   }
-}
-
-module.exports = {
-  getEvent,
 }

@@ -1,8 +1,10 @@
-'use strict'
+import test from 'ava'
 
-const test = require('ava')
+import { repeatEvents } from '../helpers/repeat.js'
+import { startLogging } from '../helpers/init.js'
+import { removeProcessListeners } from '../helpers/remove.js'
 
-const { repeatEvents, startLogging } = require('../helpers')
+removeProcessListeners()
 
 repeatEvents((prefix, { emitEvent }) => {
   test(`${prefix} events emitters should exist`, t => {

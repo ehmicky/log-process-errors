@@ -1,6 +1,4 @@
-'use strict'
-
-const process = require('process')
+import process from 'process'
 
 // By default Node.js adds a `warning` listener that prints `warning` events
 // on the console. This leads to duplicated events printing with this module.
@@ -8,7 +6,7 @@ const process = require('process')
 // Alternative ways to do it would be to ask users to pass `--no-warnings`
 // CLI flag or `NODE_NO_WARNINGS=1` environment variable. But this is not as
 // developer-friendly.
-const removeWarningListener = function() {
+export const removeWarningListener = function() {
   if (warningListener === undefined) {
     return
   }
@@ -18,7 +16,7 @@ const removeWarningListener = function() {
 }
 
 // When this module is undone, Node.js default `warning` listener is restored
-const restoreWarningListener = function() {
+export const restoreWarningListener = function() {
   if (warningListener === undefined) {
     return
   }
@@ -48,8 +46,3 @@ const getWarningListeners = function() {
 }
 
 const warningListener = getWarningListener()
-
-module.exports = {
-  removeWarningListener,
-  restoreWarningListener,
-}

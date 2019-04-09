@@ -1,20 +1,14 @@
-'use strict'
-
-const { nextTick } = require('process')
-const { promisify } = require('util')
+import { nextTick } from 'process'
+import { promisify } from 'util'
 
 const pSetImmediate = promisify(setImmediate)
 
 // Emit an `uncaughtException` event
-const uncaughtException = async function() {
+export const uncaughtException = async function() {
   nextTick(() => {
     throw new Error('message')
   })
 
   await pSetImmediate()
   await pSetImmediate()
-}
-
-module.exports = {
-  uncaughtException,
 }

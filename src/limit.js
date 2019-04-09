@@ -1,8 +1,6 @@
-'use strict'
+import { emitWarning } from 'process'
 
-const { emitWarning } = require('process')
-
-const { MAX_EVENTS } = require('./constants')
+import { MAX_EVENTS } from './constants'
 
 // We only allow 100 events (per `event.name`) for the global process because:
 //  - process errors are exceptional and if more than 100 happen, this is
@@ -15,7 +13,7 @@ const { MAX_EVENTS } = require('./constants')
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `[next]Value` is not an `Error` instance and contain dynamic
 //    content.
-const isLimited = function({
+export const isLimited = function({
   previousEvents,
   mEmitLimitedWarning,
   name,
@@ -35,12 +33,12 @@ const isLimited = function({
 }
 
 // Notify that limit has been reached with a `warning` event
-const emitLimitedWarning = function(name) {
+export const emitLimitedWarning = function(name) {
   emitWarning(ERROR_MESSAGE(name), ERROR_NAME, ERROR_CODE)
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function({ name, value = {} }) {
+export const isLimitedWarning = function({ name, value = {} }) {
   return (
     name === 'warning' && value.name === ERROR_NAME && value.code === ERROR_CODE
   )
@@ -50,9 +48,3 @@ const ERROR_MESSAGE = name =>
   `Cannot log more than ${MAX_EVENTS} '${name}' until process is restarted`
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
-
-module.exports = {
-  isLimited,
-  emitLimitedWarning,
-  isLimitedWarning,
-}

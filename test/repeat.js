@@ -1,14 +1,12 @@
-'use strict'
+import test from 'ava'
 
-const test = require('ava')
+import { repeatEvents } from './helpers/repeat.js'
+import { startLogging } from './helpers/init.js'
+import { emitEvents } from './helpers/several.js'
+import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
-const {
-  repeatEvents,
-  startLogging,
-  stubStackTrace,
-  unstubStackTrace,
-  emitEvents,
-} = require('./helpers')
+removeProcessListeners()
 
 repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should not repeat identical events`, async t => {

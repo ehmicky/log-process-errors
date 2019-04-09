@@ -1,12 +1,10 @@
-'use strict'
-
-const { emitWarning } = require('process')
-const { promisify } = require('util')
+import { emitWarning } from 'process'
+import { promisify } from 'util'
 
 const pSetImmediate = promisify(setImmediate)
 
 // Emit a `warning` event
-const warning = async function({ all = false } = {}) {
+export const warning = async function({ all = false } = {}) {
   const props = all ? WARNING_PROPS : [WARNING_PROPS[0]]
   props.forEach(createWarning)
 
@@ -26,7 +24,3 @@ const WARNING_PROPS = [
   { detail: 'Detail' },
   {},
 ]
-
-module.exports = {
-  warning,
-}

@@ -1,9 +1,7 @@
-'use strict'
-
-const { inspect } = require('util')
+import { inspect } from 'util'
 
 // Retrieve the `error.message` using the `event` information
-const getMessage = function({ event, name }) {
+export const getMessage = function({ event, name }) {
   return MESSAGES[name](event)
 }
 
@@ -78,7 +76,3 @@ const serialize = function(value) {
 }
 
 const INSPECT_OPTS = { getters: true }
-
-module.exports = {
-  getMessage,
-}

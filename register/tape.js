@@ -1,7 +1,5 @@
 // Meant to be performed as `node -r log-process-errors/build/register/tape`
-// or `require('log-process-errors/build/register/tape')`.
-'use strict'
-
-const logProcessErrors = require('../src')
+// or `import 'log-process-errors/build/register/tape'`.
+import logProcessErrors from '../src/main.js'
 
 logProcessErrors({ testing: 'tape' })

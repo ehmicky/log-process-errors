@@ -1,7 +1,5 @@
-'use strict'
-
 // Retrieve `error.stack` by re-using the original error's stack trace
-const getStack = function({ event: { nextValue, value } }) {
+export const getStack = function({ event: { nextValue, value } }) {
   const stack = getEventStack({ nextValue, value })
   const stackA = removeStackHeader({ stack })
   return stackA
@@ -27,7 +25,3 @@ const removeStackHeader = function({ stack }) {
 }
 
 const FIRST_LINE_REGEXP = /.*\n/u
-
-module.exports = {
-  getStack,
-}

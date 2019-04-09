@@ -1,19 +1,21 @@
-'use strict'
+import process from 'process'
+import { promisify } from 'util'
 
-const process = require('process')
-const { promisify } = require('util')
-
-const test = require('ava')
-const sinon = require('sinon')
-const lolex = require('lolex')
-
-const pNextTick = promisify(process.nextTick)
+import test from 'ava'
+import sinon from 'sinon'
+import lolex from 'lolex'
 
 // Required directly because this is exposed through documentation, but not
 // through code
-const { EXIT_TIMEOUT, EXIT_STATUS } = require('../src/constants')
+import { EXIT_TIMEOUT, EXIT_STATUS } from '../src/constants'
 
-const { repeatEvents, startLogging } = require('./helpers')
+import { repeatEvents } from './helpers/repeat.js'
+import { startLogging } from './helpers/init.js'
+import { removeProcessListeners } from './helpers/remove.js'
+
+const pNextTick = promisify(process.nextTick)
+
+removeProcessListeners()
 
 // Stub `process.exit()`
 const stubProcessExit = function() {

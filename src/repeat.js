@@ -1,6 +1,4 @@
-'use strict'
-
-const { inspect } = require('util')
+import { inspect } from 'util'
 
 // Events with the same `event` are only logged once because:
 //  - it makes logs clearer
@@ -9,7 +7,7 @@ const { inspect } = require('util')
 //    hosted remotely
 //  - it prevents infinite recursions if `opts.log|level()` triggers itself an
 //    event (while still reporting that event once)
-const isRepeated = function({ event, previousEvents }) {
+export const isRepeated = function({ event, previousEvents }) {
   const fingerprint = getFingerprint({ event })
 
   const isRepeatedEvent = previousEvents.has(fingerprint)
@@ -99,7 +97,3 @@ const stableSerialize = function(value) {
 }
 
 const INSPECT_OPTS = { getters: true, sorted: true }
-
-module.exports = {
-  isRepeated,
-}

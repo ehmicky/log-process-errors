@@ -1,13 +1,14 @@
-'use strict'
+import test from 'ava'
+import sinon from 'sinon'
 
-const test = require('ava')
-const sinon = require('sinon')
+import { startLogging } from './helpers/init.js'
+import { normalizeMessage } from './helpers/normalize.js'
+import { EVENTS } from './helpers/emit/main.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
-const {
-  startLogging,
-  normalizeMessage,
-  EVENTS: { warning: emitWarning },
-} = require('./helpers')
+removeProcessListeners()
+
+const { warning: emitWarning } = EVENTS
 
 test('[warning] should disable default event handlers', async t => {
   // eslint-disable-next-line no-restricted-globals

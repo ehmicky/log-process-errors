@@ -1,21 +1,19 @@
-'use strict'
+import { validate } from 'jest-validate'
 
-const { validate } = require('jest-validate')
-
-const {
+import {
   applyDefaultLevels,
   getExampleLevels,
   validateLevels,
-} = require('../level')
-const { validateExitOn } = require('../exit')
-const { defaultLog } = require('../log')
-const { addChalk } = require('../colors')
-const { pickBy } = require('../utils')
+} from '../level.js'
+import { validateExitOn } from '../exit.js'
+import { defaultLog } from '../log.js'
+import { addChalk } from '../colors.js'
+import { pickBy } from '../utils.js'
 
-const { applyTesting, getExampleTesting } = require('./testing')
+import { applyTesting, getExampleTesting } from './testing.js'
 
 // Validate options and assign default options
-const getOptions = function({ opts = {} }) {
+export const getOptions = function({ opts = {} }) {
   const optsA = pickBy(opts, value => value !== undefined)
 
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
@@ -50,8 +48,4 @@ const EXAMPLE_OPTS = {
 const validateOptions = function({ exitOn, level = {} }) {
   validateLevels({ level })
   validateExitOn({ exitOn })
-}
-
-module.exports = {
-  getOptions,
 }

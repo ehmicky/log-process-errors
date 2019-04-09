@@ -1,12 +1,10 @@
-'use strict'
+import process from 'process'
 
-const process = require('process')
-
-const { EVENTS } = require('./emit')
+import { EVENTS } from './emit/main.js'
 
 // Ava sets up process `uncaughtException` and `unhandledRejection` handlers
 // which makes testing them harder.
-const removeProcessListeners = function() {
+export const removeProcessListeners = function() {
   Object.keys(EVENTS).forEach(name => {
     // We keep the default `warning` event listener so we can test it
     if (name === 'warning') {
@@ -16,7 +14,3 @@ const removeProcessListeners = function() {
     process.removeAllListeners(name)
   })
 }
-
-removeProcessListeners()
-
-module.exports = {}

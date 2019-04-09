@@ -1,16 +1,14 @@
-'use strict'
+import { inspect } from 'util'
 
-const {
-  inspect: { custom },
-} = require('util')
+import { getMessage } from './message.js'
+import { getStack } from './stack.js'
+import { printError } from './print.js'
 
-const { getMessage } = require('./message')
-const { getStack } = require('./stack')
-const { printError } = require('./print')
+const { custom } = inspect
 
 // Retrieve `error` which sums up all information that can be gathered about
 // the event.
-const getError = function({ name, event }) {
+export const getError = function({ name, event }) {
   const message = getMessage({ event, name })
   const stack = getStack({ event })
   const error = buildError({ name, message, stack })
@@ -39,7 +37,7 @@ const capitalize = function(string) {
 }
 
 // This needs to be done later because `error` is used by `level`
-const addErrorPrint = function({
+export const addErrorPrint = function({
   error,
   error: { message },
   opts,
@@ -49,9 +47,4 @@ const addErrorPrint = function({
 }) {
   // eslint-disable-next-line fp/no-mutation, no-param-reassign
   error[custom] = printError.bind(null, { opts, level, name, message, stack })
-}
-
-module.exports = {
-  getError,
-  addErrorPrint,
 }

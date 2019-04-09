@@ -1,15 +1,13 @@
 // eslint-disable-next-line filenames/match-exported
-'use strict'
+import process from 'process'
 
-const process = require('process')
+import moize from 'moize'
 
-const moize = require('moize').default
-
-const { getOptions } = require('../options')
-const { removeWarningListener, restoreWarningListener } = require('../warnings')
-const { emitLimitedWarning } = require('../limit')
-
-const EVENTS = require('./events')
+import { getOptions } from './options/main.js'
+import { removeWarningListener, restoreWarningListener } from './warnings.js'
+import { emitLimitedWarning } from './limit.js'
+// eslint-disable-next-line import/no-namespace
+import * as EVENTS from './handle/main.js'
 
 // Add event handling for all process-related errors
 const logProcessErrors = function(opts) {
@@ -62,4 +60,7 @@ const removeListener = function({ eventListener, name }) {
   process.removeListener(name, eventListener)
 }
 
+// We do not use `export default` because Babel transpiles it in a way that
+// requires CommonJS users to `require(...).default` instead of `require(...)`.
+// eslint-disable-next-line import/no-commonjs
 module.exports = logProcessErrors

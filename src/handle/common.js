@@ -1,15 +1,13 @@
-'use strict'
+import { isLimited } from '../limit.js'
+import { isRepeated } from '../repeat.js'
+import { getLevel } from '../level.js'
+import { getError, addErrorPrint } from '../error/main.js'
+import { exitProcess } from '../exit.js'
 
-const { isLimited } = require('../limit')
-const { isRepeated } = require('../repeat')
-const { getLevel } = require('../level')
-const { getError, addErrorPrint } = require('../error')
-const { exitProcess } = require('../exit')
-
-const { getEvent } = require('./event')
+import { getEvent } from './event.js'
 
 // Generic event handler for all events.
-const handleEvent = async function({
+export const handleEvent = async function({
   opts,
   name,
   previousEvents,
@@ -53,8 +51,4 @@ const logEvent = async function({ opts, name, event }) {
 
   // See `exit.js` on why we need to `await`
   await opts.log(error, level)
-}
-
-module.exports = {
-  handleEvent,
 }

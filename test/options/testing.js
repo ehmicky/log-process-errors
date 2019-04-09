@@ -1,10 +1,12 @@
-'use strict'
+import test from 'ava'
 
-const test = require('ava')
-
-const { repeatEventsRunners, normalizeCall } = require('../helpers')
+import { repeatEventsRunners } from '../helpers/repeat.js'
+import { normalizeCall } from '../helpers/normalize.js'
+import { removeProcessListeners } from '../helpers/remove.js'
 
 const HELPER_DIR = `${__dirname}/../helpers/testing`
+
+removeProcessListeners()
 
 repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
   const [testing] = testName.split(':')
@@ -16,26 +18,30 @@ repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
   })
 
   test(`${prefix} should allow overriding 'opts.level'`, async t => {
-    const returnValue = await callRunner(
-      { testing, command, name },
-      { level: { default: 'silent' } },
-    )
+    const returnValue = await callRunner({
+      testing,
+      command,
+      name,
+      opts: { level: { default: 'silent' } },
+    })
 
     t.snapshot(returnValue)
   })
 
   test(`${prefix} should work with the -r flag`, async t => {
-    const returnValue = await callRunner(
-      { testing, command, name },
-      { register: true },
-    )
+    const returnValue = await callRunner({
+      testing,
+      command,
+      name,
+      register: true,
+    })
 
     t.snapshot(returnValue)
   })
 })
 
-const callRunner = async function({ testing, command, name }, opts) {
-  const helperFile = getHelperFile(testing)
+const callRunner = async function({ testing, command, name, opts, register }) {
+  const helperFile = getHelperFile({ testing, register })
   const optsA = { name, testing, ...opts }
   const commandA = command(helperFile)
   const returnValue = await normalizeCall(commandA, {
@@ -45,9 +51,10 @@ const callRunner = async function({ testing, command, name }, opts) {
   return returnValue
 }
 
-const getHelperFile = function(testing) {
+const getHelperFile = function({ testing, register }) {
   // TODO: remove next comment once we support over test runners than 'ava'
   // istanbul ignore next
   const helperDir = testing === 'ava' ? __dirname : HELPER_DIR
-  return `${helperDir}/${testing}.js`
+  const filename = register ? 'register' : 'regular'
+  return `${helperDir}/${testing}/${filename}.js`
 }

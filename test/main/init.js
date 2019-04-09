@@ -1,11 +1,13 @@
-'use strict'
+import process from 'process'
 
-const process = require('process')
+import test from 'ava'
+import sinon from 'sinon'
 
-const test = require('ava')
-const sinon = require('sinon')
+import { repeatEvents } from '../helpers/repeat.js'
+import { startLogging, startLoggingNoOpts } from '../helpers/init.js'
+import { removeProcessListeners } from '../helpers/remove.js'
 
-const { repeatEvents, startLogging, startLoggingNoOpts } = require('../helpers')
+removeProcessListeners()
 
 const addProcessHandler = function(name) {
   const processHandler = sinon.spy()

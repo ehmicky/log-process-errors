@@ -1,7 +1,5 @@
-'use strict'
-
 // Like Lodash pickBy()
-const pickBy = function(object, condition) {
+export const pickBy = function(object, condition) {
   const pairs = Object.entries(object).filter(([key, value]) =>
     condition(value, key),
   )
@@ -9,7 +7,7 @@ const pickBy = function(object, condition) {
 }
 
 // Like Lodash mapValues()
-const mapValues = function(object, mapper) {
+export const mapValues = function(object, mapper) {
   const pairs = Object.entries(object).map(([key, value]) => [
     key,
     mapper(value, key),
@@ -18,16 +16,10 @@ const mapValues = function(object, mapper) {
 }
 
 // Like Lodash result(), but faster
-const result = function(val, ...args) {
+export const result = function(val, ...args) {
   if (typeof val !== 'function') {
     return val
   }
 
   return val(...args)
-}
-
-module.exports = {
-  pickBy,
-  mapValues,
-  result,
 }

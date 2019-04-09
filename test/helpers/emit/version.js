@@ -1,16 +1,10 @@
-'use strict'
+import { version } from 'process'
 
-const { version } = require('process')
-
-const semver = require('semver')
+import semver from 'semver'
 
 // `multipleResolves` was introduced in Node `10.12.0`
-const hasMultipleResolves = function() {
+export const hasMultipleResolves = function() {
   return semver.gte(version, MULTIPLE_RESOLVES_V)
 }
 
 const MULTIPLE_RESOLVES_V = '10.12.0'
-
-module.exports = {
-  hasMultipleResolves,
-}

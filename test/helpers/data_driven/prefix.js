@@ -1,9 +1,7 @@
-'use strict'
-
-const { hasDuplicates } = require('./utils')
+import { hasDuplicates } from './utils.js'
 
 // Retrieve unique prefix for each combination of values
-const getPrefixes = function(arrays) {
+export const getPrefixes = function(arrays) {
   const prefixes = arrays.map(getPrefix)
   const prefixesA = fixDuplicates({ prefixes })
   return prefixesA
@@ -55,8 +53,4 @@ const fixDuplicates = function({ prefixes }) {
 const addPrefixIndex = function(prefix, index) {
   const space = prefix.length === 0 ? '' : ' '
   return `[${index}]${space}${prefix}`
-}
-
-module.exports = {
-  getPrefixes,
 }

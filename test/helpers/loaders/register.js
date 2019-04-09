@@ -1,15 +1,13 @@
-'use strict'
+import { argv } from 'process'
 
-const { argv } = require('process')
-
-// We use `require()` instead of the `-r` flag because Istanbul does not cover
+// We use `import` instead of the `-r` flag because Istanbul does not cover
 // files loaded with the `-r` flag:
 //   https://github.com/istanbuljs/istanbuljs.github.io/issues/144
 // eslint-disable-next-line import/no-unassigned-import
-require('../../../register')
+import '../../../register/index.js'
 
-const { stubStackTrace } = require('../stack')
-const { EVENTS } = require('../emit')
+import { stubStackTrace } from '../stack.js'
+import { EVENTS } from '../emit/main.js'
 
 stubStackTrace()
 

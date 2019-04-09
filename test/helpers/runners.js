@@ -1,8 +1,6 @@
-'use strict'
+import { env } from 'process'
 
-const {
-  env: { SPAWN_WRAP_SHIM_ROOT },
-} = require('process')
+const { SPAWN_WRAP_SHIM_ROOT } = env
 
 const shouldKeep = function({ skip }) {
   return skip === undefined || !skip()
@@ -17,7 +15,7 @@ const usesSpawnWrap = function() {
 }
 
 // We test each runner + reporter combination
-const RUNNERS = [
+export const RUNNERS = [
   { name: 'ava', command: file => `ava ${file}` },
 
   { name: 'mocha', command: file => `mocha ${file}` },
@@ -41,7 +39,3 @@ const RUNNERS = [
     skip: usesSpawnWrap,
   },
 ].filter(shouldKeep)
-
-module.exports = {
-  RUNNERS,
-}

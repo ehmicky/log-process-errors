@@ -4,7 +4,7 @@
 dir="$(dirname "$BASH_SOURCE")"
 projectRoot="$(realpath "$dir/..")"
 binaryName="$(basename "$projectRoot")"
-pathToBinary="build/src/bin/index.js"
+pathToBinary="build/src/bin/main.js"
 
 cd "$dir"
 
@@ -16,4 +16,4 @@ alias "$binaryName"="$projectRoot/$pathToBinary"
 
 # This mocks node's `-r` flag so that examples look the same as if the library
 # directly installed.
-alias node='node -r "./utils"'
+alias node='node -r "./utils.js"'

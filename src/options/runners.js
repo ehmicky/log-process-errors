@@ -1,6 +1,4 @@
-'use strict'
-
-const { nextTick } = require('process')
+import { nextTick } from 'process'
 
 // Make `opts.log()` propagate an `uncaughtException` so that test runner
 // reports the original process error as a test failure.
@@ -14,7 +12,8 @@ const throwUncaughtException = function(error) {
 // to do it instead.
 const tapeFailingTest = function(error) {
   // This is an optional peerDependency. `package.json` does not support those.
-  // eslint-disable-next-line import/no-extraneous-dependencies
+  // TODO: replace with `import()` once it is supported by default by ESLint
+  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
   const tape = require('tape')
   tape.test(error.message, t => {
     t.plan(1)
@@ -34,7 +33,7 @@ const COMMON_OPTIONS = {
   level: { uncaughtException: 'silent', unhandledRejection: 'silent' },
 }
 
-const RUNNERS = {
+export const RUNNERS = {
   ava: COMMON_OPTIONS,
   // Mocha does not report `unhandleRejection`
   mocha: { ...COMMON_OPTIONS, level: { uncaughtException: 'silent' } },
@@ -42,8 +41,4 @@ const RUNNERS = {
   // Tape does not report `uncaughtException` nor `unhandleRejection`
   tape: { ...COMMON_OPTIONS, level: {}, log: tapeFailingTest },
   'node-tap': COMMON_OPTIONS,
-}
-
-module.exports = {
-  RUNNERS,
 }

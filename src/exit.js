@@ -1,9 +1,7 @@
-'use strict'
-
 // Do not destructure so tests can stub it
-const process = require('process')
+import process from 'process'
 
-const { EXIT_STATUS, EXIT_TIMEOUT, EVENTS } = require('./constants')
+import { EXIT_STATUS, EXIT_TIMEOUT, EVENTS } from './constants'
 
 // Exit process according to `opts.exitOn` (default: ['uncaughtException']):
 //  - `uncaughtException`: default behavior of Node.js and recommended by
@@ -23,7 +21,7 @@ const { EXIT_STATUS, EXIT_TIMEOUT, EVENTS } = require('./constants')
 // stream, and keep track of all unique returned streams. On exit, we should
 // then close then and wait for them to flush. We should then always wait for
 // process.stdout|stderr as well.
-const exitProcess = function({ name, opts: { exitOn } }) {
+export const exitProcess = function({ name, opts: { exitOn } }) {
   if (!exitOn.includes(name)) {
     return
   }
@@ -36,7 +34,7 @@ const exitProcess = function({ name, opts: { exitOn } }) {
   }, EXIT_TIMEOUT)
 }
 
-const validateExitOn = function({ exitOn }) {
+export const validateExitOn = function({ exitOn }) {
   if (exitOn === undefined) {
     return
   }
@@ -52,9 +50,4 @@ const validateExitOn = function({ exitOn }) {
       ', ',
     )}': must be one of ${EVENTS.join(', ')}`,
   )
-}
-
-module.exports = {
-  exitProcess,
-  validateExitOn,
 }

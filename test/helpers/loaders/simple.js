@@ -1,10 +1,8 @@
-'use strict'
+import { argv } from 'process'
 
-const { argv } = require('process')
-
-const logProcessErrors = require('../../../src')
-const { stubStackTrace } = require('../stack')
-const { EVENTS } = require('../emit')
+import logProcessErrors from '../../../src/main.js'
+import { stubStackTrace } from '../stack.js'
+import { EVENTS } from '../emit/main.js'
 
 stubStackTrace()
 

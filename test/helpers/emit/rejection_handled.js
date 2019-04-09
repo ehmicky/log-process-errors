@@ -1,11 +1,9 @@
-'use strict'
-
-const { promisify } = require('util')
+import { promisify } from 'util'
 
 const pSetImmediate = promisify(setImmediate)
 
 // Emit a `rejectionHandled` event
-const rejectionHandled = async function() {
+export const rejectionHandled = async function() {
   const promise = Promise.reject(new Error('message'))
 
   await pSetImmediate()
@@ -16,8 +14,4 @@ const rejectionHandled = async function() {
 
   await pSetImmediate()
   await pSetImmediate()
-}
-
-module.exports = {
-  rejectionHandled,
 }

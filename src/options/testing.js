@@ -1,11 +1,9 @@
-'use strict'
+import { multipleValidOptions } from 'jest-validate'
 
-const { multipleValidOptions } = require('jest-validate')
-
-const { RUNNERS } = require('./runners')
+import { RUNNERS } from './runners.js'
 
 // Apply `options.testing` which is basically a preset of options.
-const applyTesting = function({ opts, opts: { level, testing } }) {
+export const applyTesting = function({ opts, opts: { level, testing } }) {
   if (testing === undefined) {
     return opts
   }
@@ -60,11 +58,6 @@ const isForbiddenOpt = function(optName) {
 const ALLOWED_OPTS = ['level']
 
 // Use during options validation
-const getExampleTesting = function() {
+export const getExampleTesting = function() {
   return multipleValidOptions(...Object.keys(RUNNERS))
-}
-
-module.exports = {
-  applyTesting,
-  getExampleTesting,
 }

@@ -1,17 +1,15 @@
-'use strict'
+import sinon from 'sinon'
 
-const sinon = require('sinon')
-
-const logProcessErrors = require('../../src')
-const { mapValues } = require('../../src/utils')
+import logProcessErrors from '../../src/main.js'
+import { mapValues } from '../../src/utils.js'
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
-const startLoggingNoOpts = function() {
+export const startLoggingNoOpts = function() {
   const stopLogging = logProcessErrors()
   return { stopLogging }
 }
 
-const startLogging = function({ name, log, level, ...opts } = {}) {
+export const startLogging = function({ name, log, level, ...opts } = {}) {
   const logA = getLog({ log })
   const levelA = getLevel({ level, name })
 
@@ -65,9 +63,4 @@ const onlyEvent = function(level, name, error) {
   }
 
   return level(error)
-}
-
-module.exports = {
-  startLoggingNoOpts,
-  startLogging,
 }

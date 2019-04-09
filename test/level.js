@@ -1,10 +1,12 @@
 /* eslint-disable max-lines, max-lines-per-function */
-'use strict'
+import test from 'ava'
+import sinon from 'sinon'
 
-const test = require('ava')
-const sinon = require('sinon')
+import { repeatEvents, repeatEventsLevels } from './helpers/repeat.js'
+import { startLogging } from './helpers/init.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
-const { repeatEvents, repeatEventsLevels, startLogging } = require('./helpers')
+removeProcessListeners()
 
 repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
   const OPTIONS = [

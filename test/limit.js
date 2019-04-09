@@ -1,18 +1,16 @@
-'use strict'
-
-const test = require('ava')
+import test from 'ava'
 
 // Required directly because this is exposed through documentation, but not
 // through code
-const { MAX_EVENTS } = require('../src/constants')
+import { MAX_EVENTS } from '../src/constants'
 
-const {
-  repeatEvents,
-  startLogging,
-  stubStackTraceRandom,
-  unstubStackTrace,
-  emitEvents,
-} = require('./helpers')
+import { repeatEvents } from './helpers/repeat.js'
+import { startLogging } from './helpers/init.js'
+import { emitEvents } from './helpers/several.js'
+import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
+import { removeProcessListeners } from './helpers/remove.js'
+
+removeProcessListeners()
 
 repeatEvents((prefix, { name, emitEvent }) => {
   test(`${prefix} should limit events`, async t => {

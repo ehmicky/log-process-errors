@@ -1,6 +1,6 @@
 // Required directly because this is exposed through documentation, but not
 // through code
-import { LEVELS, DEFAULT_LEVEL } from '../../src/constants'
+import { LEVELS, DEFAULT_LEVEL } from '../../src/level.js'
 
 import { RUNNERS } from './runners.js'
 import { EVENTS } from './emit/main.js'

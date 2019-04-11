@@ -7,7 +7,7 @@ import lolex from 'lolex'
 
 // Required directly because this is exposed through documentation, but not
 // through code
-import { EXIT_TIMEOUT, EXIT_STATUS } from '../src/constants'
+import { EXIT_TIMEOUT, EXIT_STATUS } from '../src/exit.js'
 
 import { repeatEvents } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'

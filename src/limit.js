@@ -1,7 +1,5 @@
 import { emitWarning } from 'process'
 
-import { MAX_EVENTS } from './constants'
-
 // We only allow 100 events (per `event.name`) for the global process because:
 //  - process errors are exceptional and if more than 100 happen, this is
 //    probably due to some infinite recursion.
@@ -48,3 +46,5 @@ const ERROR_MESSAGE = name =>
   `Cannot log more than ${MAX_EVENTS} '${name}' until process is restarted`
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
+
+export const MAX_EVENTS = 100

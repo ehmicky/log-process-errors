@@ -1,8 +1,6 @@
 // Do not destructure so tests can stub it
 import process from 'process'
 
-import { EXIT_STATUS, EXIT_TIMEOUT, EVENTS } from './constants'
-
 // Exit process according to `opts.exitOn` (default: ['uncaughtException']):
 //  - `uncaughtException`: default behavior of Node.js and recommended by
 //     https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
@@ -34,6 +32,9 @@ export const exitProcess = function({ name, opts: { exitOn } }) {
   }, EXIT_TIMEOUT)
 }
 
+export const EXIT_TIMEOUT = 3000
+export const EXIT_STATUS = 1
+
 export const validateExitOn = function({ exitOn }) {
   if (exitOn === undefined) {
     return
@@ -51,3 +52,11 @@ export const validateExitOn = function({ exitOn }) {
     )}': must be one of ${EVENTS.join(', ')}`,
   )
 }
+
+const EVENTS = [
+  'uncaughtException',
+  'unhandledRejection',
+  'rejectionHandled',
+  'multipleResolves',
+  'warning',
+]

@@ -2,7 +2,7 @@ import test from 'ava'
 
 // Required directly because this is exposed through documentation, but not
 // through code
-import { MAX_EVENTS } from '../src/constants'
+import { MAX_EVENTS } from '../src/limit.js'
 
 import { repeatEvents } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'

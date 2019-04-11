@@ -3,7 +3,6 @@ import { emitWarning } from 'process'
 import { multipleValidOptions } from 'jest-validate'
 
 import { result, mapValues, pickBy } from './utils.js'
-import { DEFAULT_LEVEL, LEVELS } from './constants'
 
 // Retrieve error's log level
 export const getLevel = function({ opts, name, error }) {
@@ -70,4 +69,15 @@ const isValidLevel = function({ level }) {
   return (
     LEVELS.includes(level) || level === undefined || typeof level === 'function'
   )
+}
+
+export const LEVELS = ['debug', 'info', 'warn', 'error', 'silent', 'default']
+
+export const DEFAULT_LEVEL = {
+  default: 'error',
+  uncaughtException: 'error',
+  warning: 'warn',
+  unhandledRejection: 'error',
+  rejectionHandled: 'error',
+  multipleResolves: 'info',
 }

@@ -41,7 +41,6 @@ const multipleResolves = function() {
   })
 }
 
-// eslint-disable-next-line import/no-commonjs
 module.exports = {
   uncaughtException,
   unhandledRejection,

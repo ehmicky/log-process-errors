@@ -55,7 +55,7 @@
     "core-js": "^3.0.1",
     "figures": "^2.0.0",
     "jest-validate": "^24.7.0",
-    "moize": "^5.4.3",
+    "moize": "^5.4.4",
     "supports-color": "^6.1.0"
   },
   "devDependencies": {

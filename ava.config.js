@@ -1,4 +1,4 @@
-import config from 'gulp-shared-tasks/ava.config'
+import config from 'gulp-shared-tasks/ava.config.js'
 
 export default {
   ...config,

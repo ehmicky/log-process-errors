@@ -58,4 +58,10 @@ const REPLACEMENTS = [
   [/(line|column): \d+/gu, ''],
   //  - TAP
   [/time=[\d.]+ms/gu, ''],
+  // Ava fires uncaught exception sometimes before, sometimes after unhandled
+  // rejection.
+  [
+    /1 uncaught exception\n {2}1 unhandled rejection/gu,
+    '1 unhandled rejection\n  1 uncaught exception',
+  ],
 ]

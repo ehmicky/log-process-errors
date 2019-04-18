@@ -53,7 +53,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "core-js": "^3.0.1",
-    "figures": "^2.0.0",
+    "figures": "^3.0.0",
     "jest-validate": "^24.7.0",
     "moize": "^5.4.4",
     "supports-color": "^6.1.0"

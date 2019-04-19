@@ -17,7 +17,7 @@ import process from 'process'
 //  - waiting for few seconds (EXIT_TIMEOUT)
 // This last one is a hack. We should instead allow `opts.log()` to return a
 // stream, and keep track of all unique returned streams. On exit, we should
-// then close then and wait for them to flush. We should then always wait for
+// then close them and wait for them to flush. We should then always wait for
 // process.stdout|stderr as well.
 export const exitProcess = function({ name, opts: { exitOn } }) {
   if (!exitOn.includes(name)) {

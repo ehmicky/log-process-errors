@@ -1,3 +1,15 @@
+# 4.1.1
+
+## Dependencies
+
+- Upgrade `figures`
+- Upgrade `moize`
+
+## Internal
+
+- Upgrade development dependencies
+- Code refactoring
+
 # 4.1.0
 
 ## Internal

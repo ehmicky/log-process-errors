@@ -23,7 +23,7 @@ export const getOptions = function({ opts = {} }) {
   const level = applyDefaultLevels({ opts: optsB })
   const optsC = { ...DEFAULT_OPTS, ...optsB, level }
 
-  const optsD = addChalk(optsC)
+  const optsD = addChalk({ opts: optsC })
   return optsD
 }
 

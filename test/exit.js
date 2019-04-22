@@ -34,8 +34,9 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
+// eslint-disable-next-line max-lines-per-function
 repeatEvents((prefix, { name, emitEvent }) => {
-  test(`${prefix} should call process.exit(1) if inside opts.exitOn`, async t => {
+  test.serial(`${prefix} should process.exit(1) if inside exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const exitOn = [name]
@@ -51,22 +52,25 @@ repeatEvents((prefix, { name, emitEvent }) => {
     unstubProcessExit({ clock, processExit })
   })
 
-  test(`${prefix} should not call process.exit(1) if not inside opts.exitOn`, async t => {
-    const { clock, processExit } = stubProcessExit()
+  test.serial(
+    `${prefix} should not process.exit(1) if not inside exitOn`,
+    async t => {
+      const { clock, processExit } = stubProcessExit()
 
-    const exitOn = []
-    const { stopLogging } = startLogging({ exitOn, name })
+      const exitOn = []
+      const { stopLogging } = startLogging({ exitOn, name })
 
-    await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
-    t.true(processExit.notCalled)
+      t.true(processExit.notCalled)
 
-    stopLogging()
+      stopLogging()
 
-    unstubProcessExit({ clock, processExit })
-  })
+      unstubProcessExit({ clock, processExit })
+    },
+  )
 
-  test(`${prefix} should delay process.exit(1)`, async t => {
+  test.serial(`${prefix} should delay process.exit(1)`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const { stopLogging } = startLogging({ exitOn: [name], name })
@@ -83,32 +87,35 @@ repeatEvents((prefix, { name, emitEvent }) => {
     unstubProcessExit({ clock, processExit })
   })
 
-  test(`${prefix} should delay process.exit(1) with async opts.log()`, async t => {
-    const { clock, processExit } = stubProcessExit()
+  test.serial(
+    `${prefix} should delay process.exit(1) with async opts.log()`,
+    async t => {
+      const { clock, processExit } = stubProcessExit()
 
-    const { promise, resolve } = getPromise()
+      const { promise, resolve } = getPromise()
 
-    const { stopLogging } = startLogging({
-      exitOn: [name],
-      name,
-      // We use `async` keyword to make sure they are validated correctly
-      // eslint-disable-next-line no-return-await
-      log: async () => await promise,
-    })
+      const { stopLogging } = startLogging({
+        exitOn: [name],
+        name,
+        // We use `async` keyword to make sure they are validated correctly
+        // eslint-disable-next-line no-return-await
+        log: async () => await promise,
+      })
 
-    await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
-    t.true(processExit.notCalled)
+      t.true(processExit.notCalled)
 
-    await resolve()
-    clock.tick(EXIT_TIMEOUT)
+      await resolve()
+      clock.tick(EXIT_TIMEOUT)
 
-    t.true(processExit.called)
+      t.true(processExit.called)
 
-    stopLogging()
+      stopLogging()
 
-    unstubProcessExit({ clock, processExit })
-  })
+      unstubProcessExit({ clock, processExit })
+    },
+  )
 })
 
 // Returns a promise that can be triggered from outside

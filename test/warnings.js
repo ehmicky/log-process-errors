@@ -10,7 +10,7 @@ removeProcessListeners()
 
 const { warning: emitWarning } = EVENTS
 
-test('[warning] should disable default event handlers', async t => {
+test.serial('[warning] should disable default event handlers', async t => {
   // eslint-disable-next-line no-restricted-globals
   const stub = sinon.stub(console, 'error')
 
@@ -28,7 +28,7 @@ test('[warning] should disable default event handlers', async t => {
   stub.restore()
 })
 
-test('[warning] should restore default event handlers', async t => {
+test.serial('[warning] should restore default event handlers', async t => {
   // eslint-disable-next-line no-restricted-globals
   const stub = sinon.stub(console, 'error')
 
@@ -44,23 +44,26 @@ test('[warning] should restore default event handlers', async t => {
   stub.restore()
 })
 
-test('[warning] should multiply restore default event handlers', async t => {
-  // eslint-disable-next-line no-restricted-globals
-  const stub = sinon.stub(console, 'error')
+test.serial(
+  '[warning] should multiply restore default event handlers',
+  async t => {
+    // eslint-disable-next-line no-restricted-globals
+    const stub = sinon.stub(console, 'error')
 
-  const { stopLogging } = startLogging()
-  startLogging().stopLogging()
+    const { stopLogging } = startLogging()
+    startLogging().stopLogging()
 
-  await emitWarning()
+    await emitWarning()
 
-  t.true(stub.notCalled)
+    t.true(stub.notCalled)
 
-  stopLogging()
+    stopLogging()
 
-  await emitWarning()
+    await emitWarning()
 
-  t.true(stub.calledOnce)
-  t.snapshot(normalizeMessage(String(stub.lastCall.args[0])))
+    t.true(stub.calledOnce)
+    t.snapshot(normalizeMessage(String(stub.lastCall.args[0])))
 
-  stub.restore()
-})
+    stub.restore()
+  },
+)

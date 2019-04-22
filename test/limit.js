@@ -13,7 +13,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 removeProcessListeners()
 
 repeatEvents((prefix, { name, emitEvent }) => {
-  test(`${prefix} should limit events`, async t => {
+  test.serial(`${prefix} should limit events`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
@@ -34,7 +34,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
     unstubStackTrace()
   })
 
-  test(`${prefix} should emit warning when limiting events`, async t => {
+  test.serial(`${prefix} should emit warning when limiting events`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
@@ -55,28 +55,31 @@ repeatEvents((prefix, { name, emitEvent }) => {
     unstubStackTrace()
   })
 
-  test(`${prefix} should only emit warning once when limiting events`, async t => {
-    stubStackTraceRandom()
+  test.serial(
+    `${prefix} should only emit warning once when limiting events`,
+    async t => {
+      stubStackTraceRandom()
 
-    const { stopLogging, log } = startLogging({
-      level: { default: onlyLimited },
-      log: 'spy',
-    })
+      const { stopLogging, log } = startLogging({
+        level: { default: onlyLimited },
+        log: 'spy',
+      })
 
-    await emitEvents(MAX_EVENTS, emitEvent)
+      await emitEvents(MAX_EVENTS, emitEvent)
 
-    await emitEvent()
+      await emitEvent()
 
-    const { callCount } = log
+      const { callCount } = log
 
-    await emitEvent()
+      await emitEvent()
 
-    t.is(log.callCount, callCount)
+      t.is(log.callCount, callCount)
 
-    stopLogging()
+      stopLogging()
 
-    unstubStackTrace()
-  })
+      unstubStackTrace()
+    },
+  )
 })
 
 const onlyLimited = function(error) {

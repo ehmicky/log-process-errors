@@ -56,6 +56,7 @@ const REPLACEMENTS = [
   //  - node-tap `classic` reporter
   [/ [\d.]+ms/gu, ''],
   [/(line|column): \d+/gu, ''],
+  [/ \.\. \s+/gu, ' .. '],
   //  - TAP
   [/time=[\d.]+ms/gu, ''],
   // Ava fires uncaught exception sometimes before, sometimes after unhandled

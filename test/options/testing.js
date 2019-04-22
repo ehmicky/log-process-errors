@@ -11,13 +11,13 @@ removeProcessListeners()
 repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
   const [testing] = testName.split(':')
 
-  test(`${prefix} should make tests fails`, async t => {
+  test.serial(`${prefix} should make tests fails`, async t => {
     const returnValue = await callRunner({ testing, command, name })
 
     t.snapshot(returnValue)
   })
 
-  test(`${prefix} should allow overriding 'opts.level'`, async t => {
+  test.serial(`${prefix} should allow overriding 'opts.level'`, async t => {
     const returnValue = await callRunner({
       testing,
       command,
@@ -28,7 +28,7 @@ repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
     t.snapshot(returnValue)
   })
 
-  test(`${prefix} should work with the -r flag`, async t => {
+  test.serial(`${prefix} should work with the -r flag`, async t => {
     const returnValue = await callRunner({
       testing,
       command,

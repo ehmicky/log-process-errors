@@ -16,24 +16,25 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
     { level: { default: () => 'default' } },
   ]
   OPTIONS.forEach(options => {
-    test(`${prefix} ${JSON.stringify(
-      options,
-    )} should use default opts.level()`, async t => {
-      const { stopLogging, log } = startLogging({
-        log: 'spy',
-        name,
-        ...options,
-      })
+    test.serial(
+      `${prefix} ${JSON.stringify(options)} should use default opts.level()`,
+      async t => {
+        const { stopLogging, log } = startLogging({
+          log: 'spy',
+          name,
+          ...options,
+        })
 
-      await emitEvent()
+        await emitEvent()
 
-      t.is(log.firstCall.args[1], defaultLevel)
+        t.is(log.firstCall.args[1], defaultLevel)
 
-      stopLogging()
-    })
+        stopLogging()
+      },
+    )
   })
 
-  test(`${prefix} should allow 'silent' level`, async t => {
+  test.serial(`${prefix} should allow 'silent' level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: 'silent' },
@@ -46,58 +47,67 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
     stopLogging()
   })
 
-  test(`${prefix} should use default opts.level() when using an invalid level`, async t => {
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      level: { default: 'invalid' },
-      name,
-    })
+  test.serial(
+    `${prefix} should use default opts.level() when using an invalid level`,
+    async t => {
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        level: { default: 'invalid' },
+        name,
+      })
 
-    await emitEvent()
+      await emitEvent()
 
-    t.true(log.called)
-    t.is(log.firstCall.args[1], defaultLevel)
+      t.true(log.called)
+      t.is(log.firstCall.args[1], defaultLevel)
 
-    stopLogging()
-  })
+      stopLogging()
+    },
+  )
 
-  test(`${prefix} should emit a warning when opts.level() uses an invalid level`, async t => {
-    const { stopLogging } = startLogging({
-      level: { default: 'invalid' },
-      name,
-    })
+  test.serial(
+    `${prefix} should emit a warning when opts.level() uses an invalid level`,
+    async t => {
+      const { stopLogging } = startLogging({
+        level: { default: 'invalid' },
+        name,
+      })
 
-    const { stopLogging: stopWarningLog, log } = startLogging({
-      log: 'spy',
-      name: 'warning',
-    })
+      const { stopLogging: stopWarningLog, log } = startLogging({
+        log: 'spy',
+        name: 'warning',
+      })
 
-    await emitEvent()
+      await emitEvent()
 
-    t.true(log.called)
-    t.snapshot(String(log.lastCall.args[0]))
+      t.true(log.called)
+      t.snapshot(String(log.lastCall.args[0]))
 
-    stopWarningLog()
-    stopLogging()
-  })
+      stopWarningLog()
+      stopLogging()
+    },
+  )
 
-  test(`${prefix} should allow changing log level for a specific event`, async t => {
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      level: { default: 'error', [name]: 'silent' },
-      name,
-    })
+  test.serial(
+    `${prefix} should allow changing log level for a specific event`,
+    async t => {
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        level: { default: 'error', [name]: 'silent' },
+        name,
+      })
 
-    await emitEvent()
+      await emitEvent()
 
-    t.true(log.notCalled)
+      t.true(log.notCalled)
 
-    stopLogging()
-  })
+      stopLogging()
+    },
+  )
 })
 
 repeatEventsLevels((prefix, { name, emitEvent }, level) => {
-  test(`${prefix} should allow changing log level`, async t => {
+  test.serial(`${prefix} should allow changing log level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: level },
@@ -112,7 +122,7 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     stopLogging()
   })
 
-  test(`${prefix} should allow opts.level() as a function`, async t => {
+  test.serial(`${prefix} should allow opts.level() as a function`, async t => {
     // eslint-disable-next-line max-nested-callbacks
     const defaultLevel = sinon.spy(() => level)
 

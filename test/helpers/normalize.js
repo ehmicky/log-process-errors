@@ -50,19 +50,13 @@ const REPLACEMENTS = [
   [/[^ (]+\/[^ )]+/gu, ''],
   // Durations in test runners:
   //  - Mocha, node-tap `classic` reporter
-  [/ \([\d.]+ms\)/gu, ''],
+  [/ \([\d.]+m?s\)/gu, ''],
   //  - Jasmine
   [/[\d.]+ seconds/gu, ''],
   //  - node-tap `classic` reporter
-  [/ [\d.]+ms/gu, ''],
+  [/ [\d.]+m?s/gu, ''],
   [/(line|column): \d+/gu, ''],
   [/ \.\. \s+/gu, ' .. '],
   //  - TAP
-  [/time=[\d.]+ms/gu, ''],
-  // Ava fires uncaught exception sometimes before, sometimes after unhandled
-  // rejection.
-  [
-    /1 uncaught exception\n {2}1 unhandled rejection/gu,
-    '1 unhandled rejection\n  1 uncaught exception',
-  ],
+  [/time=[\d.]+m?s/gu, ''],
 ]

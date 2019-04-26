@@ -136,7 +136,7 @@ When running tests, makes them fail if there are any process errors.
 
 Example with [Ava](https://github.com/avajs/ava):
 
-<!-- eslint-disable node/prefer-global/process, ava/no-ignored-test-files, import/order -->
+<!-- eslint-disable import/order -->
 
 ```js
 const logProcessErrors = require('log-process-errors')
@@ -155,7 +155,7 @@ test('Example test', t => {
 Alternatively, you can just require
 `log-process-errors/build/register/{testRunnerName}`:
 
-<!-- eslint-disable node/prefer-global/process, ava/no-ignored-test-files, import/no-unassigned-import -->
+<!-- eslint-disable import/no-unassigned-import -->
 
 ```js
 // Should be initialized before requiring other dependencies
@@ -180,7 +180,7 @@ ava --require log-process-errors/build/register/ava
 
 To ignore specific process errors, use the [`level` option](#level):
 
-<!-- eslint-disable node/prefer-global/process, ava/no-ignored-test-files, import/order -->
+<!-- eslint-disable import/order -->
 
 ```js
 const logProcessErrors = require('log-process-errors')

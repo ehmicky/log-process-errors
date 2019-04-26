@@ -11,10 +11,9 @@ You can try all the examples below:
 Initializes `log-process-errors`. Returns a function that can be fired to
 restore Node.js default behavior.
 
-<!-- eslint-disable import/newline-after-import -->
-
 ```js
 const logProcessErrors = require('log-process-errors')
+
 const restore = logProcessErrors(options)
 restore()
 ```

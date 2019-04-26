@@ -20,8 +20,6 @@ restore()
 
 Full example:
 
-<!-- eslint-disable no-empty-function -->
-
 ```js
 logProcessErrors({
   log(error, level) {

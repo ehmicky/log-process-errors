@@ -85,8 +85,6 @@ node -r log-process-errors/build/register ...
 
 The second is:
 
-<!-- eslint-disable import/newline-after-import -->
-
 ```js
 const logProcessErrors = require('log-process-errors')
 logProcessErrors(options)

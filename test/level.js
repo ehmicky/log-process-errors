@@ -1,4 +1,4 @@
-/* eslint-disable max-lines, max-lines-per-function */
+/* eslint-disable max-lines */
 import test from 'ava'
 import sinon from 'sinon'
 
@@ -143,4 +143,4 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     stopLogging()
   })
 })
-/* eslint-enable max-lines, max-lines-per-function */
+/* eslint-enable max-lines */

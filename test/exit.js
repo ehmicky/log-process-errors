@@ -34,7 +34,6 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-// eslint-disable-next-line max-lines-per-function
 repeatEvents((prefix, { name, emitEvent }) => {
   test.serial(`${prefix} should process.exit(1) if inside exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()

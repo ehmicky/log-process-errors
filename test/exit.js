@@ -41,14 +41,9 @@ const getPromise = function() {
   // eslint-disable-next-line promise/avoid-new
   const promise = new Promise(resolve => {
     // eslint-disable-next-line fp/no-mutation
-    resolveA = getResolve.bind(null, resolve)
+    resolveA = resolve
   })
   return { promise, resolve: resolveA }
-}
-
-const getResolve = async function(resolve) {
-  resolve()
-  await pNextTick()
 }
 
 repeatEvents((prefix, { name, emitEvent }) => {
@@ -105,6 +100,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
 
   test.serial(
     `${prefix} should delay process.exit(1) with async opts.log()`,
+    // eslint-disable-next-line max-statements
     async t => {
       const { clock, processExit } = stubProcessExit()
 
@@ -124,6 +120,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
       t.true(processExit.notCalled)
 
       await resolve()
+      await pNextTick()
       clock.tick(EXIT_TIMEOUT)
 
       t.true(processExit.called)

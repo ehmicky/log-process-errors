@@ -34,18 +34,6 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-// Returns a promise that can be triggered from outside
-const getPromise = function() {
-  // eslint-disable-next-line fp/no-let, init-declarations
-  let resolveA
-  // eslint-disable-next-line promise/avoid-new
-  const promise = new Promise(resolve => {
-    // eslint-disable-next-line fp/no-mutation
-    resolveA = resolve
-  })
-  return { promise, resolve: resolveA }
-}
-
 repeatEvents((prefix, { name, emitEvent }) => {
   test.serial(`${prefix} should process.exit(1) if inside exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
@@ -104,7 +92,13 @@ repeatEvents((prefix, { name, emitEvent }) => {
     async t => {
       const { clock, processExit } = stubProcessExit()
 
-      const { promise, resolve } = getPromise()
+      // eslint-disable-next-line fp/no-let, init-declarations
+      let resolveA
+      // eslint-disable-next-line promise/avoid-new
+      const promise = new Promise(resolve => {
+        // eslint-disable-next-line fp/no-mutation
+        resolveA = resolve
+      })
 
       const { stopLogging } = startLogging({
         exitOn: [name],
@@ -119,7 +113,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
 
       t.true(processExit.notCalled)
 
-      await resolve()
+      resolveA()
       await pNextTick()
       clock.tick(EXIT_TIMEOUT)
 

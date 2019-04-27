@@ -1,4 +1,3 @@
-// eslint-disable-next-line filenames/match-exported
 import process from 'process'
 
 import moize from 'moize'
@@ -62,5 +61,4 @@ const removeListener = function({ eventListener, name }) {
 
 // We do not use `export default` because Babel transpiles it in a way that
 // requires CommonJS users to `require(...).default` instead of `require(...)`.
-// eslint-disable-next-line import/no-commonjs
 module.exports = logProcessErrors

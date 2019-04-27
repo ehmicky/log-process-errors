@@ -114,8 +114,9 @@ repeatEvents((prefix, { name, emitEvent }) => {
         exitOn: [name],
         name,
         // We use `async` keyword to make sure they are validated correctly
-        // eslint-disable-next-line no-return-await
-        log: async () => await promise,
+        async log() {
+          await promise
+        },
       })
 
       await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })

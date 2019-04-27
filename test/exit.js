@@ -34,6 +34,23 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
+// Returns a promise that can be triggered from outside
+const getPromise = function() {
+  // eslint-disable-next-line fp/no-let, init-declarations
+  let resolveA
+  // eslint-disable-next-line promise/avoid-new
+  const promise = new Promise(resolve => {
+    // eslint-disable-next-line fp/no-mutation
+    resolveA = getResolve.bind(null, resolve)
+  })
+  return { promise, resolve: resolveA }
+}
+
+const getResolve = async function(resolve) {
+  resolve()
+  await pNextTick()
+}
+
 repeatEvents((prefix, { name, emitEvent }) => {
   test.serial(`${prefix} should process.exit(1) if inside exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
@@ -116,20 +133,3 @@ repeatEvents((prefix, { name, emitEvent }) => {
     },
   )
 })
-
-// Returns a promise that can be triggered from outside
-const getPromise = function() {
-  // eslint-disable-next-line fp/no-let, init-declarations
-  let resolveA
-  // eslint-disable-next-line promise/avoid-new
-  const promise = new Promise(resolve => {
-    // eslint-disable-next-line fp/no-mutation
-    resolveA = getResolve.bind(null, resolve)
-  })
-  return { promise, resolve: resolveA }
-}
-
-const getResolve = async function(resolve) {
-  resolve()
-  await pNextTick()
-}

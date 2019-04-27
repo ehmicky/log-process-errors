@@ -122,9 +122,12 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     stopLogging()
   })
 
+  const getLevel = function() {
+    return level
+  }
+
   test.serial(`${prefix} should allow opts.level() as a function`, async t => {
-    // eslint-disable-next-line max-nested-callbacks
-    const defaultLevel = sinon.spy(() => level)
+    const defaultLevel = sinon.spy(getLevel)
 
     const { stopLogging, log } = startLogging({
       log: 'spy',

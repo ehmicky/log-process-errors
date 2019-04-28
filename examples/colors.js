@@ -8,7 +8,7 @@
 'use strict'
 
 // Ignore the following line: this is only needed for internal purposes.
-require('./utils')
+require('./utils.js')
 
 const logProcessErrors = require('log-process-errors')
 
@@ -16,7 +16,7 @@ const logProcessErrors = require('log-process-errors')
 // Removes message colorization
 logProcessErrors({ colors: false })
 
-const { warning } = require('./errors')
+const { warning } = require('./errors.js')
 
 // Emit a `warning` process error
 warning()

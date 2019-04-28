@@ -8,7 +8,7 @@
 'use strict'
 
 // Ignore the following line: this is only needed for internal purposes.
-require('./utils')
+require('./utils.js')
 
 const logProcessErrors = require('log-process-errors')
 
@@ -31,7 +31,7 @@ const shouldSkip = function({ message }) {
   return message.includes('Deprecation')
 }
 
-const { multipleResolves, warning } = require('./errors')
+const { multipleResolves, warning } = require('./errors.js')
 
 // This deprecation `warning` will be silent
 warning()

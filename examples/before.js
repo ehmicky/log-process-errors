@@ -13,7 +13,7 @@ const {
   unhandledRejection,
   warning,
   multipleResolves,
-} = require('./errors')
+} = require('./errors.js')
 
 // Emit different types of process errors.
 uncaughtException()

@@ -6,7 +6,7 @@
 
 const Module = require('module')
 
-const { name } = require('../package')
+const { name } = require('../package.json')
 
 const originalRequire = Module.prototype.require
 

@@ -9,7 +9,7 @@
 'use strict'
 
 // Ignore the following line: this is only needed for internal purposes.
-require('./utils')
+require('./utils.js')
 
 const logProcessErrors = require('log-process-errors')
 
@@ -21,7 +21,7 @@ const {
   unhandledRejection,
   warning,
   multipleResolves,
-} = require('./errors')
+} = require('./errors.js')
 
 // Emit different types of process errors
 uncaughtException()

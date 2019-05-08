@@ -90,7 +90,8 @@ const logProcessErrors = require('log-process-errors')
 logProcessErrors(options)
 ```
 
-`logProcessErrors()` should be called as early as possible in the code.
+`logProcessErrors()` should be called as early as possible in the code, before
+other `require`/`import` statements.
 
 # Options
 

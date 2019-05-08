@@ -8,7 +8,7 @@ const HELPER_DIR = `${__dirname}/../helpers/testing`
 
 removeProcessListeners()
 
-repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
+repeatEventsRunners((prefix, { name: testName, command, env }, { name }) => {
   const [testing] = testName.split(':')
 
   // Ava handling of rejectionHandled is not predictable, i.e. make tests
@@ -18,7 +18,7 @@ repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
   }
 
   test(`${prefix} should make tests fails`, async t => {
-    const returnValue = await callRunner({ testing, command, name })
+    const returnValue = await callRunner({ testing, command, env, name })
 
     t.snapshot(returnValue)
   })
@@ -27,6 +27,7 @@ repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
     const returnValue = await callRunner({
       testing,
       command,
+      env,
       name,
       opts: { level: { default: 'silent' } },
     })
@@ -38,6 +39,7 @@ repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
     const returnValue = await callRunner({
       testing,
       command,
+      env,
       name,
       register: true,
     })
@@ -46,13 +48,20 @@ repeatEventsRunners((prefix, { name: testName, command }, { name }) => {
   })
 })
 
-const callRunner = async function({ testing, command, name, opts, register }) {
+const callRunner = async function({
+  testing,
+  command,
+  env,
+  name,
+  opts,
+  register,
+}) {
   const helperFile = getHelperFile({ testing, register })
   const optsA = { name, testing, ...opts }
   const commandA = command(helperFile)
   const returnValue = await normalizeCall(commandA, {
     // Test runners have different CI output sometimes.
-    env: { OPTIONS: JSON.stringify(optsA), CI: '1' },
+    env: { OPTIONS: JSON.stringify(optsA), CI: '1', ...env },
   })
   return returnValue
 }

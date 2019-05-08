@@ -30,12 +30,13 @@ export const RUNNERS = [
 
   {
     name: 'node-tap:classic',
-    command: file => `tap -R=classic ${file.replace('node-tap', 'node_tap')}`,
+    command: file => `tap -R=classic --no-coverage ${file.replace('node-tap', 'node_tap')}`,
     skip: usesSpawnWrap,
   },
   {
     name: 'node-tap:tap',
-    command: file => `tap -R=tap ${file.replace('node-tap', 'node_tap')}`,
+    command: file => `tap -R=tap --no-coverage ${file.replace('node-tap', 'node_tap')}`,
+    env: { TAP_DIAG: '0' },
     skip: usesSpawnWrap,
   },
 ].filter(shouldKeep)

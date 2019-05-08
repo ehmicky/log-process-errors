@@ -29,6 +29,11 @@ export const RUNNERS = [
   { name: 'tape', command: file => `tape ${file}` },
 
   {
+    name: 'node-tap:default',
+    command: file => `tap --no-coverage ${file.replace('node-tap', 'node_tap')}`,
+    skip: usesSpawnWrap,
+  },
+  {
     name: 'node-tap:classic',
     command: file => `tap -R=classic --no-coverage ${file.replace('node-tap', 'node_tap')}`,
     skip: usesSpawnWrap,

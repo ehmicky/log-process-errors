@@ -28,22 +28,6 @@ test.serial('[warning] should disable default event handlers', async t => {
   stub.restore()
 })
 
-test.serial('[warning] should restore default event handlers', async t => {
-  // eslint-disable-next-line no-restricted-globals
-  const stub = sinon.stub(console, 'error')
-
-  const { stopLogging } = startLogging()
-  stopLogging()
-
-  await emitWarning()
-
-  t.true(stub.calledOnce)
-  const message = normalizeMessage(String(stub.lastCall.args[0]))
-  t.snapshot(message)
-
-  stub.restore()
-})
-
 test.serial(
   '[warning] should multiply restore default event handlers',
   async t => {

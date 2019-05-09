@@ -35,10 +35,10 @@ const COMMON_OPTIONS = {
 
 export const RUNNERS = {
   ava: COMMON_OPTIONS,
-  // Mocha does not report `unhandleRejection`
+  // Mocha does not report `unhandledRejection`
   mocha: { ...COMMON_OPTIONS, level: { uncaughtException: 'silent' } },
   jasmine: COMMON_OPTIONS,
-  // Tape does not report `uncaughtException` nor `unhandleRejection`
+  // Tape does not report `uncaughtException` nor `unhandledRejection`
   tape: { ...COMMON_OPTIONS, level: {}, log: tapeFailingTest },
   'node-tap': COMMON_OPTIONS,
 }

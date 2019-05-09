@@ -53,6 +53,8 @@ const REPLACEMENTS = [
   [/ \([\d.]+m?s\)/gu, ''],
   //  - Jasmine
   [/[\d.]+ seconds/gu, ''],
+  //  - Jasmine, Node 10 only (not Node 8 nor 12)
+  [/\n\nSuite error: undefined/gu, ''],
   //  - node-tap `classic` reporter
   [/ [\d.]+m?s/gu, ''],
   [/(line|column): \d+/gu, ''],

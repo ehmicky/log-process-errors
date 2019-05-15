@@ -65,14 +65,14 @@ development dependency:
 npm install log-process-errors
 ```
 
-However libraries should install this as a development dependency:
+However, libraries should install this as a development dependency:
 
 ```bash
 npm install -D log-process-errors
 ```
 
 This is because logging is modified globally and libraries users might not
-expect this side-effect. Also this might lead to conflicts between libraries.
+expect this side-effect. Also, this might lead to conflicts between libraries.
 
 # Usage
 
@@ -155,7 +155,7 @@ button (pencil icon) and suggest a correction.
 If you would like to help us fix a bug or add a new feature, please check our
 [guidelines](CONTRIBUTING.md). Pull requests are welcome!
 
-<!-- Thanks goes to our wonderful contributors: -->
+<!-- Thanks go to our wonderful contributors: -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START -->
 <!-- prettier-ignore -->

@@ -20,6 +20,15 @@
         "ideas",
         "doc"
       ]
+    },
+    {
+      "login": "stevenvachon",
+      "name": "Steven Vachon",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/170197?v=4",
+      "profile": "https://svachon.com",
+      "contributions": [
+        "question"
+      ]
     }
   ],
   "contributorsPerLine": 7

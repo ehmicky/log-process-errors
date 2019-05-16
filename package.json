@@ -62,7 +62,7 @@
     "ava": "^1.4.1",
     "execa": "^1.0.0",
     "gulp": "^4.0.2",
-    "gulp-shared-tasks": "^0.27.65",
+    "gulp-shared-tasks": "^0.27.66",
     "has-ansi": "^3.0.0",
     "husky": "^2.3.0",
     "jasmine": "^3.4.0",

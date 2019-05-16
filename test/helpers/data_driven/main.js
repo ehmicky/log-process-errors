@@ -11,10 +11,10 @@ import { cartesianProduct } from './utils.js'
 //  - check other data-driven test libraries for features
 //  - allow values to be generating functions
 export const repeat = function(...args) {
-  const arrays = args.slice(0, -1)
-  const func = args[args.length - 1]
+  // eslint-disable-next-line fp/no-mutating-methods
+  const func = args.pop()
 
-  const arraysA = cartesianProduct(...arrays)
+  const arraysA = cartesianProduct(...args)
 
   const prefixes = getPrefixes(arraysA)
 

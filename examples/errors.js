@@ -15,8 +15,8 @@ const uncaughtException = function() {
 const unhandledRejection = function() {
   const promise = Promise.reject(new Error('Invalid permission'))
   setTimeout(() => {
-    // eslint-disable-next-line max-nested-callbacks
-    promise.catch(() => ({}))
+    // eslint-disable-next-line no-empty-function, max-nested-callbacks
+    promise.catch(() => {})
   }, 0)
 }
 

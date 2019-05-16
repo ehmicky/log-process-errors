@@ -11,8 +11,7 @@ import { cartesianProduct } from './utils.js'
 //  - check other data-driven test libraries for features
 //  - allow values to be generating functions
 export const repeat = function(...args) {
-  const arrays = args.slice(0, -1)
-  const func = args[args.length - 1]
+  const [func, ...arrays] = args
 
   const arraysA = cartesianProduct(...arrays)
 

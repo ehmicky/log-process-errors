@@ -21,7 +21,8 @@ const isNormalLevel = function(level) {
 
 const NORMAL_LEVELS = LEVELS.filter(isNormalLevel)
 
-export const repeatEvents = repeat.bind(null, getEvents())
-export const repeatLevels = repeat.bind(null, NORMAL_LEVELS)
-export const repeatEventsLevels = repeat.bind(null, getEvents(), NORMAL_LEVELS)
-export const repeatEventsRunners = repeat.bind(null, RUNNERS, getEvents())
+export const repeatEvents = func => repeat(func, getEvents())
+export const repeatLevels = func => repeat(func, NORMAL_LEVELS)
+export const repeatEventsLevels = func =>
+  repeat(func, getEvents(), NORMAL_LEVELS)
+export const repeatEventsRunners = func => repeat(func, RUNNERS, getEvents())

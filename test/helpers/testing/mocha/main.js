@@ -1,4 +1,4 @@
-//* eslint-env mocha */
+/* eslint-env mocha */
 import { EVENTS } from '../../emit/main.js'
 import { getOptions } from '../options.js'
 

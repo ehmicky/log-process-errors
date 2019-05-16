@@ -7,10 +7,7 @@ const { emitWarning } = require('process')
 // Emit an `uncaughtException` event
 const uncaughtException = function() {
   setTimeout(() => {
-    // eslint-disable-next-line max-nested-callbacks
-    setTimeout(() => {
-      throw new Error('File not found')
-    }, 0)
+    throw new Error('File not found')
   }, 0)
 }
 
@@ -34,8 +31,8 @@ const warning = function() {
 
 // Emit a `multipleResolves` event
 const multipleResolves = function() {
-  // eslint-disable-next-line no-new, promise/avoid-new
-  new Promise((resolve, reject) => {
+  // eslint-disable-next-line promise/avoid-new
+  return new Promise((resolve, reject) => {
     resolve({ success: true })
     reject(new Error('Cannot send request'))
   })

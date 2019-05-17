@@ -1,3 +1,21 @@
+# 5.0.0
+
+Thanks to @Hongarc and @stevenvachon for their first-time contributions!
+
+## Breaking changes
+
+- Minimum Node.js version is now `8.12.0` (instead of `8.10.0`)
+
+## Documentation
+
+- Improve documentation and examples
+
+## Internal
+
+- Upgrade development dependencies
+- Code refactoring
+- Improve linting
+
 # 4.1.1
 
 ## Dependencies

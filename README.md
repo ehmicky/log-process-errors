@@ -113,15 +113,15 @@ Which log level to use.<br> [Full documentation](docs/API.md#level).
 
 ## exitOn
 
-_Type_: `string[]`<br> _Default_: `["uncaughtException"]`
+_Type_: `string[]`<br> _Default_: `['uncaughtException']`
 
 Which process errors should trigger `process.exit(1)`.<br>
 [Full documentation](docs/API.md#exiton).
 
 ## testing
 
-_Type_: `string`<br> _Value_: `"ava"`, `"mocha"`, `"jasmine"`, `"tape"` or
-`"node-tap"`<br> _Default_: `undefined`
+_Type_: `string`<br> _Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or
+`'node-tap'`<br> _Default_: `undefined`
 
 When running tests, makes them fail if there are any process errors.<br>
 [Full documentation](docs/API.md#testing).

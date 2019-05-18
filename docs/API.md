@@ -82,8 +82,8 @@ Object keys are the error names:
 [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
 or `default`.
 
-Object values are the log level: `"debug"`, `"info"`, `"warn"`, `"error"`,
-`"silent"` or `"default"`. It can also be a function using
+Object values are the log level: `'debug'`, `'info'`, `'warn'`, `'error'`,
+`'silent'` or `'default'`. It can also be a function using
 [`error` as argument](#error) and returning one of those log levels.
 
 ```js
@@ -103,18 +103,18 @@ logProcessErrors({
 #### exitOn
 
 _Type_: `string[]`<br> _Value_: array of
-[`"uncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`"unhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`"rejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`"multipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves)
-or [`"warning"`](https://nodejs.org/api/process.html#process_event_warning)<br>
-_Default_: `["uncaughtException"]`
+[`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`'unhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
+[`'multipleResolves'`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+or [`'warning'`](https://nodejs.org/api/process.html#process_event_warning)<br>
+_Default_: `['uncaughtException']`
 
 Which process errors should trigger `process.exit(1)`:
 
-- `["uncaughtException"]` is Node.js
+- `['uncaughtException']` is Node.js
   [default behavior](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
-- we recommend using `["uncaughtException", "unhandledRejection"]` instead since
+- we recommend using `['uncaughtException', 'unhandledRejection']` instead since
   this will be
   [Node.js future default behavior](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections).
 - use `[]` to prevent any `process.exit(1)`. Recommended if your process is
@@ -129,8 +129,8 @@ logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
 
 #### testing
 
-_Type_: `string`<br> _Value_: `"ava"`, `"mocha"`, `"jasmine"`, `"tape"` or
-`"node-tap"`<br> _Default_: `undefined`
+_Type_: `string`<br> _Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or
+`'node-tap'`<br> _Default_: `undefined`
 
 When running tests, makes them fail if there are any process errors.
 
@@ -216,11 +216,11 @@ instance.
 #### error.name
 
 _Type_: `string`<br> _Value_:
-[`"UncaughtException"`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`"UnhandledRejection"`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`"RejectionHandled"`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`"MultipleResolves"`](https://nodejs.org/api/process.html#process_event_multipleresolves)
-or [`"Warning"`](https://nodejs.org/api/process.html#process_event_warning)
+[`'UncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
+[`'MultipleResolves'`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
 
 #### error.stack
 

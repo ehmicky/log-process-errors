@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: '[ENHANCEMENT] Please replace with a clear and descriptive title'
+title: 'Please replace with a clear and descriptive title'
 labels: enhancement
 assignees: ''
 ---

@@ -7,9 +7,9 @@
 [![Twitter](https://img.shields.io/badge/%E2%80%8B-twitter-4cc61e.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ehmicky)
 [![Medium](https://img.shields.io/badge/%E2%80%8B-medium-4cc61e.svg?logo=medium)](https://medium.com/@ehmicky)
 
-Show some ❤️ to Node.js process errors.
-
 [📰 Medium article.](https://medium.com/@ehmicky/node-js-process-errors-are-broken-193980f0a77b)
+
+Show some ❤️ to Node.js process errors.
 
 Node.js prints process errors
 ([`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),

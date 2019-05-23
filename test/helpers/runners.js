@@ -45,4 +45,6 @@ export const RUNNERS = [
     env: { TAP_DIAG: '0' },
     skip: usesSpawnWrap,
   },
-].filter(shouldKeep).map(addName)
+]
+  .filter(shouldKeep)
+  .map(addName)

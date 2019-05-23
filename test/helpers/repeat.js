@@ -12,7 +12,7 @@ const getEventData = function() {
 
 const getEvent = function([eventName, emitEvent]) {
   const defaultLevel = DEFAULT_LEVEL[eventName]
-  return { emitEvent, eventName, defaultLevel }
+  return { name: eventName, eventName, emitEvent, defaultLevel }
 }
 
 const EVENT_DATA = getEventData()

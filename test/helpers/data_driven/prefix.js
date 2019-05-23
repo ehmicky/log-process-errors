@@ -39,10 +39,6 @@ const serializeValue = function(value) {
     return value.name
   }
 
-  if (typeof value.eventName === 'string') {
-    return value.eventName
-  }
-
   if (typeof value.runner === 'string') {
     return value.runner
   }

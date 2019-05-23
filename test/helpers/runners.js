@@ -16,26 +16,26 @@ const usesSpawnWrap = function() {
 
 // We test each runner + reporter combination
 export const RUNNERS = [
-  { name: 'ava', command: file => `ava ${file}` },
+  { runner: 'ava', command: file => `ava ${file}` },
 
-  { name: 'mocha', command: file => `mocha ${file}` },
+  { runner: 'mocha', command: file => `mocha ${file}` },
 
   {
-    name: 'jasmine',
+    runner: 'jasmine',
     // Jasmine adds random seeds to output otherwise
     command: file => `jasmine --seed=0 ${file}`,
   },
 
-  { name: 'tape', command: file => `tape ${file}` },
+  { runner: 'tape', command: file => `tape ${file}` },
 
   {
-    name: 'node-tap:default',
+    runner: 'node-tap:default',
     command: file =>
       `tap --no-coverage ${file.replace('node-tap', 'node_tap')}`,
     skip: usesSpawnWrap,
   },
   {
-    name: 'node-tap:tap',
+    runner: 'node-tap:tap',
     command: file =>
       `tap -R=tap --no-coverage ${file.replace('node-tap', 'node_tap')}`,
     env: { TAP_DIAG: '0' },

@@ -42,6 +42,10 @@ const serializeValue = function(value) {
   if (typeof value.eventName === 'string') {
     return value.eventName
   }
+
+  if (typeof value.runner === 'string') {
+    return value.runner
+  }
 }
 
 // Add an incrementing counter if some prefixes are duplicates

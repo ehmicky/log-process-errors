@@ -140,7 +140,10 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     t.is(log.callCount, 1)
     t.is(defaultLevel.callCount, 1)
     t.true(defaultLevel.firstCall.args[0] instanceof Error)
-    t.is(defaultLevel.firstCall.args[0].name.toLowerCase(), eventName.toLowerCase())
+    t.is(
+      defaultLevel.firstCall.args[0].name.toLowerCase(),
+      eventName.toLowerCase(),
+    )
     t.is(log.firstCall.args[1], level)
 
     stopLogging()

@@ -26,7 +26,9 @@ repeatEvents((prefix, { eventName }) => {
   })
 
   test(`${prefix} should work using both the -r flag and init()`, async t => {
-    const returnValue = await normalizeCall(`node ${LOADERS}/noop.js ${eventName}`)
+    const returnValue = await normalizeCall(
+      `node ${LOADERS}/noop.js ${eventName}`,
+    )
 
     t.snapshot(returnValue)
   })

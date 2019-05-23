@@ -7,6 +7,6 @@ export const getOptions = function() {
     return {}
   }
 
-  const { name, ...options } = JSON.parse(OPTIONS)
-  return { name, options }
+  const { eventName, ...options } = JSON.parse(OPTIONS)
+  return { eventName, options }
 }

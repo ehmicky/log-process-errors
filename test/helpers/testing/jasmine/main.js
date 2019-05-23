@@ -2,11 +2,11 @@
 import { EVENTS } from '../../emit/main.js'
 import { getOptions } from '../options.js'
 
-const { name } = getOptions()
+const { eventName } = getOptions()
 
 describe('should make tests fail', () => {
-  it(`on ${name}`, () => {
+  it(`on ${eventName}`, () => {
     // eslint-disable-next-line no-empty-function, max-nested-callbacks
-    EVENTS[name]().catch(() => {})
+    EVENTS[eventName]().catch(() => {})
   })
 })

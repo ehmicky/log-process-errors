@@ -6,11 +6,11 @@ import { getOptions } from '../options.js'
 // eslint-disable-next-line import/no-unassigned-import
 import '../stack.js'
 
-const { name } = getOptions()
+const { eventName } = getOptions()
 
-tap.test(`should make tests fail on ${name}`, t => {
+tap.test(`should make tests fail on ${eventName}`, t => {
   t.plan(1)
   // eslint-disable-next-line no-empty-function
-  EVENTS[name]().catch(() => {})
+  EVENTS[eventName]().catch(() => {})
   t.pass()
 })

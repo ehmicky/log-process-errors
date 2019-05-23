@@ -10,27 +10,27 @@ const HELPER_DIR = `${__dirname}/../helpers/testing`
 
 removeProcessListeners()
 
-const shouldSkip = function({ testName, name }) {
+const shouldSkip = function({ testName, eventName }) {
   return (
-    isAvaRejectionHandled({ testName, name }) ||
-    isOldNodeTap({ testName, name })
+    isAvaRejectionHandled({ testName, eventName }) ||
+    isOldNodeTap({ testName, eventName })
   )
 }
 
 // Ava handling of rejectionHandled is not predictable, i.e. make tests
 // randomly fail
-const isAvaRejectionHandled = function({ testName, name }) {
-  return testName === 'ava' && name === 'rejectionHandled'
+const isAvaRejectionHandled = function({ testName, eventName }) {
+  return testName === 'ava' && eventName === 'rejectionHandled'
 }
 
 // `node-tap` testing is challenging for `rejectionHandled` and
 // `unhandledRejection`. It fails but only locally (not in CI) and only for
 // Node 8. Considering `node-tap` is doing lots of monkey-patching, we give up
 // on testing that combination.
-const isOldNodeTap = function({ testName, name }) {
+const isOldNodeTap = function({ testName, eventName }) {
   return (
     testName.startsWith('node-tap') &&
-    ['rejectionHandled', 'unhandledRejection'].includes(name) &&
+    ['rejectionHandled', 'unhandledRejection'].includes(eventName) &&
     version.startsWith('v8.')
   )
 }
@@ -39,12 +39,12 @@ const callRunner = async function({
   testing,
   command,
   env,
-  name,
+  eventName,
   opts,
   register,
 }) {
   const helperFile = getHelperFile({ testing, register })
-  const optsA = { name, testing, ...opts }
+  const optsA = { eventName, testing, ...opts }
   const commandA = command(helperFile)
   const returnValue = await normalizeCall(commandA, {
     // Test runners have different CI output sometimes.
@@ -61,15 +61,15 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-repeatEventsRunners((prefix, { name: testName, command, env }, { name }) => {
+repeatEventsRunners((prefix, { name: testName, command, env }, { eventName }) => {
   const [testing] = testName.split(':')
 
-  if (shouldSkip({ testName, name })) {
+  if (shouldSkip({ testName, eventName })) {
     return
   }
 
   test(`${prefix} should make tests fails`, async t => {
-    const returnValue = await callRunner({ testing, command, env, name })
+    const returnValue = await callRunner({ testing, command, env, eventName })
 
     t.snapshot(returnValue)
   })
@@ -79,7 +79,7 @@ repeatEventsRunners((prefix, { name: testName, command, env }, { name }) => {
       testing,
       command,
       env,
-      name,
+      eventName,
       opts: { level: { default: 'silent' } },
     })
 
@@ -91,7 +91,7 @@ repeatEventsRunners((prefix, { name: testName, command, env }, { name }) => {
       testing,
       command,
       env,
-      name,
+      eventName,
       register: true,
     })
 

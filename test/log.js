@@ -20,7 +20,7 @@ const snapshotArgs = function([error, level]) {
   ]
 }
 
-repeatEvents((prefix, { name, emitEvent }) => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
   test.serial(`${prefix} should fire opts.log()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -34,7 +34,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
   })
 
   test.serial(`${prefix} should fire opts.log() once`, async t => {
-    const { stopLogging, log } = startLogging({ log: 'spy', name })
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     t.true(log.notCalled)
 
@@ -48,7 +48,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
   test.serial(`${prefix} should fire opts.log() with arguments`, async t => {
     stubStackTrace()
 
-    const { stopLogging, log } = startLogging({ log: 'spy', name })
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent({ all: true })
 
@@ -63,7 +63,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
   })
 })
 
-repeatEventsLevels((prefix, { name, emitEvent }, level) => {
+repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
   test.serial(`${prefix} should log on the console by default`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, level)
@@ -71,7 +71,7 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     const { stopLogging } = startLogging({
       log: 'default',
       level: { default: level },
-      name,
+      eventName,
     })
 
     await emitEvent()

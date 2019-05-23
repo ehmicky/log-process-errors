@@ -8,7 +8,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
+repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
     { level: { default: undefined }, exitOn: [] },
@@ -21,7 +21,7 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
       async t => {
         const { stopLogging, log } = startLogging({
           log: 'spy',
-          name,
+          eventName,
           ...options,
         })
 
@@ -53,7 +53,7 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
         level: { default: 'invalid' },
-        name,
+        eventName,
       })
 
       await emitEvent()
@@ -70,12 +70,12 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
     async t => {
       const { stopLogging } = startLogging({
         level: { default: 'invalid' },
-        name,
+        eventName,
       })
 
       const { stopLogging: stopWarningLog, log } = startLogging({
         log: 'spy',
-        name: 'warning',
+        eventName: 'warning',
       })
 
       await emitEvent()
@@ -93,8 +93,8 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
-        level: { default: 'error', [name]: 'silent' },
-        name,
+        level: { default: 'error', [eventName]: 'silent' },
+        eventName,
       })
 
       await emitEvent()
@@ -106,12 +106,12 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
   )
 })
 
-repeatEventsLevels((prefix, { name, emitEvent }, level) => {
+repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
   test.serial(`${prefix} should allow changing log level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: level },
-      name,
+      eventName,
     })
 
     await emitEvent()
@@ -132,7 +132,7 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: defaultLevel },
-      name,
+      eventName,
     })
 
     await emitEvent()
@@ -140,7 +140,7 @@ repeatEventsLevels((prefix, { name, emitEvent }, level) => {
     t.is(log.callCount, 1)
     t.is(defaultLevel.callCount, 1)
     t.true(defaultLevel.firstCall.args[0] instanceof Error)
-    t.is(defaultLevel.firstCall.args[0].name.toLowerCase(), name.toLowerCase())
+    t.is(defaultLevel.firstCall.args[0].name.toLowerCase(), eventName.toLowerCase())
     t.is(log.firstCall.args[1], level)
 
     stopLogging()

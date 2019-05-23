@@ -12,13 +12,13 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents((prefix, { name, emitEvent }) => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
   test.serial(`${prefix} should limit events`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      level: { default: onlyNotLimitedWarning.bind(null, name) },
+      level: { default: onlyNotLimitedWarning.bind(null, eventName) },
     })
 
     await emitEvents(MAX_EVENTS, emitEvent)
@@ -88,10 +88,10 @@ const onlyLimited = function(error) {
   }
 }
 
-const onlyNotLimitedWarning = function(name, error) {
+const onlyNotLimitedWarning = function(eventName, error) {
   if (
     isLimitedWarning(error) ||
-    error.name.toLowerCase() !== name.toLowerCase()
+    error.name.toLowerCase() !== eventName.toLowerCase()
   ) {
     return 'silent'
   }

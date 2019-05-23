@@ -10,9 +10,9 @@ const getEvents = function() {
   return Object.entries(EVENTS).map(getEvent)
 }
 
-const getEvent = function([name, emitEvent]) {
-  const defaultLevel = DEFAULT_LEVEL[name]
-  return { emitEvent, name, defaultLevel }
+const getEvent = function([eventName, emitEvent]) {
+  const defaultLevel = DEFAULT_LEVEL[eventName]
+  return { emitEvent, eventName, defaultLevel }
 }
 
 const isNormalLevel = function(level) {

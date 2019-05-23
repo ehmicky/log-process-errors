@@ -5,19 +5,19 @@ import { EVENTS } from '../emit/main.js'
 
 import { getOptions } from './options.js'
 
-const { name } = getOptions()
+const { eventName } = getOptions()
 
 // This test is fired twice:
 //  - through `test/options/testing.js` (`OPTIONS` is defined)
 //  - when the top-level `test/options/ava/register|regular.js` is required,
 //    where it should be a noop (`OPTIONS` is `undefined`)
-if (name === undefined) {
+if (eventName === undefined) {
   // Otherwise `ava` complains
   test('Dummy test', t => t.pass())
 } else {
-  test(`should make tests fail on ${name}`, t => {
+  test(`should make tests fail on ${eventName}`, t => {
     // eslint-disable-next-line no-empty-function
-    EVENTS[name]().catch(() => {})
+    EVENTS[eventName]().catch(() => {})
 
     t.pass()
   })

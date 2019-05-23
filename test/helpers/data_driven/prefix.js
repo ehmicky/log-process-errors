@@ -29,6 +29,7 @@ const MAX_PREFIX_LENGTH = 20
 
 // Try to serialize value.
 // Objects must have a `name` member.
+// eslint-disable-next-line complexity
 const serializeValue = function(value) {
   if (value === null || typeof value !== 'object') {
     return String(value)
@@ -36,6 +37,10 @@ const serializeValue = function(value) {
 
   if (typeof value.name === 'string') {
     return value.name
+  }
+
+  if (typeof value.eventName === 'string') {
+    return value.eventName
   }
 }
 

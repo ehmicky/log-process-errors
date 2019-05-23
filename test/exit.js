@@ -34,12 +34,12 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-repeatEvents((prefix, { name, emitEvent }) => {
+repeatEvents((prefix, { eventName, emitEvent }) => {
   test.serial(`${prefix} should process.exit(1) if inside exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
 
-    const exitOn = [name]
-    const { stopLogging } = startLogging({ exitOn, name })
+    const exitOn = [eventName]
+    const { stopLogging } = startLogging({ exitOn, eventName })
 
     await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
@@ -57,7 +57,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
       const { clock, processExit } = stubProcessExit()
 
       const exitOn = []
-      const { stopLogging } = startLogging({ exitOn, name })
+      const { stopLogging } = startLogging({ exitOn, eventName })
 
       await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
 
@@ -72,7 +72,7 @@ repeatEvents((prefix, { name, emitEvent }) => {
   test.serial(`${prefix} should delay process.exit(1)`, async t => {
     const { clock, processExit } = stubProcessExit()
 
-    const { stopLogging } = startLogging({ exitOn: [name], name })
+    const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
 
     await emitEventAndWait(EXIT_TIMEOUT - 1, { clock, emitEvent })
 
@@ -101,8 +101,8 @@ repeatEvents((prefix, { name, emitEvent }) => {
       })
 
       const { stopLogging } = startLogging({
-        exitOn: [name],
-        name,
+        exitOn: [eventName],
+        eventName,
         // We use `async` keyword to make sure they are validated correctly
         async log() {
           await promise

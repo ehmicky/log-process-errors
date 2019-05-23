@@ -11,5 +11,5 @@ import { EVENTS } from '../emit/main.js'
 
 stubStackTrace()
 
-const [, , name] = argv
-EVENTS[name]()
+const [, , eventName] = argv
+EVENTS[eventName]()

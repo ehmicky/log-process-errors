@@ -9,9 +9,9 @@ import { removeProcessListeners } from '../helpers/remove.js'
 
 removeProcessListeners()
 
-const addProcessHandler = function(name) {
+const addProcessHandler = function(eventName) {
   const processHandler = sinon.spy()
-  process.on(name, processHandler)
+  process.on(eventName, processHandler)
   return processHandler
 }
 
@@ -19,7 +19,7 @@ const normalizeArgs = function([error]) {
   return String(error)
 }
 
-repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
+repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   test.serial(`${prefix} should work with no options`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)
@@ -38,11 +38,11 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
   test.serial(
     `${prefix} should keep existing process event handlers`,
     async t => {
-      if (name === 'warning') {
+      if (eventName === 'warning') {
         return t.pass()
       }
 
-      const processHandler = addProcessHandler(name)
+      const processHandler = addProcessHandler(eventName)
 
       const { stopLogging } = startLogging()
 
@@ -56,12 +56,12 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
 
       // TODO: use `process.off()` instead of `process.removeListener()`
       // after dropping Node.js <10 support
-      process.removeListener(name, processHandler)
+      process.removeListener(eventName, processHandler)
     },
   )
 
   test.serial(`${prefix} should allow disabling logging`, async t => {
-    const processHandler = addProcessHandler(name)
+    const processHandler = addProcessHandler(eventName)
 
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -78,6 +78,6 @@ repeatEvents((prefix, { name, emitEvent, defaultLevel }) => {
 
     // TODO: use `process.off()` instead of `process.removeListener()`
     // after dropping Node.js <10 support
-    process.removeListener(name, processHandler)
+    process.removeListener(eventName, processHandler)
   })
 })

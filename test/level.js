@@ -3,7 +3,8 @@ import test from 'ava'
 import testEach from 'test-each'
 import sinon from 'sinon'
 
-import { EVENT_DATA, NORMAL_LEVELS } from './helpers/repeat.js'
+import { EVENT_DATA } from './helpers/repeat.js'
+import { NORMAL_LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 

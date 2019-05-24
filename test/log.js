@@ -7,7 +7,6 @@ import testEach from 'test-each'
 import { EVENTS } from './helpers/events/main.js'
 import { LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
-import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 import { normalizeMessage } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 

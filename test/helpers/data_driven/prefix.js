@@ -37,6 +37,8 @@ const serializeValue = function(value) {
   if (typeof value.name === 'string') {
     return value.name
   }
+
+  return JSON.stringify(value)
 }
 
 // Add an incrementing counter if some prefixes are duplicates

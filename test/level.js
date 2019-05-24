@@ -9,32 +9,31 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
+testEach(EVENT_DATA, [
+  {},
+  { level: { default: undefined }, exitOn: [] },
+  { level: { default: 'default' }, exitOn: [] },
+  { level: { default: () => 'default' } },
+], ({ name }, { eventName, emitEvent, defaultLevel }, options) => {
+  test.serial(
+    `should use default opts.level() | ${name}`,
+    async t => {
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        eventName,
+        ...options,
+      })
+
+      await emitEvent()
+
+      t.is(log.firstCall.args[1], defaultLevel)
+
+      stopLogging()
+    },
+  )
+})
+
 testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
-  const OPTIONS = [
-    {},
-    { level: { default: undefined }, exitOn: [] },
-    { level: { default: 'default' }, exitOn: [] },
-    { level: { default: () => 'default' } },
-  ]
-  OPTIONS.forEach(options => {
-    test.serial(
-      `${JSON.stringify(options)} should use default opts.level() | ${name}`,
-      async t => {
-        const { stopLogging, log } = startLogging({
-          log: 'spy',
-          eventName,
-          ...options,
-        })
-
-        await emitEvent()
-
-        t.is(log.firstCall.args[1], defaultLevel)
-
-        stopLogging()
-      },
-    )
-  })
-
   test.serial(`should allow 'silent' level | ${name}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',

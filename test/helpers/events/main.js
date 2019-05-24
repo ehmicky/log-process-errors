@@ -34,6 +34,8 @@ export const emitEvents = async function(emit, maxEvents) {
   await Promise.all(array)
 }
 
+// Map of all possible events, with related information and helper methods
 export const EVENTS_MAP = getEventsMap()
 
+// Same as an array
 export const EVENTS = Object.values(EVENTS_MAP)

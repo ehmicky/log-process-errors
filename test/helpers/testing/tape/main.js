@@ -9,5 +9,5 @@ tape.test(`should make tests fail on ${eventName}`, t => {
   t.plan(1)
   t.pass()
   // eslint-disable-next-line no-empty-function
-  EVENTS[eventName]().catch(() => {})
+  EVENTS[eventName].emitEvent().catch(() => {})
 })

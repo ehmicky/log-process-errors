@@ -17,17 +17,13 @@ const addName = function({ runner, ...runnerInfo }) {
 // We test each runner + reporter combination
 export const RUNNERS = [
   { runner: 'ava', command: file => `ava ${file}` },
-
   { runner: 'mocha', command: file => `mocha ${file}` },
-
   {
     runner: 'jasmine',
     // Jasmine adds random seeds to output otherwise
     command: file => `jasmine --seed=0 ${file}`,
   },
-
   { runner: 'tape', command: file => `tape ${file}` },
-
   {
     runner: 'node-tap:default',
     command: file =>

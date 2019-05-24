@@ -2,6 +2,7 @@ import process from 'process'
 import { promisify } from 'util'
 
 import test from 'ava'
+import testEach from 'test-each'
 import sinon from 'sinon'
 import lolex from 'lolex'
 
@@ -9,7 +10,6 @@ import lolex from 'lolex'
 // through code
 import { EXIT_TIMEOUT, EXIT_STATUS } from '../src/exit.js'
 
-import { testEach } from './helpers/data_driven/main.js'
 import { EVENT_DATA } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'

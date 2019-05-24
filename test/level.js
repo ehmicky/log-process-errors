@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import test from 'ava'
+import testEach from 'test-each'
 import sinon from 'sinon'
 
-import { testEach } from './helpers/data_driven/main.js'
 import { EVENT_DATA, NORMAL_LEVELS } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'

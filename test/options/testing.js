@@ -1,8 +1,8 @@
 import { version } from 'process'
 
 import test from 'ava'
+import testEach from 'test-each'
 
-import { testEach } from '../helpers/data_driven/main.js'
 import { RUNNERS } from '../helpers/runners.js'
 import { EVENT_DATA } from '../helpers/repeat.js'
 import { normalizeCall } from '../helpers/normalize.js'

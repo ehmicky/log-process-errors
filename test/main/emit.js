@@ -1,6 +1,6 @@
 import test from 'ava'
+import testEach from 'test-each'
 
-import { testEach } from '../helpers/data_driven/main.js'
 import { EVENT_DATA } from '../helpers/repeat.js'
 import { startLogging } from '../helpers/init.js'
 import { removeProcessListeners } from '../helpers/remove.js'

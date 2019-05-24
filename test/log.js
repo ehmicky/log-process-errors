@@ -2,8 +2,8 @@ import { inspect } from 'util'
 
 import sinon from 'sinon'
 import test from 'ava'
+import testEach from 'test-each'
 
-import { testEach } from './helpers/data_driven/main.js'
 import { EVENT_DATA, NORMAL_LEVELS } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'

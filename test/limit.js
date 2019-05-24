@@ -1,10 +1,10 @@
 import test from 'ava'
+import testEach from 'test-each'
 
 // Required directly because this is exposed through documentation, but not
 // through code
 import { MAX_EVENTS } from '../src/limit.js'
 
-import { testEach } from './helpers/data_driven/main.js'
 import { EVENT_DATA } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { emitEvents } from './helpers/several.js'

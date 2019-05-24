@@ -4,7 +4,7 @@ import test from 'ava'
 import testEach from 'test-each'
 
 import { EVENTS } from '../helpers/events/main.js'
-import { RUNNERS } from '../helpers/runners.js'
+import { RUNNERS } from '../helpers/testing/runners.js'
 import { normalizeCall } from '../helpers/normalize.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 

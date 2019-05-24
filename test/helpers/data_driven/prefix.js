@@ -23,11 +23,7 @@ const MAX_PREFIX_LENGTH = 120
 // Try to serialize value.
 // Objects must have a `name` member.
 const serializeValue = function(value) {
-  if (value === null || typeof value !== 'object') {
-    return String(value)
-  }
-
-  if (typeof value.name === 'string') {
+  if (typeof value === 'object' && value !== null && typeof value.name === 'string') {
     return value.name
   }
 

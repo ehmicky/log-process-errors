@@ -36,7 +36,7 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
 }
 
 testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
-  test.serial(`${name} should process.exit(1) if inside exitOn`, async t => {
+  test.serial(`should process.exit(1) if inside exitOn | ${name}`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const exitOn = [eventName]
@@ -53,7 +53,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   })
 
   test.serial(
-    `${name} should not process.exit(1) if not inside exitOn`,
+    `should not process.exit(1) if not inside exitOn | ${name}`,
     async t => {
       const { clock, processExit } = stubProcessExit()
 
@@ -70,7 +70,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
     },
   )
 
-  test.serial(`${name} should delay process.exit(1)`, async t => {
+  test.serial(`should delay process.exit(1) | ${name}`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
@@ -88,7 +88,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   })
 
   test.serial(
-    `${name} should delay process.exit(1) with async opts.log()`,
+    `should delay process.exit(1) with async opts.log() | ${name}`,
     // eslint-disable-next-line max-statements
     async t => {
       const { clock, processExit } = stubProcessExit()

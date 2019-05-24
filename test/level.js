@@ -18,7 +18,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   ]
   OPTIONS.forEach(options => {
     test.serial(
-      `${name} ${JSON.stringify(options)} should use default opts.level()`,
+      `${JSON.stringify(options)} should use default opts.level() | ${name}`,
       async t => {
         const { stopLogging, log } = startLogging({
           log: 'spy',
@@ -35,7 +35,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
     )
   })
 
-  test.serial(`${name} should allow 'silent' level`, async t => {
+  test.serial(`should allow 'silent' level | ${name}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: 'silent' },
@@ -49,7 +49,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   })
 
   test.serial(
-    `${name} should use default opts.level() when using an invalid level`,
+    `should use default opts.level() when using an invalid level | ${name}`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
@@ -67,7 +67,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   )
 
   test.serial(
-    `${name} should emit a warning when opts.level() uses an invalid level`,
+    `should emit a warning when opts.level() uses an invalid level | ${name}`,
     async t => {
       const { stopLogging } = startLogging({
         level: { default: 'invalid' },
@@ -90,7 +90,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   )
 
   test.serial(
-    `${name} should allow changing log level for a specific event`,
+    `should allow changing log level for a specific event | ${name}`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
@@ -111,7 +111,7 @@ testEach(
   EVENT_DATA,
   NORMAL_LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {
-    test.serial(`${name} should allow changing log level`, async t => {
+    test.serial(`should allow changing log level | ${name}`, async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
         level: { default: level },
@@ -130,7 +130,7 @@ testEach(
       return level
     }
 
-    test.serial(`${name} should allow opts.level() as a function`, async t => {
+    test.serial(`should allow opts.level() as a function | ${name}`, async t => {
       const defaultLevel = sinon.spy(getLevel)
 
       const { stopLogging, log } = startLogging({

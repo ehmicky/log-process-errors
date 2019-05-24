@@ -21,7 +21,7 @@ const normalizeArgs = function([error]) {
 }
 
 testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
-  test.serial(`${name} should work with no options`, async t => {
+  test.serial(`should work with no options | ${name}`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)
     const { stopLogging } = startLoggingNoOpts()
@@ -37,7 +37,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   })
 
   test.serial(
-    `${name} should keep existing process event handlers`,
+    `should keep existing process event handlers | ${name}`,
     async t => {
       if (eventName === 'warning') {
         return t.pass()
@@ -61,7 +61,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
     },
   )
 
-  test.serial(`${name} should allow disabling logging`, async t => {
+  test.serial(`should allow disabling logging | ${name}`, async t => {
     const processHandler = addProcessHandler(eventName)
 
     const { stopLogging, log } = startLogging({ log: 'spy' })

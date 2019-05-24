@@ -12,7 +12,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 removeProcessListeners()
 
 testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
-  test.serial(`${name} should colorize the error`, async t => {
+  test.serial(`should colorize the error | ${name}`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emitEvent()
@@ -26,7 +26,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   })
 
   test.serial(
-    `${name} should allow disabling colorizing the error`,
+    `should allow disabling colorizing the error | ${name}`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',

@@ -10,7 +10,7 @@ import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 removeProcessListeners()
 
 testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
-  test.serial(`${name} should not repeat identical events`, async t => {
+  test.serial(`should not repeat identical events | ${name}`, async t => {
     stubStackTrace()
 
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })

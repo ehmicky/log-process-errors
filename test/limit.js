@@ -14,7 +14,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 removeProcessListeners()
 
 testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
-  test.serial(`${name} should limit events`, async t => {
+  test.serial(`should limit events | ${name}`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
@@ -35,7 +35,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
     unstubStackTrace()
   })
 
-  test.serial(`${name} should emit warning when limiting events`, async t => {
+  test.serial(`should emit warning when limiting events | ${name}`, async t => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
@@ -57,7 +57,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   })
 
   test.serial(
-    `${name} should only emit warning once when limiting events`,
+    `should only emit warning once when limiting events | ${name}`,
     async t => {
       stubStackTraceRandom()
 

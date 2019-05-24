@@ -22,7 +22,7 @@ const snapshotArgs = function([error, level]) {
 }
 
 testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
-  test.serial(`${name} should fire opts.log()`, async t => {
+  test.serial(`should fire opts.log() | ${name}`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
     t.true(log.notCalled)
@@ -34,7 +34,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
     stopLogging()
   })
 
-  test.serial(`${name} should fire opts.log() once`, async t => {
+  test.serial(`should fire opts.log() once | ${name}`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     t.true(log.notCalled)
@@ -46,7 +46,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
     stopLogging()
   })
 
-  test.serial(`${name} should fire opts.log() with arguments`, async t => {
+  test.serial(`should fire opts.log() with arguments | ${name}`, async t => {
     stubStackTrace()
 
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
@@ -68,7 +68,7 @@ testEach(
   EVENT_DATA,
   NORMAL_LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {
-    test.serial(`${name} should log on the console by default`, async t => {
+    test.serial(`should log on the console by default | ${name}`, async t => {
       // eslint-disable-next-line no-restricted-globals
       const stub = sinon.stub(console, level)
 

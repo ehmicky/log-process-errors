@@ -61,20 +61,20 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-repeatEventsRunners((prefix, { runner, command, env }, { eventName }) => {
+repeatEventsRunners((name, { runner, command, env }, { eventName }) => {
   const [testing] = runner.split(':')
 
   if (shouldSkip({ runner, eventName })) {
     return
   }
 
-  test(`${prefix} should make tests fails`, async t => {
+  test(`${name} should make tests fails`, async t => {
     const returnValue = await callRunner({ testing, command, env, eventName })
 
     t.snapshot(returnValue)
   })
 
-  test(`${prefix} should allow overriding 'opts.level'`, async t => {
+  test(`${name} should allow overriding 'opts.level'`, async t => {
     const returnValue = await callRunner({
       testing,
       command,
@@ -86,7 +86,7 @@ repeatEventsRunners((prefix, { runner, command, env }, { eventName }) => {
     t.snapshot(returnValue)
   })
 
-  test(`${prefix} should work with the -r flag`, async t => {
+  test(`${name} should work with the -r flag`, async t => {
     const returnValue = await callRunner({
       testing,
       command,

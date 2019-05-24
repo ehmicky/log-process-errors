@@ -8,7 +8,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
+repeatEvents((name, { eventName, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
     { level: { default: undefined }, exitOn: [] },
@@ -17,7 +17,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   ]
   OPTIONS.forEach(options => {
     test.serial(
-      `${prefix} ${JSON.stringify(options)} should use default opts.level()`,
+      `${name} ${JSON.stringify(options)} should use default opts.level()`,
       async t => {
         const { stopLogging, log } = startLogging({
           log: 'spy',
@@ -34,7 +34,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
     )
   })
 
-  test.serial(`${prefix} should allow 'silent' level`, async t => {
+  test.serial(`${name} should allow 'silent' level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: 'silent' },
@@ -48,7 +48,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   })
 
   test.serial(
-    `${prefix} should use default opts.level() when using an invalid level`,
+    `${name} should use default opts.level() when using an invalid level`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
@@ -66,7 +66,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   )
 
   test.serial(
-    `${prefix} should emit a warning when opts.level() uses an invalid level`,
+    `${name} should emit a warning when opts.level() uses an invalid level`,
     async t => {
       const { stopLogging } = startLogging({
         level: { default: 'invalid' },
@@ -89,7 +89,7 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   )
 
   test.serial(
-    `${prefix} should allow changing log level for a specific event`,
+    `${name} should allow changing log level for a specific event`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
@@ -106,8 +106,8 @@ repeatEvents((prefix, { eventName, emitEvent, defaultLevel }) => {
   )
 })
 
-repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
-  test.serial(`${prefix} should allow changing log level`, async t => {
+repeatEventsLevels((name, { eventName, emitEvent }, level) => {
+  test.serial(`${name} should allow changing log level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: level },
@@ -126,7 +126,7 @@ repeatEventsLevels((prefix, { eventName, emitEvent }, level) => {
     return level
   }
 
-  test.serial(`${prefix} should allow opts.level() as a function`, async t => {
+  test.serial(`${name} should allow opts.level() as a function`, async t => {
     const defaultLevel = sinon.spy(getLevel)
 
     const { stopLogging, log } = startLogging({

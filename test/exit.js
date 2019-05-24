@@ -34,8 +34,8 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-repeatEvents((prefix, { eventName, emitEvent }) => {
-  test.serial(`${prefix} should process.exit(1) if inside exitOn`, async t => {
+repeatEvents((name, { eventName, emitEvent }) => {
+  test.serial(`${name} should process.exit(1) if inside exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const exitOn = [eventName]
@@ -52,7 +52,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 
   test.serial(
-    `${prefix} should not process.exit(1) if not inside exitOn`,
+    `${name} should not process.exit(1) if not inside exitOn`,
     async t => {
       const { clock, processExit } = stubProcessExit()
 
@@ -69,7 +69,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
     },
   )
 
-  test.serial(`${prefix} should delay process.exit(1)`, async t => {
+  test.serial(`${name} should delay process.exit(1)`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
@@ -87,7 +87,7 @@ repeatEvents((prefix, { eventName, emitEvent }) => {
   })
 
   test.serial(
-    `${prefix} should delay process.exit(1) with async opts.log()`,
+    `${name} should delay process.exit(1) with async opts.log()`,
     // eslint-disable-next-line max-statements
     async t => {
       const { clock, processExit } = stubProcessExit()

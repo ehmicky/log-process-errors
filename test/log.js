@@ -65,27 +65,23 @@ testEach(EVENTS, ({ name }, { eventName, emit }) => {
   })
 })
 
-testEach(
-  EVENTS,
-  LEVELS,
-  ({ name }, { eventName, emit }, level) => {
-    test.serial(`should log on the console by default | ${name}`, async t => {
-      // eslint-disable-next-line no-restricted-globals
-      const stub = sinon.stub(console, level)
+testEach(EVENTS, LEVELS, ({ name }, { eventName, emit }, level) => {
+  test.serial(`should log on the console by default | ${name}`, async t => {
+    // eslint-disable-next-line no-restricted-globals
+    const stub = sinon.stub(console, level)
 
-      const { stopLogging } = startLogging({
-        log: 'default',
-        level: { default: level },
-        eventName,
-      })
-
-      await emit()
-
-      t.is(stub.callCount, 1)
-
-      stopLogging()
-
-      stub.restore()
+    const { stopLogging } = startLogging({
+      log: 'default',
+      level: { default: level },
+      eventName,
     })
-  },
-)
+
+    await emit()
+
+    t.is(stub.callCount, 1)
+
+    stopLogging()
+
+    stub.restore()
+  })
+})

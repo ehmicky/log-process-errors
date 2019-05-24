@@ -8,7 +8,9 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-const { warning: { emit } } = EVENTS_MAP
+const {
+  warning: { emit },
+} = EVENTS_MAP
 
 test.serial('[warning] should disable default event handlers', async t => {
   // eslint-disable-next-line no-restricted-globals

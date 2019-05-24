@@ -9,6 +9,7 @@ stubStackTrace()
 const stopLogging = logProcessErrors()
 
 const [, , eventName] = argv
-EVENTS_MAP[eventName].emit()
+EVENTS_MAP[eventName]
+  .emit()
   .then(stopLogging)
   .catch(stopLogging)

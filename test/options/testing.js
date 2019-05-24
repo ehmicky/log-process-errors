@@ -63,40 +63,44 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-testEach(EVENTS, RUNNERS, ({ name }, { eventName }, { runner, command, env }) => {
-  const [testing] = runner.split(':')
+testEach(
+  EVENTS,
+  RUNNERS,
+  ({ name }, { eventName }, { runner, command, env }) => {
+    const [testing] = runner.split(':')
 
-  if (shouldSkip({ runner, eventName })) {
-    return
-  }
+    if (shouldSkip({ runner, eventName })) {
+      return
+    }
 
-  test(`should make tests fails | ${name}`, async t => {
-    const returnValue = await callRunner({ testing, command, env, eventName })
+    test(`should make tests fails | ${name}`, async t => {
+      const returnValue = await callRunner({ testing, command, env, eventName })
 
-    t.snapshot(returnValue)
-  })
-
-  test(`should allow overriding 'opts.level' | ${name}`, async t => {
-    const returnValue = await callRunner({
-      testing,
-      command,
-      env,
-      eventName,
-      opts: { level: { default: 'silent' } },
+      t.snapshot(returnValue)
     })
 
-    t.snapshot(returnValue)
-  })
+    test(`should allow overriding 'opts.level' | ${name}`, async t => {
+      const returnValue = await callRunner({
+        testing,
+        command,
+        env,
+        eventName,
+        opts: { level: { default: 'silent' } },
+      })
 
-  test(`should work with the -r flag | ${name}`, async t => {
-    const returnValue = await callRunner({
-      testing,
-      command,
-      env,
-      eventName,
-      register: true,
+      t.snapshot(returnValue)
     })
 
-    t.snapshot(returnValue)
-  })
-})
+    test(`should work with the -r flag | ${name}`, async t => {
+      const returnValue = await callRunner({
+        testing,
+        command,
+        env,
+        eventName,
+        register: true,
+      })
+
+      t.snapshot(returnValue)
+    })
+  },
+)

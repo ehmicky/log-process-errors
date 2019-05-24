@@ -4,11 +4,6 @@ import logProcessErrors from '../../src/main.js'
 import { mapValues } from '../../src/utils.js'
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
-export const startLoggingNoOpts = function() {
-  const stopLogging = logProcessErrors()
-  return { stopLogging }
-}
-
 export const startLogging = function({ eventName, log, level, ...opts } = {}) {
   const logA = getLog({ log })
   const levelA = getLevel({ level, eventName })
@@ -63,4 +58,9 @@ const onlyEvent = function(level, eventName, error) {
   }
 
   return level(error)
+}
+
+export const startLoggingNoOpts = function() {
+  const stopLogging = logProcessErrors()
+  return { stopLogging }
 }

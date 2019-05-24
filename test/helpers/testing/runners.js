@@ -2,14 +2,6 @@ import { env } from 'process'
 
 const { SPAWN_WRAP_SHIM_ROOT } = env
 
-// `spawn-wrap` monkey patches `child_process`. That library is used by `nyc`.
-// This somehow impacts the output of `node-tap`. The best workaround we have
-// found is to skip `node-tap` testing in CI (which uses `nyc`).
-// Would be fixed if https://github.com/tapjs/node-tap/issues/497 is done.
-const shouldKeep = function({ name }) {
-  return !(name.startsWith('node-tap') && SPAWN_WRAP_SHIM_ROOT)
-}
-
 // We test each runner + reporter combination
 export const RUNNERS = [
   { name: 'ava', command: file => `ava ${file}` },
@@ -29,4 +21,8 @@ export const RUNNERS = [
     env: { TAP_DIAG: '0' },
   },
 ]
-  .filter(shouldKeep)
+  // `spawn-wrap` monkey patches `child_process`. That library is used by `nyc`.
+  // This somehow impacts the output of `node-tap`. The best workaround we have
+  // found is to skip `node-tap` testing in CI (which uses `nyc`).
+  // Would be fixed if https://github.com/tapjs/node-tap/issues/497 is done.
+  .filter(({ name }) => !(name.startsWith('node-tap') && SPAWN_WRAP_SHIM_ROOT))

@@ -16,7 +16,6 @@ removeProcessListeners()
 const snapshotArgs = function([error, level]) {
   return [
     normalizeMessage(inspect(error), { colors: false }),
-    String(error.stack),
     String(error),
     level,
   ]

@@ -63,7 +63,7 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-testEach(RUNNERS, EVENT_DATA, ({ name }, { runner, command, env }, { eventName }) => {
+testEach(EVENT_DATA, RUNNERS, ({ name }, { eventName }, { runner, command, env }) => {
   const [testing] = runner.split(':')
 
   if (shouldSkip({ runner, eventName })) {

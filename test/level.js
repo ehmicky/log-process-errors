@@ -4,7 +4,7 @@ import testEach from 'test-each'
 import sinon from 'sinon'
 
 import { EVENT_DATA } from './helpers/repeat.js'
-import { NORMAL_LEVELS } from './helpers/level.js'
+import { LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
@@ -109,7 +109,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
 
 testEach(
   EVENT_DATA,
-  NORMAL_LEVELS,
+  LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {
     test.serial(`should allow changing log level | ${name}`, async t => {
       const { stopLogging, log } = startLogging({

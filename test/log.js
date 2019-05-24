@@ -5,7 +5,7 @@ import test from 'ava'
 import testEach from 'test-each'
 
 import { EVENT_DATA } from './helpers/repeat.js'
-import { NORMAL_LEVELS } from './helpers/level.js'
+import { LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
 import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 import { normalizeMessage } from './helpers/normalize.js'
@@ -67,7 +67,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
 
 testEach(
   EVENT_DATA,
-  NORMAL_LEVELS,
+  LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {
     test.serial(`should log on the console by default | ${name}`, async t => {
       // eslint-disable-next-line no-restricted-globals

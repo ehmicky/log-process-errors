@@ -23,8 +23,8 @@ const EVENTS_MAP = {
 }
 
 const getEvent = function(emitEvent, eventName) {
-  const defaultLevel = DEFAULT_LEVEL[eventName]
   const emitMany = emitEvents.bind(null, emitEvent)
+  const defaultLevel = DEFAULT_LEVEL[eventName]
   return { name: eventName, eventName, emitEvent, emitMany, defaultLevel }
 }
 

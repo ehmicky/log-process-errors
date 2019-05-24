@@ -68,12 +68,12 @@
     "jasmine": "^3.4.0",
     "lolex": "^4.0.1",
     "mocha": "^6.1.4",
-    "pretty-format": "^24.8.0",
     "semver": "^6.1.0",
     "sinon": "^7.3.2",
     "strip-ansi": "^5.2.0",
     "tap": "^14.1.10",
-    "tape": "^4.10.1"
+    "tape": "^4.10.1",
+    "test-each": "^0.1.0"
   },
   "engines": {
     "node": ">=8.12.0"

@@ -66,7 +66,7 @@ const getHelperFile = function({ testing, register }) {
 testEach(
   EVENTS,
   RUNNERS,
-  ({ name }, { eventName }, { runner, command, env }) => {
+  ({ name }, { eventName }, { name: runner, command, env }) => {
     const [testing] = runner.split(':')
 
     if (shouldSkip({ runner, eventName })) {

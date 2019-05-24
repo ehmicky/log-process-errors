@@ -3,7 +3,7 @@ import sinon from 'sinon'
 
 import { startLogging } from './helpers/init.js'
 import { normalizeMessage } from './helpers/normalize.js'
-import { EVENTS } from './helpers/emit/main.js'
+import { EVENTS } from './helpers/events/main.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()

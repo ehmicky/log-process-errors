@@ -7,7 +7,7 @@ import { argv } from 'process'
 import '../../../register/index.js'
 
 import { stubStackTrace } from '../stack.js'
-import { EVENTS } from '../emit/main.js'
+import { EVENTS } from '../events/main.js'
 
 stubStackTrace()
 

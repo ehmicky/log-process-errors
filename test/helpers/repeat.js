@@ -1,3 +1,3 @@
-import { EVENTS } from './emit/main.js'
+import { EVENTS } from './events/main.js'
 
 export const EVENT_DATA = Object.values(EVENTS)

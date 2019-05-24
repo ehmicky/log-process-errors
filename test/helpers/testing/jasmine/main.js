@@ -1,5 +1,5 @@
 /* eslint-env jasmine */
-import { EVENTS } from '../../emit/main.js'
+import { EVENTS } from '../../events/main.js'
 import { getOptions } from '../options.js'
 
 const { eventName } = getOptions()

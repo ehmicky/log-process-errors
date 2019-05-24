@@ -8,7 +8,7 @@ import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 
 removeProcessListeners()
 
-repeatEvents((name, { eventName, emitEvent }) => {
+repeatEvents(({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should not repeat identical events`, async t => {
     stubStackTrace()
 

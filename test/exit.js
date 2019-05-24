@@ -34,7 +34,7 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-repeatEvents((name, { eventName, emitEvent }) => {
+repeatEvents(({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should process.exit(1) if inside exitOn`, async t => {
     const { clock, processExit } = stubProcessExit()
 

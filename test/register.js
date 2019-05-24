@@ -8,7 +8,7 @@ const LOADERS = `${__dirname}/helpers/loaders/`
 
 removeProcessListeners()
 
-repeatEvents((name, { eventName }) => {
+repeatEvents(({ name }, { eventName }) => {
   test(`${name} should work using the -r flag`, async t => {
     const returnValue = await normalizeCall(
       `node ${LOADERS}/register.js ${eventName}`,

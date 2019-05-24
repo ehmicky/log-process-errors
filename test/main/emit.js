@@ -6,7 +6,7 @@ import { removeProcessListeners } from '../helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents((name, { emitEvent }) => {
+repeatEvents(({ name }, { emitEvent }) => {
   test(`${name} events emitters should exist`, t => {
     t.is(typeof emitEvent, 'function')
   })

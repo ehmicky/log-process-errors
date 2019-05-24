@@ -61,7 +61,7 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-repeatEventsRunners((name, { runner, command, env }, { eventName }) => {
+repeatEventsRunners(({ name }, { runner, command, env }, { eventName }) => {
   const [testing] = runner.split(':')
 
   if (shouldSkip({ runner, eventName })) {

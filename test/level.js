@@ -8,7 +8,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents((name, { eventName, emitEvent, defaultLevel }) => {
+repeatEvents(({ name }, { eventName, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
     { level: { default: undefined }, exitOn: [] },
@@ -106,7 +106,7 @@ repeatEvents((name, { eventName, emitEvent, defaultLevel }) => {
   )
 })
 
-repeatEventsLevels((name, { eventName, emitEvent }, level) => {
+repeatEventsLevels(({ name }, { eventName, emitEvent }, level) => {
   test.serial(`${name} should allow changing log level`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',

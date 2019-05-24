@@ -12,7 +12,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents((name, { eventName, emitEvent }) => {
+repeatEvents(({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should limit events`, async t => {
     stubStackTraceRandom()
 

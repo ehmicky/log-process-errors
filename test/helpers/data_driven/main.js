@@ -18,5 +18,7 @@ export const repeat = function(...args) {
 
   const prefixes = getPrefixes(arraysA)
 
-  return arraysA.map((values, index) => func(prefixes[index], ...values))
+  return arraysA.map((values, index) =>
+    func({ name: prefixes[index] }, ...values),
+  )
 }

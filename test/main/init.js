@@ -19,7 +19,7 @@ const normalizeArgs = function([error]) {
   return String(error)
 }
 
-repeatEvents((name, { eventName, emitEvent, defaultLevel }) => {
+repeatEvents(({ name }, { eventName, emitEvent, defaultLevel }) => {
   test.serial(`${name} should work with no options`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)

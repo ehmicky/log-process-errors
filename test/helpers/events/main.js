@@ -10,16 +10,16 @@ import { multipleResolves } from './multiple_resolves.js'
 import { warning } from './warning.js'
 import { hasMultipleResolves } from './version.js'
 
+const getEvents = function() {
+  return mapValues(EVENTS_MAP, getEvent)
+}
+
 const EVENTS_MAP = {
   uncaughtException,
   unhandledRejection,
   rejectionHandled,
   ...(hasMultipleResolves() ? { multipleResolves } : {}),
   warning,
-}
-
-const getEvents = function() {
-  return mapValues(EVENTS_MAP, getEvent)
 }
 
 const getEvent = function(emitEvent, eventName) {

@@ -7,15 +7,15 @@ import { removeProcessListeners } from '../helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ name }, { emitEvent }) => {
+testEach(EVENTS, ({ name }, { emit }) => {
   test(`events emitters should exist | ${name}`, t => {
-    t.is(typeof emitEvent, 'function')
+    t.is(typeof emit, 'function')
   })
 
   test(`events emitters should not throw | ${name}`, async t => {
     const { stopLogging } = startLogging()
 
-    await t.notThrowsAsync(emitEvent)
+    await t.notThrowsAsync(emit)
 
     stopLogging()
   })

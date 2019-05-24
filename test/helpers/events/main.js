@@ -22,15 +22,15 @@ const EVENTS_SIMPLE_MAP = {
   warning,
 }
 
-const getEvent = function(emitEvent, eventName) {
-  const emitMany = emitEvents.bind(null, emitEvent)
+const getEvent = function(emit, eventName) {
+  const emitMany = emitEvents.bind(null, emit)
   const defaultLevel = DEFAULT_LEVEL[eventName]
-  return { name: eventName, eventName, emitEvent, emitMany, defaultLevel }
+  return { name: eventName, eventName, emit, emitMany, defaultLevel }
 }
 
 // Emit several emits in parallel
-export const emitEvents = async function(emitEvent, maxEvents) {
-  const array = Array.from({ length: maxEvents }, emitEvent)
+export const emitEvents = async function(emit, maxEvents) {
+  const array = Array.from({ length: maxEvents }, emit)
   await Promise.all(array)
 }
 

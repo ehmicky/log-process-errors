@@ -8,7 +8,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-const { warning: { emitEvent: emitWarning } } = EVENTS_MAP
+const { warning: { emit } } = EVENTS_MAP
 
 test.serial('[warning] should disable default event handlers', async t => {
   // eslint-disable-next-line no-restricted-globals
@@ -16,7 +16,7 @@ test.serial('[warning] should disable default event handlers', async t => {
 
   const { stopLogging, log } = startLogging({ log: 'spy', colors: false })
 
-  await emitWarning()
+  await emit()
 
   t.true(log.calledOnce)
   t.snapshot(String(log.lastCall.args[0]))
@@ -37,13 +37,13 @@ test.serial(
     const { stopLogging } = startLogging()
     startLogging().stopLogging()
 
-    await emitWarning()
+    await emit()
 
     t.true(stub.notCalled)
 
     stopLogging()
 
-    await emitWarning()
+    await emit()
 
     t.true(stub.calledOnce)
     t.snapshot(normalizeMessage(String(stub.lastCall.args[0])))

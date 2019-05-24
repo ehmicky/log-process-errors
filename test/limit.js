@@ -12,7 +12,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ name }, { eventName, emitEvent, emitMany }) => {
+testEach(EVENTS, ({ name }, { eventName, emit, emitMany }) => {
   test.serial(`should limit events | ${name}`, async t => {
     stubStackTraceRandom()
 
@@ -25,7 +25,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, emitMany }) => {
 
     t.is(log.callCount, MAX_EVENTS)
 
-    await emitEvent()
+    await emit()
 
     t.is(log.callCount, MAX_EVENTS)
 
@@ -46,7 +46,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, emitMany }) => {
 
     t.true(log.notCalled)
 
-    await emitEvent()
+    await emit()
 
     t.true(log.called)
 
@@ -67,11 +67,11 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, emitMany }) => {
 
       await emitMany(MAX_EVENTS)
 
-      await emitEvent()
+      await emit()
 
       const { callCount } = log
 
-      await emitEvent()
+      await emit()
 
       t.is(log.callCount, callCount)
 

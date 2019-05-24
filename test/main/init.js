@@ -20,13 +20,13 @@ const normalizeArgs = function([error]) {
   return String(error)
 }
 
-testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
+testEach(EVENTS, ({ name }, { eventName, emit, defaultLevel }) => {
   test.serial(`should work with no options | ${name}`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)
     const { stopLogging } = startLoggingNoOpts()
 
-    await emitEvent()
+    await emit()
 
     const messages = stub.args.map(normalizeArgs)
 
@@ -49,7 +49,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
 
       t.true(processHandler.notCalled)
 
-      await emitEvent()
+      await emit()
 
       t.true(processHandler.called)
 
@@ -70,7 +70,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
 
     t.true(processHandler.notCalled)
 
-    await emitEvent()
+    await emit()
 
     t.true(processHandler.called)
     t.true(log.notCalled)

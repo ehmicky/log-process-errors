@@ -12,4 +12,4 @@ import { EVENTS_MAP } from '../events/main.js'
 stubStackTrace()
 
 const [, , eventName] = argv
-EVENTS_MAP[eventName].emitEvent()
+EVENTS_MAP[eventName].emit()

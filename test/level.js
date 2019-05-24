@@ -15,7 +15,7 @@ testEach(EVENTS, [
   { level: { default: undefined }, exitOn: [] },
   { level: { default: 'default' }, exitOn: [] },
   { level: { default: () => 'default' } },
-], ({ name }, { eventName, emitEvent, defaultLevel }, options) => {
+], ({ name }, { eventName, emit, defaultLevel }, options) => {
   test.serial(
     `should use default opts.level() | ${name}`,
     async t => {
@@ -25,7 +25,7 @@ testEach(EVENTS, [
         ...options,
       })
 
-      await emitEvent()
+      await emit()
 
       t.is(log.firstCall.args[1], defaultLevel)
 
@@ -34,14 +34,14 @@ testEach(EVENTS, [
   )
 })
 
-testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
+testEach(EVENTS, ({ name }, { eventName, emit, defaultLevel }) => {
   test.serial(`should allow 'silent' level | ${name}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: 'silent' },
     })
 
-    await emitEvent()
+    await emit()
 
     t.true(log.notCalled)
 
@@ -57,7 +57,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
         eventName,
       })
 
-      await emitEvent()
+      await emit()
 
       t.true(log.called)
       t.is(log.firstCall.args[1], defaultLevel)
@@ -79,7 +79,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
         eventName: 'warning',
       })
 
-      await emitEvent()
+      await emit()
 
       t.true(log.called)
       t.snapshot(String(log.lastCall.args[0]))
@@ -98,7 +98,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
         eventName,
       })
 
-      await emitEvent()
+      await emit()
 
       t.true(log.notCalled)
 
@@ -110,7 +110,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
 testEach(
   EVENTS,
   LEVELS,
-  ({ name }, { eventName, emitEvent }, level) => {
+  ({ name }, { eventName, emit }, level) => {
     test.serial(`should allow changing log level | ${name}`, async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
@@ -118,7 +118,7 @@ testEach(
         eventName,
       })
 
-      await emitEvent()
+      await emit()
 
       t.is(log.callCount, 1)
       t.is(log.firstCall.args[1], level)
@@ -139,7 +139,7 @@ testEach(
         eventName,
       })
 
-      await emitEvent()
+      await emit()
 
       t.is(log.callCount, 1)
       t.is(defaultLevel.callCount, 1)

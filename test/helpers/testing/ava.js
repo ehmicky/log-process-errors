@@ -17,7 +17,7 @@ if (eventName === undefined) {
 } else {
   test(`should make tests fail on ${eventName}`, t => {
     // eslint-disable-next-line no-empty-function
-    EVENTS_MAP[eventName].emitEvent().catch(() => {})
+    EVENTS_MAP[eventName].emit().catch(() => {})
 
     t.pass()
   })

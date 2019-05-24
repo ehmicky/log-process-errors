@@ -30,19 +30,19 @@ const unstubProcessExit = function({ clock, processExit }) {
   clock.uninstall()
 }
 
-const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
-  await emitEvent()
+const emitAndWait = async function(timeout, { clock, emit }) {
+  await emit()
   clock.tick(timeout)
 }
 
-testEach(EVENTS, ({ name }, { eventName, emitEvent }) => {
+testEach(EVENTS, ({ name }, { eventName, emit }) => {
   test.serial(`should process.exit(1) if inside exitOn | ${name}`, async t => {
     const { clock, processExit } = stubProcessExit()
 
     const exitOn = [eventName]
     const { stopLogging } = startLogging({ exitOn, eventName })
 
-    await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+    await emitAndWait(EXIT_TIMEOUT, { clock, emit })
 
     t.is(processExit.callCount, 1)
     t.is(processExit.firstCall.args[0], EXIT_STATUS)
@@ -60,7 +60,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent }) => {
       const exitOn = []
       const { stopLogging } = startLogging({ exitOn, eventName })
 
-      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+      await emitAndWait(EXIT_TIMEOUT, { clock, emit })
 
       t.true(processExit.notCalled)
 
@@ -75,7 +75,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent }) => {
 
     const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
 
-    await emitEventAndWait(EXIT_TIMEOUT - 1, { clock, emitEvent })
+    await emitAndWait(EXIT_TIMEOUT - 1, { clock, emit })
 
     t.true(processExit.notCalled)
 
@@ -110,7 +110,7 @@ testEach(EVENTS, ({ name }, { eventName, emitEvent }) => {
         },
       })
 
-      await emitEventAndWait(EXIT_TIMEOUT, { clock, emitEvent })
+      await emitAndWait(EXIT_TIMEOUT, { clock, emit })
 
       t.true(processExit.notCalled)
 

@@ -2,7 +2,9 @@ import { version } from 'process'
 
 import test from 'ava'
 
-import { repeatEventsRunners } from '../helpers/repeat.js'
+import { repeat } from '../helpers/data_driven/main.js'
+import { RUNNERS } from '../helpers/runners.js'
+import { EVENT_DATA } from '../helpers/repeat.js'
 import { normalizeCall } from '../helpers/normalize.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 
@@ -61,7 +63,7 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-repeatEventsRunners(({ name }, { runner, command, env }, { eventName }) => {
+repeat(RUNNERS, EVENT_DATA, ({ name }, { runner, command, env }, { eventName }) => {
   const [testing] = runner.split(':')
 
   if (shouldSkip({ runner, eventName })) {

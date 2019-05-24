@@ -3,7 +3,8 @@ import process from 'process'
 import test from 'ava'
 import sinon from 'sinon'
 
-import { repeatEvents } from '../helpers/repeat.js'
+import { repeat } from '../helpers/data_driven/main.js'
+import { EVENT_DATA } from '../helpers/repeat.js'
 import { startLogging, startLoggingNoOpts } from '../helpers/init.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 
@@ -19,7 +20,7 @@ const normalizeArgs = function([error]) {
   return String(error)
 }
 
-repeatEvents(({ name }, { eventName, emitEvent, defaultLevel }) => {
+repeat(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   test.serial(`${name} should work with no options`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)

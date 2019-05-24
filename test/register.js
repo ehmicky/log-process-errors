@@ -1,6 +1,7 @@
 import test from 'ava'
 
-import { repeatEvents } from './helpers/repeat.js'
+import { repeat } from './helpers/data_driven/main.js'
+import { EVENT_DATA } from './helpers/repeat.js'
 import { normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
@@ -8,7 +9,7 @@ const LOADERS = `${__dirname}/helpers/loaders/`
 
 removeProcessListeners()
 
-repeatEvents(({ name }, { eventName }) => {
+repeat(EVENT_DATA, ({ name }, { eventName }) => {
   test(`${name} should work using the -r flag`, async t => {
     const returnValue = await normalizeCall(
       `node ${LOADERS}/register.js ${eventName}`,

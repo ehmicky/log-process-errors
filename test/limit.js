@@ -4,7 +4,8 @@ import test from 'ava'
 // through code
 import { MAX_EVENTS } from '../src/limit.js'
 
-import { repeatEvents } from './helpers/repeat.js'
+import { repeat } from './helpers/data_driven/main.js'
+import { EVENT_DATA } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { emitEvents } from './helpers/several.js'
 import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
@@ -12,7 +13,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents(({ name }, { eventName, emitEvent }) => {
+repeat(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should limit events`, async t => {
     stubStackTraceRandom()
 

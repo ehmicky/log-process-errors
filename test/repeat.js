@@ -1,6 +1,7 @@
 import test from 'ava'
 
-import { repeatEvents } from './helpers/repeat.js'
+import { repeat } from './helpers/data_driven/main.js'
+import { EVENT_DATA } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { emitEvents } from './helpers/several.js'
 import { removeProcessListeners } from './helpers/remove.js'
@@ -8,7 +9,7 @@ import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 
 removeProcessListeners()
 
-repeatEvents(({ name }, { eventName, emitEvent }) => {
+repeat(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should not repeat identical events`, async t => {
     stubStackTrace()
 

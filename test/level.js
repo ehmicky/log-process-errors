@@ -2,13 +2,14 @@
 import test from 'ava'
 import sinon from 'sinon'
 
-import { repeatEvents, repeatEventsLevels } from './helpers/repeat.js'
+import { repeat } from './helpers/data_driven/main.js'
+import { EVENT_DATA, NORMAL_LEVELS } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeatEvents(({ name }, { eventName, emitEvent, defaultLevel }) => {
+repeat(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
     { level: { default: undefined }, exitOn: [] },
@@ -106,47 +107,51 @@ repeatEvents(({ name }, { eventName, emitEvent, defaultLevel }) => {
   )
 })
 
-repeatEventsLevels(({ name }, { eventName, emitEvent }, level) => {
-  test.serial(`${name} should allow changing log level`, async t => {
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      level: { default: level },
-      eventName,
+repeat(
+  EVENT_DATA,
+  NORMAL_LEVELS,
+  ({ name }, { eventName, emitEvent }, level) => {
+    test.serial(`${name} should allow changing log level`, async t => {
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        level: { default: level },
+        eventName,
+      })
+
+      await emitEvent()
+
+      t.is(log.callCount, 1)
+      t.is(log.firstCall.args[1], level)
+
+      stopLogging()
     })
 
-    await emitEvent()
+    const getLevel = function() {
+      return level
+    }
 
-    t.is(log.callCount, 1)
-    t.is(log.firstCall.args[1], level)
+    test.serial(`${name} should allow opts.level() as a function`, async t => {
+      const defaultLevel = sinon.spy(getLevel)
 
-    stopLogging()
-  })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        level: { default: defaultLevel },
+        eventName,
+      })
 
-  const getLevel = function() {
-    return level
-  }
+      await emitEvent()
 
-  test.serial(`${name} should allow opts.level() as a function`, async t => {
-    const defaultLevel = sinon.spy(getLevel)
+      t.is(log.callCount, 1)
+      t.is(defaultLevel.callCount, 1)
+      t.true(defaultLevel.firstCall.args[0] instanceof Error)
+      t.is(
+        defaultLevel.firstCall.args[0].name.toLowerCase(),
+        eventName.toLowerCase(),
+      )
+      t.is(log.firstCall.args[1], level)
 
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      level: { default: defaultLevel },
-      eventName,
+      stopLogging()
     })
-
-    await emitEvent()
-
-    t.is(log.callCount, 1)
-    t.is(defaultLevel.callCount, 1)
-    t.true(defaultLevel.firstCall.args[0] instanceof Error)
-    t.is(
-      defaultLevel.firstCall.args[0].name.toLowerCase(),
-      eventName.toLowerCase(),
-    )
-    t.is(log.firstCall.args[1], level)
-
-    stopLogging()
-  })
-})
+  },
+)
 /* eslint-enable max-lines */

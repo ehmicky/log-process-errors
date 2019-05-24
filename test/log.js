@@ -3,7 +3,8 @@ import { inspect } from 'util'
 import sinon from 'sinon'
 import test from 'ava'
 
-import { repeatEvents, repeatEventsLevels } from './helpers/repeat.js'
+import { repeat } from './helpers/data_driven/main.js'
+import { EVENT_DATA, NORMAL_LEVELS } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 import { normalizeMessage } from './helpers/normalize.js'
@@ -20,7 +21,7 @@ const snapshotArgs = function([error, level]) {
   ]
 }
 
-repeatEvents(({ name }, { eventName, emitEvent }) => {
+repeat(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should fire opts.log()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -63,23 +64,27 @@ repeatEvents(({ name }, { eventName, emitEvent }) => {
   })
 })
 
-repeatEventsLevels(({ name }, { eventName, emitEvent }, level) => {
-  test.serial(`${name} should log on the console by default`, async t => {
-    // eslint-disable-next-line no-restricted-globals
-    const stub = sinon.stub(console, level)
+repeat(
+  EVENT_DATA,
+  NORMAL_LEVELS,
+  ({ name }, { eventName, emitEvent }, level) => {
+    test.serial(`${name} should log on the console by default`, async t => {
+      // eslint-disable-next-line no-restricted-globals
+      const stub = sinon.stub(console, level)
 
-    const { stopLogging } = startLogging({
-      log: 'default',
-      level: { default: level },
-      eventName,
+      const { stopLogging } = startLogging({
+        log: 'default',
+        level: { default: level },
+        eventName,
+      })
+
+      await emitEvent()
+
+      t.is(stub.callCount, 1)
+
+      stopLogging()
+
+      stub.restore()
     })
-
-    await emitEvent()
-
-    t.is(stub.callCount, 1)
-
-    stopLogging()
-
-    stub.restore()
-  })
-})
+  },
+)

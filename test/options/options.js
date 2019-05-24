@@ -8,7 +8,16 @@ import { removeProcessListeners } from '../helpers/remove.js'
 
 removeProcessListeners()
 
-const INVALID_OPTIONS = [
+const normalizeJestValidate = function(message) {
+  const messageA = normalizeMessage(message, { colors: false })
+  // When using nyc, example function body adds dynamic instrumentation code
+  const messageB = messageA.replace(FUNC_BODY_REGEXP, '$1$2')
+  return messageB
+}
+
+const FUNC_BODY_REGEXP = /\s*(\(\)(?:=>)?\{)[^}]*(\})/gu
+
+testEach([
   { log: true },
   { level: true },
   { level: { warning: true } },
@@ -21,20 +30,7 @@ const INVALID_OPTIONS = [
   { testing: 'invalid' },
   // eslint-disable-next-line no-empty-function
   { testing: 'ava', log() {} },
-]
-
-const WARNED_OPTIONS = [{ unknown: true }, { level: { unknown: 'error' } }]
-
-const normalizeJestValidate = function(message) {
-  const messageA = normalizeMessage(message, { colors: false })
-  // When using nyc, example function body adds dynamic instrumentation code
-  const messageB = messageA.replace(FUNC_BODY_REGEXP, '$1$2')
-  return messageB
-}
-
-const FUNC_BODY_REGEXP = /\s*(\(\)(?:=>)?\{)[^}]*(\})/gu
-
-testEach(INVALID_OPTIONS, ({ name }, options) => {
+], ({ name }, options) => {
   test(`should validate options | ${name}`, t => {
     const error = t.throws(startLogging.bind(null, options))
 
@@ -42,7 +38,10 @@ testEach(INVALID_OPTIONS, ({ name }, options) => {
   })
 })
 
-testEach(WARNED_OPTIONS, ({ name }, options) => {
+testEach([
+  { unknown: true },
+  { level: { unknown: 'error' } },
+], ({ name }, options) => {
   test(`should warn on options | ${name}`, t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, 'warn')

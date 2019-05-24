@@ -30,7 +30,7 @@ const getEvent = function(emitEvent, eventName) {
 
 // Emit several emits in parallel
 export const emitEvents = async function(emitEvent, maxEvents) {
-  const array = new Array(maxEvents).fill().map(() => emitEvent())
+  const array = Array.from({ length: maxEvents }, emitEvent)
   await Promise.all(array)
 }
 

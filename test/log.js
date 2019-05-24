@@ -47,8 +47,6 @@ testEach(EVENTS, ({ name }, { eventName, emit }) => {
   })
 
   test.serial(`should fire opts.log() with arguments | ${name}`, async t => {
-    stubStackTrace()
-
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emit({ all: true })
@@ -59,8 +57,6 @@ testEach(EVENTS, ({ name }, { eventName, emit }) => {
     t.snapshot(snapshot)
 
     stopLogging()
-
-    unstubStackTrace()
   })
 })
 

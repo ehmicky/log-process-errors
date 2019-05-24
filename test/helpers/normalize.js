@@ -41,6 +41,8 @@ const REPLACEMENTS = [
   [/◉/gu, '(*)'],
   [/ℹ/gu, 'i'],
   [/⚠/gu, '‼'],
+  // Stack traces
+  [/ +at [^]+/gu, '    at STACK TRACE'],
   // Default Node.js warnings show PID, which we remove
   [/\(node:\d+\)/gu, '(node:PID)'],
   // Default Node.js warnings <10 look different (no `code`, no `detail`)

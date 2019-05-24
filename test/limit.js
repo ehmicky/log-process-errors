@@ -7,13 +7,12 @@ import { MAX_EVENTS } from '../src/limit.js'
 
 import { EVENT_DATA } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
-import { emitEvents } from './helpers/several.js'
 import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
+testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, emitMany }) => {
   test.serial(`should limit events | ${name}`, async t => {
     stubStackTraceRandom()
 
@@ -22,7 +21,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
       level: { default: onlyNotLimitedWarning.bind(null, eventName) },
     })
 
-    await emitEvents(MAX_EVENTS, emitEvent)
+    await emitMany(MAX_EVENTS)
 
     t.is(log.callCount, MAX_EVENTS)
 
@@ -43,7 +42,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
       level: { default: onlyLimited },
     })
 
-    await emitEvents(MAX_EVENTS, emitEvent)
+    await emitMany(MAX_EVENTS)
 
     t.true(log.notCalled)
 
@@ -66,7 +65,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
         log: 'spy',
       })
 
-      await emitEvents(MAX_EVENTS, emitEvent)
+      await emitMany(MAX_EVENTS)
 
       await emitEvent()
 

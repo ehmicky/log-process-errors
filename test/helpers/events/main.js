@@ -10,11 +10,11 @@ import { multipleResolves } from './multiple_resolves.js'
 import { warning } from './warning.js'
 import { hasMultipleResolves } from './version.js'
 
-const getEvents = function() {
-  return mapValues(EVENTS_MAP, getEvent)
+const getEventsMap = function() {
+  return mapValues(EVENTS_SIMPLE_MAP, getEvent)
 }
 
-const EVENTS_MAP = {
+const EVENTS_SIMPLE_MAP = {
   uncaughtException,
   unhandledRejection,
   rejectionHandled,
@@ -34,6 +34,6 @@ export const emitEvents = async function(emitEvent, maxEvents) {
   await Promise.all(array)
 }
 
-export const EVENTS = getEvents()
+export const EVENTS_MAP = getEventsMap()
 
-export const EVENT_DATA = Object.values(EVENTS)
+export const EVENT_DATA = Object.values(EVENTS_MAP)

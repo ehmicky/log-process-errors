@@ -7,9 +7,9 @@ import { argv } from 'process'
 import '../../../register/index.js'
 
 import { stubStackTrace } from '../stack.js'
-import { EVENTS } from '../events/main.js'
+import { EVENTS_MAP } from '../events/main.js'
 
 stubStackTrace()
 
 const [, , eventName] = argv
-EVENTS[eventName].emitEvent()
+EVENTS_MAP[eventName].emitEvent()

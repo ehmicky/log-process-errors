@@ -1,7 +1,7 @@
 /* eslint-disable ava/no-ignored-test-files */
 import test from 'ava'
 
-import { EVENTS } from '../events/main.js'
+import { EVENTS_MAP } from '../events/main.js'
 
 import { getOptions } from './options.js'
 
@@ -17,7 +17,7 @@ if (eventName === undefined) {
 } else {
   test(`should make tests fail on ${eventName}`, t => {
     // eslint-disable-next-line no-empty-function
-    EVENTS[eventName].emitEvent().catch(() => {})
+    EVENTS_MAP[eventName].emitEvent().catch(() => {})
 
     t.pass()
   })

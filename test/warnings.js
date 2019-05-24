@@ -1,14 +1,14 @@
 import test from 'ava'
 import sinon from 'sinon'
 
-import { EVENTS } from './helpers/events/main.js'
+import { EVENTS_MAP } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { normalizeMessage } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-const { warning: { emitEvent: emitWarning } } = EVENTS
+const { warning: { emitEvent: emitWarning } } = EVENTS_MAP
 
 test.serial('[warning] should disable default event handlers', async t => {
   // eslint-disable-next-line no-restricted-globals

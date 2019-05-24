@@ -1,3 +1,5 @@
+import prettyFormat from 'pretty-format'
+
 import { hasDuplicates } from './utils.js'
 
 // Retrieve unique prefix for each combination of values
@@ -27,7 +29,7 @@ const serializeValue = function(value) {
     return value.name
   }
 
-  return JSON.stringify(value)
+  return prettyFormat(value, { min: true, maxDepth: 2 })
 }
 
 // Add an incrementing counter if some prefixes are duplicates

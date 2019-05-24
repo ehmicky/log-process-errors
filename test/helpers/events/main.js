@@ -36,4 +36,4 @@ export const emitEvents = async function(emitEvent, maxEvents) {
 
 export const EVENTS_MAP = getEventsMap()
 
-export const EVENT_DATA = Object.values(EVENTS_MAP)
+export const EVENTS = Object.values(EVENTS_MAP)

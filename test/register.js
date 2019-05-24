@@ -1,7 +1,7 @@
 import test from 'ava'
 import testEach from 'test-each'
 
-import { EVENT_DATA } from './helpers/events/main.js'
+import { EVENTS } from './helpers/events/main.js'
 import { normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
@@ -9,7 +9,7 @@ const LOADERS = `${__dirname}/helpers/loaders/`
 
 removeProcessListeners()
 
-testEach(EVENT_DATA, ({ name }, { eventName }) => {
+testEach(EVENTS, ({ name }, { eventName }) => {
   test(`should work using the -r flag | ${name}`, async t => {
     const returnValue = await normalizeCall(
       `node ${LOADERS}/register.js ${eventName}`,

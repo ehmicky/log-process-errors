@@ -5,13 +5,13 @@ import testEach from 'test-each'
 import hasAnsi from 'has-ansi'
 import supportsColor from 'supports-color'
 
-import { EVENT_DATA } from './helpers/events/main.js'
+import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
+testEach(EVENTS, ({ name }, { eventName, emitEvent }) => {
   test.serial(`should colorize the error | ${name}`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 

@@ -10,7 +10,7 @@ import lolex from 'lolex'
 // through code
 import { EXIT_TIMEOUT, EXIT_STATUS } from '../src/exit.js'
 
-import { EVENT_DATA } from './helpers/events/main.js'
+import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
@@ -35,7 +35,7 @@ const emitEventAndWait = async function(timeout, { clock, emitEvent }) {
   clock.tick(timeout)
 }
 
-testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
+testEach(EVENTS, ({ name }, { eventName, emitEvent }) => {
   test.serial(`should process.exit(1) if inside exitOn | ${name}`, async t => {
     const { clock, processExit } = stubProcessExit()
 

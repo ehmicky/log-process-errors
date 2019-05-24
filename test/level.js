@@ -3,14 +3,14 @@ import test from 'ava'
 import testEach from 'test-each'
 import sinon from 'sinon'
 
-import { EVENT_DATA } from './helpers/events/main.js'
+import { EVENTS } from './helpers/events/main.js'
 import { LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENT_DATA, [
+testEach(EVENTS, [
   {},
   { level: { default: undefined }, exitOn: [] },
   { level: { default: 'default' }, exitOn: [] },
@@ -34,7 +34,7 @@ testEach(EVENT_DATA, [
   )
 })
 
-testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
+testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   test.serial(`should allow 'silent' level | ${name}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
@@ -108,7 +108,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
 })
 
 testEach(
-  EVENT_DATA,
+  EVENTS,
   LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {
     test.serial(`should allow changing log level | ${name}`, async t => {

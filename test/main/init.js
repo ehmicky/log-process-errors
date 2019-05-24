@@ -4,7 +4,7 @@ import test from 'ava'
 import testEach from 'test-each'
 import sinon from 'sinon'
 
-import { EVENT_DATA } from '../helpers/events/main.js'
+import { EVENTS } from '../helpers/events/main.js'
 import { startLogging, startLoggingNoOpts } from '../helpers/init.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 
@@ -20,7 +20,7 @@ const normalizeArgs = function([error]) {
   return String(error)
 }
 
-testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
+testEach(EVENTS, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   test.serial(`should work with no options | ${name}`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)

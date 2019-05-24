@@ -4,7 +4,7 @@ import sinon from 'sinon'
 import test from 'ava'
 import testEach from 'test-each'
 
-import { EVENT_DATA } from './helpers/events/main.js'
+import { EVENTS } from './helpers/events/main.js'
 import { LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
 import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
@@ -22,7 +22,7 @@ const snapshotArgs = function([error, level]) {
   ]
 }
 
-testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
+testEach(EVENTS, ({ name }, { eventName, emitEvent }) => {
   test.serial(`should fire opts.log() | ${name}`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -66,7 +66,7 @@ testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
 })
 
 testEach(
-  EVENT_DATA,
+  EVENTS,
   LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {
     test.serial(`should log on the console by default | ${name}`, async t => {

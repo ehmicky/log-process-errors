@@ -5,14 +5,14 @@ import testEach from 'test-each'
 // through code
 import { MAX_EVENTS } from '../src/limit.js'
 
-import { EVENT_DATA } from './helpers/events/main.js'
+import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, emitMany }) => {
+testEach(EVENTS, ({ name }, { eventName, emitEvent, emitMany }) => {
   test.serial(`should limit events | ${name}`, async t => {
     stubStackTraceRandom()
 

@@ -3,7 +3,7 @@ import { version } from 'process'
 import test from 'ava'
 import testEach from 'test-each'
 
-import { EVENT_DATA } from '../helpers/events/main.js'
+import { EVENTS } from '../helpers/events/main.js'
 import { RUNNERS } from '../helpers/runners.js'
 import { normalizeCall } from '../helpers/normalize.js'
 import { removeProcessListeners } from '../helpers/remove.js'
@@ -63,7 +63,7 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-testEach(EVENT_DATA, RUNNERS, ({ name }, { eventName }, { runner, command, env }) => {
+testEach(EVENTS, RUNNERS, ({ name }, { eventName }, { runner, command, env }) => {
   const [testing] = runner.split(':')
 
   if (shouldSkip({ runner, eventName })) {

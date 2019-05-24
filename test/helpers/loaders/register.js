@@ -6,10 +6,7 @@ import { argv } from 'process'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../../register/index.js'
 
-import { stubStackTrace } from '../stack.js'
 import { EVENTS_MAP } from '../events/main.js'
-
-stubStackTrace()
 
 const [, , eventName] = argv
 EVENTS_MAP[eventName].emit()

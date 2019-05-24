@@ -28,3 +28,5 @@ const getEvent = function(emitEvent, eventName) {
 }
 
 export const EVENTS = getEvents()
+
+export const EVENT_DATA = Object.values(EVENTS)

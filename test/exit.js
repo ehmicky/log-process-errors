@@ -10,7 +10,7 @@ import lolex from 'lolex'
 // through code
 import { EXIT_TIMEOUT, EXIT_STATUS } from '../src/exit.js'
 
-import { EVENT_DATA } from './helpers/repeat.js'
+import { EVENT_DATA } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 

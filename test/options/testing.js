@@ -3,8 +3,8 @@ import { version } from 'process'
 import test from 'ava'
 import testEach from 'test-each'
 
+import { EVENT_DATA } from '../helpers/events/main.js'
 import { RUNNERS } from '../helpers/runners.js'
-import { EVENT_DATA } from '../helpers/repeat.js'
 import { normalizeCall } from '../helpers/normalize.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 

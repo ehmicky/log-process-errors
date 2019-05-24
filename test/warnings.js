@@ -1,9 +1,9 @@
 import test from 'ava'
 import sinon from 'sinon'
 
+import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { normalizeMessage } from './helpers/normalize.js'
-import { EVENTS } from './helpers/events/main.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()

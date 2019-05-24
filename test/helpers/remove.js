@@ -1,6 +1,6 @@
 import process from 'process'
 
-import { EVENT_DATA } from './repeat.js'
+import { EVENT_DATA } from './events/main.js'
 
 // Ava sets up process `uncaughtException` and `unhandledRejection` handlers
 // which makes testing them harder.

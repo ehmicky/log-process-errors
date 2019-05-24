@@ -4,7 +4,7 @@ import sinon from 'sinon'
 import test from 'ava'
 import testEach from 'test-each'
 
-import { EVENT_DATA } from './helpers/repeat.js'
+import { EVENT_DATA } from './helpers/events/main.js'
 import { LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
 import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'

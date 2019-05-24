@@ -5,7 +5,7 @@ import testEach from 'test-each'
 import hasAnsi from 'has-ansi'
 import supportsColor from 'supports-color'
 
-import { EVENT_DATA } from './helpers/repeat.js'
+import { EVENT_DATA } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 

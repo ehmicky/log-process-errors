@@ -10,22 +10,15 @@ export const getPrefixes = function(arrays) {
 const getPrefix = function(values) {
   return values
     .map(getValuePrefix)
-    .filter(Boolean)
     .join(' ')
 }
 
 const getValuePrefix = function(value) {
   const valueA = serializeValue(value)
-
-  if (valueA === undefined) {
-    return
-  }
-
-  const valueB = valueA.slice(0, MAX_PREFIX_LENGTH)
-  return `[${valueB}]`
+  return valueA.slice(0, MAX_PREFIX_LENGTH)
 }
 
-const MAX_PREFIX_LENGTH = 20
+const MAX_PREFIX_LENGTH = 120
 
 // Try to serialize value.
 // Objects must have a `name` member.
@@ -53,6 +46,9 @@ const fixDuplicates = function({ prefixes }) {
 }
 
 const addPrefixIndex = function(prefix, index) {
-  const space = prefix.length === 0 ? '' : ' '
-  return `[${index}]${space}${prefix}`
+  if (prefix.length === 0) {
+    return prefix
+  }
+
+  return `${prefix} (${index})`
 }

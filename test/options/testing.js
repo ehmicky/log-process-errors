@@ -2,7 +2,7 @@ import { version } from 'process'
 
 import test from 'ava'
 
-import { repeat } from '../helpers/data_driven/main.js'
+import { testEach } from '../helpers/data_driven/main.js'
 import { RUNNERS } from '../helpers/runners.js'
 import { EVENT_DATA } from '../helpers/repeat.js'
 import { normalizeCall } from '../helpers/normalize.js'
@@ -63,7 +63,7 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-repeat(RUNNERS, EVENT_DATA, ({ name }, { runner, command, env }, { eventName }) => {
+testEach(RUNNERS, EVENT_DATA, ({ name }, { runner, command, env }, { eventName }) => {
   const [testing] = runner.split(':')
 
   if (shouldSkip({ runner, eventName })) {

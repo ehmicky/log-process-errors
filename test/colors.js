@@ -4,14 +4,14 @@ import test from 'ava'
 import hasAnsi from 'has-ansi'
 import supportsColor from 'supports-color'
 
-import { repeat } from './helpers/data_driven/main.js'
+import { testEach } from './helpers/data_driven/main.js'
 import { EVENT_DATA } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeat(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
+testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should colorize the error`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 

@@ -2,14 +2,14 @@
 import test from 'ava'
 import sinon from 'sinon'
 
-import { repeat } from './helpers/data_driven/main.js'
+import { testEach } from './helpers/data_driven/main.js'
 import { EVENT_DATA, NORMAL_LEVELS } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-repeat(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
+testEach(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   const OPTIONS = [
     {},
     { level: { default: undefined }, exitOn: [] },
@@ -107,7 +107,7 @@ repeat(EVENT_DATA, ({ name }, { eventName, emitEvent, defaultLevel }) => {
   )
 })
 
-repeat(
+testEach(
   EVENT_DATA,
   NORMAL_LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {

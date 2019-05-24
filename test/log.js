@@ -3,7 +3,7 @@ import { inspect } from 'util'
 import sinon from 'sinon'
 import test from 'ava'
 
-import { repeat } from './helpers/data_driven/main.js'
+import { testEach } from './helpers/data_driven/main.js'
 import { EVENT_DATA, NORMAL_LEVELS } from './helpers/repeat.js'
 import { startLogging } from './helpers/init.js'
 import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
@@ -21,7 +21,7 @@ const snapshotArgs = function([error, level]) {
   ]
 }
 
-repeat(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
+testEach(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   test.serial(`${name} should fire opts.log()`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -64,7 +64,7 @@ repeat(EVENT_DATA, ({ name }, { eventName, emitEvent }) => {
   })
 })
 
-repeat(
+testEach(
   EVENT_DATA,
   NORMAL_LEVELS,
   ({ name }, { eventName, emitEvent }, level) => {

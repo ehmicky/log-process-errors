@@ -66,20 +66,20 @@ const getHelperFile = function({ testing, register }) {
 testEach(
   EVENTS,
   RUNNERS,
-  ({ name }, { eventName }, { name: runner, command, env }) => {
+  ({ title }, { eventName }, { title: runner, command, env }) => {
     const [testing] = runner.split(':')
 
     if (shouldSkip({ runner, eventName })) {
       return
     }
 
-    test(`should make tests fails | ${name}`, async t => {
+    test(`should make tests fails | ${title}`, async t => {
       const returnValue = await callRunner({ testing, command, env, eventName })
 
       t.snapshot(returnValue)
     })
 
-    test(`should allow overriding 'opts.level' | ${name}`, async t => {
+    test(`should allow overriding 'opts.level' | ${title}`, async t => {
       const returnValue = await callRunner({
         testing,
         command,
@@ -91,7 +91,7 @@ testEach(
       t.snapshot(returnValue)
     })
 
-    test(`should work with the -r flag | ${name}`, async t => {
+    test(`should work with the -r flag | ${title}`, async t => {
       const returnValue = await callRunner({
         testing,
         command,

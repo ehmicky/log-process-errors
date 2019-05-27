@@ -9,8 +9,8 @@ const LOADERS = `${__dirname}/helpers/loaders/`
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ name }, { eventName }) => {
-  test(`should work using the -r flag | ${name}`, async t => {
+testEach(EVENTS, ({ title }, { eventName }) => {
+  test(`should work using the -r flag | ${title}`, async t => {
     const returnValue = await normalizeCall(
       `node ${LOADERS}/register.js ${eventName}`,
     )
@@ -18,7 +18,7 @@ testEach(EVENTS, ({ name }, { eventName }) => {
     t.snapshot(returnValue)
   })
 
-  test(`should work with --no-warnings | ${name}`, async t => {
+  test(`should work with --no-warnings | ${title}`, async t => {
     const returnValue = await normalizeCall(
       `node --no-warnings ${LOADERS}/simple.js ${eventName}`,
     )
@@ -26,7 +26,7 @@ testEach(EVENTS, ({ name }, { eventName }) => {
     t.snapshot(returnValue)
   })
 
-  test(`should work using both the -r flag and init() | ${name}`, async t => {
+  test(`should work using both the -r flag and init() | ${title}`, async t => {
     const returnValue = await normalizeCall(
       `node ${LOADERS}/noop.js ${eventName}`,
     )

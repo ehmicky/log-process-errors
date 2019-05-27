@@ -25,7 +25,7 @@ const EVENTS_SIMPLE_MAP = {
 const getEvent = function(emit, eventName) {
   const emitMany = emitEvents.bind(null, emit)
   const defaultLevel = DEFAULT_LEVEL[eventName]
-  return { name: eventName, eventName, emit, emitMany, defaultLevel }
+  return { title: eventName, eventName, emit, emitMany, defaultLevel }
 }
 
 // Emit several emits in parallel

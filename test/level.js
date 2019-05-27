@@ -18,8 +18,8 @@ testEach(
     { level: { default: 'default' }, exitOn: [] },
     { level: { default: () => 'default' } },
   ],
-  ({ name }, { eventName, emit, defaultLevel }, options) => {
-    test.serial(`should use default opts.level() | ${name}`, async t => {
+  ({ title }, { eventName, emit, defaultLevel }, options) => {
+    test.serial(`should use default opts.level() | ${title}`, async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
         eventName,
@@ -35,8 +35,8 @@ testEach(
   },
 )
 
-testEach(EVENTS, ({ name }, { eventName, emit, defaultLevel }) => {
-  test.serial(`should allow 'silent' level | ${name}`, async t => {
+testEach(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
+  test.serial(`should allow 'silent' level | ${title}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: 'silent' },
@@ -50,7 +50,7 @@ testEach(EVENTS, ({ name }, { eventName, emit, defaultLevel }) => {
   })
 
   test.serial(
-    `should use default opts.level() when using an invalid level | ${name}`,
+    `should use default opts.level() when using an invalid level | ${title}`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
@@ -68,7 +68,7 @@ testEach(EVENTS, ({ name }, { eventName, emit, defaultLevel }) => {
   )
 
   test.serial(
-    `should emit a warning when opts.level() uses an invalid level | ${name}`,
+    `should emit a warning when opts.level() uses an invalid level | ${title}`,
     async t => {
       const { stopLogging } = startLogging({
         level: { default: 'invalid' },
@@ -91,7 +91,7 @@ testEach(EVENTS, ({ name }, { eventName, emit, defaultLevel }) => {
   )
 
   test.serial(
-    `should allow changing log level for a specific event | ${name}`,
+    `should allow changing log level for a specific event | ${title}`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
@@ -108,8 +108,8 @@ testEach(EVENTS, ({ name }, { eventName, emit, defaultLevel }) => {
   )
 })
 
-testEach(EVENTS, LEVELS, ({ name }, { eventName, emit }, level) => {
-  test.serial(`should allow changing log level | ${name}`, async t => {
+testEach(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {
+  test.serial(`should allow changing log level | ${title}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
       level: { default: level },
@@ -128,7 +128,7 @@ testEach(EVENTS, LEVELS, ({ name }, { eventName, emit }, level) => {
     return level
   }
 
-  test.serial(`should allow opts.level() as a function | ${name}`, async t => {
+  test.serial(`should allow opts.level() as a function | ${title}`, async t => {
     const defaultLevel = sinon.spy(getLevel)
 
     const { stopLogging, log } = startLogging({

@@ -32,8 +32,8 @@ testEach(
     // eslint-disable-next-line no-empty-function
     { testing: 'ava', log() {} },
   ],
-  ({ name }, options) => {
-    test(`should validate options | ${name}`, t => {
+  ({ title }, options) => {
+    test(`should validate options | ${title}`, t => {
       const error = t.throws(startLogging.bind(null, options))
 
       t.snapshot(normalizeJestValidate(error.message))
@@ -43,8 +43,8 @@ testEach(
 
 testEach(
   [{ unknown: true }, { level: { unknown: 'error' } }],
-  ({ name }, options) => {
-    test(`should warn on options | ${name}`, t => {
+  ({ title }, options) => {
+    test(`should warn on options | ${title}`, t => {
       // eslint-disable-next-line no-restricted-globals
       const stub = sinon.stub(console, 'warn')
 

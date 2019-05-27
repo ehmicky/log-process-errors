@@ -25,4 +25,6 @@ export const RUNNERS = [
   // This somehow impacts the output of `node-tap`. The best workaround we have
   // found is to skip `node-tap` testing in CI (which uses `nyc`).
   // Would be fixed if https://github.com/tapjs/node-tap/issues/497 is done.
-  .filter(({ title }) => !(title.startsWith('node-tap') && SPAWN_WRAP_SHIM_ROOT))
+  .filter(
+    ({ title }) => !(title.startsWith('node-tap') && SPAWN_WRAP_SHIM_ROOT),
+  )

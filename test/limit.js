@@ -34,26 +34,29 @@ testEach(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
     unstubStackTrace()
   })
 
-  test.serial(`should emit warning when limiting events | ${title}`, async t => {
-    stubStackTraceRandom()
+  test.serial(
+    `should emit warning when limiting events | ${title}`,
+    async t => {
+      stubStackTraceRandom()
 
-    const { stopLogging, log } = startLogging({
-      log: 'spy',
-      level: { default: onlyLimited },
-    })
+      const { stopLogging, log } = startLogging({
+        log: 'spy',
+        level: { default: onlyLimited },
+      })
 
-    await emitMany(MAX_EVENTS)
+      await emitMany(MAX_EVENTS)
 
-    t.true(log.notCalled)
+      t.true(log.notCalled)
 
-    await emit()
+      await emit()
 
-    t.true(log.called)
+      t.true(log.called)
 
-    stopLogging()
+      stopLogging()
 
-    unstubStackTrace()
-  })
+      unstubStackTrace()
+    },
+  )
 
   test.serial(
     `should only emit warning once when limiting events | ${title}`,

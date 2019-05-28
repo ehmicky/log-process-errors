@@ -36,7 +36,7 @@ export const emitLimitedWarning = function(name) {
 }
 
 // The `warning` itself should not be skipped
-export const isLimitedWarning = function({ name, value = {} }) {
+const isLimitedWarning = function({ name, value = {} }) {
   return (
     name === 'warning' && value.name === ERROR_NAME && value.code === ERROR_CODE
   )
@@ -47,4 +47,6 @@ const ERROR_MESSAGE = name =>
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
 
+// Imported by tests
+// eslint-disable-next-line import/no-unused-modules
 export const MAX_EVENTS = 100

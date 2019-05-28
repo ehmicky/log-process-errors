@@ -32,7 +32,10 @@ export const exitProcess = function({ name, opts: { exitOn } }) {
   }, EXIT_TIMEOUT)
 }
 
+// Imported by tests
+// eslint-disable-next-line import/no-unused-modules
 export const EXIT_TIMEOUT = 3000
+// eslint-disable-next-line import/no-unused-modules
 export const EXIT_STATUS = 1
 
 export const validateExitOn = function({ exitOn }) {

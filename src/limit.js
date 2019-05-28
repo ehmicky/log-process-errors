@@ -47,6 +47,4 @@ const ERROR_MESSAGE = name =>
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
 
-// Imported by tests
-// eslint-disable-next-line import/no-unused-modules
 export const MAX_EVENTS = 100

@@ -71,11 +71,8 @@ const isValidLevel = function({ level }) {
   )
 }
 
-// Imported by tests
-// eslint-disable-next-line import/no-unused-modules
-export const LEVELS = ['debug', 'info', 'warn', 'error', 'silent', 'default']
+const LEVELS = ['debug', 'info', 'warn', 'error', 'silent', 'default']
 
-// eslint-disable-next-line import/no-unused-modules
 export const DEFAULT_LEVEL = {
   default: 'error',
   uncaughtException: 'error',

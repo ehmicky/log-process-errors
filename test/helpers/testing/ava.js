@@ -1,4 +1,3 @@
-/* eslint-disable ava/no-ignored-test-files */
 import test from 'ava'
 
 import { EVENTS_MAP } from '../events/main.js'
@@ -22,4 +21,3 @@ if (eventName === undefined) {
     t.pass()
   })
 }
-/* eslint-enable ava/no-ignored-test-files */

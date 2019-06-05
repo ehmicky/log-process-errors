@@ -64,7 +64,7 @@
     "gulp": "^4.0.2",
     "gulp-shared-tasks": "^0.29.7",
     "has-ansi": "^3.0.0",
-    "husky": "^2.3.0",
+    "husky": "^2.4.0",
     "jasmine": "^3.4.0",
     "lolex": "^4.1.0",
     "mocha": "^6.1.4",

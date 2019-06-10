@@ -1,3 +1,4 @@
+// eslint-disable-next-line ava/no-ignored-test-files
 import test from 'ava'
 
 import { EVENTS_MAP } from '../events/main.js'

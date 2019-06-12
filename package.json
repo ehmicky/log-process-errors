@@ -56,7 +56,7 @@
     "figures": "^3.0.0",
     "jest-validate": "^24.8.0",
     "moize": "^5.4.4",
-    "supports-color": "^6.1.0"
+    "supports-color": "^7.0.0"
   },
   "devDependencies": {
     "ava": "^2.1.0",

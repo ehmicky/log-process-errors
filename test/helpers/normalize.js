@@ -6,7 +6,7 @@ export const normalizeCall = async function(input, opts) {
   // TODO: replace with `execa.command()` once `execa@2` is released
   const [command, ...args] = input.split(' ')
 
-  const { stdout, stderr, code } = await execa(command, args, {
+  const { stdout, stderr, exitCode: code } = await execa(command, args, {
     reject: false,
     ...opts,
   })

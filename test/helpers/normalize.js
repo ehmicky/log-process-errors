@@ -3,17 +3,14 @@ import stripAnsi from 'strip-ansi'
 
 // Call process and normalize its output for testing
 export const normalizeCall = async function(input, opts) {
-  // TODO: replace with `execa.command()` once `execa@2` is released
-  const [command, ...args] = input.split(' ')
-
-  const { stdout, stderr, exitCode: code } = await execa(command, args, {
+  const { stdout, stderr, exitCode } = await execa.command(input, {
     reject: false,
     ...opts,
   })
 
   const stdoutA = normalizeMessage(stdout)
   const stderrA = normalizeMessage(stderr)
-  return { code, stdout: stdoutA, stderr: stderrA }
+  return { exitCode, stdout: stdoutA, stderr: stderrA }
 }
 
 // Normalize console messages for testing

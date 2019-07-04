@@ -1,5 +1,6 @@
 import { isLimited } from '../limit.js'
 import { isRepeated } from '../repeat.js'
+import { isRejectionWarning } from '../warnings.js'
 import { getLevel } from '../level.js'
 import { getError, addErrorPrint } from '../error/main.js'
 import { exitProcess } from '../exit.js'
@@ -30,6 +31,10 @@ export const handleEvent = async function({
   })
 
   if (isRepeated({ event, previousEvents })) {
+    return
+  }
+
+  if (isRejectionWarning(name, event)) {
     return
   }
 

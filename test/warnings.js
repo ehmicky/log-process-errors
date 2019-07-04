@@ -1,10 +1,13 @@
 import test from 'ava'
 import sinon from 'sinon'
+import testEach from 'test-each'
 
-import { EVENTS_MAP } from './helpers/events/main.js'
+import { EVENTS, EVENTS_MAP } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
-import { normalizeMessage } from './helpers/normalize.js'
+import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
+
+const LOADERS = `${__dirname}/helpers/loaders/`
 
 removeProcessListeners()
 
@@ -51,5 +54,22 @@ test.serial(
     t.snapshot(normalizeMessage(String(stub.lastCall.args[0])))
 
     stub.restore()
+  },
+)
+
+testEach(
+  EVENTS,
+  [
+    '--no-warnings',
+    '--unhandled-rejections=none',
+    '--unhandled-rejections=warn',
+    '--unhandled-rejections=strict',
+  ],
+  ({ title }, { eventName }, flag) => {
+    test(`should work with warnings-related CLI flags | ${title}`, async t => {
+      t.snapshot(
+        await normalizeCall(`node ${flag} ${LOADERS}/simple.js ${eventName}`),
+      )
+    })
   },
 )

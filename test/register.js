@@ -14,38 +14,6 @@ testEach(EVENTS, ({ title }, { eventName }) => {
     t.snapshot(await normalizeCall(`node ${LOADERS}/register.js ${eventName}`))
   })
 
-  test(`should work with --no-warnings | ${title}`, async t => {
-    t.snapshot(
-      await normalizeCall(
-        `node --no-warnings ${LOADERS}/simple.js ${eventName}`,
-      ),
-    )
-  })
-
-  test(`should work with --unhandled-rejections=none | ${title}`, async t => {
-    t.snapshot(
-      await normalizeCall(
-        `node --unhandled-rejections=none ${LOADERS}/simple.js ${eventName}`,
-      ),
-    )
-  })
-
-  test(`should work with --unhandled-rejections=warn | ${title}`, async t => {
-    t.snapshot(
-      await normalizeCall(
-        `node --unhandled-rejections=warn ${LOADERS}/simple.js ${eventName}`,
-      ),
-    )
-  })
-
-  test(`should work with --unhandled-rejections=strict | ${title}`, async t => {
-    t.snapshot(
-      await normalizeCall(
-        `node --unhandled-rejections=strict ${LOADERS}/simple.js ${eventName}`,
-      ),
-    )
-  })
-
   test(`should work using both the -r flag and init() | ${title}`, async t => {
     t.snapshot(await normalizeCall(`node ${LOADERS}/noop.js ${eventName}`))
   })

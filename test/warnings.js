@@ -62,7 +62,6 @@ testEach(
   [
     '--no-warnings',
     '--unhandled-rejections=none',
-    '--unhandled-rejections=warn',
     '--unhandled-rejections=strict',
   ],
   ({ title }, { eventName }, flag) => {

@@ -1,6 +1,6 @@
 {
   "name": "log-process-errors",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "main": "build/src/main.js",
   "files": [
     "build/src",

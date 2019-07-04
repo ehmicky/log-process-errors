@@ -1,3 +1,14 @@
+# 5.0.1
+
+## Bug fixes
+
+- Do not print deprecation warnings on unhandled rejection promises with Node
+  `12.6.0`
+
+## Dependencies
+
+- Upgrade `supports-color`
+
 # 5.0.0
 
 Thanks to @Hongarc and @stevenvachon for their first-time contributions!

@@ -73,7 +73,7 @@
     "strip-ansi": "^5.2.0",
     "tap": "^14.4.1",
     "tape": "^4.11.0",
-    "test-each": "^1.7.1"
+    "test-each": "^1.7.2"
   },
   "engines": {
     "node": ">=8.12.0"

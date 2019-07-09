@@ -1,5 +1,5 @@
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 
 // Required directly because this is exposed through documentation, but not
 // through code
@@ -12,7 +12,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
+each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
   test.serial(`should limit events | ${title}`, async t => {
     stubStackTraceRandom()
 

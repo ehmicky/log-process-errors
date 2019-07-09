@@ -1,7 +1,7 @@
 import { inspect } from 'util'
 
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 import hasAnsi from 'has-ansi'
 import supportsColor from 'supports-color'
 
@@ -11,7 +11,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ title }, { eventName, emit }) => {
+each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should colorize the error | ${title}`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 

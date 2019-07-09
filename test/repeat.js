@@ -1,5 +1,5 @@
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
@@ -8,7 +8,7 @@ import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ title }, { eventName, emitMany }) => {
+each(EVENTS, ({ title }, { eventName, emitMany }) => {
   test.serial(`should not repeat identical events | ${title}`, async t => {
     stubStackTrace()
 

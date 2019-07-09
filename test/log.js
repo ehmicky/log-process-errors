@@ -2,7 +2,7 @@ import { inspect } from 'util'
 
 import sinon from 'sinon'
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events/main.js'
 import { LEVELS } from './helpers/level.js'
@@ -20,7 +20,7 @@ const snapshotArgs = function([error, level]) {
   ]
 }
 
-testEach(EVENTS, ({ title }, { eventName, emit }) => {
+each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should fire opts.log() | ${title}`, async t => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
@@ -59,7 +59,7 @@ testEach(EVENTS, ({ title }, { eventName, emit }) => {
   })
 })
 
-testEach(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {
+each(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {
   test.serial(`should log on the console by default | ${title}`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, level)

@@ -1,5 +1,5 @@
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 
 import { EVENTS } from '../helpers/events/main.js'
 import { startLogging } from '../helpers/init.js'
@@ -7,7 +7,7 @@ import { removeProcessListeners } from '../helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ title }, { emit }) => {
+each(EVENTS, ({ title }, { emit }) => {
   test(`events emitters should exist | ${title}`, t => {
     t.is(typeof emit, 'function')
   })

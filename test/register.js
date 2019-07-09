@@ -1,5 +1,5 @@
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events/main.js'
 import { normalizeCall } from './helpers/normalize.js'
@@ -9,7 +9,7 @@ const LOADERS = `${__dirname}/helpers/loaders/`
 
 removeProcessListeners()
 
-testEach(EVENTS, ({ title }, { eventName }) => {
+each(EVENTS, ({ title }, { eventName }) => {
   test(`should work using the -r flag | ${title}`, async t => {
     t.snapshot(await normalizeCall(`node ${LOADERS}/register.js ${eventName}`))
   })

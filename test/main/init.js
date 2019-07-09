@@ -1,7 +1,7 @@
 import process from 'process'
 
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 import sinon from 'sinon'
 
 import { EVENTS } from '../helpers/events/main.js'
@@ -20,7 +20,7 @@ const normalizeArgs = function([error]) {
   return String(error)
 }
 
-testEach(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
+each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
   test.serial(`should work with no options | ${title}`, async t => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)

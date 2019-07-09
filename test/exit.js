@@ -2,7 +2,7 @@ import process from 'process'
 import { promisify } from 'util'
 
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 import sinon from 'sinon'
 import lolex from 'lolex'
 
@@ -35,7 +35,7 @@ const emitAndWait = async function(timeout, { clock, emit }) {
   clock.tick(timeout)
 }
 
-testEach(EVENTS, ({ title }, { eventName, emit }) => {
+each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should process.exit(1) if inside exitOn | ${title}`, async t => {
     const { clock, processExit } = stubProcessExit()
 

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 import sinon from 'sinon'
 
 import { EVENTS } from './helpers/events/main.js'
@@ -10,7 +10,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-testEach(
+each(
   EVENTS,
   [
     {},
@@ -35,7 +35,7 @@ testEach(
   },
 )
 
-testEach(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
+each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
   test.serial(`should allow 'silent' level | ${title}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',
@@ -108,7 +108,7 @@ testEach(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
   )
 })
 
-testEach(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {
+each(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {
   test.serial(`should allow changing log level | ${title}`, async t => {
     const { stopLogging, log } = startLogging({
       log: 'spy',

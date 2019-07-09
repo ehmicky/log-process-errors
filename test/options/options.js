@@ -1,5 +1,5 @@
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 import sinon from 'sinon'
 
 import { startLogging } from '../helpers/init.js'
@@ -17,7 +17,7 @@ const normalizeJestValidate = function(message) {
 
 const FUNC_BODY_REGEXP = /\s*(\(\)(?:=>)?\{)[^}]*(\})/gu
 
-testEach(
+each(
   [
     { log: true },
     { level: true },
@@ -41,7 +41,7 @@ testEach(
   },
 )
 
-testEach(
+each(
   [{ unknown: true }, { level: { unknown: 'error' } }],
   ({ title }, options) => {
     test(`should warn on options | ${title}`, t => {

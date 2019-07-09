@@ -1,7 +1,7 @@
 import { version } from 'process'
 
 import test from 'ava'
-import testEach from 'test-each'
+import { each } from 'test-each'
 
 import { EVENTS } from '../helpers/events/main.js'
 import { RUNNERS } from '../helpers/testing/runners.js'
@@ -63,7 +63,7 @@ const getHelperFile = function({ testing, register }) {
   return `${helperDir}/${testing}/${filename}.js`
 }
 
-testEach(
+each(
   EVENTS,
   RUNNERS,
   ({ title }, { eventName }, { title: runner, command, env }) => {

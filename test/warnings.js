@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import testEach from 'test-each'
+import { each } from 'test-each'
 
 import { EVENTS, EVENTS_MAP } from './helpers/events/main.js'
 import { hasUnhandledFlag } from './helpers/events/version.js'
@@ -62,7 +62,7 @@ const UNHANDLED_FLAGS = hasUnhandledFlag()
   ? ['--unhandled-rejections=none', '--unhandled-rejections=strict']
   : []
 
-testEach(
+each(
   EVENTS,
   ['--no-warnings', ...UNHANDLED_FLAGS],
   ({ title }, { eventName }, flag) => {

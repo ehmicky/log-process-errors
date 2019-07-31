@@ -1,3 +1,10 @@
+# 5.0.2
+
+## Bug fixes
+
+- Do not handle deprecation warnings on unhandled rejection promises anymore
+  since this is due to a bug in Node `12.6.0` which has been fixed in `12.7.0`.
+
 # 5.0.1
 
 ## Bug fixes

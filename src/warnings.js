@@ -46,14 +46,3 @@ const getWarningListeners = function() {
 }
 
 const warningListener = getWarningListener()
-
-// Unhandled rejected promises emit a warning by default (unless
-// --unhandled-rejections is used). This warning is not useful, so we remove it.
-export const isRejectionWarning = function(name, { value }) {
-  return (
-    name === 'warning' &&
-    value instanceof Error &&
-    value.name === 'DeprecationWarning' &&
-    value.code === 'DEP0018'
-  )
-}

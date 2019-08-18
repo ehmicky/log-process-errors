@@ -13,7 +13,9 @@ const { eventName } = getOptions()
 //    where it should be a noop (`OPTIONS` is `undefined`)
 if (eventName === undefined) {
   // Otherwise `ava` complains
-  test('Dummy test', t => t.pass())
+  test('Dummy test', t => {
+    t.pass()
+  })
 } else {
   test(`should make tests fail on ${eventName}`, t => {
     // eslint-disable-next-line no-empty-function

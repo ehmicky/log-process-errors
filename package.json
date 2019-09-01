@@ -59,10 +59,10 @@
     "supports-color": "^7.0.0"
   },
   "devDependencies": {
+    "@ehmicky/dev-tasks": "^0.30.40",
     "ava": "^2.3.0",
     "execa": "^2.0.4",
     "gulp": "^4.0.2",
-    "gulp-shared-tasks": "^0.30.40",
     "has-ansi": "^3.0.0",
     "husky": "^3.0.5",
     "jasmine": "^3.4.0",

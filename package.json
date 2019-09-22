@@ -57,7 +57,7 @@
     "filter-obj": "^2.0.0",
     "jest-validate": "^24.9.0",
     "moize": "^5.4.4",
-    "supports-color": "^7.0.0"
+    "supports-color": "^7.1.0"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^0.30.43",

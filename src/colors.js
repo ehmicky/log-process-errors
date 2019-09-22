@@ -16,3 +16,5 @@ const getLevel = function(colors) {
 
   return Math.max(supportsColor.level, 1)
 }
+
+export const DEFAULT_COLORS = Boolean(supportsColor)

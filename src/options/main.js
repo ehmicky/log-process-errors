@@ -8,7 +8,7 @@ import {
 } from '../level.js'
 import { validateExitOn } from '../exit.js'
 import { defaultLog } from '../log.js'
-import { addChalk } from '../colors.js'
+import { addChalk, DEFAULT_COLORS } from '../colors.js'
 
 import { applyTesting, getExampleTesting } from './testing.js'
 
@@ -34,7 +34,7 @@ const isDefined = function(key, value) {
 const DEFAULT_OPTS = {
   log: defaultLog,
   exitOn: ['uncaughtException'],
-  colors: true,
+  colors: DEFAULT_COLORS,
 }
 
 // `validate-jest` prints the function body

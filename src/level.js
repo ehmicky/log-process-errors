@@ -1,8 +1,9 @@
 import { emitWarning } from 'process'
 
 import { multipleValidOptions } from 'jest-validate'
+import filterObj from 'filter-obj'
 
-import { result, mapValues, pickBy } from './utils.js'
+import { result, mapValues } from './utils.js'
 
 // Retrieve error's log level
 export const getLevel = function({ opts, name, error }) {
@@ -29,7 +30,7 @@ export const getLevel = function({ opts, name, error }) {
 export const applyDefaultLevels = function({
   opts: { level: { default: defaultLevel, ...level } = {} },
 }) {
-  const levelA = pickBy(level, value => value !== undefined)
+  const levelA = filterObj(level, isDefined)
 
   if (defaultLevel === undefined) {
     return { ...DEFAULT_LEVEL, ...levelA }
@@ -37,6 +38,10 @@ export const applyDefaultLevels = function({
 
   const defaultLevels = mapValues(DEFAULT_LEVEL, () => defaultLevel)
   return { ...defaultLevels, ...levelA }
+}
+
+const isDefined = function(key, value) {
+  return value !== undefined
 }
 
 // Use during options validation

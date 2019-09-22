@@ -1,4 +1,5 @@
 import { validate } from 'jest-validate'
+import filterObj from 'filter-obj'
 
 import {
   applyDefaultLevels,
@@ -8,13 +9,12 @@ import {
 import { validateExitOn } from '../exit.js'
 import { defaultLog } from '../log.js'
 import { addChalk } from '../colors.js'
-import { pickBy } from '../utils.js'
 
 import { applyTesting, getExampleTesting } from './testing.js'
 
 // Validate options and assign default options
 export const getOptions = function({ opts = {} }) {
-  const optsA = pickBy(opts, value => value !== undefined)
+  const optsA = filterObj(opts, isDefined)
 
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
   validateOptions(optsA)
@@ -25,6 +25,10 @@ export const getOptions = function({ opts = {} }) {
 
   const optsD = addChalk({ opts: optsC })
   return optsD
+}
+
+const isDefined = function(key, value) {
+  return value !== undefined
 }
 
 const DEFAULT_OPTS = {

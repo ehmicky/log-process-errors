@@ -1,4 +1,4 @@
-import { pickBy } from '../utils.js'
+import filterObj from 'filter-obj'
 
 // Retrieve `event` object representing the current event information
 export const getEvent = async function({
@@ -16,7 +16,7 @@ export const getEvent = async function({
 
   const event = { rejected, value: valueA, nextRejected, nextValue }
 
-  const eventA = pickBy(event, eventVal => eventVal !== undefined)
+  const eventA = filterObj(event, isDefined)
   return eventA
 }
 
@@ -50,4 +50,8 @@ const getPromiseValue = async function({ promise }) {
   } catch (error) {
     return { rejected: true, value: error }
   }
+}
+
+const isDefined = function(key, value) {
+  return value !== undefined
 }

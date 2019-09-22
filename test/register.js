@@ -11,7 +11,11 @@ removeProcessListeners()
 
 each(EVENTS, ({ title }, { eventName }) => {
   test(`should work using the -r flag | ${title}`, async t => {
-    t.snapshot(await normalizeCall(`node ${LOADERS}/register.js ${eventName}`))
+    t.snapshot(
+      await normalizeCall(`node ${LOADERS}/register.js ${eventName}`, {
+        colors: false,
+      }),
+    )
   })
 
   test(`should work using both the -r flag and init() | ${title}`, async t => {

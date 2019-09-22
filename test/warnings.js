@@ -68,7 +68,9 @@ each(
   ({ title }, { eventName }, flag) => {
     test(`should work with warnings-related CLI flags | ${title}`, async t => {
       t.snapshot(
-        await normalizeCall(`node ${flag} ${LOADERS}/simple.js ${eventName}`),
+        await normalizeCall(`node ${flag} ${LOADERS}/simple.js ${eventName}`, {
+          colors: false,
+        }),
       )
     })
   },

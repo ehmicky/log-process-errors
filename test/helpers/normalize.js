@@ -8,8 +8,8 @@ export const normalizeCall = async function(input, opts) {
     ...opts,
   })
 
-  const stdoutA = normalizeMessage(stdout)
-  const stderrA = normalizeMessage(stderr)
+  const stdoutA = normalizeMessage(stdout, opts)
+  const stderrA = normalizeMessage(stderr, opts)
   return { exitCode, stdout: stdoutA, stderr: stderrA }
 }
 

@@ -60,7 +60,7 @@
     "supports-color": "^7.1.0"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^0.30.46",
+    "@ehmicky/dev-tasks": "^0.30.47",
     "ava": "^2.4.0",
     "execa": "^2.1.0",
     "gulp": "^4.0.2",

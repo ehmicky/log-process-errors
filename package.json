@@ -51,7 +51,7 @@
     "test": "test"
   },
   "dependencies": {
-    "chalk": "^3.0.0-beta.1",
+    "chalk": "^3.0.0-beta.2",
     "core-js": "^3.2.1",
     "figures": "^3.0.0",
     "filter-obj": "^2.0.1",

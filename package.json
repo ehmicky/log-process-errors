@@ -62,7 +62,7 @@
   "devDependencies": {
     "@ehmicky/dev-tasks": "^0.30.47",
     "ava": "^2.4.0",
-    "execa": "^2.1.0",
+    "execa": "^3.0.0",
     "gulp": "^4.0.2",
     "has-ansi": "^4.0.0",
     "husky": "^3.0.8",

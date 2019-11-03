@@ -30,7 +30,11 @@ const COMMON_OPTIONS = {
   exitOn: [],
   // All runners need to report `uncaughtException` for
   // `throwUncaughtException()` to work. Most also report `unhandledRejection`.
-  level: { uncaughtException: 'silent', unhandledRejection: 'silent' },
+  level: {
+    uncaughtException: 'silent',
+    unhandledRejection: 'silent',
+    multipleResolves: 'silent',
+  },
 }
 
 export const RUNNERS = {

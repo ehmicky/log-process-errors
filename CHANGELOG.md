@@ -1,3 +1,9 @@
+# 5.0.3
+
+## Bug fixes
+
+- Do not make tests fail on `multipleResolves` events with the `testing` option
+
 # 5.0.2
 
 ## Bug fixes

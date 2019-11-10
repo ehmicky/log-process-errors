@@ -69,8 +69,8 @@ defined or not).
 
 #### level
 
-_Type_: `object`<br> _Default_:
-`{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
+_Type_: `object`\
+_Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
 
 Which log level to use.
 
@@ -102,12 +102,12 @@ logProcessErrors({
 
 #### exitOn
 
-_Type_: `string[]`<br> _Value_: array of
-[`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+_Type_: `string[]`\
+_Value_: array of [`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`'unhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
 [`'multipleResolves'`](https://nodejs.org/api/process.html#process_event_multipleresolves)
-or [`'warning'`](https://nodejs.org/api/process.html#process_event_warning)<br>
+or [`'warning'`](https://nodejs.org/api/process.html#process_event_warning)\
 _Default_: `['uncaughtException']`
 
 Which process errors should trigger `process.exit(1)`:
@@ -129,8 +129,9 @@ logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
 
 #### testing
 
-_Type_: `string`<br> _Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or
-`'node-tap'`<br> _Default_: `undefined`
+_Type_: `string`\
+_Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or `'node-tap'`\
+_Default_: `undefined`
 
 When running tests, makes them fail if there are any process errors.
 
@@ -198,7 +199,8 @@ test('Example test', t => {
 
 #### colors
 
-_Type_: `boolean`<br> _Default_: `true` if the output is a terminal.
+_Type_: `boolean`\
+_Default_: `true` if the output is a terminal.
 
 Colorizes messages.
 
@@ -215,8 +217,8 @@ instance.
 
 #### error.name
 
-_Type_: `string`<br> _Value_:
-[`'UncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+_Type_: `string`\
+_Value_: [`'UncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
 [`'MultipleResolves'`](https://nodejs.org/api/process.html#process_event_multipleresolves)

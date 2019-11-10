@@ -99,38 +99,43 @@ other `require`/`import` statements.
 
 ## log
 
-_Type_: `function(error, level)`<br>
+_Type_: `function(error, level)`
 
-Customizes how process errors are logged.<br>
+Customizes how process errors are logged.\
 [Full documentation](docs/API.md#log).
 
 ## level
 
-_Type_: `object`<br> _Default_:
-`{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
+_Type_: `object`\
+_Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
 
-Which log level to use.<br> [Full documentation](docs/API.md#level).
+Which log level to use.\
+[Full documentation](docs/API.md#level).
 
 ## exitOn
 
-_Type_: `string[]`<br> _Default_: `['uncaughtException']`
+_Type_: `string[]`\
+_Default_: `['uncaughtException']`
 
-Which process errors should trigger `process.exit(1)`.<br>
+Which process errors should trigger `process.exit(1)`.\
 [Full documentation](docs/API.md#exiton).
 
 ## testing
 
-_Type_: `string`<br> _Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or
-`'node-tap'`<br> _Default_: `undefined`
+_Type_: `string`\
+_Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or `'node-tap'`\
+_Default_: `undefined`
 
-When running tests, makes them fail if there are any process errors.<br>
+When running tests, makes them fail if there are any process errors.\
 [Full documentation](docs/API.md#testing).
 
 ## colors
 
-_Type_: `boolean`<br> _Default_: `true` if the output is a terminal.
+_Type_: `boolean`\
+_Default_: `true` if the output is a terminal.
 
-Colorizes messages.<br> [Full documentation](docs/API.md#colors).
+Colorizes messages.\
+[Full documentation](docs/API.md#colors).
 
 # Support
 

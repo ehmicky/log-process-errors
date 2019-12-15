@@ -10,14 +10,10 @@ removeProcessListeners()
 
 const normalizeJestValidate = function(message) {
   const messageA = normalizeMessage(message, { colors: false })
-  const messageB = messageA
-    .replace(FUNC_BODY_REGEXP, '$1$2')
-    .replace(EXAMPLE_REGEXP, '')
+  const messageB = messageA.replace(EXAMPLE_REGEXP, '')
   return messageB
 }
 
-// When using nyc, example function body adds dynamic instrumentation code
-const FUNC_BODY_REGEXP = /\s*(\(\)(?:=>)?\{)[^}]*(\})/gu
 // Examples show default options values which might vary
 const EXAMPLE_REGEXP = /Example:[^]*/u
 

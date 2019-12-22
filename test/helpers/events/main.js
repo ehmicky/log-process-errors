@@ -8,7 +8,6 @@ import { unhandledRejection } from './unhandled_rejection.js'
 import { rejectionHandled } from './rejection_handled.js'
 import { multipleResolves } from './multiple_resolves.js'
 import { warning } from './warning.js'
-import { hasMultipleResolves } from './version.js'
 
 const getEventsMap = function() {
   return mapValues(EVENTS_SIMPLE_MAP, getEvent)
@@ -18,7 +17,7 @@ const EVENTS_SIMPLE_MAP = {
   uncaughtException,
   unhandledRejection,
   rejectionHandled,
-  ...(hasMultipleResolves() ? { multipleResolves } : {}),
+  multipleResolves,
   warning,
 }
 

@@ -43,8 +43,8 @@ const REPLACEMENTS = [
   [/(([ \t]+)at STACK TRACE(\r?\n)?)+/gu, '$2at STACK TRACE$3'],
   // Default Node.js warnings show PID, which we remove
   [/\(node:\d+\)/gu, '(node:PID)'],
-  // Default Node.js warnings <10 look different (no `code`, no `detail`)
-  // TODO: remove when Node.js <10 is not supported anymore
+  // Default Node.js warnings <12 look different (no `code`, no `detail`)
+  // TODO: remove when Node.js <12 is not supported anymore
   [/(\(node:PID\)) \[[^\]]+\](.*)\n.*/gu, '$1$2'],
   // File paths
   [/[^ (]+\/[^ )]+/gu, ''],
@@ -53,9 +53,8 @@ const REPLACEMENTS = [
   [/ \([\d.]+m?s\)/gu, ''],
   //  - Jasmine
   [/[\d.]+ seconds?/gu, ''],
-  //  - Jasmine, Node 10 only (not Node 8 nor 12)
-  [/\n\nSuite error: undefined/gu, ''],
   //  - Jasmine, Node <12.5.0 only
+  [/\n\nSuite error: undefined/gu, ''],
   [
     / +Message:\n +Uncaught exception: RejectionHandled: a promise was rejected and handled too late: Error: message\n +Stack:\n +at STACK TRACE\n/gu,
     '',

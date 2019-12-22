@@ -12,12 +12,15 @@ export const RUNNERS = [
   {
     title: 'node-tap:default',
     command: file =>
-      `tap --no-coverage ${file.replace('node-tap', 'node_tap')}`,
+      `tap --no-coverage --no-timeout ${file.replace('node-tap', 'node_tap')}`,
   },
   {
     title: 'node-tap:tap',
     command: file =>
-      `tap -R=tap --no-coverage ${file.replace('node-tap', 'node_tap')}`,
+      `tap -R=tap --no-coverage --no-timeout ${file.replace(
+        'node-tap',
+        'node_tap',
+      )}`,
     env: { TAP_DIAG: '0' },
   },
 ]

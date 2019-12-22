@@ -56,8 +56,6 @@ const callRunner = async function({
 }
 
 const getHelperFile = function({ testing, register }) {
-  // TODO: remove next comment once we support over test runners than 'ava'
-  // istanbul ignore next
   const helperDir = testing === 'ava' ? __dirname : HELPER_DIR
   const filename = register ? 'register' : 'regular'
   return `${helperDir}/${testing}/${filename}.js`

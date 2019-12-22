@@ -55,9 +55,7 @@ each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
 
       stopLogging()
 
-      // TODO: use `process.off()` instead of `process.removeListener()`
-      // after dropping Node.js <10 support
-      process.removeListener(eventName, processHandler)
+      process.off(eventName, processHandler)
     },
   )
 
@@ -77,8 +75,6 @@ each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
 
     stopLogging()
 
-    // TODO: use `process.off()` instead of `process.removeListener()`
-    // after dropping Node.js <10 support
-    process.removeListener(eventName, processHandler)
+    process.off(eventName, processHandler)
   })
 })

@@ -12,7 +12,7 @@ export const removeWarningListener = function() {
   }
 
   // This will be a noop if `init()` is called several times
-  process.removeListener('warning', warningListener)
+  process.off('warning', warningListener)
 }
 
 // When this module is undone, Node.js default `warning` listener is restored

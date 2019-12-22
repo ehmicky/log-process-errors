@@ -54,9 +54,7 @@ const stopLogging = function(listeners) {
 }
 
 const removeListener = function({ eventListener, name }) {
-  // TODO: use `process.off()` instead of `process.removeListener()`
-  // after dropping Node.js <10 support
-  process.removeListener(name, eventListener)
+  process.off(name, eventListener)
 }
 
 // We do not use `export default` because Babel transpiles it in a way that

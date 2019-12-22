@@ -86,7 +86,7 @@ const STACK_TRACE_MAX_LENGTH = 10
 // We use `util.inspect()` instead of `JSON.stringify()` to support more
 // types and circular references.
 // `sorted` prevents the same event using different keys order from having
-// a different fingerprint. It is only `Node.js 10` but is backward-compatible
+// a different fingerprint.
 // Big arrays, objects or buffers will be truncated, which makes this call
 // less CPU-intensive and the result value smaller in memory. However it
 // introduces higher risk of false positives (event being flagged as repeated

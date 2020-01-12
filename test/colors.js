@@ -24,20 +24,22 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
 
     stopLogging()
   })
+})
 
+each(EVENTS, [true, false], ({ title }, { eventName, emit }, colors) => {
   test.serial(
-    `should allow disabling colorizing the error | ${title}`,
+    `should allow enabling/disabling colorizing the error | ${title}`,
     async t => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
-        colors: false,
+        colors,
         eventName,
       })
 
       await emit()
 
       t.true(log.calledOnce)
-      t.false(hasAnsi(inspect(log.firstCall.args[0])))
+      t.is(hasAnsi(inspect(log.firstCall.args[0])), colors)
 
       stopLogging()
     },

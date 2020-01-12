@@ -73,7 +73,7 @@
     "sinon": "^8.0.4",
     "strip-ansi": "^6.0.0",
     "tap": "^14.10.6",
-    "tape": "^5.0.0-next.0",
+    "tape": "^5.0.0-next.3",
     "test-each": "^2.0.0"
   },
   "engines": {

@@ -25,7 +25,7 @@ export const exitProcess = function({ name, opts: { exitOn } }) {
   }
 
   // TODO: use `promisify` instead after
-  // https://github.com/sinonjs/lolex/issues/223 is fixed
+  // https://github.com/sinonjs/fake-timers/issues/223 is fixed
   setTimeout(() => {
     // eslint-disable-next-line unicorn/no-process-exit, no-process-exit
     process.exit(EXIT_STATUS)

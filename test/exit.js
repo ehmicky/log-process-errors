@@ -4,7 +4,7 @@ import { promisify } from 'util'
 import test from 'ava'
 import { each } from 'test-each'
 import sinon from 'sinon'
-import lolex from 'lolex'
+import fakeTimers from '@sinonjs/fake-timers'
 
 // Required directly because this is exposed through documentation, but not
 // through code
@@ -20,7 +20,7 @@ removeProcessListeners()
 
 // Stub `process.exit()`
 const stubProcessExit = function() {
-  const clock = lolex.install({ toFake: ['setTimeout'] })
+  const clock = fakeTimers.install({ toFake: ['setTimeout'] })
   const processExit = sinon.stub(process, 'exit')
   return { clock, processExit }
 }

@@ -56,7 +56,7 @@
     "figures": "^3.2.0",
     "filter-obj": "^2.0.1",
     "jest-validate": "^24.9.0",
-    "moize": "^5.4.4",
+    "moize": "^5.4.5",
     "supports-color": "^7.1.0"
   },
   "devDependencies": {

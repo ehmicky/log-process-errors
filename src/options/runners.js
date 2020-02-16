@@ -10,11 +10,9 @@ const throwUncaughtException = function(error) {
 
 // `tape` does not handle `uncaughtExceptions`. We create a new failing test
 // to do it instead.
-const tapeFailingTest = function(error) {
+const tapeFailingTest = async function(error) {
   // This is an optional peerDependency. `package.json` does not support those.
-  // TODO: replace with `import()` once it is supported by default by ESLint
-  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  const tape = require('tape')
+  const tape = await import('tape')
   tape.test(error.message, t => {
     t.plan(1)
     t.error(error)

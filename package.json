@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
-    "core-js": "^3.6.4",
     "figures": "^3.2.0",
     "filter-obj": "^2.0.1",
     "jest-validate": "^25.1.0",

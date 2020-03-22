@@ -22,7 +22,7 @@ export const getEvent = async function ({
 
 // Retrieve promise's resolved/rejected state and value.
 const parsePromise = async function ({ name, promise, value }) {
-  if (NO_PROMISE_EVENTS.includes(name)) {
+  if (NO_PROMISE_EVENTS.has(name)) {
     return { value }
   }
 
@@ -41,7 +41,11 @@ const parsePromise = async function ({ name, promise, value }) {
 // For `unhandledRejection`:
 //  - we already know `rejected` and `value`
 //  - using `try/catch` will fire `rejectionHandled`
-const NO_PROMISE_EVENTS = ['uncaughtException', 'warning', 'unhandledRejection']
+const NO_PROMISE_EVENTS = new Set([
+  'uncaughtException',
+  'warning',
+  'unhandledRejection',
+])
 
 // `rejectionHandled` and `multipleResolves` otherwise use `await promise`
 const getPromiseValue = async function ({ promise }) {

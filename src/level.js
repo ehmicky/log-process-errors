@@ -13,12 +13,12 @@ export const getLevel = function ({ opts, name, error }) {
     return DEFAULT_LEVEL[name]
   }
 
-  if (LEVELS.includes(level)) {
+  if (LEVELS.has(level)) {
     return level
   }
 
   emitWarning(
-    `Invalid option 'level.${name}' returning '${level}': function must return one of ${LEVELS.join(
+    `Invalid option 'level.${name}' returning '${level}': function must return one of ${LEVELS_ARR.join(
       ', ',
     )}`,
   )
@@ -64,19 +64,18 @@ const validateLevel = function ([name, level]) {
   }
 
   throw new Error(
-    `Invalid option 'level.${name}' '${level}': must be a function or one of ${LEVELS.join(
+    `Invalid option 'level.${name}' '${level}': must be a function or one of ${LEVELS_ARR.join(
       ', ',
     )}`,
   )
 }
 
 const isValidLevel = function ({ level }) {
-  return (
-    LEVELS.includes(level) || level === undefined || typeof level === 'function'
-  )
+  return LEVELS.has(level) || level === undefined || typeof level === 'function'
 }
 
-const LEVELS = ['debug', 'info', 'warn', 'error', 'silent', 'default']
+const LEVELS_ARR = ['debug', 'info', 'warn', 'error', 'silent', 'default']
+const LEVELS = new Set(LEVELS_ARR)
 
 export const DEFAULT_LEVEL = {
   default: 'error',

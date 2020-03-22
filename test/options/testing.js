@@ -32,10 +32,12 @@ const isAvaRejectionHandled = function ({ runner, eventName }) {
 const isOldNodeTap = function ({ runner, eventName }) {
   return (
     runner.startsWith('node-tap') &&
-    ['rejectionHandled', 'unhandledRejection'].includes(eventName) &&
+    OLD_NODE_TAP_EVENTS.has(eventName) &&
     version.startsWith('v8.')
   )
 }
+
+const OLD_NODE_TAP_EVENTS = new Set(['rejectionHandled', 'unhandledRejection'])
 
 const callRunner = async function ({
   testing,

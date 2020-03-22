@@ -52,10 +52,10 @@ const validateTestOpts = function ({ opts, testOpts, testing }) {
 
 // We allow overriding preset's `level` so users can filter events.
 const isForbiddenOpt = function (optName) {
-  return !ALLOWED_OPTS.includes(optName)
+  return !ALLOWED_OPTS.has(optName)
 }
 
-const ALLOWED_OPTS = ['level']
+const ALLOWED_OPTS = new Set(['level'])
 
 // Use during options validation
 export const getExampleTesting = function () {

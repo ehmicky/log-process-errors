@@ -40,7 +40,7 @@ export const validateExitOn = function ({ exitOn }) {
     return
   }
 
-  const invalidEvents = exitOn.filter((name) => !EVENTS.includes(name))
+  const invalidEvents = exitOn.filter((name) => !EVENTS.has(name))
 
   if (invalidEvents.length === 0) {
     return
@@ -49,14 +49,15 @@ export const validateExitOn = function ({ exitOn }) {
   throw new Error(
     `Invalid option 'exitOn' '${invalidEvents.join(
       ', ',
-    )}': must be one of ${EVENTS.join(', ')}`,
+    )}': must be one of ${EVENTS_ARR.join(', ')}`,
   )
 }
 
-const EVENTS = [
+const EVENTS_ARR = [
   'uncaughtException',
   'unhandledRejection',
   'rejectionHandled',
   'multipleResolves',
   'warning',
 ]
+const EVENTS = new Set(EVENTS_ARR)

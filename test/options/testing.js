@@ -12,11 +12,11 @@ removeProcessListeners()
 
 // Ava handling of rejectionHandled is not predictable, i.e. make tests
 // randomly fail
-const shouldSkip = function({ runner, eventName }) {
+const shouldSkip = function ({ runner, eventName }) {
   return runner === 'ava' && eventName === 'rejectionHandled'
 }
 
-const callRunner = async function({
+const callRunner = async function ({
   testing,
   command,
   env,
@@ -34,7 +34,7 @@ const callRunner = async function({
   return returnValue
 }
 
-const getHelperFile = function({ testing, register }) {
+const getHelperFile = function ({ testing, register }) {
   const helperDir = testing === 'ava' ? __dirname : HELPER_DIR
   const filename = register ? 'register' : 'regular'
   return `${helperDir}/${testing}/${filename}.js`

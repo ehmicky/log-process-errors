@@ -55,6 +55,7 @@
     "figures": "^3.0.0",
     "filter-obj": "^2.0.1",
     "jest-validate": "^24.9.0",
+    "map-obj": "^4.1.0",
     "moize": "^5.4.4",
     "supports-color": "^7.1.0"
   },

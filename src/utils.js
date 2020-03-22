@@ -1,10 +1,8 @@
+import mapObj from 'map-obj'
+
 // Like Lodash mapValues()
 export const mapValues = function (object, mapper) {
-  const pairs = Object.entries(object).map(([key, value]) => [
-    key,
-    mapper(value, key),
-  ])
-  return Object.fromEntries(pairs)
+  return mapObj(object, (key, value) => [key, mapper(value, key)])
 }
 
 // Like Lodash result(), but faster

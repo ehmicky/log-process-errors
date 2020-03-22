@@ -12,7 +12,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 removeProcessListeners()
 
 each(EVENTS, ({ title }, { eventName, emit }) => {
-  test.serial(`should colorize the error | ${title}`, async t => {
+  test.serial(`should colorize the error | ${title}`, async (t) => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emit()
@@ -29,7 +29,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
 each(EVENTS, [true, false], ({ title }, { eventName, emit }, colors) => {
   test.serial(
     `should allow enabling/disabling colorizing the error | ${title}`,
-    async t => {
+    async (t) => {
       const { stopLogging, log } = startLogging({
         log: 'spy',
         colors,

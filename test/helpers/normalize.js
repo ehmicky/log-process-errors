@@ -2,7 +2,7 @@ import execa from 'execa'
 import stripAnsi from 'strip-ansi'
 
 // Call process and normalize its output for testing
-export const normalizeCall = async function(input, opts) {
+export const normalizeCall = async function (input, opts) {
   const { stdout, stderr, exitCode } = await execa.command(input, {
     reject: false,
     ...opts,
@@ -14,7 +14,7 @@ export const normalizeCall = async function(input, opts) {
 }
 
 // Normalize console messages for testing
-export const normalizeMessage = function(message, { colors = true } = {}) {
+export const normalizeMessage = function (message, { colors = true } = {}) {
   // Windows does not use colors on CI
   const messageA = colors ? message : stripAnsi(message)
   const messageB = messageA.trim()
@@ -22,7 +22,7 @@ export const normalizeMessage = function(message, { colors = true } = {}) {
   return messageC
 }
 
-const replacePart = function(message, [before, after]) {
+const replacePart = function (message, [before, after]) {
   return message.replace(before, after)
 }
 

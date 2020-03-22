@@ -4,7 +4,7 @@ import logProcessErrors from '../../src/main.js'
 import { mapValues } from '../../src/utils.js'
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
-export const startLogging = function({ eventName, log, level, ...opts } = {}) {
+export const startLogging = function ({ eventName, log, level, ...opts } = {}) {
   const logA = getLog({ log })
   const levelA = getLevel({ level, eventName })
 
@@ -18,7 +18,7 @@ export const startLogging = function({ eventName, log, level, ...opts } = {}) {
 }
 
 // Get `opts.log()`
-const getLog = function({ log }) {
+const getLog = function ({ log }) {
   if (log === 'default') {
     return
   }
@@ -35,20 +35,20 @@ const getLog = function({ log }) {
 }
 
 // eslint-disable-next-line no-empty-function
-const noop = function() {}
+const noop = function () {}
 
 // If `eventName` is specified, only print those events
-const getLevel = function({ level, eventName }) {
+const getLevel = function ({ level, eventName }) {
   if (eventName === undefined) {
     return level
   }
 
   const levelA = level === undefined ? { default: 'default' } : level
 
-  return mapValues(levelA, levelB => onlyEvent.bind(null, levelB, eventName))
+  return mapValues(levelA, (levelB) => onlyEvent.bind(null, levelB, eventName))
 }
 
-const onlyEvent = function(level, eventName, error) {
+const onlyEvent = function (level, eventName, error) {
   if (error.name.toLowerCase() !== eventName.toLowerCase()) {
     return 'silent'
   }
@@ -60,7 +60,7 @@ const onlyEvent = function(level, eventName, error) {
   return level(error)
 }
 
-export const startLoggingNoOpts = function() {
+export const startLoggingNoOpts = function () {
   const stopLogging = logProcessErrors()
   return { stopLogging }
 }

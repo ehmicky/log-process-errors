@@ -6,7 +6,7 @@ import filterObj from 'filter-obj'
 import { result, mapValues } from './utils.js'
 
 // Retrieve error's log level
-export const getLevel = function({ opts, name, error }) {
+export const getLevel = function ({ opts, name, error }) {
   const level = result(opts.level[name], error)
 
   if (level === 'default' || level === undefined) {
@@ -27,7 +27,7 @@ export const getLevel = function({ opts, name, error }) {
 }
 
 // Apply `opts.level.default` and default values to `opts.level`
-export const applyDefaultLevels = function({
+export const applyDefaultLevels = function ({
   opts: { level: { default: defaultLevel, ...level } = {} },
 }) {
   const levelA = filterObj(level, isDefined)
@@ -40,25 +40,25 @@ export const applyDefaultLevels = function({
   return { ...defaultLevels, ...levelA }
 }
 
-const isDefined = function(key, value) {
+const isDefined = function (key, value) {
   return value !== undefined
 }
 
 // Use during options validation
-export const getExampleLevels = function() {
+export const getExampleLevels = function () {
   return mapValues(DEFAULT_LEVEL, getExampleLevel)
 }
 
-const getExampleLevel = function(level) {
+const getExampleLevel = function (level) {
   // eslint-disable-next-line no-empty-function
   return multipleValidOptions(level, () => {})
 }
 
-export const validateLevels = function({ level }) {
+export const validateLevels = function ({ level }) {
   Object.entries(level).forEach(validateLevel)
 }
 
-const validateLevel = function([name, level]) {
+const validateLevel = function ([name, level]) {
   if (isValidLevel({ level })) {
     return
   }
@@ -70,7 +70,7 @@ const validateLevel = function([name, level]) {
   )
 }
 
-const isValidLevel = function({ level }) {
+const isValidLevel = function ({ level }) {
   return (
     LEVELS.includes(level) || level === undefined || typeof level === 'function'
   )

@@ -1,7 +1,7 @@
 import filterObj from 'filter-obj'
 
 // Retrieve `event` object representing the current event information
-export const getEvent = async function({
+export const getEvent = async function ({
   name,
   promise,
   value,
@@ -21,7 +21,7 @@ export const getEvent = async function({
 }
 
 // Retrieve promise's resolved/rejected state and value.
-const parsePromise = async function({ name, promise, value }) {
+const parsePromise = async function ({ name, promise, value }) {
   if (NO_PROMISE_EVENTS.includes(name)) {
     return { value }
   }
@@ -44,7 +44,7 @@ const parsePromise = async function({ name, promise, value }) {
 const NO_PROMISE_EVENTS = ['uncaughtException', 'warning', 'unhandledRejection']
 
 // `rejectionHandled` and `multipleResolves` otherwise use `await promise`
-const getPromiseValue = async function({ promise }) {
+const getPromiseValue = async function ({ promise }) {
   try {
     return { rejected: false, value: await promise }
   } catch (error) {
@@ -52,6 +52,6 @@ const getPromiseValue = async function({ promise }) {
   }
 }
 
-const isDefined = function(key, value) {
+const isDefined = function (key, value) {
   return value !== undefined
 }

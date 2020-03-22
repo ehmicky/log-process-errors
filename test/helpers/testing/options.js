@@ -2,7 +2,7 @@ import { env } from 'process'
 
 const { OPTIONS } = env
 
-export const getOptions = function() {
+export const getOptions = function () {
   if (OPTIONS === undefined) {
     return {}
   }

@@ -9,7 +9,7 @@ import { rejectionHandled } from './rejection_handled.js'
 import { multipleResolves } from './multiple_resolves.js'
 import { warning } from './warning.js'
 
-const getEventsMap = function() {
+const getEventsMap = function () {
   return mapValues(EVENTS_SIMPLE_MAP, getEvent)
 }
 
@@ -21,14 +21,14 @@ const EVENTS_SIMPLE_MAP = {
   warning,
 }
 
-const getEvent = function(emit, eventName) {
+const getEvent = function (emit, eventName) {
   const emitMany = emitEvents.bind(null, emit)
   const defaultLevel = DEFAULT_LEVEL[eventName]
   return { title: eventName, eventName, emit, emitMany, defaultLevel }
 }
 
 // Emit several emits in parallel
-export const emitEvents = async function(emit, maxEvents) {
+export const emitEvents = async function (emit, maxEvents) {
   const array = Array.from({ length: maxEvents }, emit)
   await Promise.all(array)
 }

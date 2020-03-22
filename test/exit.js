@@ -19,42 +19,45 @@ const pNextTick = promisify(process.nextTick)
 removeProcessListeners()
 
 // Stub `process.exit()`
-const stubProcessExit = function() {
+const stubProcessExit = function () {
   const clock = fakeTimers.install({ toFake: ['setTimeout'] })
   const processExit = sinon.stub(process, 'exit')
   return { clock, processExit }
 }
 
-const unstubProcessExit = function({ clock, processExit }) {
+const unstubProcessExit = function ({ clock, processExit }) {
   processExit.restore()
   clock.uninstall()
 }
 
-const emitAndWait = async function(timeout, { clock, emit }) {
+const emitAndWait = async function (timeout, { clock, emit }) {
   await emit()
   clock.tick(timeout)
 }
 
 each(EVENTS, ({ title }, { eventName, emit }) => {
-  test.serial(`should process.exit(1) if inside exitOn | ${title}`, async t => {
-    const { clock, processExit } = stubProcessExit()
+  test.serial(
+    `should process.exit(1) if inside exitOn | ${title}`,
+    async (t) => {
+      const { clock, processExit } = stubProcessExit()
 
-    const exitOn = [eventName]
-    const { stopLogging } = startLogging({ exitOn, eventName })
+      const exitOn = [eventName]
+      const { stopLogging } = startLogging({ exitOn, eventName })
 
-    await emitAndWait(EXIT_TIMEOUT, { clock, emit })
+      await emitAndWait(EXIT_TIMEOUT, { clock, emit })
 
-    t.is(processExit.callCount, 1)
-    t.is(processExit.firstCall.args[0], EXIT_STATUS)
+      t.is(processExit.callCount, 1)
+      t.is(processExit.firstCall.args[0], EXIT_STATUS)
 
-    stopLogging()
+      stopLogging()
 
-    unstubProcessExit({ clock, processExit })
-  })
+      unstubProcessExit({ clock, processExit })
+    },
+  )
 
   test.serial(
     `should not process.exit(1) if not inside exitOn | ${title}`,
-    async t => {
+    async (t) => {
       const { clock, processExit } = stubProcessExit()
 
       const exitOn = []
@@ -70,7 +73,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
     },
   )
 
-  test.serial(`should delay process.exit(1) | ${title}`, async t => {
+  test.serial(`should delay process.exit(1) | ${title}`, async (t) => {
     const { clock, processExit } = stubProcessExit()
 
     const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
@@ -90,13 +93,13 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(
     `should delay process.exit(1) with async opts.log() | ${title}`,
     // eslint-disable-next-line max-statements
-    async t => {
+    async (t) => {
       const { clock, processExit } = stubProcessExit()
 
       // eslint-disable-next-line fp/no-let, init-declarations
       let resolveA
       // eslint-disable-next-line promise/avoid-new
-      const promise = new Promise(resolve => {
+      const promise = new Promise((resolve) => {
         // eslint-disable-next-line fp/no-mutation
         resolveA = resolve
       })

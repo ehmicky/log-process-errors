@@ -9,7 +9,7 @@ import { emitLimitedWarning } from './limit.js'
 import * as EVENTS from './handle/main.js'
 
 // Add event handling for all process-related errors
-const logProcessErrors = function(opts) {
+const logProcessErrors = function (opts) {
   const optsA = getOptions({ opts })
 
   removeWarningListener()
@@ -21,13 +21,13 @@ const logProcessErrors = function(opts) {
   return stopLogProcessErrors
 }
 
-const addListeners = function({ opts }) {
+const addListeners = function ({ opts }) {
   return Object.entries(EVENTS).map(([name, eventFunc]) =>
     addListener({ opts, name, eventFunc }),
   )
 }
 
-const addListener = function({ opts, name, eventFunc }) {
+const addListener = function ({ opts, name, eventFunc }) {
   // `previousEvents` is event-name-specific so that if events of a given event
   // stopped being emitted, others still are.
   // `previousEvents` can take up some memory, but it should be cleaned up
@@ -48,12 +48,12 @@ const addListener = function({ opts, name, eventFunc }) {
 }
 
 // Remove all event handlers and restore previous `warning` listeners
-const stopLogging = function(listeners) {
+const stopLogging = function (listeners) {
   listeners.forEach(removeListener)
   restoreWarningListener()
 }
 
-const removeListener = function({ eventListener, name }) {
+const removeListener = function ({ eventListener, name }) {
   process.off(name, eventListener)
 }
 

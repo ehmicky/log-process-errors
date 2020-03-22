@@ -13,7 +13,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 removeProcessListeners()
 
 each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
-  test.serial(`should limit events | ${title}`, async t => {
+  test.serial(`should limit events | ${title}`, async (t) => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
@@ -36,7 +36,7 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
 
   test.serial(
     `should emit warning when limiting events | ${title}`,
-    async t => {
+    async (t) => {
       stubStackTraceRandom()
 
       const { stopLogging, log } = startLogging({
@@ -60,7 +60,7 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
 
   test.serial(
     `should only emit warning once when limiting events | ${title}`,
-    async t => {
+    async (t) => {
       stubStackTraceRandom()
 
       const { stopLogging, log } = startLogging({
@@ -85,13 +85,13 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
   )
 })
 
-const onlyLimited = function(error) {
+const onlyLimited = function (error) {
   if (!isLimitedWarning(error)) {
     return 'silent'
   }
 }
 
-const onlyNotLimitedWarning = function(eventName, error) {
+const onlyNotLimitedWarning = function (eventName, error) {
   if (
     isLimitedWarning(error) ||
     error.name.toLowerCase() !== eventName.toLowerCase()
@@ -100,6 +100,6 @@ const onlyNotLimitedWarning = function(eventName, error) {
   }
 }
 
-const isLimitedWarning = function({ name, message }) {
+const isLimitedWarning = function ({ name, message }) {
   return name === 'Warning' && message.includes('LogProcessErrors')
 }

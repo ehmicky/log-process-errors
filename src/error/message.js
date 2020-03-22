@@ -1,19 +1,19 @@
 import { inspect } from 'util'
 
 // Retrieve the `error.message` using the `event` information
-export const getMessage = function({ event, name }) {
+export const getMessage = function ({ event, name }) {
   return MESSAGES[name](event)
 }
 
-const uncaughtException = function({ value }) {
+const uncaughtException = function ({ value }) {
   return `an exception was thrown but not caught: ${serialize(value)}`
 }
 
-const warning = function({ value, value: { code, detail } }) {
+const warning = function ({ value, value: { code, detail } }) {
   return `${serialize(value)}${getWarningDetails({ code, detail })}`
 }
 
-const getWarningDetails = function({ code, detail = '' }) {
+const getWarningDetails = function ({ code, detail = '' }) {
   if (code !== undefined) {
     return `\n[${code}] ${detail}`
   }
@@ -25,17 +25,17 @@ const getWarningDetails = function({ code, detail = '' }) {
   return ''
 }
 
-const unhandledRejection = function({ value }) {
+const unhandledRejection = function ({ value }) {
   return `a promise was rejected but not handled: ${serialize(value)}`
 }
 
-const rejectionHandled = function({ value }) {
+const rejectionHandled = function ({ value }) {
   return `a promise was rejected and handled too late: ${serialize(value)}`
 }
 
 // The default level is `event` because it does not always indicate an error:
 // https://github.com/nodejs/node/issues/24321
-const multipleResolves = function({
+const multipleResolves = function ({
   rejected,
   value,
   nextRejected,
@@ -66,7 +66,7 @@ const MESSAGES = {
 
 // We use `util.inspect()` instead of `JSON.stringify()` or a third-party
 // library because it has nice output.
-const serialize = function(value) {
+const serialize = function (value) {
   // Do not print `Error.stack`, but print `Error.name` + `Error.message`
   if (value instanceof Error) {
     return String(value)

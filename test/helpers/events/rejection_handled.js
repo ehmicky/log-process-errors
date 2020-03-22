@@ -3,7 +3,7 @@ import { promisify } from 'util'
 const pSetImmediate = promisify(setImmediate)
 
 // Emit a `rejectionHandled` event
-export const rejectionHandled = async function() {
+export const rejectionHandled = async function () {
   const promise = Promise.reject(new Error('message'))
 
   await pSetImmediate()

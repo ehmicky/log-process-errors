@@ -27,7 +27,7 @@ logProcessErrors({
 })
 
 // Skip deprecation warnings
-const shouldSkip = function({ message }) {
+const shouldSkip = function ({ message }) {
   return message.includes('Deprecation')
 }
 

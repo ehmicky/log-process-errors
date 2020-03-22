@@ -6,7 +6,7 @@ import process from 'process'
 // Alternative ways to do it would be to ask users to pass `--no-warnings`
 // CLI flag or `NODE_NO_WARNINGS=1` environment variable. But this is not as
 // developer-friendly.
-export const removeWarningListener = function() {
+export const removeWarningListener = function () {
   if (warningListener === undefined) {
     return
   }
@@ -16,7 +16,7 @@ export const removeWarningListener = function() {
 }
 
 // When this module is undone, Node.js default `warning` listener is restored
-export const restoreWarningListener = function() {
+export const restoreWarningListener = function () {
   if (warningListener === undefined) {
     return
   }
@@ -37,11 +37,11 @@ export const restoreWarningListener = function() {
 // This needs be done at load time to ensure:
 //  - we are not catching user-defined listeners
 //  - this is idempotent, allowing this module to be called several times
-const getWarningListener = function() {
+const getWarningListener = function () {
   return getWarningListeners()[0]
 }
 
-const getWarningListeners = function() {
+const getWarningListeners = function () {
   return process.listeners('warning')
 }
 

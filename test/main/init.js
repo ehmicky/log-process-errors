@@ -10,18 +10,18 @@ import { removeProcessListeners } from '../helpers/remove.js'
 
 removeProcessListeners()
 
-const addProcessHandler = function(eventName) {
+const addProcessHandler = function (eventName) {
   const processHandler = sinon.spy()
   process.on(eventName, processHandler)
   return processHandler
 }
 
-const normalizeArgs = function([error]) {
+const normalizeArgs = function ([error]) {
   return String(error)
 }
 
 each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
-  test.serial(`should work with no options | ${title}`, async t => {
+  test.serial(`should work with no options | ${title}`, async (t) => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, defaultLevel)
     const { stopLogging } = startLoggingNoOpts()
@@ -38,7 +38,7 @@ each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
 
   test.serial(
     `should keep existing process event handlers | ${title}`,
-    async t => {
+    async (t) => {
       if (eventName === 'warning') {
         return t.pass()
       }
@@ -59,7 +59,7 @@ each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
     },
   )
 
-  test.serial(`should allow disabling logging | ${title}`, async t => {
+  test.serial(`should allow disabling logging | ${title}`, async (t) => {
     const processHandler = addProcessHandler(eventName)
 
     const { stopLogging, log } = startLogging({ log: 'spy' })

@@ -11,13 +11,13 @@ const { name } = require('../package.json')
 const originalRequire = Module.prototype.require
 
 // eslint-disable-next-line fp/no-mutation, func-names
-Module.prototype.require = function(moduleName, ...args) {
+Module.prototype.require = function (moduleName, ...args) {
   const moduleNameA = getMockedName(moduleName)
   // eslint-disable-next-line fp/no-this
   return originalRequire.call(this, moduleNameA, ...args)
 }
 
-const getMockedName = function(moduleName) {
+const getMockedName = function (moduleName) {
   if (moduleName !== name && !moduleName.startsWith(`${name}/`)) {
     return moduleName
   }

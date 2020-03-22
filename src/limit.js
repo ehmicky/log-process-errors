@@ -11,7 +11,7 @@ import { emitWarning } from 'process'
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `[next]Value` is not an `Error` instance and contain dynamic
 //    content.
-export const isLimited = function({
+export const isLimited = function ({
   previousEvents,
   mEmitLimitedWarning,
   name,
@@ -31,18 +31,18 @@ export const isLimited = function({
 }
 
 // Notify that limit has been reached with a `warning` event
-export const emitLimitedWarning = function(name) {
+export const emitLimitedWarning = function (name) {
   emitWarning(ERROR_MESSAGE(name), ERROR_NAME, ERROR_CODE)
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function({ name, value = {} }) {
+const isLimitedWarning = function ({ name, value = {} }) {
   return (
     name === 'warning' && value.name === ERROR_NAME && value.code === ERROR_CODE
   )
 }
 
-const ERROR_MESSAGE = name =>
+const ERROR_MESSAGE = (name) =>
   `Cannot log more than ${MAX_EVENTS} '${name}' until process is restarted`
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'

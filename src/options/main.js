@@ -13,7 +13,7 @@ import { addChalk, DEFAULT_COLORS } from '../colors.js'
 import { applyTesting, getExampleTesting } from './testing.js'
 
 // Validate options and assign default options
-export const getOptions = function({ opts = {} }) {
+export const getOptions = function ({ opts = {} }) {
   const optsA = filterObj(opts, isDefined)
 
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
@@ -27,7 +27,7 @@ export const getOptions = function({ opts = {} }) {
   return optsD
 }
 
-const isDefined = function(key, value) {
+const isDefined = function (key, value) {
   return value !== undefined
 }
 
@@ -39,7 +39,7 @@ const DEFAULT_OPTS = {
 
 // `validate-jest` prints the function body
 // eslint-disable-next-line no-empty-function
-const exampleFunction = function() {}
+const exampleFunction = function () {}
 
 const EXAMPLE_OPTS = {
   ...DEFAULT_OPTS,
@@ -49,7 +49,7 @@ const EXAMPLE_OPTS = {
 }
 
 // Validation beyond what `jest-validate` can do
-const validateOptions = function({ exitOn, level = {} }) {
+const validateOptions = function ({ exitOn, level = {} }) {
   validateLevels({ level })
   validateExitOn({ exitOn })
 }

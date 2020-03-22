@@ -16,7 +16,7 @@ const {
   warning: { emit },
 } = EVENTS_MAP
 
-test.serial('[warning] should disable default event handlers', async t => {
+test.serial('[warning] should disable default event handlers', async (t) => {
   // eslint-disable-next-line no-restricted-globals
   const stub = sinon.stub(console, 'error')
 
@@ -36,7 +36,7 @@ test.serial('[warning] should disable default event handlers', async t => {
 
 test.serial(
   '[warning] should multiply restore default event handlers',
-  async t => {
+  async (t) => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, 'error')
 
@@ -66,7 +66,7 @@ each(
   EVENTS,
   ['--no-warnings', ...UNHANDLED_FLAGS],
   ({ title }, { eventName }, flag) => {
-    test(`should work with warnings-related CLI flags | ${title}`, async t => {
+    test(`should work with warnings-related CLI flags | ${title}`, async (t) => {
       t.snapshot(
         await normalizeCall(`node ${flag} ${LOADERS}/simple.js ${eventName}`, {
           colors: false,

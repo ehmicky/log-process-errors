@@ -12,7 +12,7 @@ const HELPER_DIR = `${__dirname}/../helpers/testing`
 
 removeProcessListeners()
 
-const shouldSkip = function({ runner, eventName }) {
+const shouldSkip = function ({ runner, eventName }) {
   return (
     isAvaRejectionHandled({ runner, eventName }) ||
     isOldNodeTap({ runner, eventName })
@@ -21,7 +21,7 @@ const shouldSkip = function({ runner, eventName }) {
 
 // Ava handling of rejectionHandled is not predictable, i.e. make tests
 // randomly fail
-const isAvaRejectionHandled = function({ runner, eventName }) {
+const isAvaRejectionHandled = function ({ runner, eventName }) {
   return runner === 'ava' && eventName === 'rejectionHandled'
 }
 
@@ -29,7 +29,7 @@ const isAvaRejectionHandled = function({ runner, eventName }) {
 // `unhandledRejection`. It fails but only locally (not in CI) and only for
 // Node 8. Considering `node-tap` is doing lots of monkey-patching, we give up
 // on testing that combination.
-const isOldNodeTap = function({ runner, eventName }) {
+const isOldNodeTap = function ({ runner, eventName }) {
   return (
     runner.startsWith('node-tap') &&
     ['rejectionHandled', 'unhandledRejection'].includes(eventName) &&
@@ -37,7 +37,7 @@ const isOldNodeTap = function({ runner, eventName }) {
   )
 }
 
-const callRunner = async function({
+const callRunner = async function ({
   testing,
   command,
   env,
@@ -55,7 +55,7 @@ const callRunner = async function({
   return returnValue
 }
 
-const getHelperFile = function({ testing, register }) {
+const getHelperFile = function ({ testing, register }) {
   const helperDir = testing === 'ava' ? __dirname : HELPER_DIR
   const filename = register ? 'register' : 'regular'
   return `${helperDir}/${testing}/${filename}.js`
@@ -71,13 +71,13 @@ each(
       return
     }
 
-    test(`should make tests fails | ${title}`, async t => {
+    test(`should make tests fails | ${title}`, async (t) => {
       const returnValue = await callRunner({ testing, command, env, eventName })
 
       t.snapshot(returnValue)
     })
 
-    test(`should allow overriding 'opts.level' | ${title}`, async t => {
+    test(`should allow overriding 'opts.level' | ${title}`, async (t) => {
       const returnValue = await callRunner({
         testing,
         command,
@@ -89,7 +89,7 @@ each(
       t.snapshot(returnValue)
     })
 
-    test(`should work with the -r flag | ${title}`, async t => {
+    test(`should work with the -r flag | ${title}`, async (t) => {
       const returnValue = await callRunner({
         testing,
         command,

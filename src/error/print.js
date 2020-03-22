@@ -1,7 +1,7 @@
 import { circleFilled, info, warning, cross } from 'figures'
 
 // Pretty-print error on the console (which uses `util.inspect()`)
-export const printError = function({
+export const printError = function ({
   opts: {
     chalk,
     chalk: { dim },
@@ -17,7 +17,7 @@ export const printError = function({
 }
 
 // Add color, sign and `event.name` to first message line
-const getHeader = function({
+const getHeader = function ({
   level,
   name,
   message,
@@ -33,7 +33,7 @@ const getHeader = function({
   return headerA
 }
 
-const splitMessage = function({ message }) {
+const splitMessage = function ({ message }) {
   const [messageA, ...details] = message.split(':')
   const detailsA = details.join(':')
   return { message: messageA, details: detailsA }

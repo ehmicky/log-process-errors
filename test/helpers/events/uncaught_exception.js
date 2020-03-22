@@ -4,7 +4,7 @@ import { promisify } from 'util'
 const pSetImmediate = promisify(setImmediate)
 
 // Emit an `uncaughtException` event
-export const uncaughtException = async function() {
+export const uncaughtException = async function () {
   nextTick(() => {
     const error = new Error('message')
     // `error.stack` is instantiated lazily otherwise.

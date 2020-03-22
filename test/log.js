@@ -12,7 +12,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-const snapshotArgs = function([error, level]) {
+const snapshotArgs = function ([error, level]) {
   return [
     normalizeMessage(inspect(error), { colors: false }),
     String(error),
@@ -21,7 +21,7 @@ const snapshotArgs = function([error, level]) {
 }
 
 each(EVENTS, ({ title }, { eventName, emit }) => {
-  test.serial(`should fire opts.log() | ${title}`, async t => {
+  test.serial(`should fire opts.log() | ${title}`, async (t) => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 
     t.true(log.notCalled)
@@ -33,7 +33,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
     stopLogging()
   })
 
-  test.serial(`should fire opts.log() once | ${title}`, async t => {
+  test.serial(`should fire opts.log() once | ${title}`, async (t) => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     t.true(log.notCalled)
@@ -45,7 +45,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
     stopLogging()
   })
 
-  test.serial(`should fire opts.log() with arguments | ${title}`, async t => {
+  test.serial(`should fire opts.log() with arguments | ${title}`, async (t) => {
     const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
     await emit({ all: true })
@@ -60,7 +60,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
 })
 
 each(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {
-  test.serial(`should log on the console by default | ${title}`, async t => {
+  test.serial(`should log on the console by default | ${title}`, async (t) => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, level)
 

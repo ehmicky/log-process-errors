@@ -6,7 +6,4 @@ import { EVENTS_MAP } from '../events/main.js'
 const stopLogging = logProcessErrors()
 
 const [, , eventName] = argv
-EVENTS_MAP[eventName]
-  .emit()
-  .then(stopLogging)
-  .catch(stopLogging)
+EVENTS_MAP[eventName].emit().then(stopLogging).catch(stopLogging)

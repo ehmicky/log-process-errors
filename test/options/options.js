@@ -8,7 +8,7 @@ import { removeProcessListeners } from '../helpers/remove.js'
 
 removeProcessListeners()
 
-const normalizeJestValidate = function(message) {
+const normalizeJestValidate = function (message) {
   const messageA = normalizeMessage(message, { colors: false })
   const messageB = messageA.replace(EXAMPLE_REGEXP, '')
   return messageB
@@ -33,7 +33,7 @@ each(
     { testing: 'ava', log() {} },
   ],
   ({ title }, options) => {
-    test(`should validate options | ${title}`, t => {
+    test(`should validate options | ${title}`, (t) => {
       const error = t.throws(startLogging.bind(null, options))
 
       t.snapshot(normalizeJestValidate(error.message))
@@ -44,7 +44,7 @@ each(
 each(
   [{ unknown: true }, { level: { unknown: 'error' } }],
   ({ title }, options) => {
-    test(`should warn on options | ${title}`, t => {
+    test(`should warn on options | ${title}`, (t) => {
       // eslint-disable-next-line no-restricted-globals
       const stub = sinon.stub(console, 'warn')
 

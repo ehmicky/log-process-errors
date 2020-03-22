@@ -5,14 +5,14 @@
 const { emitWarning } = require('process')
 
 // Emit an `uncaughtException` event
-const uncaughtException = function() {
+const uncaughtException = function () {
   setTimeout(() => {
     throw new Error('File not found')
   }, 0)
 }
 
 // Emit `unhandledRejection` and `rejectionHandled` events
-const unhandledRejection = function() {
+const unhandledRejection = function () {
   const promise = Promise.reject(new Error('Invalid permission'))
   setTimeout(() => {
     // eslint-disable-next-line no-empty-function, max-nested-callbacks
@@ -21,7 +21,7 @@ const unhandledRejection = function() {
 }
 
 // Emit a `warning` event
-const warning = function() {
+const warning = function () {
   emitWarning('Invalid option', {
     type: 'DeprecationWarning',
     code: 'DeprecatedMethod',
@@ -30,7 +30,7 @@ const warning = function() {
 }
 
 // Emit a `multipleResolves` event
-const multipleResolves = function() {
+const multipleResolves = function () {
   // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve, reject) => {
     resolve({ success: true })

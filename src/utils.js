@@ -1,5 +1,5 @@
 // Like Lodash mapValues()
-export const mapValues = function(object, mapper) {
+export const mapValues = function (object, mapper) {
   const pairs = Object.entries(object).map(([key, value]) => [
     key,
     mapper(value, key),
@@ -8,7 +8,7 @@ export const mapValues = function(object, mapper) {
 }
 
 // Like Lodash result(), but faster
-export const result = function(val, ...args) {
+export const result = function (val, ...args) {
   if (typeof val !== 'function') {
     return val
   }

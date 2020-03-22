@@ -13,11 +13,11 @@ const { eventName } = getOptions()
 //    where it should be a noop (`OPTIONS` is `undefined`)
 if (eventName === undefined) {
   // Otherwise `ava` complains
-  test('Dummy test', t => {
+  test('Dummy test', (t) => {
     t.pass()
   })
 } else {
-  test(`should make tests fail on ${eventName}`, t => {
+  test(`should make tests fail on ${eventName}`, (t) => {
     // eslint-disable-next-line no-empty-function
     EVENTS_MAP[eventName].emit().catch(() => {})
 

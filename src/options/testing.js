@@ -3,7 +3,7 @@ import { multipleValidOptions } from 'jest-validate'
 import { RUNNERS } from './runners.js'
 
 // Apply `options.testing` which is basically a preset of options.
-export const applyTesting = function({ opts, opts: { level, testing } }) {
+export const applyTesting = function ({ opts, opts: { level, testing } }) {
   if (testing === undefined) {
     return opts
   }
@@ -21,7 +21,7 @@ export const applyTesting = function({ opts, opts: { level, testing } }) {
   }
 }
 
-const validateTesting = function({ testOpts, testing }) {
+const validateTesting = function ({ testOpts, testing }) {
   if (testOpts !== undefined) {
     return
   }
@@ -34,10 +34,10 @@ const validateTesting = function({ testOpts, testing }) {
 
 // Presets override other options. We make sure users do not assume their
 // options are used when they are actually overriden.
-const validateTestOpts = function({ opts, testOpts, testing }) {
+const validateTestOpts = function ({ opts, testOpts, testing }) {
   const forbiddenOpts = Object.keys(testOpts).filter(isForbiddenOpt)
 
-  const invalidOpt = Object.keys(opts).find(optName =>
+  const invalidOpt = Object.keys(opts).find((optName) =>
     forbiddenOpts.includes(optName),
   )
 
@@ -51,13 +51,13 @@ const validateTestOpts = function({ opts, testOpts, testing }) {
 }
 
 // We allow overriding preset's `level` so users can filter events.
-const isForbiddenOpt = function(optName) {
+const isForbiddenOpt = function (optName) {
   return !ALLOWED_OPTS.includes(optName)
 }
 
 const ALLOWED_OPTS = ['level']
 
 // Use during options validation
-export const getExampleTesting = function() {
+export const getExampleTesting = function () {
   return multipleValidOptions(...Object.keys(RUNNERS))
 }

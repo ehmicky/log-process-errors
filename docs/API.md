@@ -147,7 +147,7 @@ logProcessErrors({ testing: 'ava' })
 const test = require('ava')
 
 // Tests will fail because a warning is triggered
-test('Example test', t => {
+test('Example test', (t) => {
   process.emitWarning('Example warning')
   t.pass()
 })
@@ -165,7 +165,7 @@ require('log-process-errors/build/register/ava')
 const test = require('ava')
 
 // Tests will fail because a warning is triggered
-test('Example test', t => {
+test('Example test', (t) => {
   process.emitWarning('Example warning')
   t.pass()
 })
@@ -191,7 +191,7 @@ logProcessErrors({ testing: 'ava', level: { warning: 'silent' } })
 const test = require('ava')
 
 // Tests will not fail because warnings are `silent`
-test('Example test', t => {
+test('Example test', (t) => {
   process.emitWarning('Example warning')
   t.pass()
 })

@@ -7,7 +7,7 @@ import { exitProcess } from '../exit.js'
 import { getEvent } from './event.js'
 
 // Generic event handler for all events.
-export const handleEvent = async function({
+export const handleEvent = async function ({
   opts,
   name,
   previousEvents,
@@ -38,7 +38,7 @@ export const handleEvent = async function({
   await exitProcess({ name, opts })
 }
 
-const logEvent = async function({ opts, name, event }) {
+const logEvent = async function ({ opts, name, event }) {
   const { error, stack } = getError({ name, event })
 
   const level = getLevel({ opts, name, error })

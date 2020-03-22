@@ -1,3 +1,9 @@
+# 6.0.1
+
+## Dependency
+
+- Remove unused dependency `core-js`
+
 # 6.0.0
 
 ## Breaking changes

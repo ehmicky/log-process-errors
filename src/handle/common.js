@@ -1,8 +1,8 @@
-import { isLimited } from '../limit.js'
-import { isRepeated } from '../repeat.js'
-import { getLevel } from '../level.js'
 import { getError, addErrorPrint } from '../error/main.js'
 import { exitProcess } from '../exit.js'
+import { getLevel } from '../level.js'
+import { isLimited } from '../limit.js'
+import { isRepeated } from '../repeat.js'
 
 import { getEvent } from './event.js'
 

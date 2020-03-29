@@ -1,12 +1,12 @@
 import { inspect } from 'util'
 
-import sinon from 'sinon'
 import test from 'ava'
+import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events/main.js'
-import { LEVELS } from './helpers/level.js'
 import { startLogging } from './helpers/init.js'
+import { LEVELS } from './helpers/level.js'
 import { normalizeMessage } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 

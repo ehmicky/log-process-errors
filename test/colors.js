@@ -1,9 +1,9 @@
 import { inspect } from 'util'
 
 import test from 'ava'
-import { each } from 'test-each'
 import hasAnsi from 'has-ansi'
 import supportsColor from 'supports-color'
+import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'

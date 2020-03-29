@@ -3,10 +3,10 @@
 import { DEFAULT_LEVEL } from '../../../src/level.js'
 import { mapValues } from '../../../src/utils.js'
 
+import { multipleResolves } from './multiple_resolves.js'
+import { rejectionHandled } from './rejection_handled.js'
 import { uncaughtException } from './uncaught_exception.js'
 import { unhandledRejection } from './unhandled_rejection.js'
-import { rejectionHandled } from './rejection_handled.js'
-import { multipleResolves } from './multiple_resolves.js'
 import { warning } from './warning.js'
 
 const getEventsMap = function () {

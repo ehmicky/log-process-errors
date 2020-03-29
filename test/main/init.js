@@ -1,8 +1,8 @@
 import process from 'process'
 
 import test from 'ava'
-import { each } from 'test-each'
 import sinon from 'sinon'
+import { each } from 'test-each'
 
 import { EVENTS } from '../helpers/events/main.js'
 import { startLogging, startLoggingNoOpts } from '../helpers/init.js'

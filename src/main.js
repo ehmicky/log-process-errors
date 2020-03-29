@@ -2,11 +2,11 @@ import process from 'process'
 
 import moize from 'moize'
 
-import { getOptions } from './options/main.js'
-import { removeWarningListener, restoreWarningListener } from './warnings.js'
-import { emitLimitedWarning } from './limit.js'
 // eslint-disable-next-line import/no-namespace
 import * as EVENTS from './handle/main.js'
+import { emitLimitedWarning } from './limit.js'
+import { getOptions } from './options/main.js'
+import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
 // Add event handling for all process-related errors
 const logProcessErrors = function (opts) {

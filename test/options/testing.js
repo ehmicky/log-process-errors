@@ -2,9 +2,9 @@ import test from 'ava'
 import { each } from 'test-each'
 
 import { EVENTS } from '../helpers/events/main.js'
-import { RUNNERS } from '../helpers/testing/runners.js'
 import { normalizeCall } from '../helpers/normalize.js'
 import { removeProcessListeners } from '../helpers/remove.js'
+import { RUNNERS } from '../helpers/testing/runners.js'
 
 const HELPER_DIR = `${__dirname}/../helpers/testing`
 

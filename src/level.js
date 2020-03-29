@@ -1,7 +1,7 @@
 import { emitWarning } from 'process'
 
-import { multipleValidOptions } from 'jest-validate'
 import filterObj from 'filter-obj'
+import { multipleValidOptions } from 'jest-validate'
 
 import { result, mapValues } from './utils.js'
 

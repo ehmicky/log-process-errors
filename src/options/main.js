@@ -1,14 +1,14 @@
-import { validate } from 'jest-validate'
 import filterObj from 'filter-obj'
+import { validate } from 'jest-validate'
 
+import { addChalk, DEFAULT_COLORS } from '../colors.js'
+import { validateExitOn } from '../exit.js'
 import {
   applyDefaultLevels,
   getExampleLevels,
   validateLevels,
 } from '../level.js'
-import { validateExitOn } from '../exit.js'
 import { defaultLog } from '../log.js'
-import { addChalk, DEFAULT_COLORS } from '../colors.js'
 
 import { applyTesting, getExampleTesting } from './testing.js'
 

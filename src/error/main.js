@@ -1,8 +1,8 @@
 import { inspect } from 'util'
 
 import { getMessage } from './message.js'
-import { getStack } from './stack.js'
 import { printError } from './print.js'
+import { getStack } from './stack.js'
 
 const { custom } = inspect
 

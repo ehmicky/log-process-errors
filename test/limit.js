@@ -7,8 +7,8 @@ import { MAX_EVENTS } from '../src/limit.js'
 
 import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
-import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
 import { removeProcessListeners } from './helpers/remove.js'
+import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
 
 removeProcessListeners()
 

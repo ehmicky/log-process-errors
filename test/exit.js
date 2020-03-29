@@ -1,10 +1,10 @@
 import process from 'process'
 import { promisify } from 'util'
 
-import test from 'ava'
-import { each } from 'test-each'
-import sinon from 'sinon'
 import fakeTimers from '@sinonjs/fake-timers'
+import test from 'ava'
+import sinon from 'sinon'
+import { each } from 'test-each'
 
 // Required directly because this is exposed through documentation, but not
 // through code

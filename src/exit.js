@@ -32,8 +32,8 @@ export const exitProcess = function ({ name, opts: { exitOn } }) {
   }, EXIT_TIMEOUT)
 }
 
-export const EXIT_TIMEOUT = 3000
-export const EXIT_STATUS = 1
+const EXIT_TIMEOUT = 3000
+const EXIT_STATUS = 1
 
 export const validateExitOn = function ({ exitOn }) {
   if (exitOn === undefined) {

@@ -47,4 +47,4 @@ const ERROR_MESSAGE = (name) =>
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
 
-export const MAX_EVENTS = 100
+const MAX_EVENTS = 100

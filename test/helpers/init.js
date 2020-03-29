@@ -1,7 +1,7 @@
+import mapObj from 'map-obj'
 import sinon from 'sinon'
 
 import logProcessErrors from '../../src/main.js'
-import { mapValues } from '../../src/utils.js'
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
 export const startLogging = function ({ eventName, log, level, ...opts } = {}) {
@@ -45,7 +45,10 @@ const getLevel = function ({ level, eventName }) {
 
   const levelA = level === undefined ? { default: 'default' } : level
 
-  return mapValues(levelA, (levelB) => onlyEvent.bind(null, levelB, eventName))
+  return mapObj(levelA, (key, levelB) => [
+    key,
+    onlyEvent.bind(null, levelB, eventName),
+  ])
 }
 
 const onlyEvent = function (level, eventName, error) {

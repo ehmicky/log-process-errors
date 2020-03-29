@@ -1,14 +1,12 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-// Required directly because this is exposed through documentation, but not
-// through code
-import { MAX_EVENTS } from '../src/limit.js'
-
 import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
+
+const MAX_EVENTS = 100
 
 removeProcessListeners()
 

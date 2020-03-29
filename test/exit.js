@@ -6,15 +6,14 @@ import test from 'ava'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-// Required directly because this is exposed through documentation, but not
-// through code
-import { EXIT_TIMEOUT, EXIT_STATUS } from '../src/exit.js'
-
 import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 const pNextTick = promisify(process.nextTick)
+
+const EXIT_TIMEOUT = 3000
+const EXIT_STATUS = 1
 
 removeProcessListeners()
 

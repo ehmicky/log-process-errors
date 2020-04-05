@@ -99,7 +99,7 @@ other `require`/`import` statements.
 
 ## log
 
-_Type_: `function(error, level)`
+_Type_: `function(error, level, originalError)`
 
 Customizes how process errors are logged.\
 [Full documentation](docs/API.md#log).

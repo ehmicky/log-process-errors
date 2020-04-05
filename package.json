@@ -13,7 +13,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "gulp check --full"
+      "pre-push": "gulp -LL check --full"
     }
   },
   "description": "Show some ❤️ to process errors",

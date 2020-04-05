@@ -42,7 +42,7 @@ _Type_: `object`
 
 #### log
 
-_Type_: `function(error, level)`
+_Type_: `function(error, level, originalError)`
 
 By default process errors will be logged to the console using `console.error()`,
 `console.warn()`, etc.
@@ -52,13 +52,14 @@ process errors with [Winston](https://github.com/winstonjs/winston) instead:
 
 ```js
 logProcessErrors({
-  log(error, level) {
+  log(error, level, originalError) {
     winstonLogger[level](error.stack)
   },
 })
 ```
 
-The function's arguments are [`error`](#error) and [`level`](#level).
+The function's arguments are [`error`](#error), [`level`](#level) and
+[`originalError`](#error).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is using streams (like
@@ -212,6 +213,10 @@ _Type_: `Error`
 
 The [`log`](#log) and [`level`](#level) options receive as argument an `error`
 instance.
+
+This error is generated based on the original process error but with an improved
+`name`, `message` and `stack`. However the original process error is still
+available as a third argument to [`log`](#log).
 
 #### error.name
 

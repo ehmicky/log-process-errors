@@ -2,7 +2,6 @@ import { inspect } from 'util'
 
 import { getMessage } from './message.js'
 import { printError } from './print.js'
-import { getEventProps } from './props.js'
 import { getStack } from './stack.js'
 
 const { custom } = inspect
@@ -10,11 +9,26 @@ const { custom } = inspect
 // Retrieve `error` which sums up all information that can be gathered about
 // the event.
 export const getError = function({ name, event }) {
-  const { stack, ...staticProps } = getEventProps(event)
   const message = getMessage({ event, name })
-  const stackA = getStack(stack)
+  const mainValue = getMainValue(event)
+  const staticProps = getEventProps(mainValue)
+  const stackA = getStack(mainValue)
   const error = buildError({ name, message, stack: stackA, staticProps })
   return { error, stack: stackA }
+}
+
+// Retrieve main thrown value, which is most likely an `Error` instance
+const getMainValue = function({ value, nextValue: mainValue = value }) {
+  return mainValue
+}
+
+// If event is an error, retrieve static properties except `name` and `message`
+const getEventProps = function(mainValue) {
+  if (mainValue instanceof Error) {
+    return { ...mainValue }
+  }
+
+  return {}
 }
 
 const buildError = function({ name, message, stack, staticProps }) {

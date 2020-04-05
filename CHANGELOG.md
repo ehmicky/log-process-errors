@@ -1,3 +1,9 @@
+# 6.0.2
+
+## Bug fixes
+
+- Do not remove error static properties
+
 # 6.0.1
 
 ## Dependency

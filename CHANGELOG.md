@@ -1,3 +1,10 @@
+# 6.1.1
+
+## Bug fixes
+
+- Fix handling uncaught exceptions or warnings that are not `Error` instances
+  (#32)
+
 # 6.1.0
 
 ## Features
@@ -19,6 +26,13 @@
 ## Breaking changes
 
 - Minimal supported Node.js version is now `10.17.0`
+
+# 5.1.1 (backport)
+
+## Bug fixes
+
+- Fix handling uncaught exceptions or warnings that are not `Error` instances
+  (#32)
 
 # 5.1.0 (backport)
 

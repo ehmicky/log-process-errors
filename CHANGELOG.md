@@ -1,4 +1,8 @@
-# 6.0.2
+# 6.1.0
+
+## Features
+
+- Pass original error to [`log()` option](docs/API.md#log)
 
 ## Bug fixes
 

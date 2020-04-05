@@ -20,6 +20,16 @@
 
 - Minimal supported Node.js version is now `10.17.0`
 
+# 5.1.0 (backport)
+
+## Features
+
+- Pass original error to [`log()` option](docs/API.md#log)
+
+## Bug fixes
+
+- Do not remove error static properties
+
 # 5.0.3
 
 ## Bug fixes

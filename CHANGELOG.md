@@ -27,6 +27,12 @@
 
 - Minimal supported Node.js version is now `10.17.0`
 
+# 5.1.2 (backport)
+
+## Dependency
+
+- Remove unused dependency `core-js`
+
 # 5.1.1 (backport)
 
 ## Bug fixes

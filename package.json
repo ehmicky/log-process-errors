@@ -62,7 +62,7 @@
   "devDependencies": {
     "@ehmicky/dev-tasks": "^0.31.35",
     "@sinonjs/fake-timers": "^6.0.1",
-    "ava": "^3.6.0",
+    "ava": "^3.7.0",
     "execa": "^4.0.0",
     "gulp": "^4.0.2",
     "has-ansi": "^4.0.0",

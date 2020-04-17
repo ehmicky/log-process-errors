@@ -6,7 +6,7 @@
     "build/src",
     "build/register",
     "examples",
-    "!~"
+    "!*~"
   ],
   "scripts": {
     "test": "gulp test"

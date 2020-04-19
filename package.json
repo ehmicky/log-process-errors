@@ -60,7 +60,7 @@
     "supports-color": "^7.1.0"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^0.31.38",
+    "@ehmicky/dev-tasks": "^0.31.39",
     "@sinonjs/fake-timers": "^6.0.1",
     "ava": "^3.7.1",
     "execa": "^4.0.0",

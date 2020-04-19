@@ -36,7 +36,7 @@ const addListener = function ({ opts, name, eventFunc }) {
   // Should only emit the warning once per event name and per `init()`
   const mEmitLimitedWarning = moize(emitLimitedWarning)
 
-  const eventListener = eventFunc.bind(null, {
+  const eventListener = eventFunc.bind(undefined, {
     opts,
     name,
     previousEvents,

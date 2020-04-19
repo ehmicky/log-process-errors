@@ -35,10 +35,10 @@ const validateTesting = function ({ testOpts, testing }) {
 // Presets override other options. We make sure users do not assume their
 // options are used when they are actually overriden.
 const validateTestOpts = function ({ opts, testOpts, testing }) {
-  const forbiddenOpts = Object.keys(testOpts).filter(isForbiddenOpt)
+  const forbiddenOpts = new Set(Object.keys(testOpts).filter(isForbiddenOpt))
 
   const invalidOpt = Object.keys(opts).find((optName) =>
-    forbiddenOpts.includes(optName),
+    forbiddenOpts.has(optName),
   )
 
   if (invalidOpt === undefined) {

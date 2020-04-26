@@ -38,6 +38,8 @@ const REPLACEMENTS = [
   [/◉/gu, '(*)'],
   [/ℹ/gu, 'i'],
   [/⚠/gu, '‼'],
+  // Ava uses different symbols on Windows
+  [/›/gu, '»'],
   // Stack traces
   [/^([ \t]+)at [^\r\n]+$/gmu, '$1at STACK TRACE'],
   [/(([ \t]+)at STACK TRACE(\r?\n)?)+/gu, '$2at STACK TRACE$3'],

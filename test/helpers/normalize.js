@@ -46,6 +46,8 @@ const REPLACEMENTS = [
   // Default Node.js warnings <12 look different (no `code`, no `detail`)
   // TODO: remove when Node.js <12 is not supported anymore
   [/(\(node:PID\)) \[[^\]]+\](.*)\n.*/gu, '$1$2'],
+  // Default Node.js warnings in >=14 show this additional warning
+  [/\n.*--trace-warnings \.\.\..*/gu, ''],
   // File paths
   [/[^ (]+\/[^ )]+/gu, ''],
   // Durations in test runners:

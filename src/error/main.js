@@ -64,5 +64,11 @@ export const addErrorPrint = function ({
   stack,
 }) {
   // eslint-disable-next-line fp/no-mutation, no-param-reassign
-  error[custom] = printError.bind(null, { opts, level, name, message, stack })
+  error[custom] = printError.bind(undefined, {
+    opts,
+    level,
+    name,
+    message,
+    stack,
+  })
 }

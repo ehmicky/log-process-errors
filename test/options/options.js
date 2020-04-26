@@ -34,7 +34,7 @@ each(
   ],
   ({ title }, options) => {
     test(`should validate options | ${title}`, (t) => {
-      const error = t.throws(startLogging.bind(null, options))
+      const error = t.throws(startLogging.bind(undefined, options))
 
       t.snapshot(normalizeJestValidate(error.message))
     })

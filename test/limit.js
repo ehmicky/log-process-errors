@@ -16,7 +16,7 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
 
     const { stopLogging, log } = startLogging({
       log: 'spy',
-      level: { default: onlyNotLimitedWarning.bind(null, eventName) },
+      level: { default: onlyNotLimitedWarning.bind(undefined, eventName) },
     })
 
     await emitMany(MAX_EVENTS)

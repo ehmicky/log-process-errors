@@ -47,7 +47,7 @@ const getLevel = function ({ level, eventName }) {
 
   return mapObj(levelA, (key, levelB) => [
     key,
-    onlyEvent.bind(null, levelB, eventName),
+    onlyEvent.bind(undefined, levelB, eventName),
   ])
 }
 

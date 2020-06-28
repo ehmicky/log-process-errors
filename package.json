@@ -54,7 +54,7 @@
     "chalk": "^4.0.0",
     "figures": "^3.2.0",
     "filter-obj": "^2.0.1",
-    "jest-validate": "^25.5.0",
+    "jest-validate": "^26.1.0",
     "map-obj": "^4.1.0",
     "moize": "^5.4.6",
     "supports-color": "^7.1.0"

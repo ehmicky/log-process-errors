@@ -34,7 +34,7 @@ const addListener = function ({ opts, name, eventFunc }) {
   // by `removeListener()`, i.e. once `eventListener` is garbage collected.
   const previousEvents = new Set()
   // Should only emit the warning once per event name and per `init()`
-  const mEmitLimitedWarning = moize(emitLimitedWarning)
+  const mEmitLimitedWarning = moize(emitLimitedWarning, { maxSize: Infinity })
 
   const eventListener = eventFunc.bind(undefined, {
     opts,

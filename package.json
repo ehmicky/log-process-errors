@@ -56,7 +56,7 @@
     "filter-obj": "^2.0.1",
     "jest-validate": "^26.1.0",
     "map-obj": "^4.1.0",
-    "moize": "^5.4.7",
+    "moize": "^6.0.0-beta.4",
     "supports-color": "^7.1.0"
   },
   "devDependencies": {

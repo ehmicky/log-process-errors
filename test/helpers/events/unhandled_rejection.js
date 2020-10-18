@@ -1,5 +1,7 @@
 import { promisify } from 'util'
 
+// TODO: replace with `timers/promises` `setImmediate()` after dropping support
+// for Node <15.0.0
 const pSetImmediate = promisify(setImmediate)
 
 // Emit an `unhandledRejection` event

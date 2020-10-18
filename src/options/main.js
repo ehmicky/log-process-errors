@@ -1,5 +1,8 @@
+import { version } from 'process'
+
 import filterObj from 'filter-obj'
 import { validate } from 'jest-validate'
+import { gte as gteVersion } from 'semver'
 
 import { addChalk, DEFAULT_COLORS } from '../colors.js'
 import { validateExitOn } from '../exit.js'
@@ -31,9 +34,25 @@ const isDefined = function (key, value) {
   return value !== undefined
 }
 
+// Since Node 15.0.0, `unhandledRejection` makes the process exit too
+// TODO: remove after dropping support for Node <15.0.0
+const getDefaultExitOn = function () {
+  if (isNewExitBehavior()) {
+    return ['uncaughtException', 'unhandledRejection']
+  }
+
+  return ['uncaughtException']
+}
+
+const isNewExitBehavior = function () {
+  return gteVersion(version, NEW_EXIT_MIN_VERSION)
+}
+
+const NEW_EXIT_MIN_VERSION = '15.0.0'
+
 const DEFAULT_OPTS = {
   log: defaultLog,
-  exitOn: ['uncaughtException'],
+  exitOn: getDefaultExitOn(),
   colors: DEFAULT_COLORS,
 }
 

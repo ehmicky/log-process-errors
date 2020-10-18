@@ -109,15 +109,15 @@ _Value_: array of [`'uncaughtException'`](https://nodejs.org/api/process.html#pr
 [`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
 [`'multipleResolves'`](https://nodejs.org/api/process.html#process_event_multipleresolves)
 or [`'warning'`](https://nodejs.org/api/process.html#process_event_warning)\
-_Default_: `['uncaughtException']`
+_Default_: `['uncaughtException', 'unhandledRejection']` for Node `>= 15.0.0`,
+`['uncaughtException']` otherwise.
 
 Which process errors should trigger `process.exit(1)`:
 
-- `['uncaughtException']` is Node.js
-  [default behavior](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly).
-- we recommend using `['uncaughtException', 'unhandledRejection']` instead since
-  this will be
-  [Node.js future default behavior](https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections).
+- `['uncaughtException', 'unhandledRejection']` is Node.js default behavior
+  since Node.js `15.0.0`. Before, only
+  [`uncaughtException`](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly)
+  was enabled.
 - use `[]` to prevent any `process.exit(1)`. Recommended if your process is
   long-running and does not automatically restart on exit.
 

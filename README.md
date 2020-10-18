@@ -115,7 +115,8 @@ Which log level to use.\
 ## exitOn
 
 _Type_: `string[]`\
-_Default_: `['uncaughtException']`
+_Default_: `['uncaughtException', 'unhandledRejection']` for Node `>= 15.0.0`, `['uncaughtException']`
+otherwise.
 
 Which process errors should trigger `process.exit(1)`.\
 [Full documentation](docs/API.md#exiton).

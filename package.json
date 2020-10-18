@@ -57,6 +57,7 @@
     "jest-validate": "^26.6.1",
     "map-obj": "^4.1.0",
     "moize": "^6.0.0-beta.5",
+    "semver": "^7.3.2",
     "supports-color": "^7.2.0"
   },
   "devDependencies": {
@@ -69,7 +70,6 @@
     "husky": "^4.3.0",
     "jasmine": "^3.6.1",
     "mocha": "^8.2.0",
-    "semver": "^7.3.2",
     "sinon": "^9.2.0",
     "strip-ansi": "^6.0.0",
     "tap": "^14.10.8",

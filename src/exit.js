@@ -4,10 +4,7 @@ import process from 'process'
 // Exit process according to `opts.exitOn` (default: ['uncaughtException']):
 //  - `uncaughtException`: default behavior of Node.js and recommended by
 //     https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
-//  - `unhandledRejection`: possible future behavior and recommended by Node.js.
-//    See https://nodejs.org/dist/latest-v8.x/docs/api/deprecations.html#deprecations_dep0018_unhandled_promise_rejections
-// By default `unhandledRejection` is opt-in so that using this library does not
-// decrease stability (if the application does not restart on exit).
+//  - `unhandledRejection`: default behavior of Node.js since 15.0.0
 // `process.exit()` unfortunately aborts any current async operations and
 // streams are not flushed (including stdout/stderr):
 //  - https://github.com/nodejs/node/issues/784

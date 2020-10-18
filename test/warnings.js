@@ -3,7 +3,10 @@ import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { EVENTS, EVENTS_MAP } from './helpers/events/main.js'
-import { hasUnhandledFlag } from './helpers/events/version.js'
+import {
+  hasUnhandledFlag,
+  hasOldExitBehavior,
+} from './helpers/events/version.js'
 import { startLogging } from './helpers/init.js'
 import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
@@ -67,6 +70,10 @@ each(
   ['--no-warnings', ...UNHANDLED_FLAGS],
   ({ title }, { eventName }, flag) => {
     test(`should work with warnings-related CLI flags | ${title}`, async (t) => {
+      if (hasOldExitBehavior(eventName)) {
+        return t.pass()
+      }
+
       t.snapshot(
         await normalizeCall(`node ${flag} ${LOADERS}/simple.js ${eventName}`, {
           colors: false,

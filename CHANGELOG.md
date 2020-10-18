@@ -1,3 +1,14 @@
+# 6.2.0
+
+## Features
+
+- The [`exitOn()` option](docs/API.md#exiton) now defaults to
+  `['uncaughtException', 'unhandledRejection']` on Node `>= 15.0.0`. Its default
+  value is still `['uncaughtException']` on Node `< 15.0.0`. This is to mimic
+  Node.js default behavior:
+  [since Node `15.0.0`](https://github.com/nodejs/node/pull/33021), processes
+  exit on unhandled promises.
+
 # 6.1.1
 
 ## Bug fixes

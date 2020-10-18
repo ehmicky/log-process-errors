@@ -59,7 +59,12 @@ each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
     },
   )
 
+  // eslint-disable-next-line max-statements
   test.serial(`should allow disabling logging | ${title}`, async (t) => {
+    if (eventName === 'rejectionHandled') {
+      return t.pass()
+    }
+
     const processHandler = addProcessHandler(eventName)
 
     const { stopLogging, log } = startLogging({ log: 'spy' })

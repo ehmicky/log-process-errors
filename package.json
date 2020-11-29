@@ -57,7 +57,7 @@
     "jest-validate": "^26.6.2",
     "map-obj": "^4.1.0",
     "moize": "^6.0.0-beta.5",
-    "semver": "^7.3.2",
+    "semver": "^7.3.4",
     "supports-color": "^8.0.0"
   },
   "devDependencies": {

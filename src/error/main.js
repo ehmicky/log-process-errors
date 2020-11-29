@@ -44,7 +44,6 @@ const buildError = function ({ name, message, stack, staticProps }) {
     configurable: true,
   })
   // We removed the first line of `stack`, now we substitute it
-  // eslint-disable-next-line fp/no-mutation
   error.stack = `${error}\n${stack}`
   return error
 }
@@ -63,7 +62,7 @@ export const addErrorPrint = function ({
   name,
   stack,
 }) {
-  // eslint-disable-next-line fp/no-mutation, no-param-reassign
+  // eslint-disable-next-line no-param-reassign
   error[custom] = printError.bind(undefined, {
     opts,
     level,

@@ -62,7 +62,6 @@ export const addErrorPrint = function ({
   name,
   stack,
 }) {
-  // eslint-disable-next-line no-param-reassign
   error[custom] = printError.bind(undefined, {
     opts,
     level,

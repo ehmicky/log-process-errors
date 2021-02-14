@@ -74,7 +74,8 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
 
       await emit()
 
-      t.is(log.callCount, callCount)
+      const { callCount: newCallCount } = log
+      t.is(newCallCount, callCount)
 
       stopLogging()
 

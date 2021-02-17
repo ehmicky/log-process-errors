@@ -3,10 +3,8 @@
   "version": "6.2.0",
   "main": "build/src/main.js",
   "files": [
-    "build/src",
-    "build/register",
-    "examples",
-    "!*~"
+    "build/{src,register}/**/*.{js,ts,map,json,sh,md}",
+    "examples/**/*.{js,ts,map,json,sh,md}"
   ],
   "scripts": {
     "test": "gulp test"

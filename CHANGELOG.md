@@ -1,3 +1,9 @@
+# 6.3.0
+
+## Features
+
+- Improve colors on Windows terminal
+
 # 6.2.0
 
 ## Features

@@ -4,7 +4,7 @@ import { circleFilled, info, warning, cross } from 'figures'
 export const printError = function ({
   opts: {
     chalk,
-    chalk: { dim },
+    chalk: { gray },
   },
   level,
   name,
@@ -12,7 +12,7 @@ export const printError = function ({
   stack,
 }) {
   const header = getHeader({ level, name, message, chalk })
-  const stackA = dim(stack)
+  const stackA = gray(stack)
   return `${header}\n${stackA}`
 }
 

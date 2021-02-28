@@ -1,10 +1,10 @@
 import { version } from 'process'
 
+import colorsOption from 'colors-option'
 import filterObj from 'filter-obj'
 import { validate } from 'jest-validate'
 import { gte as gteVersion } from 'semver'
 
-import { getChalk } from '../colors.js'
 import { validateExitOn } from '../exit.js'
 import {
   applyDefaultLevels,
@@ -24,9 +24,9 @@ export const getOptions = function ({ opts = {} }) {
 
   const optsB = applyTesting({ opts: optsA })
   const level = applyDefaultLevels({ opts: optsB })
-  const optsC = { ...DEFAULT_OPTS, ...optsB, level }
+  const { colors, ...optsC } = { ...DEFAULT_OPTS, ...optsB, level }
 
-  const chalk = getChalk(optsC)
+  const chalk = colorsOption({ colors })
   return { ...optsC, chalk }
 }
 

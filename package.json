@@ -55,8 +55,7 @@
     "jest-validate": "^26.6.2",
     "map-obj": "^4.1.0",
     "moize": "^6.0.0",
-    "semver": "^7.3.4",
-    "supports-color": "^8.1.0"
+    "semver": "^7.3.4"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^0.31.84",

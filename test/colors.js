@@ -1,8 +1,8 @@
+import { stdout } from 'process'
 import { inspect } from 'util'
 
 import test from 'ava'
 import hasAnsi from 'has-ansi'
-import supportsColor from 'supports-color'
 import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events/main.js'
@@ -20,7 +20,10 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
     t.true(log.calledOnce)
     t.false(hasAnsi(String(log.firstCall.args[0])))
     t.false(hasAnsi(log.firstCall.args[0].stack))
-    t.is(hasAnsi(inspect(log.firstCall.args[0])), Boolean(supportsColor.stdout))
+    t.is(
+      hasAnsi(inspect(log.firstCall.args[0])),
+      Boolean(stdout.isTTY) && stdout.hasColors(),
+    )
 
     stopLogging()
   })

@@ -1,20 +1,38 @@
-import Chalk from 'chalk'
-import { stdout as supportsColor } from 'supports-color'
+import { stdout } from 'process'
 
-// Can disable colors with `opts.colors`.
-// chalk will automatically disable colors if output does not support it.
-export const addChalk = function ({ opts, opts: { colors } }) {
+import Chalk from 'chalk'
+
+// Retrieve `chalk` instance.
+// Allows forcing `colors` with `true` or `false` (default: guessed).
+// Use `stdout.getColorDepth()` instead of chalk's default behavior (relying
+// on `supports-color`) because it behaves more correctly.
+export const getChalk = function ({ colors }) {
   const level = getLevel(colors)
   const chalk = new Chalk.Instance({ level })
-  return { ...opts, chalk }
+  return chalk
 }
 
 const getLevel = function (colors) {
-  if (!colors) {
+  if (colors === false) {
     return 0
   }
 
-  return Math.max(supportsColor.level, 1)
+  const terminalLevel = getTerminalLevel()
+
+  if (colors === undefined) {
+    return terminalLevel
+  }
+
+  return Math.max(terminalLevel, 1)
 }
 
-export const DEFAULT_COLORS = Boolean(supportsColor)
+const getTerminalLevel = function () {
+  if (!stdout.isTTY) {
+    return 0
+  }
+
+  return DEPTH_TO_LEVEL[stdout.getColorDepth()]
+}
+
+// Maps chalk levels to color depth
+const DEPTH_TO_LEVEL = { 1: 0, 4: 1, 8: 2, 24: 3 }

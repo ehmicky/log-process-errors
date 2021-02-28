@@ -4,7 +4,7 @@ import filterObj from 'filter-obj'
 import { validate } from 'jest-validate'
 import { gte as gteVersion } from 'semver'
 
-import { addChalk, DEFAULT_COLORS } from '../colors.js'
+import { getChalk } from '../colors.js'
 import { validateExitOn } from '../exit.js'
 import {
   applyDefaultLevels,
@@ -26,8 +26,8 @@ export const getOptions = function ({ opts = {} }) {
   const level = applyDefaultLevels({ opts: optsB })
   const optsC = { ...DEFAULT_OPTS, ...optsB, level }
 
-  const optsD = addChalk({ opts: optsC })
-  return optsD
+  const chalk = getChalk(optsC)
+  return { ...optsC, chalk }
 }
 
 const isDefined = function (key, value) {
@@ -53,7 +53,6 @@ const NEW_EXIT_MIN_VERSION = '15.0.0'
 const DEFAULT_OPTS = {
   log: defaultLog,
   exitOn: getDefaultExitOn(),
-  colors: DEFAULT_COLORS,
 }
 
 // `validate-jest` prints the function body
@@ -62,6 +61,7 @@ const exampleFunction = function () {}
 
 const EXAMPLE_OPTS = {
   ...DEFAULT_OPTS,
+  colors: true,
   log: exampleFunction,
   level: getExampleLevels(),
   testing: getExampleTesting(),

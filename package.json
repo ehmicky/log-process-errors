@@ -61,7 +61,7 @@
     "@ehmicky/dev-tasks": "^0.31.87",
     "@sinonjs/fake-timers": "^7.0.2",
     "execa": "^5.0.0",
-    "has-ansi": "^4.0.0",
+    "has-ansi": "^4.0.1",
     "jasmine": "^3.6.1",
     "mocha": "^8.2.1",
     "sinon": "^10.0.0",

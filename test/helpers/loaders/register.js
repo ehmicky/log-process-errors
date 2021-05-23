@@ -5,7 +5,6 @@ import { argv } from 'process'
 //   https://github.com/istanbuljs/istanbuljs.github.io/issues/144
 // eslint-disable-next-line import/no-unassigned-import
 import '../../../register/index.js'
-
 import { EVENTS_MAP } from '../events/main.js'
 
 const [, , eventName] = argv

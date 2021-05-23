@@ -6,7 +6,7 @@ const { eventName } = getOptions()
 
 describe('should make tests fail', function testSuite() {
   it(`on ${eventName}`, () => {
-    // eslint-disable-next-line no-empty-function, max-nested-callbacks
+    // eslint-disable-next-line promise/prefer-await-to-then, no-empty-function, max-nested-callbacks
     EVENTS_MAP[eventName].emit().catch(() => {})
   })
 })

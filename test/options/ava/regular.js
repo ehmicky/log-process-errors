@@ -2,7 +2,7 @@
 // with the other test runner files in `test/helpers/testing/`
 // eslint-disable-next-line import/no-unassigned-import
 import '../../helpers/testing/stack.js'
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import/no-unassigned-import, import/order
 import '../../helpers/testing/call.js'
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import/no-unassigned-import, import/order
 import '../../helpers/testing/ava.js'

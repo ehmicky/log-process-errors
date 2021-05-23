@@ -7,7 +7,7 @@ const { eventName } = getOptions()
 describe('should make tests fail', () => {
   it(`on ${eventName}`, () => {
     const promise = EVENTS_MAP[eventName].emit()
-    // eslint-disable-next-line no-empty-function, max-nested-callbacks
+    // eslint-disable-next-line promise/prefer-await-to-then, no-empty-function, max-nested-callbacks
     promise.catch(() => {})
   })
 })

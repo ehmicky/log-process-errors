@@ -11,7 +11,7 @@ export const rejectionHandled = async function () {
   await pSetImmediate()
   await pSetImmediate()
 
-  // eslint-disable-next-line no-empty-function
+  // eslint-disable-next-line promise/prefer-await-to-then, no-empty-function
   promise.catch(() => {})
 
   await pSetImmediate()

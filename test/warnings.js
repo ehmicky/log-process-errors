@@ -3,10 +3,7 @@ import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { EVENTS, EVENTS_MAP } from './helpers/events/main.js'
-import {
-  hasUnhandledFlag,
-  hasOldExitBehavior,
-} from './helpers/events/version.js'
+import { hasOldExitBehavior } from './helpers/events/version.js'
 import { startLogging } from './helpers/init.js'
 import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
@@ -61,13 +58,13 @@ test.serial(
   },
 )
 
-const UNHANDLED_FLAGS = hasUnhandledFlag()
-  ? ['--unhandled-rejections=none', '--unhandled-rejections=strict']
-  : []
-
 each(
   EVENTS,
-  ['--no-warnings', ...UNHANDLED_FLAGS],
+  [
+    '--no-warnings',
+    '--unhandled-rejections=none',
+    '--unhandled-rejections=strict',
+  ],
   ({ title }, { eventName }, flag) => {
     test(`should work with warnings-related CLI flags | ${title}`, async (t) => {
       if (hasOldExitBehavior(eventName)) {

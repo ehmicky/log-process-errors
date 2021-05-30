@@ -45,9 +45,6 @@ const REPLACEMENTS = [
   [/(([ \t]+)at STACK TRACE(\r?\n)?)+/gu, '$2at STACK TRACE$3'],
   // Default Node.js warnings show PID, which we remove
   [/\(node:\d+\)/gu, '(node:PID)'],
-  // Default Node.js warnings <12 look different (no `code`, no `detail`)
-  // TODO: remove when Node.js <12 is not supported anymore
-  [/(\(node:PID\)) \[[^\]]+\](.*)\n.*/gu, '$1$2'],
   // Default Node.js warnings in >=14 show this additional warning
   [/\n.*--trace-warnings \.\.\..*/gu, ''],
   // File paths

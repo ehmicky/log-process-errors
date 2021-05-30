@@ -54,7 +54,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
 
     t.true(log.called)
 
-    const snapshot = [].concat(...log.args.map(snapshotArgs))
+    const snapshot = log.args.flatMap(snapshotArgs)
     t.snapshot(snapshot)
 
     stopLogging()

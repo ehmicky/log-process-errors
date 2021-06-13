@@ -41,7 +41,7 @@ const callRunner = async function ({
 const getHelperFile = function ({ testing, register }) {
   const helperDir = testing === 'ava' ? AVA_HELPER_DIR : HELPER_DIR
   const filename = register ? 'register' : 'regular'
-  return `${helperDir}/${testing}/${filename}.js`
+  return `${helperDir}/${testing}/${filename}`
 }
 
 each(

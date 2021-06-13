@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'url'
+
 import test from 'ava'
 import sinon from 'sinon'
 import { each } from 'test-each'
@@ -8,7 +10,7 @@ import { startLogging } from './helpers/init.js'
 import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
-const LOADERS = `${__dirname}/helpers/loaders/`
+const LOADERS = fileURLToPath(new URL('./helpers/loaders/', import.meta.url))
 
 removeProcessListeners()
 

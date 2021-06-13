@@ -1,3 +1,6 @@
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+
 import test from 'ava'
 import { each } from 'test-each'
 
@@ -6,7 +9,8 @@ import { normalizeCall } from '../helpers/normalize.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 import { RUNNERS } from '../helpers/testing/runners.js'
 
-const HELPER_DIR = `${__dirname}/../helpers/testing`
+const HELPER_DIR = fileURLToPath(new URL('../helpers/testing', import.meta.url))
+const AVA_HELPER_DIR = dirname(fileURLToPath(import.meta.url))
 
 removeProcessListeners()
 
@@ -35,7 +39,7 @@ const callRunner = async function ({
 }
 
 const getHelperFile = function ({ testing, register }) {
-  const helperDir = testing === 'ava' ? __dirname : HELPER_DIR
+  const helperDir = testing === 'ava' ? AVA_HELPER_DIR : HELPER_DIR
   const filename = register ? 'register' : 'regular'
   return `${helperDir}/${testing}/${filename}.js`
 }

@@ -13,7 +13,7 @@ const LOADERS = fileURLToPath(new URL('./helpers/loaders/', import.meta.url))
 removeProcessListeners()
 
 each(EVENTS, ({ title }, { eventName }) => {
-  test(`should work using the -r flag | ${title}`, async (t) => {
+  test(`should work using register | ${title}`, async (t) => {
     if (hasOldExitBehavior(eventName)) {
       t.pass()
       return
@@ -26,7 +26,7 @@ each(EVENTS, ({ title }, { eventName }) => {
     )
   })
 
-  test(`should work using both the -r flag and init() | ${title}`, async (t) => {
+  test(`should work using both register and init() | ${title}`, async (t) => {
     t.snapshot(await normalizeCall(`node ${LOADERS}/noop.js ${eventName}`))
   })
 })

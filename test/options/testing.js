@@ -82,7 +82,7 @@ each(
       t.snapshot(returnValue)
     })
 
-    test(`should work with the -r flag | ${title}`, async (t) => {
+    test(`should work with register | ${title}`, async (t) => {
       const returnValue = await callRunner({
         runner,
         testing,

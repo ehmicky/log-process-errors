@@ -6,19 +6,18 @@
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
-'use strict'
+// eslint-disable-next-line node/no-extraneous-import
+import logProcessErrors from 'log-process-errors'
 
-const logProcessErrors = require('log-process-errors')
-
-// Initialization
-logProcessErrors()
-
-const {
+import {
   uncaughtException,
   unhandledRejection,
   warning,
   multipleResolves,
-} = require('./errors.js')
+} from './errors.js'
+
+// Initialization
+logProcessErrors()
 
 // Emit different types of process errors
 uncaughtException()

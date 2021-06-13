@@ -5,15 +5,14 @@
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
-'use strict'
+// eslint-disable-next-line node/no-extraneous-import
+import logProcessErrors from 'log-process-errors'
 
-const logProcessErrors = require('log-process-errors')
+import { unhandledRejection } from './errors.js'
 
 // Initialization
 // Changes which events should trigger `process.exit(1)`
 logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
-
-const { unhandledRejection } = require('./errors.js')
 
 // Emitting a `unhandledRejection` process error will exit the process
 unhandledRejection()

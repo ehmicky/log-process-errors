@@ -6,14 +6,12 @@
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
-'use strict'
-
-const {
+import {
   uncaughtException,
   unhandledRejection,
   warning,
   multipleResolves,
-} = require('./errors.js')
+} from './errors.js'
 
 // Emit different types of process errors.
 uncaughtException()

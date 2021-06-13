@@ -5,9 +5,10 @@
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
-'use strict'
+// eslint-disable-next-line node/no-extraneous-import
+import logProcessErrors from 'log-process-errors'
 
-const logProcessErrors = require('log-process-errors')
+import { multipleResolves, warning } from './errors.js'
 
 // Initialization
 // Changes which log level to use
@@ -27,8 +28,6 @@ logProcessErrors({
 const shouldSkip = function ({ message }) {
   return message.includes('Deprecation')
 }
-
-const { multipleResolves, warning } = require('./errors.js')
 
 // This deprecation `warning` will be silent
 warning()

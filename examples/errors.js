@@ -1,18 +1,16 @@
 // The methods in this file trigger different types of process errors.
 // This is done for example purposes.
-'use strict'
-
-const { emitWarning } = require('process')
+import { emitWarning } from 'process'
 
 // Emit an `uncaughtException` event
-const uncaughtException = function () {
+export const uncaughtException = function () {
   setTimeout(() => {
     throw new Error('File not found')
   }, 0)
 }
 
 // Emit `unhandledRejection` and `rejectionHandled` events
-const unhandledRejection = function () {
+export const unhandledRejection = function () {
   const promise = Promise.reject(new Error('Invalid permission'))
   setTimeout(() => {
     // eslint-disable-next-line promise/prefer-await-to-then, no-empty-function, max-nested-callbacks
@@ -21,7 +19,7 @@ const unhandledRejection = function () {
 }
 
 // Emit a `warning` event
-const warning = function () {
+export const warning = function () {
   emitWarning('Invalid option', {
     type: 'DeprecationWarning',
     code: 'DeprecatedMethod',
@@ -30,17 +28,10 @@ const warning = function () {
 }
 
 // Emit a `multipleResolves` event
-const multipleResolves = function () {
+export const multipleResolves = function () {
   // eslint-disable-next-line promise/avoid-new
   return new Promise((resolve, reject) => {
     resolve({ success: true })
     reject(new Error('Cannot send request'))
   })
-}
-
-module.exports = {
-  uncaughtException,
-  unhandledRejection,
-  warning,
-  multipleResolves,
 }

@@ -5,15 +5,14 @@
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
-'use strict'
+// eslint-disable-next-line node/no-extraneous-import
+import logProcessErrors from 'log-process-errors'
 
-const logProcessErrors = require('log-process-errors')
+import { warning } from './errors.js'
 
 // Initialization
 // Removes message colorization
 logProcessErrors({ colors: false })
-
-const { warning } = require('./errors.js')
 
 // Emit a `warning` process error
 warning()

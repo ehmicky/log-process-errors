@@ -9,20 +9,12 @@ export const RUNNERS = [
   },
   { title: 'tape', command: (file) => `node ${file}.js` },
   // {
-  //   title: 'node-tap:default',
-  //   command: (file) =>
-  //     `tap --no-coverage --no-timeout ${file.replace(
-  //       'node-tap',
-  //       'node_tap',
-  //     )}.js`,
+  //   title: 'node_tap:default',
+  //   command: (file) => `tap --no-coverage --no-timeout ${file}.js`,
   // },
   // {
-  // title: 'node-tap:tap',
-  // command: (file) =>
-  //     `tap -R=tap --no-coverage --no-timeout ${file.replace(
-  //       'node-tap',
-  //       'node_tap',
-  //     )}.js`,
-  // env: { TAP_DIAG: '0' },
+  //   title: 'node_tap:tap',
+  //   command: (file) => `tap --no-coverage --no-timeout -R=tap ${file}.js`,
+  //   env: { TAP_DIAG: '0' },
   // },
 ]

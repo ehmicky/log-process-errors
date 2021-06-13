@@ -9,6 +9,7 @@ export const RUNNERS = [
     command: (file) => `jasmine --seed=0 ${file}.mjs`,
   },
   { title: 'tape', runner: 'tape', command: (file) => `node ${file}.js` },
+  // TODO: re-enable tests for node-tap
   // {
   //   title: 'node-tap:default',
   //   runner: 'node_tap',

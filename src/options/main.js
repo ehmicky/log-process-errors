@@ -3,7 +3,7 @@ import { version } from 'process'
 import colorsOption from 'colors-option'
 import filterObj from 'filter-obj'
 import { validate } from 'jest-validate'
-import { gte as gteVersion } from 'semver'
+import semver from 'semver'
 
 import { validateExitOn } from '../exit.js'
 import {
@@ -45,7 +45,7 @@ const getDefaultExitOn = function () {
 }
 
 const isNewExitBehavior = function () {
-  return gteVersion(version, NEW_EXIT_MIN_VERSION)
+  return semver.gte(version, NEW_EXIT_MIN_VERSION)
 }
 
 const NEW_EXIT_MIN_VERSION = '15.0.0'

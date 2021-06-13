@@ -1,13 +1,13 @@
 import { version } from 'process'
 
-import { lt as ltVersion } from 'semver'
+import semver from 'semver'
 
 // TODO: remove after dropping support for Node <15.0.0
 // Node 15.0.0 changed the default exit behavior on unhandled promises
 export const hasOldExitBehavior = function (eventName) {
   return (
     PROMISE_REJECTION_EVENTS.has(eventName) &&
-    ltVersion(version, NEW_EXIT_MIN_VERSION)
+    semver.lt(version, NEW_EXIT_MIN_VERSION)
   )
 }
 

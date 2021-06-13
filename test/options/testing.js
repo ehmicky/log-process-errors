@@ -21,6 +21,7 @@ const shouldSkip = function ({ runner, eventName }) {
 }
 
 const callRunner = async function ({
+  runner,
   testing,
   command,
   env,
@@ -28,7 +29,7 @@ const callRunner = async function ({
   opts,
   register,
 }) {
-  const helperFile = getHelperFile({ testing, register })
+  const helperFile = getHelperFile({ runner, register })
   const optsA = { eventName, testing, ...opts }
   const commandA = command(helperFile)
   const returnValue = await normalizeCall(commandA, {
@@ -38,30 +39,39 @@ const callRunner = async function ({
   return returnValue
 }
 
-const getHelperFile = function ({ testing, register }) {
-  const helperDir = testing === 'ava' ? AVA_HELPER_DIR : HELPER_DIR
+const getHelperFile = function ({ runner, register }) {
+  const helperDir = runner === 'ava' ? AVA_HELPER_DIR : HELPER_DIR
   const filename = register ? 'register' : 'regular'
-  return `${helperDir}/${testing}/${filename}`
+  return `${helperDir}/${runner}/${filename}`
 }
 
 each(
   EVENTS,
   RUNNERS,
-  ({ title }, { eventName }, { title: runner, command, env }) => {
-    const [testing] = runner.split(':')
-
+  (
+    { title },
+    { eventName },
+    { runner = title, testing = runner, command, env },
+  ) => {
     if (shouldSkip({ runner, eventName })) {
       return
     }
 
     test(`should make tests fails | ${title}`, async (t) => {
-      const returnValue = await callRunner({ testing, command, env, eventName })
+      const returnValue = await callRunner({
+        runner,
+        testing,
+        command,
+        env,
+        eventName,
+      })
 
       t.snapshot(returnValue)
     })
 
     test(`should allow overriding 'opts.level' | ${title}`, async (t) => {
       const returnValue = await callRunner({
+        runner,
         testing,
         command,
         env,
@@ -74,6 +84,7 @@ each(
 
     test(`should work with the -r flag | ${title}`, async (t) => {
       const returnValue = await callRunner({
+        runner,
         testing,
         command,
         env,

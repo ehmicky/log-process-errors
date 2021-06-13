@@ -10,13 +10,13 @@ export const RUNNERS = [
   },
   { title: 'tape', runner: 'tape', command: (file) => `node ${file}.js` },
   // {
-  //   title: 'node_tap:default',
+  //   title: 'node-tap:default',
   //   runner: 'node_tap',
   //   testing: 'node-tap',
   //   command: (file) => `tap --no-coverage --no-timeout ${file}.js`,
   // },
   // {
-  //   title: 'node_tap:tap',
+  //   title: 'node-tap:tap',
   //   runner: 'node_tap',
   //   testing: 'node-tap',
   //   command: (file) => `tap --no-coverage --no-timeout -R=tap ${file}.js`,

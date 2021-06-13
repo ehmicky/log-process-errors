@@ -180,14 +180,6 @@ test('Example test', (t) => {
 })
 ```
 
-This can also be used with
-[`node -r`](https://nodejs.org/api/cli.html#cli_r_require_module) or any
-equivalent CLI flag for your test runner:
-
-```bash
-ava --require log-process-errors/ava.js
-```
-
 To ignore specific process errors, use the [`level` option](#level):
 
 <!-- eslint-disable import/order, node/no-extraneous-import, import/first -->

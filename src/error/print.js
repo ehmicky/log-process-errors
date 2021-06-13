@@ -1,4 +1,4 @@
-import { circleFilled, info, warning, cross } from 'figures'
+import figures from 'figures'
 
 // Pretty-print error on the console (which uses `util.inspect()`)
 export const printError = function ({
@@ -41,8 +41,8 @@ const splitMessage = function ({ message }) {
 
 // Each level is printed in a different way
 const LEVELS = {
-  debug: { COLOR: 'blue', SIGN: circleFilled },
-  info: { COLOR: 'green', SIGN: info },
-  warn: { COLOR: 'yellow', SIGN: warning },
-  error: { COLOR: 'red', SIGN: cross },
+  debug: { COLOR: 'blue', SIGN: figures.circleFilled },
+  info: { COLOR: 'green', SIGN: figures.info },
+  warn: { COLOR: 'yellow', SIGN: figures.warning },
+  error: { COLOR: 'red', SIGN: figures.cross },
 }

@@ -9,7 +9,8 @@ import { getOptions } from './options/main.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
 // Add event handling for all process-related errors
-const logProcessErrors = function (opts) {
+// eslint-disable-next-line import/no-default-export
+export default function logProcessErrors(opts) {
   const optsA = getOptions({ opts })
 
   removeWarningListener()
@@ -58,7 +59,3 @@ const stopLogging = function (listeners) {
 const removeListener = function ({ eventListener, name }) {
   process.off(name, eventListener)
 }
-
-// We do not use `export default` because Babel transpiles it in a way that
-// requires CommonJS users to `require(...).default` instead of `require(...)`.
-module.exports = logProcessErrors

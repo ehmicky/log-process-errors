@@ -7,8 +7,7 @@
 # An online demo is also available at:
 #   https://repl.it/@ehmicky/log-process-errors
 
-# Ignore the following line: this is only needed for internal purposes.
-. "$(dirname "$BASH_SOURCE")/utils.sh"
+examplesDir="$(dirname "$BASH_SOURCE")"
 
 # Emits different types of process errors.
-node before.js
+node "$examplesDir/before.js"

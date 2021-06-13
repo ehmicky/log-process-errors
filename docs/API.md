@@ -164,7 +164,7 @@ test('Example test', (t) => {
 })
 ```
 
-Alternatively, you can just require `log-process-errors/{testRunnerName}.js`:
+Alternatively, you can just import `log-process-errors/{testRunnerName}.js`:
 
 <!-- eslint-disable import/no-unassigned-import, node/no-missing-import, import/order -->
 

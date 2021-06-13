@@ -11,14 +11,18 @@ You can try all the examples below:
 Initializes `log-process-errors`. Returns a function that can be fired to
 restore Node.js default behavior.
 
+<!-- eslint-disable node/no-extraneous-import -->
+
 ```js
-const logProcessErrors = require('log-process-errors')
+import logProcessErrors from 'log-process-errors'
 
 const restore = logProcessErrors(options)
 restore()
 ```
 
 Full example:
+
+<!-- eslint-disable import/unambiguous -->
 
 ```js
 logProcessErrors({
@@ -49,6 +53,8 @@ By default process errors will be logged to the console using `console.error()`,
 
 This behavior can be overridden with the `log` option. For example to log
 process errors with [Winston](https://github.com/winstonjs/winston) instead:
+
+<!-- eslint-disable import/unambiguous -->
 
 ```js
 logProcessErrors({
@@ -87,6 +93,8 @@ Object values are the log level: `'debug'`, `'info'`, `'warn'`, `'error'`,
 `'silent'` or `'default'`. It can also be a function using
 [`error` as argument](#error) and returning one of those log levels.
 
+<!-- eslint-disable import/unambiguous -->
+
 ```js
 logProcessErrors({
   level: {
@@ -124,6 +132,8 @@ Which process errors should trigger `process.exit(1)`:
 `process.exit(1)` will only be fired after successfully logging the process
 error.
 
+<!-- eslint-disable import/unambiguous -->
+
 ```js
 logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
 ```
@@ -138,14 +148,14 @@ When running tests, makes them fail if there are any process errors.
 
 Example with [Ava](https://github.com/avajs/ava):
 
-<!-- eslint-disable import/order -->
+<!-- eslint-disable import/order, node/no-extraneous-import, import/first -->
 
 ```js
-const logProcessErrors = require('log-process-errors')
+import logProcessErrors from 'log-process-errors'
 // Should be initialized before requiring other dependencies
 logProcessErrors({ testing: 'ava' })
 
-const test = require('ava')
+import test from 'ava'
 
 // Tests will fail because a warning is triggered
 test('Example test', (t) => {
@@ -156,13 +166,12 @@ test('Example test', (t) => {
 
 Alternatively, you can just require `log-process-errors/{testRunnerName}.js`:
 
-<!-- eslint-disable import/no-unassigned-import -->
+<!-- eslint-disable import/no-unassigned-import, node/no-missing-import, import/order -->
 
 ```js
 // Should be initialized before requiring other dependencies
-require('log-process-errors/ava.js')
-
-const test = require('ava')
+import 'log-process-errors/ava.js'
+import test from 'ava'
 
 // Tests will fail because a warning is triggered
 test('Example test', (t) => {
@@ -181,14 +190,14 @@ ava --require log-process-errors/ava.js
 
 To ignore specific process errors, use the [`level` option](#level):
 
-<!-- eslint-disable import/order -->
+<!-- eslint-disable import/order, node/no-extraneous-import, import/first -->
 
 ```js
-const logProcessErrors = require('log-process-errors')
+import logProcessErrors from 'log-process-errors'
 // Should be initialized before requiring other dependencies
 logProcessErrors({ testing: 'ava', level: { warning: 'silent' } })
 
-const test = require('ava')
+import test from 'ava'
 
 // Tests will not fail because warnings are `silent`
 test('Example test', (t) => {
@@ -203,6 +212,8 @@ _Type_: `boolean`\
 _Default_: `true` if the output is a terminal.
 
 Colorizes messages.
+
+<!-- eslint-disable import/unambiguous -->
 
 ```js
 logProcessErrors({ colors: false })
@@ -235,6 +246,8 @@ or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
 or
 [`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options):
 
+<!-- eslint-disable import/unambiguous -->
+
 ```js
 console.log(error)
 ```
@@ -242,6 +255,8 @@ console.log(error)
 ![Error prettified](error_pretty.png)
 
 But not when using `error.stack` instead:
+
+<!-- eslint-disable import/unambiguous -->
 
 ```js
 console.log(error.stack)

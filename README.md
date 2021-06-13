@@ -84,13 +84,15 @@ node -r log-process-errors/register.js ...
 
 The second is:
 
+<!-- eslint-disable node/no-extraneous-import -->
+
 ```js
-const logProcessErrors = require('log-process-errors')
+import logProcessErrors from 'log-process-errors'
 logProcessErrors(options)
 ```
 
 `logProcessErrors()` should be called as early as possible in the code, before
-other `require`/`import` statements.
+other `import` statements.
 
 # Options
 

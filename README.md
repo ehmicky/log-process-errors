@@ -79,7 +79,7 @@ There are two ways to load this library. The first is to use the
 [`node -r` CLI flag](https://nodejs.org/api/cli.html#cli_r_require_module):
 
 ```bash
-node -r log-process-errors/build/register ...
+node -r log-process-errors/register.js ...
 ```
 
 The second is:

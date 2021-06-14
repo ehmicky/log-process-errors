@@ -154,14 +154,13 @@ test('Example test', (t) => {
 })
 ```
 
-Alternatively, you can just require
-`log-process-errors/build/register/{testRunnerName}`:
+Alternatively, you can just require `log-process-errors/{testRunnerName}.js`:
 
 <!-- eslint-disable import/no-unassigned-import -->
 
 ```js
 // Should be initialized before requiring other dependencies
-require('log-process-errors/build/register/ava')
+require('log-process-errors/ava.js')
 
 const test = require('ava')
 
@@ -177,7 +176,7 @@ This can also be used with
 equivalent CLI flag for your test runner:
 
 ```bash
-ava --require log-process-errors/build/register/ava
+ava --require log-process-errors/ava.js
 ```
 
 To ignore specific process errors, use the [`level` option](#level):

@@ -1,7 +1,7 @@
+// eslint-disable-next-line node/no-extraneous-import
+import logProcessErrors from 'log-process-errors'
 import mapObj from 'map-obj'
 import sinon from 'sinon'
-
-import logProcessErrors from '../../src/main.js'
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
 export const startLogging = function ({ eventName, log, level, ...opts } = {}) {

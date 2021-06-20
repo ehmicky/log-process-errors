@@ -6,7 +6,6 @@
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
-// eslint-disable-next-line node/no-extraneous-import
 import logProcessErrors from 'log-process-errors'
 
 import { warning } from './errors.js'

@@ -1,6 +1,11 @@
 /* eslint-env mocha */
-import { EVENTS_MAP } from '../../events/main.js'
-import { getOptions } from '../options.js'
+// eslint-disable-next-line import/no-unassigned-import
+import './call.js'
+
+// eslint-disable-next-line import/order
+import { EVENTS_MAP } from '../events/main.js'
+
+import { getOptions } from './options.js'
 
 const { eventName } = getOptions()
 

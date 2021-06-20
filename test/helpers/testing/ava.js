@@ -9,7 +9,7 @@ const { eventName } = getOptions()
 
 // This test is fired twice:
 //  - through `test/options/testing.js` (`OPTIONS` is defined)
-//  - when the top-level `test/options/ava/register|regular.js` is required,
+//  - when the top-level `test/options/ava.js` is required,
 //    where it should be a noop (`OPTIONS` is `undefined`)
 if (eventName === undefined) {
   // Otherwise `ava` complains

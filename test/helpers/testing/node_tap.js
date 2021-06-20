@@ -1,7 +1,13 @@
+// eslint-disable-next-line import/no-unassigned-import, import/order
+import './call.js'
+
 import tap from 'tap'
 
-import { EVENTS_MAP } from '../../events/main.js'
-import { getOptions } from '../options.js'
+import { EVENTS_MAP } from '../events/main.js'
+
+// eslint-disable-next-line import/order
+import { getOptions } from './options.js'
+
 // Needs to be required after `tap` because it stubs stack traces too.
 // eslint-disable-next-line import/no-unassigned-import
 import '../stack.js'

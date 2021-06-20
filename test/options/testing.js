@@ -27,9 +27,9 @@ const callRunner = async function ({
   env,
   eventName,
   opts,
-  register,
 }) {
-  const helperFile = getHelperFile({ runner, register })
+  const helperDir = runner === 'ava' ? AVA_HELPER_DIR : HELPER_DIR
+  const helperFile = `${helperDir}/${runner}`
   const optsA = { eventName, testing, ...opts }
   const commandA = command(helperFile)
   const returnValue = await normalizeCall(commandA, {
@@ -37,12 +37,6 @@ const callRunner = async function ({
     env: { OPTIONS: JSON.stringify(optsA), CI: '1', ...env },
   })
   return returnValue
-}
-
-const getHelperFile = function ({ runner, register }) {
-  const helperDir = runner === 'ava' ? AVA_HELPER_DIR : HELPER_DIR
-  const filename = register ? 'register' : 'regular'
-  return `${helperDir}/${runner}/${filename}`
 }
 
 each(
@@ -77,19 +71,6 @@ each(
         env,
         eventName,
         opts: { level: { default: 'silent' } },
-      })
-
-      t.snapshot(returnValue)
-    })
-
-    test(`should work with register | ${title}`, async (t) => {
-      const returnValue = await callRunner({
-        runner,
-        testing,
-        command,
-        env,
-        eventName,
-        register: true,
       })
 
       t.snapshot(returnValue)

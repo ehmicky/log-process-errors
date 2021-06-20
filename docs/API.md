@@ -22,9 +22,11 @@ restore()
 
 Full example:
 
-<!-- eslint-disable import/unambiguous -->
+<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
+import logProcessErrors from 'log-process-errors'
+
 logProcessErrors({
   log(error, level) {
     winstonLogger[level](error.stack)
@@ -54,9 +56,11 @@ By default process errors will be logged to the console using `console.error()`,
 This behavior can be overridden with the `log` option. For example to log
 process errors with [Winston](https://github.com/winstonjs/winston) instead:
 
-<!-- eslint-disable import/unambiguous -->
+<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
+import logProcessErrors from 'log-process-errors'
+
 logProcessErrors({
   log(error, level, originalError) {
     winstonLogger[level](error.stack)
@@ -93,9 +97,11 @@ Object values are the log level: `'debug'`, `'info'`, `'warn'`, `'error'`,
 `'silent'` or `'default'`. It can also be a function using
 [`error` as argument](#error) and returning one of those log levels.
 
-<!-- eslint-disable import/unambiguous -->
+<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
+import logProcessErrors from 'log-process-errors'
+
 logProcessErrors({
   level: {
     // Use `debug` log level for `multipleResolves` instead of `info`
@@ -132,9 +138,11 @@ Which process errors should trigger `process.exit(1)`:
 `process.exit(1)` will only be fired after successfully logging the process
 error.
 
-<!-- eslint-disable import/unambiguous -->
+<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
+import logProcessErrors from 'log-process-errors'
+
 logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
 ```
 
@@ -155,22 +163,6 @@ import logProcessErrors from 'log-process-errors'
 // Should be initialized before requiring other dependencies
 logProcessErrors({ testing: 'ava' })
 
-import test from 'ava'
-
-// Tests will fail because a warning is triggered
-test('Example test', (t) => {
-  process.emitWarning('Example warning')
-  t.pass()
-})
-```
-
-Alternatively, you can just import `log-process-errors/{testRunnerName}.js`:
-
-<!-- eslint-disable import/no-unassigned-import, node/no-missing-import, import/order -->
-
-```js
-// Should be initialized before requiring other dependencies
-import 'log-process-errors/ava.js'
 import test from 'ava'
 
 // Tests will fail because a warning is triggered
@@ -205,9 +197,11 @@ _Default_: `true` if the output is a terminal.
 
 Colorizes messages.
 
-<!-- eslint-disable import/unambiguous -->
+<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
+import logProcessErrors from 'log-process-errors'
+
 logProcessErrors({ colors: false })
 ```
 

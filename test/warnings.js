@@ -10,7 +10,7 @@ import { startLogging } from './helpers/init.js'
 import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
-const LOADERS = fileURLToPath(new URL('./helpers/loaders/', import.meta.url))
+const LOAD_HELPER = fileURLToPath(new URL('./helpers/load.js', import.meta.url))
 
 removeProcessListeners()
 
@@ -74,7 +74,7 @@ each(
       }
 
       t.snapshot(
-        await normalizeCall(`node ${flag} ${LOADERS}/simple.js ${eventName}`, {
+        await normalizeCall(`node ${flag} ${LOAD_HELPER} ${eventName}`, {
           colors: false,
         }),
       )

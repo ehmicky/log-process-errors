@@ -2,17 +2,9 @@
   "name": "log-process-errors",
   "version": "6.3.0",
   "type": "module",
-  "exports": {
-    ".": "./build/src/main.js",
-    "./register.js": "./build/register/index.js",
-    "./ava.js": "./build/register/ava.js",
-    "./jasmine.js": "./build/register/jasmine.js",
-    "./mocha.js": "./build/register/mocha.js",
-    "./node-tap.js": "./build/register/node-tap.js",
-    "./tape.js": "./build/register/tape.js"
-  },
+  "exports": "./build/src/main.js",
   "files": [
-    "build/{src,register}/**/*.{js,ts,map,json,sh,md}",
+    "build/src/**/*.{js,ts,map,json,sh,md}",
     "examples/**/*.{js,ts,map,json,sh,md}"
   ],
   "scripts": {

@@ -1,7 +1,13 @@
+// eslint-disable-next-line import/no-unassigned-import, import/order
+import './stack.js'
+// eslint-disable-next-line import/no-unassigned-import, import/order
+import './call.js'
+
 import tape from 'tape'
 
-import { EVENTS_MAP } from '../../events/main.js'
-import { getOptions } from '../options.js'
+import { EVENTS_MAP } from '../events/main.js'
+
+import { getOptions } from './options.js'
 
 const { eventName } = getOptions()
 

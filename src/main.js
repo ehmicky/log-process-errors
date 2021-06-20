@@ -2,8 +2,7 @@ import process from 'process'
 
 import moize from 'moize'
 
-// eslint-disable-next-line import/no-namespace
-import * as EVENTS from './handle/main.js'
+import { EVENTS } from './handle/main.js'
 import { emitLimitedWarning } from './limit.js'
 import { getOptions } from './options/main.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'

@@ -220,8 +220,6 @@ or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
 or
 [`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options):
 
-<!-- eslint-disable import/unambiguous -->
-
 ```js
 console.log(error)
 ```
@@ -229,8 +227,6 @@ console.log(error)
 ![Error prettified](error_pretty.png)
 
 But not when using `error.stack` instead:
-
-<!-- eslint-disable import/unambiguous -->
 
 ```js
 console.log(error.stack)

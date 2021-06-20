@@ -1,6 +1,6 @@
 {
   "name": "log-process-errors",
-  "version": "6.3.0",
+  "version": "7.0.0",
   "type": "module",
   "exports": "./build/src/main.js",
   "files": [

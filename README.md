@@ -75,8 +75,6 @@ expect this side-effect. Also, this might lead to conflicts between libraries.
 
 # Usage
 
-<!-- eslint-disable node/no-extraneous-import -->
-
 ```js
 import logProcessErrors from 'log-process-errors'
 logProcessErrors(options)

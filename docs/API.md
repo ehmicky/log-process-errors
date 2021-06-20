@@ -11,8 +11,6 @@ You can try all the examples below:
 Initializes `log-process-errors`. Returns a function that can be fired to
 restore Node.js default behavior.
 
-<!-- eslint-disable node/no-extraneous-import -->
-
 ```js
 import logProcessErrors from 'log-process-errors'
 
@@ -21,8 +19,6 @@ restore()
 ```
 
 Full example:
-
-<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
 import logProcessErrors from 'log-process-errors'
@@ -55,8 +51,6 @@ By default process errors will be logged to the console using `console.error()`,
 
 This behavior can be overridden with the `log` option. For example to log
 process errors with [Winston](https://github.com/winstonjs/winston) instead:
-
-<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
 import logProcessErrors from 'log-process-errors'
@@ -97,8 +91,6 @@ Object values are the log level: `'debug'`, `'info'`, `'warn'`, `'error'`,
 `'silent'` or `'default'`. It can also be a function using
 [`error` as argument](#error) and returning one of those log levels.
 
-<!-- eslint-disable node/no-extraneous-import -->
-
 ```js
 import logProcessErrors from 'log-process-errors'
 
@@ -138,8 +130,6 @@ Which process errors should trigger `process.exit(1)`:
 `process.exit(1)` will only be fired after successfully logging the process
 error.
 
-<!-- eslint-disable node/no-extraneous-import -->
-
 ```js
 import logProcessErrors from 'log-process-errors'
 
@@ -156,7 +146,7 @@ When running tests, makes them fail if there are any process errors.
 
 Example with [Ava](https://github.com/avajs/ava):
 
-<!-- eslint-disable import/order, node/no-extraneous-import, import/first -->
+<!-- eslint-disable import/order, import/first -->
 
 ```js
 import logProcessErrors from 'log-process-errors'
@@ -174,7 +164,7 @@ test('Example test', (t) => {
 
 To ignore specific process errors, use the [`level` option](#level):
 
-<!-- eslint-disable import/order, node/no-extraneous-import, import/first -->
+<!-- eslint-disable import/order, import/first -->
 
 ```js
 import logProcessErrors from 'log-process-errors'
@@ -196,8 +186,6 @@ _Type_: `boolean`\
 _Default_: `true` if the output is a terminal.
 
 Colorizes messages.
-
-<!-- eslint-disable node/no-extraneous-import -->
 
 ```js
 import logProcessErrors from 'log-process-errors'

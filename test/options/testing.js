@@ -20,17 +20,10 @@ const shouldSkip = function ({ runner, eventName }) {
   return runner === 'ava' && eventName === 'rejectionHandled'
 }
 
-const callRunner = async function ({
-  runner,
-  testing,
-  command,
-  env,
-  eventName,
-  opts,
-}) {
+const callRunner = async function ({ runner, command, env, eventName, opts }) {
   const helperDir = runner === 'ava' ? AVA_HELPER_DIR : HELPER_DIR
   const helperFile = `${helperDir}/${runner}`
-  const optsA = { eventName, testing, ...opts }
+  const optsA = { eventName, testing: runner, ...opts }
   const commandA = command(helperFile)
   const returnValue = await normalizeCall(commandA, {
     // Test runners have different CI output sometimes.
@@ -42,11 +35,7 @@ const callRunner = async function ({
 each(
   EVENTS,
   RUNNERS,
-  (
-    { title },
-    { eventName },
-    { runner = title, testing = runner, command, env },
-  ) => {
+  ({ title }, { eventName }, { runner = title, command, env }) => {
     if (shouldSkip({ runner, eventName })) {
       return
     }
@@ -54,7 +43,6 @@ each(
     test(`should make tests fails | ${title}`, async (t) => {
       const returnValue = await callRunner({
         runner,
-        testing,
         command,
         env,
         eventName,
@@ -66,7 +54,6 @@ each(
     test(`should allow overriding 'opts.level' | ${title}`, async (t) => {
       const returnValue = await callRunner({
         runner,
-        testing,
         command,
         env,
         eventName,

@@ -42,5 +42,5 @@ export const RUNNERS = {
   jasmine: COMMON_OPTIONS,
   // Tape does not report `uncaughtException` nor `unhandledRejection`
   tape: { ...COMMON_OPTIONS, level: {}, log: tapeFailingTest },
-  'node-tap': COMMON_OPTIONS,
+  node_tap: COMMON_OPTIONS,
 }

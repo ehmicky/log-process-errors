@@ -50,7 +50,7 @@ const REPLACEMENTS = [
   // File paths
   [/[^ (]+\/[^ )]+/gu, ''],
   // Durations in test runners:
-  //  - Mocha, node-tap `classic` reporter
+  //  - Mocha, node_tap `classic` reporter
   [/ \([\d.]+m?s\)/gu, ''],
   //  - Jasmine
   [/[\d.]+ seconds?/gu, ''],
@@ -60,7 +60,7 @@ const REPLACEMENTS = [
     / +Message:\n +Uncaught exception: RejectionHandled: a promise was rejected and handled too late: Error: message\n +Stack:\n +at STACK TRACE\n/gu,
     '',
   ],
-  //  - node-tap `classic` reporter
+  //  - node_tap `classic` reporter
   [/ [\d.]+m?s/gu, ''],
   [/(line|column): \d+/gu, ''],
   [/ \.\. \s+/gu, ' .. '],

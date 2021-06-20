@@ -1,31 +1,23 @@
 This directory contains examples of this library.
 
 To execute them, first [install](../README.md#install) `log-process-errors`.
-Then:
+Then run:
 
-- for JavaScript files, run
-  `node node_modules/log-process-errors/examples/FILE.js`.
-- for command line files (Bash), run
-  `bash node_modules/log-process-errors/examples/FILE.sh`.
+```
+node node_modules/log-process-errors/examples/FILE.js
+```
 
 You can edit the examples.
 
 They can also be run directly
 [in your browser](https://repl.it/@ehmicky/log-process-errors).
 
-## Main usage
+## Examples
 
-- How process errors look by default **without** `log-process-errors`:
-  [JavaScript](before.js), [command line](before.sh).
-- How process errors look **with**
-  [`log-process-errors`](../docs/API.md#logprocesserrorsoptions):
-  [JavaScript](after.js), [command line](after.sh).
-- [Restoring](../docs/API.md#logprocesserrorsoptions) Node.js default behavior:
-  [JavaScript](restore.js).
-
-## Options
-
-- [`log`](../docs/API.md#log): [JavaScript](log.js).
-- [`level`](../docs/API.md#level): [JavaScript](level.js).
-- [`exitOn`](../docs/API.md#exit): [JavaScript](exit.js).
-- [`colors`](../docs/API.md#colors): [JavaScript](colors.js).
+- How process errors look by default [without](before.js) and
+  [with `log-process-errors`](after.js)
+- [Restoring Node.js default behavior](restore.js)
+- [`log` option](log.js)
+- [`level` option](level.js)
+- [`exitOn` option](exit.js)
+- [`colors` option](colors.js)

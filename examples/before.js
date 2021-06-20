@@ -1,5 +1,5 @@
 // Demonstrates how process errors look by default
-// **without** `log-process-errors`, in JavaScript.
+// **without** `log-process-errors`.
 // This file can be directly run:
 //   - first install `log-process-errors`
 //   - then `node node_modules/log-process-errors/examples/before.js`

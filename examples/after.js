@@ -1,5 +1,4 @@
-// Demonstrates how process errors look **with** `log-process-errors`,
-// in JavaScript.
+// Demonstrates how process errors look **with** `log-process-errors`.
 // This file can be directly run:
 //   - first install `log-process-errors`
 //   - then `node node_modules/log-process-errors/examples/after.js`

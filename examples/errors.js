@@ -13,7 +13,7 @@ export const uncaughtException = function () {
 export const unhandledRejection = function () {
   const promise = Promise.reject(new Error('Invalid permission'))
   setTimeout(() => {
-    // eslint-disable-next-line promise/prefer-await-to-then, no-empty-function, max-nested-callbacks
+    // eslint-disable-next-line promise/prefer-await-to-then, max-nested-callbacks
     promise.catch(() => {})
   }, 0)
 }

@@ -1,15 +1,19 @@
-// eslint-disable-next-line import/no-unassigned-import, import/order
-import './call.js'
+// eslint-disable-next-line import/order
+import { boundLogProcessErrors } from './call.js'
 
+boundLogProcessErrors()
+
+// eslint-disable-next-line import/first
 import tap from 'tap'
 
+// eslint-disable-next-line import/first
 import { EVENTS_MAP } from '../events/main.js'
 
-// eslint-disable-next-line import/order
+// eslint-disable-next-line import/order, import/first
 import { getOptions } from './options.js'
 
 // Needs to be required after `tap` because it stubs stack traces too.
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import/no-unassigned-import, import/first
 import '../stack.js'
 
 const { eventName } = getOptions()

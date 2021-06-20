@@ -1,14 +1,17 @@
-// eslint-disable-next-line import/no-unassigned-import, import/order, ava/no-ignored-test-files
-import './stack.js'
-// eslint-disable-next-line import/order
+// eslint-disable-next-line ava/no-ignored-test-files
+import { stubStackTrace } from '../stack.js'
+
+stubStackTrace()
+
+// eslint-disable-next-line import/first
 import { boundLogProcessErrors } from './call.js'
 
 boundLogProcessErrors()
 
-// eslint-disable-next-line import/first
+// eslint-disable-next-line import/first, import/order
 import test from 'ava'
 
-// eslint-disable-next-line import/first
+// eslint-disable-next-line import/first, import/order
 import { EVENTS_MAP } from '../events/main.js'
 
 // eslint-disable-next-line import/first

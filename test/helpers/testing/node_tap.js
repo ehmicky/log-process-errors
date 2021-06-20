@@ -13,8 +13,10 @@ import { EVENTS_MAP } from '../events/main.js'
 import { getOptions } from './options.js'
 
 // Needs to be required after `tap` because it stubs stack traces too.
-// eslint-disable-next-line import/no-unassigned-import, import/first
-import '../stack.js'
+// eslint-disable-next-line import/first
+import { stubStackTrace } from '../stack.js'
+
+stubStackTrace()
 
 const { eventName } = getOptions()
 

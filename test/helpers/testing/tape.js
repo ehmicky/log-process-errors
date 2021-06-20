@@ -1,14 +1,16 @@
-// eslint-disable-next-line import/no-unassigned-import, import/order
-import './stack.js'
-// eslint-disable-next-line import/order
+import { stubStackTrace } from '../stack.js'
+
+stubStackTrace()
+
+// eslint-disable-next-line import/first
 import { boundLogProcessErrors } from './call.js'
 
 boundLogProcessErrors()
 
-// eslint-disable-next-line import/first
+// eslint-disable-next-line import/first, import/order
 import tape from 'tape'
 
-// eslint-disable-next-line import/first
+// eslint-disable-next-line import/first, import/order
 import { EVENTS_MAP } from '../events/main.js'
 
 // eslint-disable-next-line import/first

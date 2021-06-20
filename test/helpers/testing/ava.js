@@ -30,7 +30,7 @@ if (eventName === undefined) {
   })
 } else {
   test(`should make tests fail on ${eventName}`, (t) => {
-    // eslint-disable-next-line promise/prefer-await-to-then, no-empty-function
+    // eslint-disable-next-line promise/prefer-await-to-then
     EVENTS_MAP[eventName].emit().catch(() => {})
 
     t.pass()

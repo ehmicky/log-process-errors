@@ -29,7 +29,6 @@ each(
     { exitOn: ['invalid'] },
     { testing: true },
     { testing: 'invalid' },
-    // eslint-disable-next-line no-empty-function
     { testing: 'ava', log() {} },
   ],
   ({ title }, options) => {

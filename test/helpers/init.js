@@ -33,7 +33,6 @@ const getLog = function ({ log }) {
   return log
 }
 
-// eslint-disable-next-line no-empty-function
 const noop = function () {}
 
 // If `eventName` is specified, only print those events

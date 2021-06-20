@@ -1,4 +1,7 @@
-// eslint-disable-next-line ava/no-ignored-test-files
+// eslint-disable-next-line import/no-unassigned-import, import/order, ava/no-ignored-test-files
+import './stack.js'
+// eslint-disable-next-line import/no-unassigned-import, import/order
+import './call.js'
 import test from 'ava'
 
 import { EVENTS_MAP } from '../events/main.js'

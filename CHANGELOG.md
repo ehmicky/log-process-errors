@@ -1,3 +1,19 @@
+# 7.0.0
+
+## Breaking changes
+
+- The `log-process-errors/build/register` export has been removed.
+  Please [import `log-process-errors` programmatically](README.md#usage) instead.
+- The [`testing` option value](docs/API.md#testing) `node-tap` has been renamed to `node_tap`
+- Minimal supported Node.js version is now `12.20.0`
+- This package is now an ES module. It can only be loaded with an `import` or
+  `import()` statement, not `require()`. See
+  [this post for more information](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
+
+## Features
+
+- Improve colors detection
+
 # 6.3.0
 
 ## Features

@@ -1,6 +1,6 @@
 import { argv } from 'process'
 
-// eslint-disable-next-line import/order, node/no-extraneous-import
+// eslint-disable-next-line import/order
 import logProcessErrors from 'log-process-errors'
 import { EVENTS_MAP } from './events/main.js'
 

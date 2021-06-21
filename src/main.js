@@ -9,7 +9,6 @@ import { getOptions } from './options/main.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
 // Add event handling for all process-related errors
-// eslint-disable-next-line import/no-default-export
 export default function logProcessErrors(opts) {
   const optsA = getOptions({ opts })
 

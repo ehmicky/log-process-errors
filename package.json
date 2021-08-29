@@ -48,7 +48,7 @@
   "dependencies": {
     "colors-option": "^2.0.1",
     "figures": "^4.0.0",
-    "filter-obj": "^2.0.1",
+    "filter-obj": "^3.0.0",
     "jest-validate": "^27.0.6",
     "map-obj": "^4.2.0",
     "moize": "^6.0.3",

@@ -49,7 +49,7 @@
     "colors-option": "^2.0.1",
     "figures": "^4.0.0",
     "filter-obj": "^3.0.0",
-    "jest-validate": "^27.0.6",
+    "jest-validate": "^27.1.1",
     "map-obj": "^4.2.0",
     "moize": "^6.0.3",
     "semver": "^7.3.5"

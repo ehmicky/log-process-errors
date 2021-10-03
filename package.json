@@ -51,7 +51,7 @@
     "filter-obj": "^3.0.0",
     "jest-validate": "^27.2.4",
     "map-obj": "^4.3.0",
-    "moize": "^6.0.3",
+    "moize": "^6.1.0",
     "semver": "^7.3.5"
   },
   "devDependencies": {

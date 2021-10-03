@@ -1,4 +1,6 @@
 import execa from 'execa'
+// TODO: use `util.stripVTControlCharacters()` after dropping support for
+// Node <16.11.0
 import stripAnsi from 'strip-ansi'
 
 // Call process and normalize its output for testing

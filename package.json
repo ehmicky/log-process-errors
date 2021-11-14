@@ -57,7 +57,7 @@
   "devDependencies": {
     "@ehmicky/dev-tasks": "^1.0.56",
     "@sinonjs/fake-timers": "^8.1.0",
-    "execa": "^5.1.1",
+    "execa": "^6.0.0",
     "has-ansi": "^5.0.1",
     "jasmine": "^3.10.0",
     "mocha": "^9.1.3",

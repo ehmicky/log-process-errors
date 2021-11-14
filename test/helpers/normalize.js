@@ -1,11 +1,11 @@
-import execa from 'execa'
+import { execaCommand } from 'execa'
 // TODO: use `util.stripVTControlCharacters()` after dropping support for
 // Node <16.11.0
 import stripAnsi from 'strip-ansi'
 
 // Call process and normalize its output for testing
 export const normalizeCall = async function (input, opts) {
-  const { stdout, stderr, exitCode } = await execa.command(input, {
+  const { stdout, stderr, exitCode } = await execaCommand(input, {
     reject: false,
     ...opts,
   })

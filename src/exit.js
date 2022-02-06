@@ -26,7 +26,7 @@ export const exitProcess = function ({ name, opts: { exitOn } }) {
   // TODO: replace with `timers/promises` `setTimeout()` after dropping support
   // for Node <15.0.0
   setTimeout(() => {
-    // eslint-disable-next-line unicorn/no-process-exit, node/no-process-exit
+    // eslint-disable-next-line unicorn/no-process-exit, n/no-process-exit
     process.exit(EXIT_STATUS)
   }, EXIT_TIMEOUT)
 }

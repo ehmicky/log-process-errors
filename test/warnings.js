@@ -10,7 +10,7 @@ import { startLogging } from './helpers/init.js'
 import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
-const LOAD_HELPER = fileURLToPath(new URL('./helpers/load.js', import.meta.url))
+const LOAD_HELPER = fileURLToPath(new URL('helpers/load.js', import.meta.url))
 
 removeProcessListeners()
 

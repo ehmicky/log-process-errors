@@ -6,15 +6,9 @@
 // An online demo is also available at:
 //   https://repl.it/@ehmicky/log-process-errors
 
-import {
-  uncaughtException,
-  unhandledRejection,
-  warning,
-  multipleResolves,
-} from './errors.js'
+import { uncaughtException, unhandledRejection, warning } from './errors.js'
 
 // Emit different types of process errors.
 uncaughtException()
 unhandledRejection()
 warning()
-multipleResolves()

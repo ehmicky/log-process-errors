@@ -87,5 +87,4 @@ const DEFAULT_LEVEL = {
   warning: 'warn',
   unhandledRejection: 'error',
   rejectionHandled: 'error',
-  multipleResolves: 'info',
 }

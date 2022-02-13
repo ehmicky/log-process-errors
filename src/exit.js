@@ -56,7 +56,6 @@ const EVENTS_ARR = [
   'uncaughtException',
   'unhandledRejection',
   'rejectionHandled',
-  'multipleResolves',
   'warning',
 ]
 const EVENTS = new Set(EVENTS_ARR)

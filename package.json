@@ -28,7 +28,6 @@
     "uncaughtException",
     "unhandledRejection",
     "rejectionHandled",
-    "multipleResolves",
     "debugging",
     "testing",
     "test"

@@ -21,9 +21,6 @@ on the console which is very useful. Unfortunately those errors:
   [`warning`](https://nodejs.org/api/process.html#process_event_warning) and
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   making them hard to debug.
-- do not include
-  [`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
-  errors (when a promise is resolved/rejected twice).
 - are inconvenient to [log to an external service](docs/API.md#log).
 - are hard to [test](docs/API.md#testing).
 - cannot be conditionally skipped.
@@ -101,7 +98,7 @@ Customizes how process errors are logged.\
 ## level
 
 _Type_: `object`\
-_Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
+_Default_: `{ warning: 'warn', default: 'error' }`
 
 Which log level to use.\
 [Full documentation](docs/API.md#level).

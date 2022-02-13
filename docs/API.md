@@ -28,7 +28,7 @@ logProcessErrors({
     winstonLogger[level](error.stack)
   },
 
-  level: { multipleResolves: 'debug' },
+  level: { uncaughtException: 'debug' },
 
   exitOn: ['uncaughtException', 'unhandledRejection'],
 
@@ -75,7 +75,7 @@ defined or not).
 #### level
 
 _Type_: `object`\
-_Default_: `{ warning: 'warn', multipleResolves: 'info', default: 'error' }`
+_Default_: `{ warning: 'warn', default: 'error' }`
 
 Which log level to use.
 
@@ -83,8 +83,7 @@ Object keys are the error names:
 [`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`warning`](https://nodejs.org/api/process.html#process_event_warning),
 [`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`multipleResolves`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 or `default`.
 
 Object values are the log level: `'debug'`, `'info'`, `'warn'`, `'error'`,
@@ -96,8 +95,8 @@ import logProcessErrors from 'log-process-errors'
 
 logProcessErrors({
   level: {
-    // Use `debug` log level for `multipleResolves` instead of `info`
-    multipleResolves: 'debug',
+    // Use `debug` log level for `uncaughtException` instead of `error`
+    uncaughtException: 'debug',
 
     // Skip some logs based on a condition
     default(error) {
@@ -112,8 +111,7 @@ logProcessErrors({
 _Type_: `string[]`\
 _Value_: array of [`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`'unhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`'multipleResolves'`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+[`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 or [`'warning'`](https://nodejs.org/api/process.html#process_event_warning)\
 _Default_: `['uncaughtException', 'unhandledRejection']` for Node `>= 15.0.0`,
 `['uncaughtException']` otherwise.
@@ -209,8 +207,7 @@ available as a third argument to [`log`](#log).
 _Type_: `string`\
 _Value_: [`'UncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
-[`'MultipleResolves'`](https://nodejs.org/api/process.html#process_event_multipleresolves)
+[`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
 
 #### error.stack

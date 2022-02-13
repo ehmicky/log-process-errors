@@ -1,6 +1,5 @@
 import mapObj from 'map-obj'
 
-import { multipleResolves } from './multiple_resolves.js'
 import { rejectionHandled } from './rejection_handled.js'
 import { uncaughtException } from './uncaught_exception.js'
 import { unhandledRejection } from './unhandled_rejection.js'
@@ -14,7 +13,6 @@ const EVENTS_SIMPLE_MAP = {
   uncaughtException,
   unhandledRejection,
   rejectionHandled,
-  multipleResolves,
   warning,
 }
 
@@ -39,7 +37,6 @@ const DEFAULT_LEVEL = {
   warning: 'warn',
   unhandledRejection: 'error',
   rejectionHandled: 'error',
-  multipleResolves: 'info',
 }
 
 // Map of all possible events, with related information and helper methods

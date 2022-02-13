@@ -33,35 +33,11 @@ const rejectionHandled = function ({ value }) {
   return `a promise was rejected and handled too late: ${serialize(value)}`
 }
 
-// The default level is `event` because it does not always indicate an error:
-// https://github.com/nodejs/node/issues/24321
-const multipleResolves = function ({
-  rejected,
-  value,
-  nextRejected,
-  nextValue,
-}) {
-  const rejectedStr = REJECTED_NAME[rejected]
-  const nextRejectedStr = REJECTED_NAME[nextRejected]
-  const again = rejected === nextRejected ? ' again' : ''
-  const state = again ? rejectedStr : 'resolved/rejected'
-
-  return `a promise was ${state} multiple times:
-Initially ${rejectedStr} with: ${serialize(value)}
-Then ${nextRejectedStr}${again} with: ${serialize(nextValue)}`
-}
-
-const REJECTED_NAME = {
-  true: 'rejected',
-  false: 'resolved',
-}
-
 const MESSAGES = {
   uncaughtException,
   warning,
   unhandledRejection,
   rejectionHandled,
-  multipleResolves,
 }
 
 // We use `util.inspect()` instead of `JSON.stringify()` or a third-party

@@ -18,21 +18,9 @@ const rejectionHandled = function (context, promise) {
   handleEvent({ ...context, promise })
 }
 
-// eslint-disable-next-line max-params
-const multipleResolves = function (context, type, promise, nextValue) {
-  const nextRejected = TYPE_TO_REJECTED[type]
-  handleEvent({ ...context, promise, nextRejected, nextValue })
-}
-
-const TYPE_TO_REJECTED = {
-  resolve: false,
-  reject: true,
-}
-
 export const EVENTS = {
   uncaughtException,
   warning,
   unhandledRejection,
   rejectionHandled,
-  multipleResolves,
 }

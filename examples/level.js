@@ -7,14 +7,14 @@
 
 import logProcessErrors from 'log-process-errors'
 
-import { multipleResolves, warning } from './errors.js'
+import { warning, uncaughtException } from './errors.js'
 
 // Initialization
 // Changes which log level to use
 logProcessErrors({
   level: {
-    // Use `debug` log level for `multipleResolves` instead of `info`
-    multipleResolves: 'debug',
+    // Use `debug` log level for `uncaughtException` instead of `error`
+    uncaughtException: 'debug',
 
     // Skip some logs based on a condition
     default(error) {
@@ -31,5 +31,5 @@ const shouldSkip = function ({ message }) {
 // This deprecation `warning` will be silent
 warning()
 
-// This `multipleResolves` process error will use a `debug` log level
-multipleResolves()
+// This `uncaughtException` process error will use a `debug` log level
+uncaughtException()

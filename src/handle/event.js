@@ -47,7 +47,7 @@ const NO_PROMISE_EVENTS = new Set([
   'unhandledRejection',
 ])
 
-// `rejectionHandled` and `multipleResolves` otherwise use `await promise`
+// `rejectionHandled` otherwise use `await promise`
 const getPromiseValue = async function ({ promise }) {
   try {
     return { rejected: false, value: await promise }

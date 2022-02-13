@@ -26,12 +26,3 @@ export const warning = function () {
     detail: 'opts.force is deprecated',
   })
 }
-
-// Emit a `multipleResolves` event
-export const multipleResolves = function () {
-  // eslint-disable-next-line promise/avoid-new
-  return new Promise((resolve, reject) => {
-    resolve({ success: true })
-    reject(new Error('Cannot send request'))
-  })
-}

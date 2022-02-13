@@ -31,7 +31,6 @@ const COMMON_OPTIONS = {
   level: {
     uncaughtException: 'silent',
     unhandledRejection: 'silent',
-    multipleResolves: 'silent',
   },
 }
 

@@ -7,12 +7,7 @@
 
 import logProcessErrors from 'log-process-errors'
 
-import {
-  uncaughtException,
-  unhandledRejection,
-  warning,
-  multipleResolves,
-} from './errors.js'
+import { uncaughtException, unhandledRejection, warning } from './errors.js'
 
 // Initialization
 logProcessErrors()
@@ -21,4 +16,3 @@ logProcessErrors()
 uncaughtException()
 unhandledRejection()
 warning()
-multipleResolves()

@@ -1,3 +1,14 @@
+# 8.0.0
+
+## Breaking changes
+
+- `multipleResolves` has been
+  [deprecated by Node.js](https://github.com/nodejs/node/pull/41872). Therefore,
+  support for it as been removed.
+  - If your code uses the `level` or `exitOn` option with a `multipleResolves`
+    parameter, you should remove it.
+  - Otherwise, this release is not a breaking change for you.
+
 # 7.0.1
 
 ## Bug fixes

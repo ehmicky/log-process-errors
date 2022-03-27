@@ -49,7 +49,7 @@
     "figures": "^4.0.0",
     "filter-obj": "^3.0.0",
     "jest-validate": "^27.5.1",
-    "map-obj": "^5.0.0",
+    "map-obj": "^5.0.1",
     "moize": "^6.1.0",
     "semver": "^7.3.5"
   },

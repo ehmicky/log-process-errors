@@ -1,5 +1,9 @@
 name: Build
 on: [push, pull_request]
+env:
+  # This projects has many layers of nested processes making test coverage not
+  # work correctly
+  COVERAGE: 'false'
 jobs:
   combinations:
     # git push --tags does not create any commits so should not trigger a new

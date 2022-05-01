@@ -56,12 +56,6 @@ const REPLACEMENTS = [
   [/ \([\d.]+m?s\)/gu, ''],
   //  - Jasmine
   [/[\d.]+ seconds?/gu, ''],
-  //  - Jasmine, Node <12.5.0 only
-  [/\n\nSuite error: undefined/gu, ''],
-  [
-    / +Message:\n +Uncaught exception: RejectionHandled: a promise was rejected and handled too late: Error: message\n +Stack:\n +at STACK TRACE\n/gu,
-    '',
-  ],
   //  - node_tap `classic` reporter
   [/ [\d.]+m?s/gu, ''],
   [/(line|column): \d+/gu, ''],

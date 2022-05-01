@@ -47,8 +47,6 @@ const REPLACEMENTS = [
   [/(([ \t]+)at STACK TRACE(\r?\n)?)+/gu, '$2at STACK TRACE$3'],
   // Default Node.js warnings show PID, which we remove
   [/\(node:\d+\)/gu, '(node:PID)'],
-  // Default Node.js warnings in >=14 show this additional warning
-  [/\n.*--trace-warnings \.\.\..*/gu, ''],
   // File paths
   [/[^ (]+\/[^ )]+/gu, ''],
   // Durations in test runners:

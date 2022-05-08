@@ -64,7 +64,7 @@
     "strip-ansi": "^7.0.1",
     "tap": "^16.0.1",
     "tape": "^5.5.3",
-    "test-each": "^4.0.0"
+    "test-each": "^5.0.0"
   },
   "engines": {
     "node": ">=14.18.0"

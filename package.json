@@ -45,7 +45,7 @@
     "test": "test"
   },
   "dependencies": {
-    "colors-option": "^3.0.0",
+    "colors-option": "^4.0.0",
     "figures": "^4.0.0",
     "filter-obj": "^3.0.0",
     "jest-validate": "^27.5.1",

@@ -1,6 +1,6 @@
 {
   "name": "log-process-errors",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "type": "module",
   "exports": "./build/src/main.js",
   "main": "./build/src/main.js",

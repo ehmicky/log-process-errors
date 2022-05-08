@@ -1,8 +1,6 @@
-import { version } from 'process'
 import { inspect } from 'util'
 
 import test from 'ava'
-import semver from 'semver'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
@@ -10,7 +8,6 @@ import { EVENTS } from './helpers/events/main.js'
 import { startLogging } from './helpers/init.js'
 import { LEVELS } from './helpers/level.js'
 import { normalizeMessage } from './helpers/normalize.js'
-// eslint-disable-next-line import/max-dependencies
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
@@ -24,9 +21,6 @@ const snapshotArgs = function ([error, level, mainValue]) {
     mainValue,
   ]
 }
-
-// Stack traces change with this Node.js version
-const MIN_STACK_VERSION = '14.0.0'
 
 each([EVENTS[0]], ({ title }, { eventName, emit }) => {
   test.serial(`should fire opts.log() | ${title}`, async (t) => {
@@ -53,23 +47,18 @@ each([EVENTS[0]], ({ title }, { eventName, emit }) => {
     stopLogging()
   })
 
-  if (semver.gte(version, MIN_STACK_VERSION)) {
-    test.serial(
-      `should fire opts.log() with arguments | ${title}`,
-      async (t) => {
-        const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+  test.serial(`should fire opts.log() with arguments | ${title}`, async (t) => {
+    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
-        await emit({ all: true })
+    await emit({ all: true })
 
-        t.true(log.called)
+    t.true(log.called)
 
-        const snapshot = log.args.flatMap(snapshotArgs)
-        t.snapshot(snapshot)
+    const snapshot = log.args.flatMap(snapshotArgs)
+    t.snapshot(snapshot)
 
-        stopLogging()
-      },
-    )
-  }
+    stopLogging()
+  })
 })
 
 each(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {

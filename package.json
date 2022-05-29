@@ -54,7 +54,7 @@
     "semver": "^7.3.7"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^1.0.74",
+    "@ehmicky/dev-tasks": "^1.0.75",
     "@sinonjs/fake-timers": "^9.1.2",
     "execa": "^6.1.0",
     "has-ansi": "^5.0.1",

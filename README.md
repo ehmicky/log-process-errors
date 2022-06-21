@@ -1,7 +1,6 @@
 <img src="https://raw.githubusercontent.com/ehmicky/design/main/log-process-errors/log-process-errors.svg?sanitize=true" width="500"/>
 
 [![Codecov](https://img.shields.io/codecov/c/github/ehmicky/log-process-errors.svg?label=tested&logo=codecov)](https://codecov.io/gh/ehmicky/log-process-errors)
-[![Build](https://github.com/ehmicky/log-process-errors/workflows/Build/badge.svg)](https://github.com/ehmicky/log-process-errors/actions)
 [![Node](https://img.shields.io/node/v/log-process-errors.svg?logo=node.js)](https://www.npmjs.com/package/log-process-errors)
 [![Twitter](https://img.shields.io/badge/%E2%80%8B-twitter-4cc61e.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ehmicky)
 [![Medium](https://img.shields.io/badge/%E2%80%8B-medium-4cc61e.svg?logo=medium)](https://medium.com/@ehmicky)

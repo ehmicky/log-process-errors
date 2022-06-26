@@ -20,8 +20,8 @@ on the console which is very useful. Unfortunately those errors:
   [`warning`](https://nodejs.org/api/process.html#process_event_warning) and
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   making them hard to debug.
-- are inconvenient to [log to an external service](docs/API.md#log).
-- are hard to [test](docs/API.md#testing).
+- are inconvenient to [log to an external service](#log).
+- are hard to [test](#testing).
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
@@ -73,60 +73,220 @@ This package is an ES module and must be loaded using
 [an `import` or `import()` statement](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c),
 not `require()`.
 
-# Usage
+# API
+
+## logProcessErrors(options?)
+
+[`options`](#options) `object?`\
+_Return value_: `() => void`
+
+Initializes `log-process-errors`. Should be called as early as possible in the
+code, before other `import` statements.
 
 ```js
 import logProcessErrors from 'log-process-errors'
 logProcessErrors(options)
 ```
 
-`logProcessErrors()` should be called as early as possible in the code, before
-other `import` statements.
+Returns a function that can be fired to restore Node.js default behavior.
 
-# Options
+```js
+import logProcessErrors from 'log-process-errors'
 
-`options` is an optional object with the following properties.
+const restore = logProcessErrors(options)
+restore()
+```
 
-## log
+## Options
+
+### log
 
 _Type_: `function(error, level, originalError)`
 
-Customizes how process errors are logged.\
-[Full documentation](docs/API.md#log).
+By default process errors will be logged to the console using `console.error()`,
+`console.warn()`, etc.
 
-## level
+This behavior can be overridden with the `log` option. For example to log
+process errors with [Winston](https://github.com/winstonjs/winston) instead:
+
+```js
+import logProcessErrors from 'log-process-errors'
+
+logProcessErrors({
+  log(error, level, originalError) {
+    winstonLogger[level](error.stack)
+  },
+})
+```
+
+The function's arguments are [`error`](#error), [`level`](#level) and
+[`originalError`](#error).
+
+If logging is asynchronous, the function should return a promise (or use
+`async`/`await`). This is not necessary if logging is using streams (like
+[Winston](https://github.com/winstonjs/winston)).
+
+Duplicate process errors are only logged once (whether the `log` option is
+defined or not).
+
+#### error
+
+_Type_: `Error`
+
+The [`log`](#log) and [`level`](#level) options receive as argument an `error`
+instance.
+
+This error is generated based on the original process error but with an improved
+`name`, `message` and `stack`. However the original process error is still
+available as a third argument to [`log`](#log).
+
+##### error.name
+
+_Type_: `string`\
+_Value_: [`'UncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
+or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
+
+##### error.stack
+
+`error` is prettified when using
+[`console`](https://nodejs.org/api/console.html#console_console_log_data_args)
+or
+[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options):
+
+```js
+console.log(error)
+```
+
+![Error prettified](error_pretty.png)
+
+But not when using `error.stack` instead:
+
+```js
+console.log(error.stack)
+```
+
+![Error raw](error_raw.png)
+
+### level
 
 _Type_: `object`\
 _Default_: `{ warning: 'warn', default: 'error' }`
 
-Which log level to use.\
-[Full documentation](docs/API.md#level).
+Which log level to use.
 
-## exitOn
+Object keys are the error names:
+[`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`warning`](https://nodejs.org/api/process.html#process_event_warning),
+[`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
+or `default`.
+
+Object values are the log level: `'debug'`, `'info'`, `'warn'`, `'error'`,
+`'silent'` or `'default'`. It can also be a function using
+[`error` as argument](#error) and returning one of those log levels.
+
+```js
+import logProcessErrors from 'log-process-errors'
+
+logProcessErrors({
+  level: {
+    // Use `debug` log level for `uncaughtException` instead of `error`
+    uncaughtException: 'debug',
+
+    // Skip some logs based on a condition
+    default(error) {
+      return shouldSkip(error) ? 'silent' : 'default'
+    },
+  },
+})
+```
+
+### exitOn
 
 _Type_: `string[]`\
-_Default_: `['uncaughtException', 'unhandledRejection']` for Node `>= 15.0.0`, `['uncaughtException']`
-otherwise.
+_Value_: array of [`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`'unhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
+or [`'warning'`](https://nodejs.org/api/process.html#process_event_warning)\
+_Default_: `['uncaughtException', 'unhandledRejection']` for Node `>= 15.0.0`,
+`['uncaughtException']` otherwise.
 
-Which process errors should trigger `process.exit(1)`.\
-[Full documentation](docs/API.md#exiton).
+Which process errors should trigger `process.exit(1)`:
 
-## testing
+- `['uncaughtException', 'unhandledRejection']` is Node.js default behavior
+  since Node.js `15.0.0`. Before, only
+  [`uncaughtException`](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly)
+  was enabled.
+- use `[]` to prevent any `process.exit(1)`. Recommended if your process is
+  long-running and does not automatically restart on exit.
+
+`process.exit(1)` will only be fired after successfully logging the process
+error.
+
+```js
+import logProcessErrors from 'log-process-errors'
+
+logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
+```
+
+### testing
 
 _Type_: `string`\
 _Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or `'node_tap'`\
 _Default_: `undefined`
 
-When running tests, makes them fail if there are any process errors.\
-[Full documentation](docs/API.md#testing).
+When running tests, makes them fail if there are any process errors.
+
+Example with [Ava](https://github.com/avajs/ava):
+
+<!-- eslint-disable import/order, import/first -->
+
+```js
+import logProcessErrors from 'log-process-errors'
+// Should be initialized before requiring other dependencies
+logProcessErrors({ testing: 'ava' })
+
+import test from 'ava'
+
+// Tests will fail because a warning is triggered
+test('Example test', (t) => {
+  process.emitWarning('Example warning')
+  t.pass()
+})
+```
+
+To ignore specific process errors, use the [`level` option](#level):
+
+<!-- eslint-disable import/order, import/first -->
+
+```js
+import logProcessErrors from 'log-process-errors'
+// Should be initialized before requiring other dependencies
+logProcessErrors({ testing: 'ava', level: { warning: 'silent' } })
+
+import test from 'ava'
+
+// Tests will not fail because warnings are `silent`
+test('Example test', (t) => {
+  process.emitWarning('Example warning')
+  t.pass()
+})
+```
 
 ## colors
 
 _Type_: `boolean`\
 _Default_: `true` if the output is a terminal.
 
-Colorizes messages.\
-[Full documentation](docs/API.md#colors).
+Colorizes messages.
+
+```js
+import logProcessErrors from 'log-process-errors'
+
+logProcessErrors({ colors: false })
+```
 
 # Support
 

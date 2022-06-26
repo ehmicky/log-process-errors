@@ -159,7 +159,7 @@ or
 console.log(error)
 ```
 
-![Error prettified](error_pretty.png)
+![Error prettified](docs/error_pretty.png)
 
 But not when using `error.stack` instead:
 
@@ -167,7 +167,7 @@ But not when using `error.stack` instead:
 console.log(error.stack)
 ```
 
-![Error raw](error_raw.png)
+![Error raw](docs/error_raw.png)
 
 ### level
 

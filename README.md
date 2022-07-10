@@ -123,7 +123,7 @@ The function's arguments are [`error`](#error), [`level`](#level) and
 [`originalError`](#error).
 
 If logging is asynchronous, the function should return a promise (or use
-`async`/`await`). This is not necessary if logging is using streams (like
+`async`/`await`). This is not necessary if logging is buffered (like
 [Winston](https://github.com/winstonjs/winston)).
 
 Duplicate process errors are only logged once (whether the `log` option is

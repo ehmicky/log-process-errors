@@ -4,33 +4,36 @@
   "type": "module",
   "exports": "./build/src/main.js",
   "main": "./build/src/main.js",
+  "types": "./build/src/main.d.ts",
   "files": [
-    "build/src/**/*.{js,ts,map,json,sh,md}",
-    "examples/**/*.{js,ts,map,json,sh,md}"
+    "build/src/**/*.{js,d.ts,map,json,sh,md}",
+    "examples/**/*.{js,d.ts,map,json,sh,md}"
   ],
   "scripts": {
     "test": "gulp test"
   },
   "description": "Show some ❤️ to process errors",
   "keywords": [
-    "process",
-    "error-handling",
-    "error-handler",
-    "error",
-    "handling",
-    "handler",
-    "exception",
-    "promise",
-    "warnings",
-    "logging",
-    "uncaught",
-    "uncaught-exceptions",
-    "uncaughtException",
-    "unhandledRejection",
-    "rejectionHandled",
+    "code-quality",
     "debugging",
+    "error",
+    "error-handler",
+    "error-handling",
+    "exception",
+    "handler",
+    "handling",
+    "javascript",
+    "library",
+    "logging",
+    "monitoring",
+    "nodejs",
+    "process",
+    "promise",
+    "test",
     "testing",
-    "test"
+    "typescript",
+    "uncaught",
+    "uncaught-exceptions"
   ],
   "license": "Apache-2.0",
   "homepage": "https://git.io/fhSGY",
@@ -64,7 +67,8 @@
     "strip-ansi": "^7.0.1",
     "tap": "^16.0.1",
     "tape": "^5.5.3",
-    "test-each": "^5.0.0"
+    "test-each": "^5.0.0",
+    "tsd": "^0.22.0"
   },
   "engines": {
     "node": ">=14.18.0"

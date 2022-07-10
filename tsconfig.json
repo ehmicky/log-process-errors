@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "log-process-errors": ["."]
+    }
+  }
+}

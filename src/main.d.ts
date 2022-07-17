@@ -17,6 +17,15 @@ export type ErrorName =
   | 'unhandledRejection'
   | 'rejectionHandled'
 
+declare class ProcessError extends Error {
+  name:
+    | 'UncaughtException'
+    | 'UnhandledRejection'
+    | 'RejectionHandled'
+    | 'MultipleResolves'
+    | 'Warning'
+}
+
 export type Options = Partial<{
   /**
    * By default process errors will be logged to the console using
@@ -39,7 +48,7 @@ export type Options = Partial<{
    * ```
    */
   log: (
-    error: Error,
+    error: ProcessError,
     level: Level,
     originalError: Error,
   ) => Promise<void> | void
@@ -67,7 +76,7 @@ export type Options = Partial<{
   level: {
     [errorName in ErrorName | 'default']?:
       | LevelOption
-      | ((error: Error) => LevelOption)
+      | ((error: ProcessError) => LevelOption)
   }
 
   /**

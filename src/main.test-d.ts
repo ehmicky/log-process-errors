@@ -1,16 +1,17 @@
-import logProcessErrors, {
-  Options,
-  Level,
-  LevelOption,
-  ErrorName,
-  Undo,
-} from 'log-process-errors'
 import {
   expectType,
   expectAssignable,
   expectNotAssignable,
   expectError,
 } from 'tsd'
+
+import logProcessErrors, {
+  Options,
+  Level,
+  LevelOption,
+  ErrorName,
+  Undo,
+} from './main.js'
 
 const undo = logProcessErrors()
 expectType<Undo>(undo)

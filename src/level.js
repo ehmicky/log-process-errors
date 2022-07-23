@@ -1,6 +1,6 @@
 import { emitWarning } from 'process'
 
-import filterObj from 'filter-obj'
+import { excludeKeys } from 'filter-obj'
 import { multipleValidOptions } from 'jest-validate'
 import mapObj from 'map-obj'
 
@@ -31,7 +31,7 @@ export const getLevel = function ({ opts, name, error }) {
 export const applyDefaultLevels = function ({
   opts: { level: { default: defaultLevel, ...level } = {} },
 }) {
-  const levelA = filterObj(level, isDefined)
+  const levelA = excludeKeys(level, isUndefined)
 
   if (defaultLevel === undefined) {
     return { ...DEFAULT_LEVEL, ...levelA }
@@ -44,8 +44,8 @@ export const applyDefaultLevels = function ({
   return { ...defaultLevels, ...levelA }
 }
 
-const isDefined = function (key, value) {
-  return value !== undefined
+const isUndefined = function (key, value) {
+  return value === undefined
 }
 
 // Use during options validation

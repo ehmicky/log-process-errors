@@ -1,4 +1,4 @@
-import filterObj from 'filter-obj'
+import { excludeKeys } from 'filter-obj'
 
 // Retrieve `event` object representing the current event information
 export const getEvent = async function ({
@@ -16,7 +16,7 @@ export const getEvent = async function ({
 
   const event = { rejected, value: valueA, nextRejected, nextValue }
 
-  const eventA = filterObj(event, isDefined)
+  const eventA = excludeKeys(event, isUndefined)
   return eventA
 }
 
@@ -56,6 +56,6 @@ const getPromiseValue = async function ({ promise }) {
   }
 }
 
-const isDefined = function (key, value) {
-  return value !== undefined
+const isUndefined = function (key, value) {
+  return value === undefined
 }

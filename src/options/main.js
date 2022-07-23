@@ -1,7 +1,7 @@
 import { version } from 'process'
 
 import colorsOption from 'colors-option'
-import filterObj from 'filter-obj'
+import { excludeKeys } from 'filter-obj'
 import { validate } from 'jest-validate'
 import semver from 'semver'
 
@@ -17,7 +17,7 @@ import { applyTesting, getExampleTesting } from './testing.js'
 
 // Validate options and assign default options
 export const getOptions = function ({ opts = {} }) {
-  const optsA = filterObj(opts, isDefined)
+  const optsA = excludeKeys(opts, isUndefined)
 
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
   validateOptions(optsA)
@@ -30,8 +30,8 @@ export const getOptions = function ({ opts = {} }) {
   return { ...optsC, chalk }
 }
 
-const isDefined = function (key, value) {
-  return value !== undefined
+const isUndefined = function (key, value) {
+  return value === undefined
 }
 
 // Since Node 15.0.0, `unhandledRejection` makes the process exit too

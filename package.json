@@ -36,7 +36,7 @@
     "uncaught-exceptions"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://git.io/fhSGY",
+  "homepage": "https://www.github.com/ehmicky/log-process-errors",
   "repository": "ehmicky/log-process-errors",
   "bugs": {
     "url": "https://github.com/ehmicky/log-process-errors/issues"

@@ -33,7 +33,7 @@ const validateTesting = function ({ testOpts, testing }) {
 }
 
 // Presets override other options. We make sure users do not assume their
-// options are used when they are actually overriden.
+// options are used when they are actually overridden.
 const validateTestOpts = function ({ opts, testOpts, testing }) {
   const forbiddenOpts = new Set(Object.keys(testOpts).filter(isForbiddenOpt))
 

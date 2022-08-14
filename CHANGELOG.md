@@ -1,3 +1,10 @@
+# 9.3.0
+
+## Documentation
+
+- Document related projects, including
+  [`modern-errors`](https://github.com/ehmicky/modern-errors)
+
 # 9.2.0
 
 ## Features

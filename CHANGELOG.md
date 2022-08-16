@@ -1,3 +1,9 @@
+# 9.2.0
+
+## Features
+
+- Reduce npm package size
+
 # 9.1.0
 
 ## Features

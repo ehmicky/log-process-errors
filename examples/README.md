@@ -1,16 +1,8 @@
-This directory contains examples of this library.
+This directory contains examples of this library. They can be run and
+edited:
 
-To execute them, first [install](../README.md#install) `log-process-errors`.
-Then run:
-
-```
-node node_modules/log-process-errors/examples/FILE.js
-```
-
-You can edit the examples.
-
-They can also be run directly
-[in your browser](https://repl.it/@ehmicky/log-process-errors).
+- either directly [in your browser](https://repl.it/@ehmicky/log-process-errors)
+- or in a terminal by cloning this repository
 
 ## Examples
 

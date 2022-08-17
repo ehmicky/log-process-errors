@@ -292,6 +292,24 @@ import logProcessErrors from 'log-process-errors'
 logProcessErrors({ colors: false })
 ```
 
+# Related projects
+
+- [`modern-errors`](https://github.com/ehmicky/modern-errors): Handle errors
+  like it's 2022 🔮
+- [`create-error-types`](https://github.com/ehmicky/create-error-types): Create
+  multiple error types
+- [`error-type`](https://github.com/ehmicky/error-type): Create one error type
+- [`error-serializer`](https://github.com/ehmicky/error-serializer): Convert
+  errors to/from plain objects
+- [`normalize-exception`](https://github.com/ehmicky/normalize-exception):
+  Normalize exceptions/errors
+- [`merge-error-cause`](https://github.com/ehmicky/merge-error-cause): Merge an
+  error with its `cause`
+- [`error-cause-polyfill`](https://github.com/ehmicky/error-cause-polyfill):
+  Polyfill `error.cause`
+- [`handle-cli-error`](https://github.com/ehmicky/handle-cli-error): 💣 Error
+  handler for CLI applications 💥
+
 # Support
 
 For any question, _don't hesitate_ to [submit an issue on GitHub](../../issues).

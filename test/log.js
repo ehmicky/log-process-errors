@@ -5,6 +5,7 @@ import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events/main.js'
+import { hasInlinePreview } from './helpers/events/version.js'
 import { startLogging } from './helpers/init.js'
 import { LEVELS } from './helpers/level.js'
 import { normalizeMessage } from './helpers/normalize.js'
@@ -47,18 +48,23 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
     stopLogging()
   })
 
-  test.serial(`should fire opts.log() with arguments | ${title}`, async (t) => {
-    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+  if (hasInlinePreview()) {
+    test.serial(
+      `should fire opts.log() with arguments | ${title}`,
+      async (t) => {
+        const { stopLogging, log } = startLogging({ log: 'spy', eventName })
 
-    await emit({ all: true })
+        await emit({ all: true })
 
-    t.true(log.called)
+        t.true(log.called)
 
-    const snapshot = log.args.flatMap(snapshotArgs)
-    t.snapshot(snapshot)
+        const snapshot = log.args.flatMap(snapshotArgs)
+        t.snapshot(snapshot)
 
-    stopLogging()
-  })
+        stopLogging()
+      },
+    )
+  }
 })
 
 each(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {

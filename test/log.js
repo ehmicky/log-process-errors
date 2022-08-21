@@ -22,7 +22,7 @@ const snapshotArgs = function ([error, level, mainValue]) {
   ]
 }
 
-each([EVENTS[0]], ({ title }, { eventName, emit }) => {
+each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should fire opts.log() | ${title}`, async (t) => {
     const { stopLogging, log } = startLogging({ log: 'spy' })
 

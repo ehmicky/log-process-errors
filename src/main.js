@@ -16,29 +16,29 @@ export default function logProcessErrors(opts) {
 }
 
 const addListeners = function (opts) {
-  return Object.entries(EVENTS).map(([name, eventFunc]) =>
-    addListener(opts, name, eventFunc),
+  return Object.entries(EVENTS).map(([reason, eventFunc]) =>
+    addListener(opts, reason, eventFunc),
   )
 }
 
-const addListener = function (opts, name, eventFunc) {
-  // `previousEvents` is event-name-specific so that if events of a given event
+const addListener = function (opts, reason, eventFunc) {
+  // `previousEvents` is reason-specific so that if events of a given event
   // stopped being emitted, others still are.
   // `previousEvents` can take up some memory, but it should be cleaned up
   // by `removeListener()`, i.e. once `eventListener` is garbage collected.
   const previousEvents = new Set()
-  // Should only emit the warning once per event name and per `init()`
+  // Should only emit the warning once per `reason` and per `init()`
   const mEmitLimitedWarning = mem(emitLimitedWarning)
 
   const eventListener = eventFunc.bind(undefined, {
     opts,
-    name,
+    reason,
     previousEvents,
     mEmitLimitedWarning,
   })
-  process.on(name, eventListener)
+  process.on(reason, eventListener)
 
-  return { eventListener, name }
+  return { eventListener, reason }
 }
 
 // Remove all event handlers and restore previous `warning` listeners
@@ -47,6 +47,6 @@ const stopLogProcessErrors = function (listeners) {
   restoreWarningListener()
 }
 
-const removeListener = function ({ eventListener, name }) {
-  process.off(name, eventListener)
+const removeListener = function ({ eventListener, reason }) {
+  process.off(reason, eventListener)
 }

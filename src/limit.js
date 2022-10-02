@@ -1,6 +1,6 @@
 import { emitWarning } from 'process'
 
-// We only allow 100 events (per `event.name`) for the global process because:
+// We only allow 100 events (per `reason`) for the global process because:
 //  - process errors are exceptional and if more than 100 happen, this is
 //    probably due to some infinite recursion.
 //  - the `repeated` logic should prevent reaching the threshold
@@ -13,36 +13,38 @@ import { emitWarning } from 'process'
 export const isLimited = function ({
   previousEvents,
   mEmitLimitedWarning,
-  name,
+  reason,
   value,
 }) {
-  if (isLimitedWarning(name, value)) {
+  if (isLimitedWarning(reason, value)) {
     return false
   }
 
   const isLimitedEvent = [...previousEvents].length >= MAX_EVENTS
 
   if (isLimitedEvent) {
-    mEmitLimitedWarning(name)
+    mEmitLimitedWarning(reason)
   }
 
   return isLimitedEvent
 }
 
 // Notify that limit has been reached with a `warning` event
-export const emitLimitedWarning = function (name) {
-  emitWarning(ERROR_MESSAGE(name), ERROR_NAME, ERROR_CODE)
+export const emitLimitedWarning = function (reason) {
+  emitWarning(ERROR_MESSAGE(reason), ERROR_NAME, ERROR_CODE)
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function (name, value = {}) {
+const isLimitedWarning = function (reason, value = {}) {
   return (
-    name === 'warning' && value.name === ERROR_NAME && value.code === ERROR_CODE
+    reason === 'warning' &&
+    value.name === ERROR_NAME &&
+    value.code === ERROR_CODE
   )
 }
 
-const ERROR_MESSAGE = (name) =>
-  `Cannot log more than ${MAX_EVENTS} '${name}' until process is restarted`
+const ERROR_MESSAGE = (reason) =>
+  `Cannot log more than ${MAX_EVENTS} '${reason}' until process is restarted`
 const ERROR_NAME = 'LogProcessErrors'
 const ERROR_CODE = 'TooManyErrors'
 

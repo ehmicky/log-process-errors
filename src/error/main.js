@@ -2,12 +2,12 @@ import { getMessage } from './message.js'
 
 // Retrieve `error` which sums up all information that can be gathered about
 // the event.
-export const getError = function (name, event) {
-  const message = getMessage(event, name)
+export const getError = function (reason, event) {
+  const message = getMessage(event, reason)
   const mainValue = getMainValue(event)
   const staticProps = getEventProps(mainValue)
   const stack = getStack(mainValue)
-  const error = buildError({ name, message, stack, staticProps })
+  const error = buildError({ reason, message, stack, staticProps })
   return error
 }
 
@@ -32,14 +32,14 @@ const getStack = function (mainValue) {
 
 const FIRST_LINE_REGEXP = /.*\n/u
 
-const buildError = function ({ name, message, stack, staticProps }) {
+const buildError = function ({ reason, message, stack, staticProps }) {
   const error = new Error(message)
   // eslint-disable-next-line fp/no-mutating-assign
   Object.assign(error, staticProps)
   // `error.name` should not be enumerable, to ensure it is correctly printed.
   // eslint-disable-next-line fp/no-mutating-methods
   Object.defineProperty(error, 'name', {
-    value: capitalize(name),
+    value: capitalize(reason),
     enumerable: false,
     writable: true,
     configurable: true,

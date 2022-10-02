@@ -2,28 +2,28 @@ import { excludeKeys } from 'filter-obj'
 
 // Retrieve `event` object representing the current event information
 export const getEvent = async function ({
-  name,
+  reason,
   promise,
   value,
   nextRejected,
   nextValue,
 }) {
-  const { rejected, value: valueA } = await parsePromise(name, promise, value)
+  const { rejected, value: valueA } = await parsePromise(reason, promise, value)
   const event = { rejected, value: valueA, nextRejected, nextValue }
   const eventA = excludeKeys(event, isUndefined)
   return eventA
 }
 
 // Retrieve promise's resolved/rejected state and value.
-const parsePromise = async function (name, promise, value) {
-  if (NO_PROMISE_EVENTS.has(name)) {
+const parsePromise = async function (reason, promise, value) {
+  if (NO_PROMISE_REASONS.has(reason)) {
     return { value }
   }
 
   const { rejected, value: valueA } = await getPromiseValue(promise)
 
   // `rejected` is always `true` with `rejectionHandled`, so we skip it
-  return name === 'rejectionHandled'
+  return reason === 'rejectionHandled'
     ? { value: valueA }
     : { rejected, value: valueA }
 }
@@ -33,7 +33,7 @@ const parsePromise = async function (name, promise, value) {
 // For `unhandledRejection`:
 //  - we already know `rejected` and `value`
 //  - using `try/catch` will fire `rejectionHandled`
-const NO_PROMISE_EVENTS = new Set([
+const NO_PROMISE_REASONS = new Set([
   'uncaughtException',
   'warning',
   'unhandledRejection',

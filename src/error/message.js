@@ -1,8 +1,8 @@
 import { inspect } from 'util'
 
 // Retrieve the `error.message` using the `event` information
-export const getMessage = function (event, name) {
-  return MESSAGES[name](event)
+export const getMessage = function (event, reason) {
+  return MESSAGES[reason](event)
 }
 
 const uncaughtException = function ({ value }) {

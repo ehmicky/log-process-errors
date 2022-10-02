@@ -1,10 +1,5 @@
 /**
- * Actual logging level
- */
-export type Level = 'debug' | 'info' | 'warn' | 'error'
-
-/**
- * Process error's `name`
+ * Why the process error was created
  */
 export type Reason =
   | 'uncaughtException'
@@ -23,21 +18,17 @@ declare class ProcessError extends Error {
 
 export type Options = {
   /**
-   * By default process errors will be logged to the console using
-   * `console.error()`, `console.warn()`, etc.
-   * This behavior can be overridden with the `log` option.
+   * Function called once per process error.
+   * Duplicate process errors are ignored.
    *
-   * If logging is asynchronous, the function should return a promise (or use
-   * `async`/`await`). This is not necessary if logging is buffered (like
-   * [Winston](https://github.com/winstonjs/winston)).
-   *
-   * @default `console.error()`, `console.warn()`, etc.
+   * @default console.error(error)
    *
    * @example
    * ```js
+   * // Log process errors with Winston instead
    * logProcessErrors({
-   *   log(error, level, originalError) {
-   *     winstonLogger[level](error.stack)
+   *   log(error, reason) {
+   *     winstonLogger.error(error.stack)
    *   },
    * })
    * ```
@@ -45,30 +36,18 @@ export type Options = {
   readonly log?: (error: ProcessError, reason: Reason) => Promise<void> | void
 
   /**
-   * Which process errors should trigger `process.exit(1)`:
-   *  - `['uncaughtException', 'unhandledRejection']` is Node.js default
-   *    behavior since Node.js `15.0.0`. Before, only
-   *    [`uncaughtException`](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly)
-   *    was enabled.
-   *  - use `[]` to prevent any `process.exit(1)`. Recommended if your process
-   *    is long-running and does not automatically restart on exit.
+   * Prevent exiting the process on
+   * [uncaught exception](https://nodejs.org/api/process.html#process_event_uncaughtexception)
+   * or
+   * [unhandled promise](https://nodejs.org/api/process.html#process_event_unhandledrejection).
    *
-   * `process.exit(1)` will only be fired after successfully logging the process
-   * error.
-   *
-   * @default `['uncaughtException', 'unhandledRejection']` for Node
-   * `>= 15.0.0`, `['uncaughtException']` otherwise.
-   *
-   * @example
-   * ```js
-   * logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
-   * ```
+   * @default false
    */
-  readonly exitOn?: Level[]
+  readonly keep?: boolean
 }
 
 /**
- * Function that can be fired to restore Node.js default behavior.
+ * Restores Node.js default behavior.
  *
  * @example
  * ```js
@@ -80,8 +59,6 @@ type Undo = () => void
 
 /**
  * Improve how process errors are logged.
- * Should be called as early as possible in the code, before other `import`
- * statements.
  *
  * @example
  * ```js

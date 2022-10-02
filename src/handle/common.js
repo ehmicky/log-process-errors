@@ -7,8 +7,8 @@ import { getEvent } from './event.js'
 
 // Generic event handler for all events.
 export const handleEvent = async function ({
-  opts: { log, exitOn },
-  name,
+  opts: { log, keep },
+  reason,
   previousEvents,
   mEmitLimitedWarning,
   promise,
@@ -16,12 +16,12 @@ export const handleEvent = async function ({
   nextRejected,
   nextValue,
 }) {
-  if (isLimited({ previousEvents, mEmitLimitedWarning, name, value })) {
+  if (isLimited({ previousEvents, mEmitLimitedWarning, reason, value })) {
     return
   }
 
   const event = await getEvent({
-    name,
+    reason,
     promise,
     value,
     nextRejected,
@@ -32,8 +32,8 @@ export const handleEvent = async function ({
     return
   }
 
-  const error = getError(name, event)
+  const error = getError(reason, event)
   // See `exit.js` on why we need to `await`
-  await log(error, name)
-  await exitProcess(name, exitOn)
+  await log(error, reason)
+  await exitProcess(keep, reason)
 }

@@ -3,14 +3,21 @@
 ## Breaking changes
 
 - Remove the following options: `testing`, `colors`, `levels`
-- The `log` option's argument are now: `(error, reason)` instead of
-  `(error, level, originalError)`
+- Replace the `exitOn` option by the simpler
+  [`keep` boolean option](README.md#keep)
+- The [`log` option's](README.md#log) arguments are now: `(error, reason)`
+  instead of `(error, level, originalError)`
 - Errors are not pretty-printed anymore
-- Modify TypeScript types accordingly
+- TypeScript types have been simplified
 
 ## Features
 
 - Reduce npm package size
+
+## Bug fixes
+
+- On uncaught exceptions, do not hold the process for 3 seconds unless there are
+  still some ongoing tasks
 
 # 9.4.0
 

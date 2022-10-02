@@ -23,12 +23,12 @@ on the console which is very useful. Unfortunately those errors:
 - do not show stack traces for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning) and
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-  making them hard to debug.
-- are inconvenient to [log to an external service](#log).
-- are hard to test.
-- cannot be conditionally skipped.
+  making them hard to debug
+- are inconvenient to [log to an external service](#log)
+- are hard to test
+- cannot be conditionally skipped
 - are printed each time an error is repeated (except for
-  [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
+  [`warning`](https://nodejs.org/api/process.html#process_event_warning))
 
 `log-process-errors` fixes all those issues.
 
@@ -67,51 +67,47 @@ not `require()`.
 [`options`](#options) `object?`\
 _Return value_: `() => void`
 
-Initializes `log-process-errors`. Should be called as early as possible in the
-code, before other `import` statements.
+Initializes `log-process-errors`.
 
 ```js
 import logProcessErrors from 'log-process-errors'
 logProcessErrors(options)
 ```
 
-Returns a function that can be fired to restore Node.js default behavior.
+The return value restores Node.js default behavior.
 
 ```js
-import logProcessErrors from 'log-process-errors'
-
 const restore = logProcessErrors(options)
 restore()
 ```
 
 ## Options
 
+### keep
+
+_Type_: `boolean`\
+_Default_: `false`
+
+Prevent exiting the process on
+[uncaught exception](https://nodejs.org/api/process.html#process_event_uncaughtexception)
+or
+[unhandled promise](https://nodejs.org/api/process.html#process_event_unhandledrejection).
+
 ### log
 
-_Type_: `function(error, reason)`
+_Type_: `(Error, string) => Promise<void> | void`\
+_Default_: `console.error(error)`
 
-By default process errors will be logged to the console using `console.error()`,
-`console.warn()`, etc.
-
-This behavior can be overridden with the `log` option. For example to log
-process errors with [Winston](https://github.com/winstonjs/winston) instead:
+Function called once per process error. Duplicate process errors are ignored.
 
 ```js
-import logProcessErrors from 'log-process-errors'
-
+// Log process errors with Winston instead
 logProcessErrors({
   log(error, reason) {
     winstonLogger.error(error.stack)
   },
 })
 ```
-
-If logging is asynchronous, the function should return a promise (or use
-`async`/`await`). This is not necessary if logging is buffered (like
-[Winston](https://github.com/winstonjs/winston)).
-
-Duplicate process errors are only logged once (whether the `log` option is
-defined or not).
 
 #### error
 
@@ -127,34 +123,6 @@ _Value_: [`'UncaughtException'`](https://nodejs.org/api/process.html#process_eve
 [`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
-
-### exitOn
-
-_Type_: `string[]`\
-_Value_: array of [`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`'unhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-or [`'warning'`](https://nodejs.org/api/process.html#process_event_warning)\
-_Default_: `['uncaughtException', 'unhandledRejection']` for Node `>= 15.0.0`,
-`['uncaughtException']` otherwise.
-
-Which process errors should trigger `process.exit(1)`:
-
-- `['uncaughtException', 'unhandledRejection']` is Node.js default behavior
-  since Node.js `15.0.0`. Before, only
-  [`uncaughtException`](https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly)
-  was enabled.
-- use `[]` to prevent any `process.exit(1)`. Recommended if your process is
-  long-running and does not automatically restart on exit.
-
-`process.exit(1)` will only be fired after successfully logging the process
-error.
-
-```js
-import logProcessErrors from 'log-process-errors'
-
-logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
-```
 
 # Related projects
 

@@ -100,18 +100,6 @@ export type Options = Partial<{
    * ```
    */
   exitOn: Level[]
-
-  /**
-   * Colorizes messages.
-   *
-   * @default `true` if the output is a terminal.
-   *
-   * @example
-   * ```js
-   * logProcessErrors({ colors: false })
-   * ```
-   */
-  colors: boolean
 }>
 
 /**

@@ -59,6 +59,3 @@ logProcessErrors({ exitOn: ['info', 'debug'] })
 expectError(logProcessErrors({ exitOn: true }))
 expectError(logProcessErrors({ exitOn: [true] }))
 expectError(logProcessErrors({ exitOn: ['other'] }))
-
-logProcessErrors({ colors: true })
-expectError(logProcessErrors({ colors: 'true' }))

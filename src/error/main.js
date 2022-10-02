@@ -57,16 +57,9 @@ const capitalize = function (string) {
 export const addErrorPrint = function ({
   error,
   error: { message },
-  opts,
   level,
   name,
   stack,
 }) {
-  error[custom] = printError.bind(undefined, {
-    opts,
-    level,
-    name,
-    message,
-    stack,
-  })
+  error[custom] = printError.bind(undefined, { level, name, message, stack })
 }

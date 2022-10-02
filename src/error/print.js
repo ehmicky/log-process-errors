@@ -1,48 +1,16 @@
 import figures from 'figures'
 
 // Pretty-print error on the console (which uses `util.inspect()`)
-export const printError = function ({
-  opts: {
-    chalk,
-    chalk: { gray },
-  },
-  level,
-  name,
-  message,
-  stack,
-}) {
-  const header = getHeader({ level, name, message, chalk })
-  const stackA = gray(stack)
-  return `${header}\n${stackA}`
-}
-
-// Add color, sign and `event.name` to first message line
-const getHeader = function ({
-  level,
-  name,
-  message,
-  chalk,
-  chalk: { italic, inverse, bold },
-}) {
-  const { message: messageA, details } = splitMessage({ message })
-
-  const { COLOR, SIGN } = LEVELS[level]
-  const prefix = ` ${SIGN}  ${name} ${italic(`(${messageA})`)} `
-  const header = `${inverse(bold(prefix))}${details}`
-  const headerA = chalk[COLOR](header)
-  return headerA
-}
-
-const splitMessage = function ({ message }) {
+export const printError = function ({ level, name, message, stack }) {
   const [messageA, ...details] = message.split(':')
   const detailsA = details.join(':')
-  return { message: messageA, details: detailsA }
+  return ` ${SIGNS[level]}  ${name} ${`(${messageA})`} ${detailsA}\n${stack}`
 }
 
 // Each level is printed in a different way
-const LEVELS = {
-  debug: { COLOR: 'blue', SIGN: figures.circleFilled },
-  info: { COLOR: 'green', SIGN: figures.info },
-  warn: { COLOR: 'yellow', SIGN: figures.warning },
-  error: { COLOR: 'red', SIGN: figures.cross },
+const SIGNS = {
+  debug: figures.circleFilled,
+  info: figures.info,
+  warn: figures.warning,
+  error: figures.cross,
 }

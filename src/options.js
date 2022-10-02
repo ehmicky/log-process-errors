@@ -1,6 +1,5 @@
 import { version } from 'process'
 
-import colorsOption from 'colors-option'
 import { excludeKeys } from 'filter-obj'
 import { validate } from 'jest-validate'
 import semver from 'semver'
@@ -21,10 +20,7 @@ export const getOptions = function ({ opts = {} }) {
   validateOptions(optsA)
 
   const level = applyDefaultLevels({ opts: optsA })
-  const { colors, ...optsC } = { ...DEFAULT_OPTS, ...optsA, level }
-
-  const chalk = colorsOption({ colors })
-  return { ...optsC, chalk }
+  return { ...DEFAULT_OPTS, ...optsA, level }
 }
 
 const isUndefined = function (key, value) {
@@ -58,7 +54,6 @@ const exampleFunction = function () {}
 
 const EXAMPLE_OPTS = {
   ...DEFAULT_OPTS,
-  colors: true,
   log: exampleFunction,
   level: getExampleLevels(),
 }

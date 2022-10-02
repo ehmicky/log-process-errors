@@ -22,7 +22,7 @@ test.serial('[warning] should disable default event handlers', async (t) => {
   // eslint-disable-next-line no-restricted-globals
   const stub = sinon.stub(console, 'error')
 
-  const { stopLogging, log } = startLogging({ log: 'spy', colors: false })
+  const { stopLogging, log } = startLogging({ log: 'spy' })
 
   await emit()
 
@@ -74,9 +74,7 @@ each(
       }
 
       t.snapshot(
-        await normalizeCall(`node ${flag} ${LOAD_HELPER} ${eventName}`, {
-          colors: false,
-        }),
+        await normalizeCall(`node ${flag} ${LOAD_HELPER} ${eventName}`),
       )
     })
   },

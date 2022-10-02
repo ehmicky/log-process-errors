@@ -227,19 +227,6 @@ import logProcessErrors from 'log-process-errors'
 logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
 ```
 
-## colors
-
-_Type_: `boolean`\
-_Default_: `true` if the output is a terminal.
-
-Colorizes messages.
-
-```js
-import logProcessErrors from 'log-process-errors'
-
-logProcessErrors({ colors: false })
-```
-
 # Related projects
 
 - [`modern-errors`](https://github.com/ehmicky/modern-errors): Handle errors

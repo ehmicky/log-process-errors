@@ -1,27 +1,21 @@
 import { execaCommand } from 'execa'
-// TODO: use `util.stripVTControlCharacters()` after dropping support for
-// Node <16.11.0
-import stripAnsi from 'strip-ansi'
 
 // Call process and normalize its output for testing
-export const normalizeCall = async function (input, opts) {
+export const normalizeCall = async function (input) {
   const { stdout, stderr, exitCode } = await execaCommand(input, {
     reject: false,
-    ...opts,
   })
 
-  const stdoutA = normalizeMessage(stdout, opts)
-  const stderrA = normalizeMessage(stderr, opts)
+  const stdoutA = normalizeMessage(stdout)
+  const stderrA = normalizeMessage(stderr)
   return { exitCode, stdout: stdoutA, stderr: stderrA }
 }
 
 // Normalize console messages for testing
-export const normalizeMessage = function (message, { colors = true } = {}) {
-  // Windows does not use colors on CI
-  const messageA = colors ? message : stripAnsi(message)
-  const messageB = messageA.trim()
-  const messageC = REPLACEMENTS.reduce(replacePart, messageB)
-  return messageC
+export const normalizeMessage = function (message) {
+  const messageA = message.trim()
+  const messageB = REPLACEMENTS.reduce(replacePart, messageA)
+  return messageB
 }
 
 const replacePart = function (message, [before, after]) {

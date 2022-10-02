@@ -9,7 +9,7 @@ import { removeProcessListeners } from '../helpers/remove.js'
 removeProcessListeners()
 
 const normalizeJestValidate = function (message) {
-  const messageA = normalizeMessage(message, { colors: false })
+  const messageA = normalizeMessage(message)
   const messageB = messageA.replace(EXAMPLE_REGEXP, '')
   return messageB
 }
@@ -24,7 +24,6 @@ each(
     { level: { warning: true } },
     { level: 'invalid' },
     { level: { warning: 'invalid' } },
-    { colors: 1 },
     { exitOn: true },
     { exitOn: ['invalid'] },
   ],
@@ -48,7 +47,7 @@ each(
       stopLogging()
 
       t.is(stub.callCount, 1)
-      t.snapshot(normalizeMessage(stub.firstCall.args[0], { colors: false }))
+      t.snapshot(normalizeMessage(stub.firstCall.args[0]))
 
       stub.restore()
     })

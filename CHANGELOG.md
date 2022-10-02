@@ -2,7 +2,11 @@
 
 ## Breaking changes
 
-- Remove the following options: `testing`
+- Remove the following options: `testing`, `colors`
+
+## Features
+
+- Reduce npm package size
 
 # 9.4.0
 

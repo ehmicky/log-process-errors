@@ -47,7 +47,7 @@ const logEvent = async function ({ opts, name, event }) {
     return
   }
 
-  addErrorPrint({ error, opts, level, name, stack })
+  addErrorPrint({ error, level, name, stack })
 
   // See `exit.js` on why we need to `await`
   await opts.log(error, level, mainValue)

@@ -27,9 +27,6 @@ each(
     { colors: 1 },
     { exitOn: true },
     { exitOn: ['invalid'] },
-    { testing: true },
-    { testing: 'invalid' },
-    { testing: 'ava', log() {} },
   ],
   ({ title }, options) => {
     test(`should validate options | ${title}`, (t) => {

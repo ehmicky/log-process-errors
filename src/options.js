@@ -5,15 +5,13 @@ import { excludeKeys } from 'filter-obj'
 import { validate } from 'jest-validate'
 import semver from 'semver'
 
-import { validateExitOn } from '../exit.js'
+import { validateExitOn } from './exit.js'
 import {
   applyDefaultLevels,
   getExampleLevels,
   validateLevels,
-} from '../level.js'
-import { defaultLog } from '../log.js'
-
-import { applyTesting, getExampleTesting } from './testing.js'
+} from './level.js'
+import { defaultLog } from './log.js'
 
 // Validate options and assign default options
 export const getOptions = function ({ opts = {} }) {
@@ -22,9 +20,8 @@ export const getOptions = function ({ opts = {} }) {
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
   validateOptions(optsA)
 
-  const optsB = applyTesting({ opts: optsA })
-  const level = applyDefaultLevels({ opts: optsB })
-  const { colors, ...optsC } = { ...DEFAULT_OPTS, ...optsB, level }
+  const level = applyDefaultLevels({ opts: optsA })
+  const { colors, ...optsC } = { ...DEFAULT_OPTS, ...optsA, level }
 
   const chalk = colorsOption({ colors })
   return { ...optsC, chalk }
@@ -64,7 +61,6 @@ const EXAMPLE_OPTS = {
   colors: true,
   log: exampleFunction,
   level: getExampleLevels(),
-  testing: getExampleTesting(),
 }
 
 // Validation beyond what `jest-validate` can do

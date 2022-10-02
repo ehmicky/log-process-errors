@@ -59,12 +59,8 @@
     "@sinonjs/fake-timers": "^9.1.2",
     "execa": "^6.1.0",
     "has-ansi": "^5.0.1",
-    "jasmine": "^4.2.1",
-    "mocha": "^10.0.0",
     "sinon": "^14.0.0",
     "strip-ansi": "^7.0.1",
-    "tap": "^16.0.1",
-    "tape": "^5.5.3",
     "test-each": "^5.4.0"
   },
   "engines": {

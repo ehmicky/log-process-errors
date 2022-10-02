@@ -1,3 +1,9 @@
+# 10.0.0
+
+## Breaking changes
+
+- Remove the following options: `testing`
+
 # 9.4.0
 
 ## Features

@@ -60,9 +60,5 @@ expectError(logProcessErrors({ exitOn: true }))
 expectError(logProcessErrors({ exitOn: [true] }))
 expectError(logProcessErrors({ exitOn: ['other'] }))
 
-logProcessErrors({ testing: 'ava' })
-expectError(logProcessErrors({ testing: true }))
-expectError(logProcessErrors({ testing: 'other' }))
-
 logProcessErrors({ colors: true })
 expectError(logProcessErrors({ colors: 'true' }))

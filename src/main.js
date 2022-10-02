@@ -4,7 +4,7 @@ import mem from 'mem'
 
 import { EVENTS } from './handle/main.js'
 import { emitLimitedWarning } from './limit.js'
-import { getOptions } from './options/main.js'
+import { getOptions } from './options.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
 // Add event handling for all process-related errors

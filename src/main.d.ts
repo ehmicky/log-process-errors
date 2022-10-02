@@ -102,28 +102,6 @@ export type Options = Partial<{
   exitOn: Level[]
 
   /**
-   * When running tests, makes them fail if there are any process errors.
-   *
-   * @default undefined
-   *
-   * @example
-   * ```js
-   * import logProcessErrors from 'log-process-errors'
-   * // Should be initialized before requiring other dependencies
-   * logProcessErrors({ testing: 'ava' })
-   *
-   * import test from 'ava'
-   *
-   * // Tests will fail because a warning is triggered
-   * test('Example test', (t) => {
-   *   process.emitWarning('Example warning')
-   *   t.pass()
-   * })
-   * ```
-   */
-  testing: 'ava' | 'mocha' | 'jasmine' | 'tape' | 'node_tap'
-
-  /**
    * Colorizes messages.
    *
    * @default `true` if the output is a terminal.

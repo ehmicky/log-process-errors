@@ -25,7 +25,7 @@ on the console which is very useful. Unfortunately those errors:
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
   making them hard to debug.
 - are inconvenient to [log to an external service](#log).
-- are hard to [test](#testing).
+- are hard to test.
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
@@ -225,50 +225,6 @@ error.
 import logProcessErrors from 'log-process-errors'
 
 logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
-```
-
-### testing
-
-_Type_: `string`\
-_Value_: `'ava'`, `'mocha'`, `'jasmine'`, `'tape'` or `'node_tap'`\
-_Default_: `undefined`
-
-When running tests, makes them fail if there are any process errors.
-
-Example with [Ava](https://github.com/avajs/ava):
-
-<!-- eslint-disable import/order, import/first -->
-
-```js
-import logProcessErrors from 'log-process-errors'
-// Should be initialized before requiring other dependencies
-logProcessErrors({ testing: 'ava' })
-
-import test from 'ava'
-
-// Tests will fail because a warning is triggered
-test('Example test', (t) => {
-  process.emitWarning('Example warning')
-  t.pass()
-})
-```
-
-To ignore specific process errors, use the [`level` option](#level):
-
-<!-- eslint-disable import/order, import/first -->
-
-```js
-import logProcessErrors from 'log-process-errors'
-// Should be initialized before requiring other dependencies
-logProcessErrors({ testing: 'ava', level: { warning: 'silent' } })
-
-import test from 'ava'
-
-// Tests will not fail because warnings are `silent`
-test('Example test', (t) => {
-  process.emitWarning('Example warning')
-  t.pass()
-})
 ```
 
 ## colors

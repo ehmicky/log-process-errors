@@ -4,8 +4,14 @@ import setErrorMessage from 'set-error-message'
 // Normalize error and add the `reason` to its `message`
 export const getError = function (value, reason) {
   const error = normalizeException(value)
-  setErrorMessage(error, `${error.message}${MESSAGES[reason]}`)
+  setErrorMessage(error, `${getMessage(error, reason)}${MESSAGES[reason]}`)
   return error
+}
+
+const getMessage = function ({ message }, reason) {
+  return reason === 'rejectionHandled'
+    ? message.replace(MESSAGES.unhandledRejection, '')
+    : message
 }
 
 const MESSAGES = {

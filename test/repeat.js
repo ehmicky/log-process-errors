@@ -12,7 +12,7 @@ each(EVENTS, ({ title }, { eventName, emitMany }) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
     stubStackTrace()
 
-    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+    const { stopLogging, log } = startLogging({ spy: true, eventName })
 
     await emitMany(2)
 

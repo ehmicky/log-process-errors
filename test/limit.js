@@ -15,8 +15,9 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
     stubStackTraceRandom()
 
     const { stopLogging, log } = startLogging({
-      log: 'spy',
-      level: { default: onlyNotLimitedWarning.bind(undefined, eventName) },
+      eventName,
+      spy: true,
+      log: onlyNotLimited,
     })
 
     await emitMany(MAX_EVENTS)
@@ -38,8 +39,9 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
       stubStackTraceRandom()
 
       const { stopLogging, log } = startLogging({
-        log: 'spy',
-        level: { default: onlyLimited },
+        eventName,
+        spy: true,
+        log: onlyLimited,
       })
 
       await emitMany(MAX_EVENTS)
@@ -62,8 +64,9 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
       stubStackTraceRandom()
 
       const { stopLogging, log } = startLogging({
-        level: { default: onlyLimited },
-        log: 'spy',
+        eventName,
+        spy: true,
+        log: onlyLimited,
       })
 
       await emitMany(MAX_EVENTS)
@@ -85,17 +88,16 @@ each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
 })
 
 const onlyLimited = function (error) {
-  if (!isLimitedWarning(error)) {
-    return 'silent'
+  if (isLimitedWarning(error)) {
+    // eslint-disable-next-line no-restricted-globals, no-console
+    console.error(error)
   }
 }
 
-const onlyNotLimitedWarning = function (eventName, error) {
-  if (
-    isLimitedWarning(error) ||
-    error.name.toLowerCase() !== eventName.toLowerCase()
-  ) {
-    return 'silent'
+const onlyNotLimited = function (error) {
+  if (!isLimitedWarning(error)) {
+    // eslint-disable-next-line no-restricted-globals, no-console
+    console.error(error)
   }
 }
 

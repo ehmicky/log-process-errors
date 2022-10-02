@@ -9,24 +9,19 @@ import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
 // Add event handling for all process-related errors
 export default function logProcessErrors(opts) {
-  const optsA = getOptions({ opts })
-
+  const optsA = getOptions(opts)
   removeWarningListener()
-
-  const listeners = addListeners({ opts: optsA })
-
-  // Do not use `function.bind()` to keep the right `function.name`
-  const stopLogProcessErrors = () => stopLogging(listeners)
-  return stopLogProcessErrors
+  const listeners = addListeners(optsA)
+  return stopLogProcessErrors.bind(undefined, listeners)
 }
 
-const addListeners = function ({ opts }) {
+const addListeners = function (opts) {
   return Object.entries(EVENTS).map(([name, eventFunc]) =>
-    addListener({ opts, name, eventFunc }),
+    addListener(opts, name, eventFunc),
   )
 }
 
-const addListener = function ({ opts, name, eventFunc }) {
+const addListener = function (opts, name, eventFunc) {
   // `previousEvents` is event-name-specific so that if events of a given event
   // stopped being emitted, others still are.
   // `previousEvents` can take up some memory, but it should be cleaned up
@@ -47,7 +42,7 @@ const addListener = function ({ opts, name, eventFunc }) {
 }
 
 // Remove all event handlers and restore previous `warning` listeners
-const stopLogging = function (listeners) {
+const stopLogProcessErrors = function (listeners) {
   listeners.forEach(removeListener)
   restoreWarningListener()
 }

@@ -5,22 +5,14 @@ import { validate } from 'jest-validate'
 import semver from 'semver'
 
 import { validateExitOn } from './exit.js'
-import {
-  applyDefaultLevels,
-  getExampleLevels,
-  validateLevels,
-} from './level.js'
 import { defaultLog } from './log.js'
 
 // Validate options and assign default options
-export const getOptions = function ({ opts = {} }) {
+export const getOptions = function (opts = {}) {
   const optsA = excludeKeys(opts, isUndefined)
-
   validate(optsA, { exampleConfig: EXAMPLE_OPTS })
-  validateOptions(optsA)
-
-  const level = applyDefaultLevels({ opts: optsA })
-  return { ...DEFAULT_OPTS, ...optsA, level }
+  validateExitOn(optsA.exitOn)
+  return { ...DEFAULT_OPTS, ...optsA }
 }
 
 const isUndefined = function (key, value) {
@@ -55,11 +47,4 @@ const exampleFunction = function () {}
 const EXAMPLE_OPTS = {
   ...DEFAULT_OPTS,
   log: exampleFunction,
-  level: getExampleLevels(),
-}
-
-// Validation beyond what `jest-validate` can do
-const validateOptions = function ({ exitOn, level = {} }) {
-  validateLevels({ level })
-  validateExitOn({ exitOn })
 }

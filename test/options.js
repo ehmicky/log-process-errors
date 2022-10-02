@@ -18,15 +18,7 @@ const normalizeJestValidate = function (message) {
 const EXAMPLE_REGEXP = /Example:[^]*/u
 
 each(
-  [
-    { log: true },
-    { level: true },
-    { level: { warning: true } },
-    { level: 'invalid' },
-    { level: { warning: 'invalid' } },
-    { exitOn: true },
-    { exitOn: ['invalid'] },
-  ],
+  [{ log: true }, { exitOn: true }, { exitOn: ['invalid'] }],
   ({ title }, options) => {
     test(`should validate options | ${title}`, (t) => {
       const error = t.throws(startLogging.bind(undefined, options))
@@ -36,20 +28,15 @@ each(
   },
 )
 
-each(
-  [{ unknown: true }, { level: { unknown: 'error' } }],
-  ({ title }, options) => {
-    test(`should warn on options | ${title}`, (t) => {
-      // eslint-disable-next-line no-restricted-globals
-      const stub = sinon.stub(console, 'warn')
+test('should warn on options', (t) => {
+  // eslint-disable-next-line no-restricted-globals
+  const stub = sinon.stub(console, 'warn')
 
-      const { stopLogging } = startLogging(options)
-      stopLogging()
+  const { stopLogging } = startLogging({ unknown: true })
+  stopLogging()
 
-      t.is(stub.callCount, 1)
-      t.snapshot(normalizeMessage(stub.firstCall.args[0]))
+  t.is(stub.callCount, 1)
+  t.snapshot(normalizeMessage(stub.firstCall.args[0]))
 
-      stub.restore()
-    })
-  },
-)
+  stub.restore()
+})

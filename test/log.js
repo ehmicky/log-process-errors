@@ -7,25 +7,23 @@ import { each } from 'test-each'
 import { EVENTS } from './helpers/events/main.js'
 import { hasInlinePreview } from './helpers/events/version.js'
 import { startLogging } from './helpers/init.js'
-import { LEVELS } from './helpers/level.js'
 import { normalizeMessage } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-const snapshotArgs = function ([error, level, mainValue]) {
+const snapshotArgs = function ([error, reason]) {
   return [
     normalizeMessage(inspect(error)),
     String(error),
     Object.keys(error),
-    level,
-    mainValue,
+    reason,
   ]
 }
 
 each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should fire opts.log() | ${title}`, async (t) => {
-    const { stopLogging, log } = startLogging({ log: 'spy' })
+    const { stopLogging, log } = startLogging({ spy: true })
 
     t.true(log.notCalled)
 
@@ -37,7 +35,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
   })
 
   test.serial(`should fire opts.log() once | ${title}`, async (t) => {
-    const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+    const { stopLogging, log } = startLogging({ spy: true, eventName })
 
     t.true(log.notCalled)
 
@@ -52,7 +50,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
     test.serial(
       `should fire opts.log() with arguments | ${title}`,
       async (t) => {
-        const { stopLogging, log } = startLogging({ log: 'spy', eventName })
+        const { stopLogging, log } = startLogging({ spy: true, eventName })
 
         await emit({ all: true })
 
@@ -67,16 +65,12 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
   }
 })
 
-each(EVENTS, LEVELS, ({ title }, { eventName, emit }, level) => {
+each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should log on the console by default | ${title}`, async (t) => {
     // eslint-disable-next-line no-restricted-globals
-    const stub = sinon.stub(console, level)
+    const stub = sinon.stub(console, 'error')
 
-    const { stopLogging } = startLogging({
-      log: 'default',
-      level: { default: level },
-      eventName,
-    })
+    const { stopLogging } = startLogging({ log: 'default', eventName })
 
     await emit()
 

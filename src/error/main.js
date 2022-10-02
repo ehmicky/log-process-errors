@@ -8,7 +8,7 @@ export const getError = function ({ name, event }) {
   const staticProps = getEventProps(mainValue)
   const stack = getStack(mainValue)
   const error = buildError({ name, message, stack, staticProps })
-  return { error, mainValue }
+  return error
 }
 
 // Retrieve main thrown value, which is most likely an `Error` instance

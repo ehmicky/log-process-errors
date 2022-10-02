@@ -4,14 +4,9 @@
 export type Level = 'debug' | 'info' | 'warn' | 'error'
 
 /**
- * Configured logging level
- */
-export type LevelOption = Level | 'default' | 'silent'
-
-/**
  * Process error's `name`
  */
-export type ErrorName =
+export type Reason =
   | 'uncaughtException'
   | 'warning'
   | 'unhandledRejection'
@@ -26,7 +21,7 @@ declare class ProcessError extends Error {
     | 'Warning'
 }
 
-export type Options = Partial<{
+export type Options = {
   /**
    * By default process errors will be logged to the console using
    * `console.error()`, `console.warn()`, etc.
@@ -47,37 +42,7 @@ export type Options = Partial<{
    * })
    * ```
    */
-  log: (
-    error: ProcessError,
-    level: Level,
-    originalError: Error,
-  ) => Promise<void> | void
-
-  /**
-   * Which log level to use.
-   *
-   * @default { warning: 'warn', default: 'error' }
-   *
-   * @example
-   * ```js
-   * logProcessErrors({
-   *   level: {
-   *     // Use `debug` log level for `uncaughtException` instead of `error`
-   *     uncaughtException: 'debug',
-   *
-   *     // Skip some logs based on a condition
-   *     default(error) {
-   *       return shouldSkip(error) ? 'silent' : 'default'
-   *     },
-   *   },
-   * })
-   * ```
-   */
-  level: {
-    [errorName in ErrorName | 'default']?:
-      | LevelOption
-      | ((error: ProcessError) => LevelOption)
-  }
+  readonly log?: (error: ProcessError, reason: Reason) => Promise<void> | void
 
   /**
    * Which process errors should trigger `process.exit(1)`:
@@ -99,8 +64,8 @@ export type Options = Partial<{
    * logProcessErrors({ exitOn: ['uncaughtException', 'unhandledRejection'] })
    * ```
    */
-  exitOn: Level[]
-}>
+  readonly exitOn?: Level[]
+}
 
 /**
  * Function that can be fired to restore Node.js default behavior.
@@ -111,7 +76,7 @@ export type Options = Partial<{
  * restore()
  * ```
  */
-export type Undo = () => void
+type Undo = () => void
 
 /**
  * Improve how process errors are logged.

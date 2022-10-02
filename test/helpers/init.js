@@ -1,64 +1,35 @@
 import logProcessErrors from 'log-process-errors'
-import mapObj from 'map-obj'
 import sinon from 'sinon'
 
 // Call `logProcessErrors()` then return spied objects and `stopLogging()`
-export const startLogging = function ({ eventName, log, level, ...opts } = {}) {
-  const logA = getLog({ log })
-  const levelA = getLevel({ level, eventName })
-
-  const stopLogging = logProcessErrors({
-    log: logA,
-    level: levelA,
-    exitOn: [],
-    ...opts,
-  })
-  return { stopLogging, log: logA, level: levelA }
+export const startLogging = function ({
+  eventName,
+  log,
+  spy,
+  exitOn = [],
+} = {}) {
+  const logA = getLog(log, spy, eventName)
+  const stopLogging = logProcessErrors({ log: logA, exitOn })
+  return { stopLogging, log: logA }
 }
 
 // Get `opts.log()`
-const getLog = function ({ log }) {
+const getLog = function (log, spy, eventName) {
   if (log === 'default') {
     return
   }
 
-  if (log === 'spy') {
-    return sinon.spy()
-  }
-
-  if (log === undefined) {
-    return noop
-  }
-
-  return log
+  const logFunc = logEvent.bind(undefined, { log, eventName })
+  return spy ? sinon.spy(logFunc) : logFunc
 }
 
-const noop = function () {}
-
-// If `eventName` is specified, only print those events
-const getLevel = function ({ level, eventName }) {
-  if (eventName === undefined) {
-    return level
+const logEvent = function ({ log, eventName }, error, actualEventName) {
+  if (
+    log !== undefined &&
+    (eventName === undefined || actualEventName === eventName)
+  ) {
+    log(error, actualEventName)
   }
-
-  const levelA = level === undefined ? { default: 'default' } : level
-
-  return mapObj(levelA, (key, levelB) => [
-    key,
-    onlyEvent.bind(undefined, levelB, eventName),
-  ])
-}
-
-const onlyEvent = function (level, eventName, error) {
-  if (error.name.toLowerCase() !== eventName.toLowerCase()) {
-    return 'silent'
-  }
-
-  if (typeof level !== 'function') {
-    return level
-  }
-
-  return level(error)
 }
 
 export const startLoggingNoOpts = function () {

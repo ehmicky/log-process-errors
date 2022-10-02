@@ -88,7 +88,7 @@ restore()
 
 ### log
 
-_Type_: `function(error, level, originalError)`
+_Type_: `function(error, reason)`
 
 By default process errors will be logged to the console using `console.error()`,
 `console.warn()`, etc.
@@ -100,14 +100,11 @@ process errors with [Winston](https://github.com/winstonjs/winston) instead:
 import logProcessErrors from 'log-process-errors'
 
 logProcessErrors({
-  log(error, level, originalError) {
-    winstonLogger[level](error.stack)
+  log(error, reason) {
+    winstonLogger.error(error.stack)
   },
 })
 ```
-
-The function's arguments are [`error`](#error), [`level`](#level) and
-[`originalError`](#error).
 
 If logging is asynchronous, the function should return a promise (or use
 `async`/`await`). This is not necessary if logging is buffered (like
@@ -120,54 +117,16 @@ defined or not).
 
 _Type_: `Error`
 
-The [`log`](#log) and [`level`](#level) options receive as argument an `error`
-instance.
-
 This error is generated based on the original process error but with an improved
-`name`, `message` and `stack`. However the original process error is still
-available as a third argument to [`log`](#log).
+`name`, `message` and `stack`.
 
-##### error.name
+#### reason
 
 _Type_: `string`\
 _Value_: [`'UncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
-
-### level
-
-_Type_: `object`\
-_Default_: `{ warning: 'warn', default: 'error' }`
-
-Which log level to use.
-
-Object keys are the error names:
-[`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`warning`](https://nodejs.org/api/process.html#process_event_warning),
-[`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-or `default`.
-
-Object values are the log level: `'debug'`, `'info'`, `'warn'`, `'error'`,
-`'silent'` or `'default'`. It can also be a function using
-[`error` as argument](#error) and returning one of those log levels.
-
-```js
-import logProcessErrors from 'log-process-errors'
-
-logProcessErrors({
-  level: {
-    // Use `debug` log level for `uncaughtException` instead of `error`
-    uncaughtException: 'debug',
-
-    // Skip some logs based on a condition
-    default(error) {
-      return shouldSkip(error) ? 'silent' : 'default'
-    },
-  },
-})
-```
 
 ### exitOn
 

@@ -20,10 +20,10 @@ const normalizeArgs = function ([error]) {
   return String(error)
 }
 
-each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
+each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should work with no options | ${title}`, async (t) => {
     // eslint-disable-next-line no-restricted-globals
-    const stub = sinon.stub(console, defaultLevel)
+    const stub = sinon.stub(console, 'error')
     const { stopLogging } = startLoggingNoOpts()
 
     await emit()
@@ -67,7 +67,7 @@ each(EVENTS, ({ title }, { eventName, emit, defaultLevel }) => {
 
     const processHandler = addProcessHandler(eventName)
 
-    const { stopLogging, log } = startLogging({ log: 'spy' })
+    const { stopLogging, log } = startLogging({ spy: true })
 
     stopLogging()
 

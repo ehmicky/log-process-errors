@@ -22,7 +22,7 @@ test.serial('[warning] should disable default event handlers', async (t) => {
   // eslint-disable-next-line no-restricted-globals
   const stub = sinon.stub(console, 'error')
 
-  const { stopLogging, log } = startLogging({ log: 'spy' })
+  const { stopLogging, log } = startLogging({ spy: true })
 
   await emit()
 

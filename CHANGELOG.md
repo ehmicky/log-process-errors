@@ -2,8 +2,11 @@
 
 ## Breaking changes
 
-- Remove the following options: `testing`, `colors`
+- Remove the following options: `testing`, `colors`, `levels`
+- The `log` option's argument are now: `(error, reason)` instead of
+  `(error, level, originalError)`
 - Errors are not pretty-printed anymore
+- Modify TypeScript types accordingly
 
 ## Features
 

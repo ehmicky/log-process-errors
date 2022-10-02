@@ -10,8 +10,7 @@ import mem from 'mem'
 //    memory leak.
 //  - It prevents infinite recursions if `opts.log()` triggers itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still
-//    happen when `[next]Value` is not an `Error` instance and contain dynamic
-//    content.
+//    happen when `value` is not an `Error` instance and contain dynamic content
 export const isLimited = function ({
   previousEvents,
   mEmitLimitedWarning,
@@ -31,6 +30,11 @@ export const isLimited = function ({
   return isLimitedEvent
 }
 
+// The `warning` itself should not be skipped
+const isLimitedWarning = function (reason, { name, code } = {}) {
+  return reason === 'warning' && name === ERROR_NAME && code === ERROR_CODE
+}
+
 // Should only emit the warning once per `reason` and per `init()`
 export const getEmitLimitedWarning = function () {
   return mem(emitLimitedWarning)
@@ -39,15 +43,6 @@ export const getEmitLimitedWarning = function () {
 // Notify that limit has been reached with a `warning` event
 const emitLimitedWarning = function (reason) {
   emitWarning(ERROR_MESSAGE(reason), ERROR_NAME, ERROR_CODE)
-}
-
-// The `warning` itself should not be skipped
-const isLimitedWarning = function (reason, value = {}) {
-  return (
-    reason === 'warning' &&
-    value.name === ERROR_NAME &&
-    value.code === ERROR_CODE
-  )
 }
 
 const ERROR_MESSAGE = (reason) =>

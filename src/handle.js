@@ -5,52 +5,44 @@ import { isRepeated } from './repeat.js'
 
 // List of all handled events
 export const EVENTS = {
-  uncaughtException(context, value) {
-    handleEvent({ ...context, value })
+  uncaughtException(context, value, origin) {
+    if (origin !== 'unhandledRejection') {
+      handleEvent(value, context)
+    }
   },
   warning(context, value) {
-    handleEvent({ ...context, value })
+    handleEvent(value, context)
   },
-  unhandledRejection(context, value, promise) {
-    handleEvent({ ...context, promise, value })
+  unhandledRejection(context, value) {
+    handleEvent(value, context)
   },
-  rejectionHandled(context, promise) {
-    handleEvent({ ...context, promise })
+  async rejectionHandled(context, promise) {
+    const value = await resolvePromise(promise)
+    handleEvent(value, context)
   },
 }
 
-// Generic event handler for all events
-const handleEvent = async function ({
-  opts: { log, keep },
-  reason,
-  previousEvents,
-  mEmitLimitedWarning,
-  promise,
-  value,
-}) {
-  if (isLimited({ previousEvents, mEmitLimitedWarning, reason, value })) {
-    return
-  }
-
-  const valueA = await getValue(reason, promise, value)
-
-  if (isRepeated(valueA, previousEvents)) {
-    return
-  }
-
-  const error = getError(reason, valueA)
-  await log(error, reason)
-  await exitProcess(keep, reason)
-}
-
-const getValue = async function (reason, promise, value) {
-  if (reason !== 'rejectionHandled') {
-    return value
-  }
-
+const resolvePromise = async function (promise) {
   try {
     return await promise
   } catch (error) {
     return error
   }
+}
+
+// Generic event handler for all events
+const handleEvent = async function (
+  value,
+  { opts: { log, keep }, reason, previousEvents, mEmitLimitedWarning },
+) {
+  if (
+    isLimited({ previousEvents, mEmitLimitedWarning, reason, value }) ||
+    isRepeated(value, previousEvents)
+  ) {
+    return
+  }
+
+  const error = getError(reason, value)
+  await log(error, reason)
+  await exitProcess(keep, reason)
 }

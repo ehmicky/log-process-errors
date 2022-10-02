@@ -20,6 +20,7 @@
   still some ongoing tasks
 - Support cross-realm errors
 - Do not crash when `error.stack` is `undefined` or `null`
+- Fix support for `--unhandled-rejections=strict`
 
 # 9.4.0
 

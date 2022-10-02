@@ -1,9 +1,5 @@
 import { inspect } from 'util'
 
-// `previousEvents` is reason-specific so that if events of a given reason
-// stopped being emitted, others still are.
-// `previousEvents` can take up some memory, but it should be cleaned up
-// by `removeListener()`, i.e. once `eventListener` is garbage collected.
 // Duplicate errors are only logged once because:
 //  - It makes logs clearer
 //  - It prevents creating too much CPU load or too many microtasks
@@ -11,15 +7,20 @@ import { inspect } from 'util'
 //    hosted remotely
 //  - It prevents infinite recursions if `opts.log()` triggers itself an event
 //    (while still reporting that event once)
+// `previousEvents`:
+//  - Is reason-specific so that if events of a given reason stopped being
+//    emitted, others still are.
+//  - Can take up some memory, but it should be cleaned up by
+//    `removeListener()`, i.e. once `eventListener` is garbage collected.
 export const isRepeated = function (value, isError, previousEvents) {
-  const fingerprint = getFingerprint(value, isError)
+  const previousEvent = getPreviousEvent(value, isError)
 
-  if (previousEvents.includes(fingerprint)) {
+  if (previousEvents.includes(previousEvent)) {
     return true
   }
 
   // eslint-disable-next-line fp/no-mutating-methods
-  previousEvents.push(fingerprint)
+  previousEvents.push(previousEvent)
   return false
 }
 
@@ -28,9 +29,9 @@ export const isRepeated = function (value, isError, previousEvents) {
 // is big.
 // This introduces higher risk of false positives (see comment below).
 // We do not hash as it would be too CPU-intensive if the value is big.
-const getFingerprint = function (value, isError) {
-  const fingerprint = isError ? serializeError(value) : stableSerialize(value)
-  return fingerprint.slice(0, FINGERPRINT_MAX_LENGTH)
+const getPreviousEvent = function (value, isError) {
+  const previousEvent = isError ? serializeError(value) : stableSerialize(value)
+  return previousEvent.slice(0, FINGERPRINT_MAX_LENGTH)
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like

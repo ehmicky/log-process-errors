@@ -3,7 +3,7 @@ import { exitProcess } from './exit.js'
 import { isLimited } from './limit.js'
 import { isRepeated } from './repeat.js'
 
-// List of all handled events
+// All event handlers
 export const EVENTS = {
   uncaughtException(context, value, origin) {
     if (origin !== 'unhandledRejection') {
@@ -30,7 +30,6 @@ const resolvePromise = async function (promise) {
   }
 }
 
-// Generic event handler for all events
 const handleEvent = async function (
   value,
   { opts: { log, keep }, reason, previousEvents, mEmitLimitedWarning },
@@ -39,7 +38,7 @@ const handleEvent = async function (
 
   if (
     isLimited({ previousEvents, mEmitLimitedWarning, reason, value }) ||
-    isRepeated(value, previousEvents)
+    isRepeated(value, isError, previousEvents)
   ) {
     return
   }

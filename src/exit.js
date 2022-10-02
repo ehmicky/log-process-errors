@@ -29,7 +29,7 @@ const shouldExit = function (keep, reason) {
 // Since Node 15.0.0, `unhandledRejection` makes the process exit too
 // TODO: remove after dropping support for Node <15.0.0
 const hasNewExitBehavior = function () {
-  return Number(version.split('.')[0]) >= NEW_EXIT_MIN_VERSION
+  return Number(version.split('.')[0].replace('v', '')) >= NEW_EXIT_MIN_VERSION
 }
 
 const NEW_EXIT_MIN_VERSION = 15

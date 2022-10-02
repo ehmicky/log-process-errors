@@ -7,7 +7,7 @@ import { getEvent } from './event.js'
 
 // Generic event handler for all events.
 export const handleEvent = async function ({
-  opts,
+  opts: { log, exitOn },
   name,
   previousEvents,
   mEmitLimitedWarning,
@@ -28,12 +28,12 @@ export const handleEvent = async function ({
     nextValue,
   })
 
-  if (isRepeated({ event, previousEvents })) {
+  if (isRepeated(event, previousEvents)) {
     return
   }
 
-  const error = getError({ name, event })
+  const error = getError(name, event)
   // See `exit.js` on why we need to `await`
-  await opts.log(error, name)
-  await exitProcess({ name, opts })
+  await log(error, name)
+  await exitProcess(name, exitOn)
 }

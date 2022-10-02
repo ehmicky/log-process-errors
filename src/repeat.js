@@ -7,8 +7,8 @@ import { inspect } from 'util'
 //    hosted remotely
 //  - it prevents infinite recursions if `opts.log()` triggers itself an event
 //    (while still reporting that event once)
-export const isRepeated = function ({ event, previousEvents }) {
-  const fingerprint = getFingerprint({ event })
+export const isRepeated = function (event, previousEvents) {
+  const fingerprint = getFingerprint(event)
 
   const isRepeatedEvent = previousEvents.has(fingerprint)
 
@@ -20,10 +20,8 @@ export const isRepeated = function ({ event, previousEvents }) {
 }
 
 // Serialize `event` into a short fingerprint
-const getFingerprint = function ({ event }) {
-  const entries = EVENT_PROPS.map((propName) =>
-    serializeEntry({ event, propName }),
-  )
+const getFingerprint = function (event) {
+  const entries = EVENT_PROPS.map((propName) => serializeEntry(event, propName))
   const eventA = Object.assign({}, ...entries)
 
   const fingerprint = JSON.stringify(eventA)
@@ -43,23 +41,19 @@ const EVENT_PROPS = ['nextRejected', 'rejected', 'nextValue', 'value']
 
 const FINGERPRINT_MAX_LENGTH = 1e4
 
-const serializeEntry = function ({ event, propName }) {
+const serializeEntry = function (event, propName) {
   const value = event[propName]
 
   if (value === undefined) {
     return
   }
 
-  const valueA = serializeValue({ value })
+  const valueA = serializeValue(value)
   return { [propName]: valueA }
 }
 
-const serializeValue = function ({ value }) {
-  if (value instanceof Error) {
-    return serializeError(value)
-  }
-
-  return stableSerialize(value)
+const serializeValue = function (value) {
+  return value instanceof Error ? serializeError(value) : stableSerialize(value)
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like
@@ -67,11 +61,11 @@ const serializeValue = function ({ value }) {
 // should be a good fingerprint.
 // Also we only keep first 10 callsites in case of infinitely recursive stack.
 const serializeError = function ({ name, stack }) {
-  const stackA = filterErrorStack({ stack })
+  const stackA = filterErrorStack(stack)
   return `${name}\n${stackA}`
 }
 
-const filterErrorStack = function ({ stack }) {
+const filterErrorStack = function (stack) {
   return stack
     .split('\n')
     .filter((line) => STACK_TRACE_LINE_REGEXP.test(line))

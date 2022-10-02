@@ -16,7 +16,7 @@ export const isLimited = function ({
   name,
   value,
 }) {
-  if (isLimitedWarning({ name, value })) {
+  if (isLimitedWarning(name, value)) {
     return false
   }
 
@@ -35,7 +35,7 @@ export const emitLimitedWarning = function (name) {
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function ({ name, value = {} }) {
+const isLimitedWarning = function (name, value = {}) {
   return (
     name === 'warning' && value.name === ERROR_NAME && value.code === ERROR_CODE
   )

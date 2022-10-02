@@ -16,7 +16,7 @@ import process from 'process'
 // stream, and keep track of all unique returned streams. On exit, we should
 // then close them and wait for them to flush. We should then always wait for
 // process.stdout|stderr as well.
-export const exitProcess = function ({ name, opts: { exitOn } }) {
+export const exitProcess = function (name, exitOn) {
   if (!exitOn.includes(name)) {
     return
   }
@@ -34,7 +34,7 @@ export const exitProcess = function ({ name, opts: { exitOn } }) {
 const EXIT_TIMEOUT = 3000
 const EXIT_STATUS = 1
 
-export const validateExitOn = function ({ exitOn }) {
+export const validateExitOn = function (exitOn) {
   if (exitOn === undefined) {
     return
   }

@@ -22,11 +22,9 @@ const isUndefined = function (key, value) {
 // Since Node 15.0.0, `unhandledRejection` makes the process exit too
 // TODO: remove after dropping support for Node <15.0.0
 const getDefaultExitOn = function () {
-  if (isNewExitBehavior()) {
-    return ['uncaughtException', 'unhandledRejection']
-  }
-
-  return ['uncaughtException']
+  return isNewExitBehavior()
+    ? ['uncaughtException', 'unhandledRejection']
+    : ['uncaughtException']
 }
 
 const isNewExitBehavior = function () {

@@ -1,7 +1,7 @@
 import { inspect } from 'util'
 
 // Retrieve the `error.message` using the `event` information
-export const getMessage = function ({ event, name }) {
+export const getMessage = function (event, name) {
   return MESSAGES[name](event)
 }
 
@@ -10,19 +10,15 @@ const uncaughtException = function ({ value }) {
 }
 
 const warning = function ({ value, value: { code, detail } }) {
-  return `${serialize(value)}${getWarningDetails({ code, detail })}`
+  return `${serialize(value)}${getWarningDetails(code, detail)}`
 }
 
-const getWarningDetails = function ({ code, detail = '' }) {
+const getWarningDetails = function (code, detail = '') {
   if (code !== undefined) {
     return `\n[${code}] ${detail}`
   }
 
-  if (detail !== '') {
-    return `\n${detail}`
-  }
-
-  return ''
+  return detail === '' ? '' : `\n${detail}`
 }
 
 const unhandledRejection = function ({ value }) {
@@ -42,13 +38,9 @@ const MESSAGES = {
 
 // We use `util.inspect()` instead of `JSON.stringify()` or a third-party
 // library because it has nice output.
+// Do not print `Error.stack`, but print `Error.name` + `Error.message`
 const serialize = function (value) {
-  // Do not print `Error.stack`, but print `Error.name` + `Error.message`
-  if (value instanceof Error) {
-    return String(value)
-  }
-
-  return inspect(value, INSPECT_OPTS)
+  return value instanceof Error ? String(value) : inspect(value, INSPECT_OPTS)
 }
 
 const INSPECT_OPTS = { getters: true }

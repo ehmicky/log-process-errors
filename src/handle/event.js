@@ -8,32 +8,24 @@ export const getEvent = async function ({
   nextRejected,
   nextValue,
 }) {
-  const { rejected, value: valueA } = await parsePromise({
-    name,
-    promise,
-    value,
-  })
-
+  const { rejected, value: valueA } = await parsePromise(name, promise, value)
   const event = { rejected, value: valueA, nextRejected, nextValue }
-
   const eventA = excludeKeys(event, isUndefined)
   return eventA
 }
 
 // Retrieve promise's resolved/rejected state and value.
-const parsePromise = async function ({ name, promise, value }) {
+const parsePromise = async function (name, promise, value) {
   if (NO_PROMISE_EVENTS.has(name)) {
     return { value }
   }
 
-  const { rejected, value: valueA } = await getPromiseValue({ promise })
+  const { rejected, value: valueA } = await getPromiseValue(promise)
 
   // `rejected` is always `true` with `rejectionHandled`, so we skip it
-  if (name === 'rejectionHandled') {
-    return { value: valueA }
-  }
-
-  return { rejected, value: valueA }
+  return name === 'rejectionHandled'
+    ? { value: valueA }
+    : { rejected, value: valueA }
 }
 
 // Those events do not try to get the promise value.
@@ -48,7 +40,7 @@ const NO_PROMISE_EVENTS = new Set([
 ])
 
 // `rejectionHandled` otherwise use `await promise`
-const getPromiseValue = async function ({ promise }) {
+const getPromiseValue = async function (promise) {
   try {
     return { rejected: false, value: await promise }
   } catch (error) {

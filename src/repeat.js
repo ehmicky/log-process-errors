@@ -4,10 +4,6 @@ import { inspect } from 'util'
 // stopped being emitted, others still are.
 // `previousEvents` can take up some memory, but it should be cleaned up
 // by `removeListener()`, i.e. once `eventListener` is garbage collected.
-export const getPreviousEvents = function () {
-  return []
-}
-
 // Duplicate errors are only logged once because:
 //  - It makes logs clearer
 //  - It prevents creating too much CPU load or too many microtasks

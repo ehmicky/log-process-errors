@@ -3,7 +3,6 @@ import process from 'process'
 import { EVENTS } from './handle.js'
 import { getEmitLimitedWarning } from './limit.js'
 import { getOptions } from './options.js'
-import { getPreviousEvents } from './repeat.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
 // Add event handling for all process-related errors
@@ -21,13 +20,11 @@ const addListeners = function (opts) {
 }
 
 const addListener = function (opts, reason, eventFunc) {
-  const previousEvents = getPreviousEvents()
-  const mEmitLimitedWarning = getEmitLimitedWarning()
   const eventListener = eventFunc.bind(undefined, {
     opts,
     reason,
-    previousEvents,
-    mEmitLimitedWarning,
+    previousEvents: [],
+    mEmitLimitedWarning: getEmitLimitedWarning(),
   })
   process.on(reason, eventListener)
   return { eventListener, reason }

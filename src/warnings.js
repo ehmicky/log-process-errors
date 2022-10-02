@@ -29,6 +29,8 @@ export const restoreWarningListener = function () {
 // This needs be done at load time to ensure:
 //  - we are not catching user-defined listeners
 //  - this is idempotent, allowing this module to be called several times
+// One side effect is that it removes the possibility to use `--*deprecation`
+// CLI flags
 const getWarningListeners = function () {
   return process.listeners('warning')
 }

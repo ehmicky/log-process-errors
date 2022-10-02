@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "filter-obj": "^5.1.0",
-    "jest-validate": "^29.0.1",
+    "is-plain-obj": "^4.1.0",
     "mem": "^9.0.2",
     "semver": "^7.3.7"
   },

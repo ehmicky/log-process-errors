@@ -43,15 +43,4 @@ const REPLACEMENTS = [
   [/\(node:\d+\)/gu, '(node:PID)'],
   // File paths
   [/[^ (]+\/[^ )]+/gu, ''],
-  // Durations in test runners:
-  //  - Mocha, node_tap `classic` reporter
-  [/ \([\d.]+m?s\)/gu, ''],
-  //  - Jasmine
-  [/[\d.]+ seconds?/gu, ''],
-  //  - node_tap `classic` reporter
-  [/ [\d.]+m?s/gu, ''],
-  [/(line|column): \d+/gu, ''],
-  [/ \.\. \s+/gu, ' .. '],
-  //  - TAP
-  [/time=[\d.]+m?s/gu, ''],
 ]

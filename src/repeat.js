@@ -10,30 +10,29 @@ export const getPreviousEvents = function () {
   return new Set()
 }
 
-// Events with the same `event` are only logged once because:
-//  - it makes logs clearer
-//  - it prevents creating too much CPU load or too many microtasks
-//  - it prevents creating too many logs, which can be expensive if logs are
+// Duplicate errors are only logged once because:
+//  - It makes logs clearer
+//  - It prevents creating too much CPU load or too many microtasks
+//  - It prevents creating too many logs, which can be expensive if logs are
 //    hosted remotely
-//  - it prevents infinite recursions if `opts.log()` triggers itself an event
+//  - It prevents infinite recursions if `opts.log()` triggers itself an event
 //    (while still reporting that event once)
 export const isRepeated = function (value, previousEvents) {
   const fingerprint = getFingerprint(value)
 
-  const isRepeatedEvent = previousEvents.has(fingerprint)
-
-  if (!isRepeatedEvent) {
-    previousEvents.add(fingerprint)
+  if (previousEvents.has(fingerprint)) {
+    return true
   }
 
-  return isRepeatedEvent
+  previousEvents.add(fingerprint)
+  return false
 }
 
-// Serialize `event` into a short fingerprint.
-// We truncate fingerprints to prevent consuming too much memory in case some
-// `event` properties are huge.
+// Serialize `value` into a short fingerprint.
+// We truncate fingerprints to prevent consuming too much memory in case `value`
+// is big.
 // This introduces higher risk of false positives (see comment below).
-// We do not hash as it would be too CPU-intensive if the value is huge.
+// We do not hash as it would be too CPU-intensive if the value is big.
 const getFingerprint = function (value) {
   const fingerprint = isErrorInstance(value)
     ? serializeError(value)
@@ -46,12 +45,12 @@ const getFingerprint = function (value) {
 // should be a good fingerprint.
 // Also we only keep first 10 call sites in case of infinitely recursive stack.
 const serializeError = function ({ name, stack }) {
-  const stackA = filterErrorStack(stack)
+  const stackA = serializeStack(stack)
   return `${name}\n${stackA}`
 }
 
-const filterErrorStack = function (stack) {
-  return stack
+const serializeStack = function (stack) {
+  return String(stack)
     .split('\n')
     .filter(isStackLine)
     .slice(0, STACK_TRACE_MAX_LENGTH)

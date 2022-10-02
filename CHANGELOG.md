@@ -19,6 +19,7 @@
 - On uncaught exceptions, do not hold the process for 3 seconds unless there are
   still some ongoing tasks
 - Support cross-realm errors
+- Do not crash when `error.stack` is `undefined` or `null`
 
 # 9.4.0
 

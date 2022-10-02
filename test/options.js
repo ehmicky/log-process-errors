@@ -2,9 +2,9 @@ import test from 'ava'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { startLogging } from '../helpers/init.js'
-import { normalizeMessage } from '../helpers/normalize.js'
-import { removeProcessListeners } from '../helpers/remove.js'
+import { startLogging } from './helpers/init.js'
+import { normalizeMessage } from './helpers/normalize.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 

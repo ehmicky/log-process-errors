@@ -1,6 +1,6 @@
 import process from 'process'
 
-import moize from 'moize'
+import mem from 'mem'
 
 import { EVENTS } from './handle/main.js'
 import { emitLimitedWarning } from './limit.js'
@@ -33,9 +33,7 @@ const addListener = function ({ opts, name, eventFunc }) {
   // by `removeListener()`, i.e. once `eventListener` is garbage collected.
   const previousEvents = new Set()
   // Should only emit the warning once per event name and per `init()`
-  const mEmitLimitedWarning = moize(emitLimitedWarning, {
-    maxSize: Number.POSITIVE_INFINITY,
-  })
+  const mEmitLimitedWarning = mem(emitLimitedWarning)
 
   const eventListener = eventFunc.bind(undefined, {
     opts,

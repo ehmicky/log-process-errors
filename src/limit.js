@@ -1,7 +1,5 @@
 import { emitWarning } from 'process'
 
-import mem from 'mem'
-
 // We only allow 100 events per `reason` for the global process because:
 //  - Process errors are exceptional and if more than 100 happen, this is
 //    probably due to some infinite recursion.
@@ -11,37 +9,19 @@ import mem from 'mem'
 //  - It prevents infinite recursions if `opts.log()` triggers itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `value` is not an `Error` instance and contain dynamic content
-export const isLimited = function ({
-  previousEvents,
-  mEmitLimitedWarning,
-  reason,
-  value,
-}) {
+export const isLimited = function (value, reason, previousEvents) {
   if (previousEvents.length < MAX_EVENTS || isLimitedWarning(reason, value)) {
     return false
   }
 
-  mEmitLimitedWarning(reason)
+  emitWarning(`${PREFIX} "${reason}" until process is restarted.`)
   return true
 }
 
 // The `warning` itself should not be skipped
 const isLimitedWarning = function (reason, value) {
-  return reason === 'warning' && value.name === ERROR_NAME
-}
-
-// Should only emit the warning once per `reason` and per `init()`
-export const getEmitLimitedWarning = function () {
-  return mem(emitLimitedWarning)
-}
-
-// Notify that limit has been reached with a `warning` event
-const emitLimitedWarning = function (reason) {
-  emitWarning(
-    `Cannot log more than ${MAX_EVENTS} "${reason}" until process is restarted.`,
-    ERROR_NAME,
-  )
+  return reason === 'warning' && value.message.startsWith(PREFIX)
 }
 
 const MAX_EVENTS = 100
-const ERROR_NAME = 'TooManyError'
+const PREFIX = `Cannot log more than ${MAX_EVENTS}`

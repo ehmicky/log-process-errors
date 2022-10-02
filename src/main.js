@@ -1,7 +1,6 @@
 import process from 'process'
 
 import { EVENTS } from './events.js'
-import { getEmitLimitedWarning } from './limit.js'
 import { getOptions } from './options.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
@@ -24,7 +23,6 @@ const addListener = function (opts, reason, eventFunc) {
     opts,
     reason,
     previousEvents: [],
-    mEmitLimitedWarning: getEmitLimitedWarning(),
   })
   process.on(reason, eventListener)
   return { eventListener, reason }

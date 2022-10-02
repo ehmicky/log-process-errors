@@ -32,10 +32,10 @@ const resolvePromise = async function (promise) {
 
 const handleEvent = async function (
   value,
-  { opts: { log, keep }, reason, previousEvents, mEmitLimitedWarning },
+  { opts: { log, keep }, reason, previousEvents },
 ) {
   if (
-    isLimited({ previousEvents, mEmitLimitedWarning, reason, value }) ||
+    isLimited(value, reason, previousEvents) ||
     isRepeated(value, previousEvents)
   ) {
     return

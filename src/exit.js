@@ -1,10 +1,8 @@
 import process, { version } from 'process'
 
-import semver from 'semver'
-
 // Exit process on `uncaughtException` and `unhandledRejection`
 //  - This is the default behavior of Node.js
-//  - This is  recommended by
+//  - This is recommended by
 //     https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
 // This can be disabled with the `keep: true` option.
 export const exitProcess = function (keep, reason) {
@@ -26,12 +24,15 @@ const shouldExit = function (keep, reason) {
   return (
     !keep &&
     (reason === 'uncaughtException' ||
-      (reason === 'unhandledRejection' &&
-        semver.gte(version, NEW_EXIT_MIN_VERSION)))
+      (reason === 'unhandledRejection' && hasNewExitBehavior()))
   )
 }
 
-const NEW_EXIT_MIN_VERSION = '15.0.0'
+const hasNewExitBehavior = function () {
+  return Number(version.split('.')[0]) >= NEW_EXIT_MIN_VERSION
+}
+
+const NEW_EXIT_MIN_VERSION = 15
 
 const forceExitProcess = function () {
   // eslint-disable-next-line unicorn/no-process-exit, n/no-process-exit

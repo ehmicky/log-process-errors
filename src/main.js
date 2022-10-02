@@ -1,6 +1,6 @@
 import process from 'process'
 
-import { EVENTS } from './handle.js'
+import { EVENTS } from './events.js'
 import { getEmitLimitedWarning } from './limit.js'
 import { getOptions } from './options.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'

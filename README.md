@@ -108,7 +108,7 @@ The process error. This is guaranteed to be an error instance.
 
 #### reason
 
-_Type_: `string`\
+_Type_: `string`
 
 The reason why the process error occurred among:
 [`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),

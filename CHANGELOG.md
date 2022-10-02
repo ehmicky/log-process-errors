@@ -3,6 +3,7 @@
 ## Breaking changes
 
 - Remove the following options: `testing`, `colors`
+- Errors are not pretty-printed anymore
 
 ## Features
 

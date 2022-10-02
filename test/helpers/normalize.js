@@ -26,16 +26,6 @@ const REPLACEMENTS = [
   // Windows specifics
   [/\r\n/gu, '\n'],
   [/\\/gu, '/'],
-  // Our library and ava prints the symbol before test names differently
-  // on Windows
-  [/✔/gu, '√'],
-  [/✓/gu, '√'],
-  [/✖/gu, '×'],
-  [/◉/gu, '(*)'],
-  [/ℹ/gu, 'i'],
-  [/⚠/gu, '‼'],
-  // Ava uses different symbols on Windows
-  [/›/gu, '»'],
   // Stack traces
   [/^([ \t]+)at [^\r\n]+$/gmu, '$1at STACK TRACE'],
   [/(([ \t]+)at STACK TRACE(\r?\n)?)+/gu, '$2at STACK TRACE$3'],

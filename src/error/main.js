@@ -1,10 +1,5 @@
-import { inspect } from 'util'
-
 import { getMessage } from './message.js'
-import { printError } from './print.js'
 import { getStack } from './stack.js'
-
-const { custom } = inspect
 
 // Retrieve `error` which sums up all information that can be gathered about
 // the event.
@@ -14,7 +9,7 @@ export const getError = function ({ name, event }) {
   const staticProps = getEventProps(mainValue)
   const stackA = getStack(mainValue)
   const error = buildError({ name, message, stack: stackA, staticProps })
-  return { error, stack: stackA, mainValue }
+  return { error, mainValue }
 }
 
 // Retrieve main thrown value, which is most likely an `Error` instance
@@ -51,15 +46,4 @@ const buildError = function ({ name, message, stack, staticProps }) {
 const capitalize = function (string) {
   const [firstLetter, ...rest] = string
   return [firstLetter.toUpperCase(), ...rest].join('')
-}
-
-// This needs to be done later because `error` is used by `level`
-export const addErrorPrint = function ({
-  error,
-  error: { message },
-  level,
-  name,
-  stack,
-}) {
-  error[custom] = printError.bind(undefined, { level, name, message, stack })
 }

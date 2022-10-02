@@ -29,17 +29,8 @@ on the console which is very useful. Unfortunately those errors:
 - cannot be conditionally skipped.
 - are printed each time an error is repeated (except for
   [`warning`](https://nodejs.org/api/process.html#process_event_warning)).
-- are not human-friendly.
 
 `log-process-errors` fixes all those issues.
-
-Without `log-process-errors`:
-
-![Screenshot before](docs/before.png)
-
-With `log-process-errors`:
-
-![Screenshot after](docs/after.png)
 
 # Use cases
 
@@ -143,27 +134,6 @@ _Value_: [`'UncaughtException'`](https://nodejs.org/api/process.html#process_eve
 [`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
-
-##### error.stack
-
-`error` is prettified when using
-[`console`](https://nodejs.org/api/console.html#console_console_log_data_args)
-or
-[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options):
-
-```js
-console.log(error)
-```
-
-![Error prettified](docs/error_pretty.png)
-
-But not when using `error.stack` instead:
-
-```js
-console.log(error.stack)
-```
-
-![Error raw](docs/error_raw.png)
 
 ### level
 

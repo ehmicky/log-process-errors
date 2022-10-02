@@ -46,7 +46,6 @@
     "test": "test"
   },
   "dependencies": {
-    "figures": "^5.0.0",
     "filter-obj": "^5.1.0",
     "jest-validate": "^29.0.1",
     "map-obj": "^5.0.2",

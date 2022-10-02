@@ -1,4 +1,4 @@
-import { getError, addErrorPrint } from '../error/main.js'
+import { getError } from '../error/main.js'
 import { exitProcess } from '../exit.js'
 import { getLevel } from '../level.js'
 import { isLimited } from '../limit.js'
@@ -39,15 +39,13 @@ export const handleEvent = async function ({
 }
 
 const logEvent = async function ({ opts, name, event }) {
-  const { error, stack, mainValue } = getError({ name, event })
+  const { error, mainValue } = getError({ name, event })
 
   const level = getLevel({ opts, name, error })
 
   if (level === 'silent') {
     return
   }
-
-  addErrorPrint({ error, level, name, stack })
 
   // See `exit.js` on why we need to `await`
   await opts.log(error, level, mainValue)

@@ -7,7 +7,7 @@ import { isErrorInstance } from './error/check.js'
 // `previousEvents` can take up some memory, but it should be cleaned up
 // by `removeListener()`, i.e. once `eventListener` is garbage collected.
 export const getPreviousEvents = function () {
-  return new Set()
+  return []
 }
 
 // Duplicate errors are only logged once because:
@@ -20,11 +20,12 @@ export const getPreviousEvents = function () {
 export const isRepeated = function (value, previousEvents) {
   const fingerprint = getFingerprint(value)
 
-  if (previousEvents.has(fingerprint)) {
+  if (previousEvents.includes(fingerprint)) {
     return true
   }
 
-  previousEvents.add(fingerprint)
+  // eslint-disable-next-line fp/no-mutating-methods
+  previousEvents.push(fingerprint)
   return false
 }
 

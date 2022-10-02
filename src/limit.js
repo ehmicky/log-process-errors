@@ -17,22 +17,17 @@ export const isLimited = function ({
   reason,
   value,
 }) {
-  if (isLimitedWarning(reason, value)) {
+  if (previousEvents.length < MAX_EVENTS || isLimitedWarning(reason, value)) {
     return false
   }
 
-  const isLimitedEvent = [...previousEvents].length >= MAX_EVENTS
-
-  if (isLimitedEvent) {
-    mEmitLimitedWarning(reason)
-  }
-
-  return isLimitedEvent
+  mEmitLimitedWarning(reason)
+  return true
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function (reason, { name, code } = {}) {
-  return reason === 'warning' && name === ERROR_NAME && code === ERROR_CODE
+const isLimitedWarning = function (reason, value) {
+  return reason === 'warning' && value.name === ERROR_NAME
 }
 
 // Should only emit the warning once per `reason` and per `init()`
@@ -42,12 +37,11 @@ export const getEmitLimitedWarning = function () {
 
 // Notify that limit has been reached with a `warning` event
 const emitLimitedWarning = function (reason) {
-  emitWarning(ERROR_MESSAGE(reason), ERROR_NAME, ERROR_CODE)
+  emitWarning(
+    `Cannot log more than ${MAX_EVENTS} "${reason}" until process is restarted.`,
+    ERROR_NAME,
+  )
 }
 
-const ERROR_MESSAGE = (reason) =>
-  `Cannot log more than ${MAX_EVENTS} '${reason}' until process is restarted`
-const ERROR_NAME = 'LogProcessErrors'
-const ERROR_CODE = 'TooManyErrors'
-
 const MAX_EVENTS = 100
+const ERROR_NAME = 'TooManyError'

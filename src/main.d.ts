@@ -10,9 +10,9 @@ export type Reason =
 export type Options = {
   /**
    * Prevent exiting the process on
-   * [uncaught exception](https://nodejs.org/api/process.html#process_event_uncaughtexception)
+   * [uncaught exceptions](https://nodejs.org/api/process.html#process_event_uncaughtexception)
    * or
-   * [unhandled promise](https://nodejs.org/api/process.html#process_event_unhandledrejection).
+   * [unhandled promises](https://nodejs.org/api/process.html#process_event_unhandledrejection).
    *
    * @default false
    */

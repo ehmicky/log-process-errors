@@ -5,11 +5,11 @@
 - Replace the `exitOn` option by the simpler
   [`keep` boolean option](README.md#keep)
 - Remove the following options: `testing`, `colors`, `levels`. Please use the
-  [`log` option](README.md#log) instead
+  [`log` option](README.md#log) instead.
 - The [`log` option's](README.md#log) arguments are now: `(error, reason)`
   instead of `(error, level, originalError)`
-- The `error` passed to the `log` option is now the original process error. Its
-  `name` is left unchanged.
+- The `error` passed to the [`log` option](README.md#log) is now the original
+  process error. Its `name` is left unchanged.
 - Errors are not pretty-printed anymore
 - TypeScript types have been simplified
 

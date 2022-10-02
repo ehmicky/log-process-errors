@@ -46,7 +46,6 @@
     "test": "test"
   },
   "dependencies": {
-    "filter-obj": "^5.1.0",
     "is-plain-obj": "^4.1.0",
     "mem": "^9.0.2"
   },

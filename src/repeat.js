@@ -9,8 +9,8 @@ import { isErrorInstance } from './error/check.js'
 //    hosted remotely
 //  - it prevents infinite recursions if `opts.log()` triggers itself an event
 //    (while still reporting that event once)
-export const isRepeated = function (event, previousEvents) {
-  const fingerprint = getFingerprint(event)
+export const isRepeated = function (value, previousEvents) {
+  const fingerprint = getFingerprint(value)
 
   const isRepeatedEvent = previousEvents.has(fingerprint)
 
@@ -21,47 +21,22 @@ export const isRepeated = function (event, previousEvents) {
   return isRepeatedEvent
 }
 
-// Serialize `event` into a short fingerprint
-const getFingerprint = function (event) {
-  const entries = EVENT_PROPS.map((propName) => serializeEntry(event, propName))
-  const eventA = Object.assign({}, ...entries)
-
-  const fingerprint = JSON.stringify(eventA)
-
-  // We truncate fingerprints to prevent consuming too much memory in case some
-  // `event` properties are huge.
-  // This introduces higher risk of false positives (see comment below).
-  // We do not hash as it would be too CPU-intensive if the value is huge.
-  const fingerprintA = fingerprint.slice(0, FINGERPRINT_MAX_LENGTH)
-  return fingerprintA
-}
-
-// We do not serialize `name` since this is already `reason`-wise
-// Key order matters since fingerprint might be truncated: we serialize short
-// and non-dynamic values first.
-const EVENT_PROPS = ['rejected', 'value']
-
-const FINGERPRINT_MAX_LENGTH = 1e4
-
-const serializeEntry = function (event, propName) {
-  const value = event[propName]
-
-  if (value === undefined) {
-    return
-  }
-
-  const valueA = serializeValue(value)
-  return { [propName]: valueA }
-}
-
-const serializeValue = function (value) {
-  return isErrorInstance(value) ? serializeError(value) : stableSerialize(value)
+// Serialize `event` into a short fingerprint.
+// We truncate fingerprints to prevent consuming too much memory in case some
+// `event` properties are huge.
+// This introduces higher risk of false positives (see comment below).
+// We do not hash as it would be too CPU-intensive if the value is huge.
+const getFingerprint = function (value) {
+  const fingerprint = isErrorInstance(value)
+    ? serializeError(value)
+    : stableSerialize(value)
+  return fingerprint.slice(0, FINGERPRINT_MAX_LENGTH)
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like
 // timestamps. This means errors are only `error.name` + `error.stack`, which
 // should be a good fingerprint.
-// Also we only keep first 10 callsites in case of infinitely recursive stack.
+// Also we only keep first 10 call sites in case of infinitely recursive stack.
 const serializeError = function ({ name, stack }) {
   const stackA = filterErrorStack(stack)
   return `${name}\n${stackA}`
@@ -70,9 +45,13 @@ const serializeError = function ({ name, stack }) {
 const filterErrorStack = function (stack) {
   return stack
     .split('\n')
-    .filter((line) => STACK_TRACE_LINE_REGEXP.test(line))
+    .filter(isStackLine)
     .slice(0, STACK_TRACE_MAX_LENGTH)
     .join('\n')
+}
+
+const isStackLine = function (line) {
+  return STACK_TRACE_LINE_REGEXP.test(line)
 }
 
 const STACK_TRACE_LINE_REGEXP = /^\s+at /u
@@ -93,3 +72,5 @@ const stableSerialize = function (value) {
 }
 
 const INSPECT_OPTS = { getters: true, sorted: true }
+
+const FINGERPRINT_MAX_LENGTH = 1e4

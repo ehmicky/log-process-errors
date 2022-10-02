@@ -1,5 +1,4 @@
 import { getError } from './error/main.js'
-import { getEvent } from './event.js'
 import { exitProcess } from './exit.js'
 import { isLimited } from './limit.js'
 import { isRepeated } from './repeat.js'
@@ -33,14 +32,27 @@ const handleEvent = async function ({
     return
   }
 
-  const event = await getEvent(reason, promise, value)
+  const valueA = await getValue(reason, promise, value)
 
-  if (isRepeated(event, previousEvents)) {
+  if (isRepeated(valueA, previousEvents)) {
     return
   }
 
-  const error = getError(reason, event)
+  const error = getError(reason, valueA)
   // See `exit.js` on why we need to `await`
   await log(error, reason)
   await exitProcess(keep, reason)
+}
+
+// Retrieve `event` object representing the current event information
+const getValue = async function (reason, promise, value) {
+  if (reason !== 'rejectionHandled') {
+    return value
+  }
+
+  try {
+    return await promise
+  } catch (error) {
+    return error
+  }
 }

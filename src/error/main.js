@@ -3,7 +3,7 @@ import { getMessage } from './message.js'
 
 // Retrieve `error` which sums up all information that can be gathered about
 // the event.
-export const getError = function (reason, { value }) {
+export const getError = function (reason, value) {
   const message = getMessage(value, reason)
   const staticProps = getEventProps(value)
   const stack = getStack(value)

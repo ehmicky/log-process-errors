@@ -18,8 +18,6 @@ export const exitProcess = function (keep, reason) {
   setTimeout(forceExitProcess, EXIT_TIMEOUT).unref()
 }
 
-// Since Node 15.0.0, `unhandledRejection` makes the process exit too
-// TODO: remove after dropping support for Node <15.0.0
 const shouldExit = function (keep, reason) {
   return (
     !keep &&
@@ -28,6 +26,8 @@ const shouldExit = function (keep, reason) {
   )
 }
 
+// Since Node 15.0.0, `unhandledRejection` makes the process exit too
+// TODO: remove after dropping support for Node <15.0.0
 const hasNewExitBehavior = function () {
   return Number(version.split('.')[0]) >= NEW_EXIT_MIN_VERSION
 }

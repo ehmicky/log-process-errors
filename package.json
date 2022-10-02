@@ -47,7 +47,9 @@
   },
   "dependencies": {
     "is-plain-obj": "^4.1.0",
-    "mem": "^9.0.2"
+    "mem": "^9.0.2",
+    "normalize-exception": "^2.6.0",
+    "set-error-message": "^1.2.0"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^1.0.92",

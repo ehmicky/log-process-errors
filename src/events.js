@@ -1,4 +1,4 @@
-import { getError } from './error/main.js'
+import { getError } from './error.js'
 import { exitProcess } from './exit.js'
 import { isLimited } from './limit.js'
 import { isRepeated } from './repeat.js'
@@ -34,20 +34,14 @@ const handleEvent = async function (
   value,
   { opts: { log, keep }, reason, previousEvents, mEmitLimitedWarning },
 ) {
-  const isError = isErrorInstance(value)
-
   if (
     isLimited({ previousEvents, mEmitLimitedWarning, reason, value }) ||
-    isRepeated(value, isError, previousEvents)
+    isRepeated(value, previousEvents)
   ) {
     return
   }
 
-  const error = getError(value, isError, reason)
+  const error = getError(value, reason)
   await log(error, reason)
   await exitProcess(keep, reason)
-}
-
-const isErrorInstance = function (value) {
-  return Object.prototype.toString.call(value) === '[object Error]'
 }

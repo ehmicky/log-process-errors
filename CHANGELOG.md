@@ -7,6 +7,8 @@
   [`keep` boolean option](README.md#keep)
 - The [`log` option's](README.md#log) arguments are now: `(error, reason)`
   instead of `(error, level, originalError)`
+- The `error` passed to the `log` option is now the original process error. Its
+  `name` is left unchanged.
 - Errors are not pretty-printed anymore
 - TypeScript types have been simplified
 

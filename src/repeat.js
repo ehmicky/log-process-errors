@@ -12,8 +12,8 @@ import { inspect } from 'util'
 //    emitted, others still are.
 //  - Can take up some memory, but it should be cleaned up by
 //    `removeListener()`, i.e. once `eventListener` is garbage collected.
-export const isRepeated = function (value, isError, previousEvents) {
-  const previousEvent = getPreviousEvent(value, isError)
+export const isRepeated = function (value, previousEvents) {
+  const previousEvent = getPreviousEvent(value)
 
   if (previousEvents.includes(previousEvent)) {
     return true
@@ -29,9 +29,15 @@ export const isRepeated = function (value, isError, previousEvents) {
 // is big.
 // This introduces higher risk of false positives (see comment below).
 // We do not hash as it would be too CPU-intensive if the value is big.
-const getPreviousEvent = function (value, isError) {
-  const previousEvent = isError ? serializeError(value) : stableSerialize(value)
+const getPreviousEvent = function (value) {
+  const previousEvent = isErrorInstance(value)
+    ? serializeError(value)
+    : stableSerialize(value)
   return previousEvent.slice(0, FINGERPRINT_MAX_LENGTH)
+}
+
+const isErrorInstance = function (value) {
+  return Object.prototype.toString.call(value) === '[object Error]'
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like

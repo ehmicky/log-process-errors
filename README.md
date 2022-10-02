@@ -13,30 +13,19 @@
 
 Show some ❤️ to Node.js process errors.
 
-Node.js prints process errors
-([`uncaughtException`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`warning`](https://nodejs.org/api/process.html#process_event_warning),
-[`unhandledRejection`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled))
-on the console which is very useful. Unfortunately those errors:
+This improves Node.js process errors:
+[uncaught exceptions](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[unhandled promises](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[promises handled too late](https://nodejs.org/api/process.html#process_event_rejectionhandled))
+and [warnings](https://nodejs.org/api/process.html#process_event_warning).
 
-- do not show stack traces for
-  [`warning`](https://nodejs.org/api/process.html#process_event_warning) and
+# Features
+
+- Stack traces for warnings and
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-  making them hard to debug
-- are inconvenient to [log to an external service](#log)
-- are hard to test
-- cannot be conditionally skipped
-- are printed each time an error is repeated (except for
-  [`warning`](https://nodejs.org/api/process.html#process_event_warning))
-
-`log-process-errors` fixes all those issues.
-
-# Use cases
-
-- Proper **logging** of process errors in production.
-- **Debugging** of process errors in development.
-- Automated **testing** of process errors.
+- [Single event handler](#log) for all process errors
+- Only log duplicate process errors [once](#log)
+- Prevent [process exit](#keep) (optionally)
 
 # Install
 
@@ -89,9 +78,9 @@ _Type_: `boolean`\
 _Default_: `false`
 
 Prevent exiting the process on
-[uncaught exception](https://nodejs.org/api/process.html#process_event_uncaughtexception)
+[uncaught exceptions](https://nodejs.org/api/process.html#process_event_uncaughtexception)
 or
-[unhandled promise](https://nodejs.org/api/process.html#process_event_unhandledrejection).
+[unhandled promises](https://nodejs.org/api/process.html#process_event_unhandledrejection).
 
 ### log
 
@@ -113,16 +102,17 @@ logProcessErrors({
 
 _Type_: `Error`
 
-This error is generated based on the original process error but with an improved
-`name`, `message` and `stack`.
+The process error. This is guaranteed to be an error instance.
 
 #### reason
 
 _Type_: `string`\
-_Value_: [`'UncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
-[`'UnhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[`'RejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-or [`'Warning'`](https://nodejs.org/api/process.html#process_event_warning)
+
+The reason why the process error occurred among:
+[`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
+[`'unhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
+[`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),
+[`'warning'`](https://nodejs.org/api/process.html#process_event_warning).
 
 # Related projects
 

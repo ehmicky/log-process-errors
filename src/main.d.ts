@@ -1,5 +1,5 @@
 /**
- * Why the process error was created
+ * The reason why the process error occurred.
  */
 export type Reason =
   | 'uncaughtException'
@@ -7,16 +7,17 @@ export type Reason =
   | 'unhandledRejection'
   | 'rejectionHandled'
 
-declare class ProcessError extends Error {
-  name:
-    | 'UncaughtException'
-    | 'UnhandledRejection'
-    | 'RejectionHandled'
-    | 'MultipleResolves'
-    | 'Warning'
-}
-
 export type Options = {
+  /**
+   * Prevent exiting the process on
+   * [uncaught exception](https://nodejs.org/api/process.html#process_event_uncaughtexception)
+   * or
+   * [unhandled promise](https://nodejs.org/api/process.html#process_event_unhandledrejection).
+   *
+   * @default false
+   */
+  readonly keep?: boolean
+
   /**
    * Function called once per process error.
    * Duplicate process errors are ignored.
@@ -33,17 +34,7 @@ export type Options = {
    * })
    * ```
    */
-  readonly log?: (error: ProcessError, reason: Reason) => Promise<void> | void
-
-  /**
-   * Prevent exiting the process on
-   * [uncaught exception](https://nodejs.org/api/process.html#process_event_uncaughtexception)
-   * or
-   * [unhandled promise](https://nodejs.org/api/process.html#process_event_unhandledrejection).
-   *
-   * @default false
-   */
-  readonly keep?: boolean
+  readonly log?: (error: Error, reason: Reason) => Promise<void> | void
 }
 
 /**

@@ -47,14 +47,6 @@ With `log-process-errors`:
 - **Debugging** of process errors in development.
 - Automated **testing** of process errors.
 
-# Demo
-
-You can try this library:
-
-- either directly
-  [in your browser](https://repl.it/@ehmicky/log-process-errors).
-- or by executing the [`examples` files](examples/README.md) in a terminal.
-
 # Install
 
 Production code (e.g. a server) can install this either as a production or

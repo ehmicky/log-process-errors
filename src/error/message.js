@@ -1,5 +1,7 @@
 import { inspect } from 'util'
 
+import { isErrorInstance } from './check.js'
+
 // Retrieve the `error.message` using the `event` information
 export const getMessage = function (event, reason) {
   return MESSAGES[reason](event)
@@ -40,7 +42,7 @@ const MESSAGES = {
 // library because it has nice output.
 // Do not print `Error.stack`, but print `Error.name` + `Error.message`
 const serialize = function (value) {
-  return value instanceof Error ? String(value) : inspect(value, INSPECT_OPTS)
+  return isErrorInstance(value) ? String(value) : inspect(value, INSPECT_OPTS)
 }
 
 const INSPECT_OPTS = { getters: true }

@@ -18,6 +18,7 @@
 
 - On uncaught exceptions, do not hold the process for 3 seconds unless there are
   still some ongoing tasks
+- Support cross-realm errors
 
 # 9.4.0
 

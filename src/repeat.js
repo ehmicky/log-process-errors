@@ -1,5 +1,7 @@
 import { inspect } from 'util'
 
+import { isErrorInstance } from './error/check.js'
+
 // Events with the same `event` are only logged once because:
 //  - it makes logs clearer
 //  - it prevents creating too much CPU load or too many microtasks
@@ -53,7 +55,7 @@ const serializeEntry = function (event, propName) {
 }
 
 const serializeValue = function (value) {
-  return value instanceof Error ? serializeError(value) : stableSerialize(value)
+  return isErrorInstance(value) ? serializeError(value) : stableSerialize(value)
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like

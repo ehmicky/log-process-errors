@@ -1,3 +1,4 @@
+import { isErrorInstance } from './check.js'
 import { getMessage } from './message.js'
 
 // Retrieve `error` which sums up all information that can be gathered about
@@ -18,14 +19,14 @@ const getMainValue = function ({ value, nextValue: mainValue = value }) {
 
 // If event is an error, retrieve static properties except `name` and `message`
 const getEventProps = function (mainValue) {
-  return mainValue instanceof Error ? { ...mainValue } : {}
+  return isErrorInstance(mainValue) ? { ...mainValue } : {}
 }
 
 // Retrieve `error.stack` by re-using the original error's stack trace
 // Remove first line of `Error.stack` as it contains `Error.name|message`,
 // which is already present in the upper error's `message`
 const getStack = function (mainValue) {
-  return mainValue instanceof Error
+  return isErrorInstance(mainValue)
     ? mainValue.stack.replace(FIRST_LINE_REGEXP, '')
     : ''
 }

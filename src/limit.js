@@ -1,5 +1,7 @@
 import { emitWarning } from 'process'
 
+import mem from 'mem'
+
 // We only allow 100 events per `reason` for the global process because:
 //  - Process errors are exceptional and if more than 100 happen, this is
 //    probably due to some infinite recursion.
@@ -29,8 +31,13 @@ export const isLimited = function ({
   return isLimitedEvent
 }
 
+// Should only emit the warning once per `reason` and per `init()`
+export const getEmitLimitedWarning = function () {
+  return mem(emitLimitedWarning)
+}
+
 // Notify that limit has been reached with a `warning` event
-export const emitLimitedWarning = function (reason) {
+const emitLimitedWarning = function (reason) {
   emitWarning(ERROR_MESSAGE(reason), ERROR_NAME, ERROR_CODE)
 }
 

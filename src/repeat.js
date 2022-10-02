@@ -2,6 +2,14 @@ import { inspect } from 'util'
 
 import { isErrorInstance } from './error/check.js'
 
+// `previousEvents` is reason-specific so that if events of a given reason
+// stopped being emitted, others still are.
+// `previousEvents` can take up some memory, but it should be cleaned up
+// by `removeListener()`, i.e. once `eventListener` is garbage collected.
+export const getPreviousEvents = function () {
+  return new Set()
+}
+
 // Events with the same `event` are only logged once because:
 //  - it makes logs clearer
 //  - it prevents creating too much CPU load or too many microtasks

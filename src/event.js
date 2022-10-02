@@ -1,15 +1,8 @@
 import { excludeKeys } from 'filter-obj'
 
 // Retrieve `event` object representing the current event information
-export const getEvent = async function ({
-  reason,
-  promise,
-  value,
-  nextRejected,
-  nextValue,
-}) {
-  const { rejected, value: valueA } = await parsePromise(reason, promise, value)
-  const event = { rejected, value: valueA, nextRejected, nextValue }
+export const getEvent = async function (reason, promise, value) {
+  const event = await parsePromise(reason, promise, value)
   const eventA = excludeKeys(event, isUndefined)
   return eventA
 }

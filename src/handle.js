@@ -28,20 +28,12 @@ const handleEvent = async function ({
   mEmitLimitedWarning,
   promise,
   value,
-  nextRejected,
-  nextValue,
 }) {
   if (isLimited({ previousEvents, mEmitLimitedWarning, reason, value })) {
     return
   }
 
-  const event = await getEvent({
-    reason,
-    promise,
-    value,
-    nextRejected,
-    nextValue,
-  })
+  const event = await getEvent(reason, promise, value)
 
   if (isRepeated(event, previousEvents)) {
     return

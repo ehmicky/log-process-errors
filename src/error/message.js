@@ -3,19 +3,19 @@ import { inspect } from 'util'
 import { isErrorInstance } from './check.js'
 
 // Retrieve the `error.message` using the `event` information
-export const getMessage = function (event, reason) {
-  return MESSAGES[reason](event)
+export const getMessage = function (value, reason) {
+  return MESSAGES[reason](value)
 }
 
-const uncaughtException = function ({ value }) {
+const uncaughtException = function (value) {
   return `an exception was thrown but not caught: ${serialize(value)}`
 }
 
-const warning = function ({ value, value: { code, detail } }) {
-  return `${serialize(value)}${getWarningDetails(code, detail)}`
+const warning = function (value) {
+  return `${serialize(value)}${getWarningDetails(value)}`
 }
 
-const getWarningDetails = function (code, detail = '') {
+const getWarningDetails = function ({ code, detail = '' }) {
   if (code !== undefined) {
     return `\n[${code}] ${detail}`
   }
@@ -23,11 +23,11 @@ const getWarningDetails = function (code, detail = '') {
   return detail === '' ? '' : `\n${detail}`
 }
 
-const unhandledRejection = function ({ value }) {
+const unhandledRejection = function (value) {
   return `a promise was rejected but not handled: ${serialize(value)}`
 }
 
-const rejectionHandled = function ({ value }) {
+const rejectionHandled = function (value) {
   return `a promise was rejected and handled too late: ${serialize(value)}`
 }
 

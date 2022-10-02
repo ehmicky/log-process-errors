@@ -1,12 +1,12 @@
 import { emitWarning } from 'process'
 
-// We only allow 100 events (per `reason`) for the global process because:
-//  - process errors are exceptional and if more than 100 happen, this is
+// We only allow 100 events per `reason` for the global process because:
+//  - Process errors are exceptional and if more than 100 happen, this is
 //    probably due to some infinite recursion.
-//  - the `repeated` logic should prevent reaching the threshold
+//  - The `repeated` logic should prevents reaching the threshold
 //  - `previousEvents` might otherwise take too much memory and/or create a
 //    memory leak.
-//  - it prevents infinite recursions if `opts.log()` triggers itself an event.
+//  - It prevents infinite recursions if `opts.log()` triggers itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `[next]Value` is not an `Error` instance and contain dynamic
 //    content.

@@ -1,28 +1,25 @@
-import { isErrorInstance } from './check.js'
 import { getMessage } from './message.js'
 
 // Retrieve `error` which sums up all information that can be gathered about
 // the event.
-export const getError = function (reason, value) {
-  const message = getMessage(value, reason)
-  const staticProps = getEventProps(value)
-  const stack = getStack(value)
+export const getError = function (value, isError, reason) {
+  const message = getMessage(value, isError, reason)
+  const staticProps = getEventProps(value, isError)
+  const stack = getStack(value, isError)
   const error = buildError({ reason, message, stack, staticProps })
   return error
 }
 
 // If event is an error, retrieve static properties except `name` and `message`
-const getEventProps = function (value) {
-  return isErrorInstance(value) ? { ...value } : {}
+const getEventProps = function (value, isError) {
+  return isError ? { ...value } : {}
 }
 
 // Retrieve `error.stack` by re-using the original error's stack trace
 // Remove first line of `Error.stack` as it contains `Error.name|message`,
 // which is already present in the upper error's `message`
-const getStack = function (value) {
-  return isErrorInstance(value)
-    ? value.stack.replace(FIRST_LINE_REGEXP, '')
-    : ''
+const getStack = function (value, isError) {
+  return isError ? value.stack.replace(FIRST_LINE_REGEXP, '') : ''
 }
 
 const FIRST_LINE_REGEXP = /.*\n/u

@@ -10,14 +10,14 @@ export const EVENTS = {
       handleEvent(value, context)
     }
   },
-  warning(context, value) {
-    handleEvent(value, context)
-  },
   unhandledRejection(context, value) {
     handleEvent(value, context)
   },
   async rejectionHandled(context, promise) {
     const value = await resolvePromise(promise)
+    handleEvent(value, context)
+  },
+  warning(context, value) {
     handleEvent(value, context)
   },
 }
@@ -35,6 +35,8 @@ const handleEvent = async function (
   value,
   { opts: { log, keep }, reason, previousEvents, mEmitLimitedWarning },
 ) {
+  const isError = isErrorInstance(value)
+
   if (
     isLimited({ previousEvents, mEmitLimitedWarning, reason, value }) ||
     isRepeated(value, previousEvents)
@@ -42,7 +44,11 @@ const handleEvent = async function (
     return
   }
 
-  const error = getError(reason, value)
+  const error = getError(value, isError, reason)
   await log(error, reason)
   await exitProcess(keep, reason)
+}
+
+const isErrorInstance = function (value) {
+  return Object.prototype.toString.call(value) === '[object Error]'
 }

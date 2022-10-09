@@ -5,30 +5,26 @@ import { promisify } from 'util'
 // for Node <15.0.0
 const pSetImmediate = promisify(setImmediate)
 
-const uncaughtException = async function () {
+const uncaughtException = function (value) {
   setImmediate(() => {
-    throw new Error('message')
+    throw value
   })
-  await pSetImmediate()
 }
 
-const unhandledRejection = async function () {
+const unhandledRejection = function (value) {
   // eslint-disable-next-line promise/catch-or-return
-  Promise.reject(new Error('message'))
-  await pSetImmediate()
+  Promise.reject(value)
 }
 
-const rejectionHandled = async function () {
-  const promise = Promise.reject(new Error('message'))
+const rejectionHandled = async function (value) {
+  const promise = Promise.reject(value)
   await pSetImmediate()
   // eslint-disable-next-line promise/prefer-await-to-then
   promise.catch(() => {})
-  await pSetImmediate()
 }
 
-const warning = async function () {
-  emitWarning('message')
-  await pSetImmediate()
+const warning = function (value) {
+  emitWarning(value)
 }
 
 const EVENTS_MAP = {
@@ -45,5 +41,7 @@ export const emitMany = async function (eventName, length) {
 }
 
 export const emit = async function (eventName) {
-  await EVENTS_MAP[eventName]()
+  const error = new Error('message')
+  await EVENTS_MAP[eventName](error)
+  await pSetImmediate()
 }

@@ -3,45 +3,49 @@ import { exitProcess } from './exit.js'
 import { isLimited } from './limit.js'
 import { isRepeated } from './repeat.js'
 
-// All event handlers
-export const EVENTS = {
-  uncaughtException(context, value, origin) {
-    if (origin !== 'unhandledRejection') {
-      handleEvent(value, context)
-    }
-  },
-  unhandledRejection(context, value) {
-    handleEvent(value, context)
-  },
-  async rejectionHandled(context, promise) {
-    const value = await resolvePromise(promise)
-    handleEvent(value, context)
-  },
-  warning(context, value) {
-    handleEvent(value, context)
-  },
+export const EVENTS = [
+  'uncaughtException',
+  'unhandledRejection',
+  'rejectionHandled',
+  'warning',
+]
+
+export const handleEvent = async function (
+  { event, opts: { onError, exit }, previousEvents },
+  value,
+  origin,
+) {
+  const valueA = await resolveValue(value, event)
+
+  if (
+    isDoubleRejection(event, origin) ||
+    isLimited(valueA, event, previousEvents) ||
+    isRepeated(valueA, previousEvents)
+  ) {
+    return
+  }
+
+  const error = getError(valueA, event)
+  await onError(error, event)
+  exitProcess(exit, event)
 }
 
-const resolvePromise = async function (promise) {
+// `rejectionHandled` pass a `Promise` as argument. The other events pass the
+// main value as is.
+const resolveValue = async function (value, event) {
+  if (event !== 'rejectionHandled') {
+    return value
+  }
+
   try {
-    return await promise
+    return await value
   } catch (error) {
     return error
   }
 }
 
-const handleEvent = async function (
-  value,
-  { opts: { onError, exit }, event, previousEvents },
-) {
-  if (
-    isLimited(value, event, previousEvents) ||
-    isRepeated(value, previousEvents)
-  ) {
-    return
-  }
-
-  const error = getError(value, event)
-  await onError(error, event)
-  exitProcess(exit, event)
+// With `--unhandled-rejections=strict`, `unhandledRejection` also emits an
+// `uncaughtException` event. We discard it to avoid repetitions.
+const isDoubleRejection = function (event, origin) {
+  return event === 'uncaughtException' && origin === 'unhandledRejection'
 }

@@ -1,5 +1,7 @@
 import { inspect } from 'util'
 
+import { PREFIX } from './limit.js'
+
 // Duplicate errors are only logged once because:
 //  - It makes logs clearer
 //  - It prevents creating too much CPU load or too many microtasks
@@ -44,9 +46,10 @@ const isErrorInstance = function (value) {
 // timestamps. This means errors are only `error.name` + `error.stack`, which
 // should be a good fingerprint.
 // Also we only keep first 10 call sites in case of infinitely recursive stack.
-const serializeError = function ({ name, stack }) {
+const serializeError = function ({ name, message, stack }) {
+  const messageA = String(message).includes(PREFIX) ? `${message}\n` : ''
   const stackA = serializeStack(stack)
-  return `${name}\n${stackA}`
+  return `${name}\n${messageA}${stackA}`
 }
 
 const serializeStack = function (stack) {

@@ -1,6 +1,6 @@
 import process from 'process'
 
-import { EVENTS } from './events.js'
+import { EVENTS, handleEvent } from './events.js'
 import { getOptions } from './options.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
@@ -13,15 +13,13 @@ export default function logProcessErrors(opts) {
 }
 
 const addListeners = function (opts) {
-  return Object.entries(EVENTS).map(([event, eventFunc]) =>
-    addListener(opts, event, eventFunc),
-  )
+  return EVENTS.map((event) => addListener(event, opts))
 }
 
-const addListener = function (opts, event, eventFunc) {
-  const eventListener = eventFunc.bind(undefined, {
-    opts,
+const addListener = function (event, opts) {
+  const eventListener = handleEvent.bind(undefined, {
     event,
+    opts,
     previousEvents: [],
   })
   process.on(event, eventListener)

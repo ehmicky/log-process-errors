@@ -25,4 +25,4 @@ const isLimitedWarning = function (event, value) {
 }
 
 export const MAX_EVENTS = 100
-const PREFIX = `Cannot log more than ${MAX_EVENTS}`
+export const PREFIX = `Cannot log more than ${MAX_EVENTS}`

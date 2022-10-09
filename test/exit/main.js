@@ -41,7 +41,7 @@ test.serial(
     const stopLogging = startExitLogging({ exit: true })
 
     await emit('unhandledRejection')
-    t.is(process.exit.exitCode === EXIT_CODE, version.startsWith('v14.'))
+    t.not(process.exitCode === EXIT_CODE, version.startsWith('v14.'))
 
     stopLogging()
   },

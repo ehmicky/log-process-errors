@@ -3,18 +3,11 @@ import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
+import { getRandomMessageError, getObjectError } from './helpers/error.js'
 import { EVENTS, emitMany, emitManyValues } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
-
-const getRandomError = function () {
-  return new Error(String(Math.random()))
-}
-
-const getObjectError = function (eventName) {
-  return eventName === 'warning' ? 'test' : { message: 'test' }
-}
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
@@ -51,7 +44,7 @@ each(EVENTS, ({ title }, eventName) => {
       const stopLogging = logProcessErrors({ onError, exit: false })
 
       t.is(onError.callCount, 0)
-      await emitManyValues(getRandomError, eventName, 2)
+      await emitManyValues(getRandomMessageError, eventName, 2)
       t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
 
       stopLogging()

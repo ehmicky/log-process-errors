@@ -16,7 +16,7 @@ each(EVENTS, ({ title }, eventName) => {
       const stopLogging = logProcessErrors({ onError, exit: false })
 
       const message = 'message'
-      await emitValue(() => message, eventName)
+      await emitValue(message, eventName)
       t.true(onError.args[0][0] instanceof Error)
       t.true(onError.args[0][0].message.startsWith(message))
 

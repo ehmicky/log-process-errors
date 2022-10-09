@@ -1,6 +1,8 @@
 import { emitWarning } from 'process'
 import { promisify } from 'util'
 
+import { getError } from './error.js'
+
 // TODO: replace with `timers/promises` `setImmediate()` after dropping support
 // for Node <15.0.0
 const pSetImmediate = promisify(setImmediate)
@@ -36,20 +38,21 @@ const EVENTS_MAP = {
 
 export const EVENTS = Object.keys(EVENTS_MAP)
 
+export const emit = async function (eventName) {
+  await emitValue(getError(), eventName)
+}
+
+export const emitMany = async function (eventName, length) {
+  await emitManyValues(getError, eventName, length)
+}
+
 export const emitManyValues = async function (getValue, eventName, length) {
   await Promise.all(
-    Array.from({ length }, () => emitValue(getValue, eventName)),
+    Array.from({ length }, () => emitValue(getValue(), eventName)),
   )
 }
 
-export const emitValue = async function (getValue, eventName) {
-  await EVENTS_MAP[eventName](getValue())
+export const emitValue = async function (value, eventName) {
+  await EVENTS_MAP[eventName](value)
   await pSetImmediate()
 }
-
-const getError = function () {
-  return new Error('message')
-}
-
-export const emit = emitValue.bind(undefined, getError)
-export const emitMany = emitManyValues.bind(undefined, getError)

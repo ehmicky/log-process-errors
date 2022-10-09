@@ -7,9 +7,12 @@ The npm package size has been greatly reduced.
 ## Pretty-printing
 
 Errors are not pretty-printed anymore. As a consequence, the `colors` option was
-removed. The [`onError` option](README.md#onerror) can be used instead to
-customize how the errors are printed. It receives the original process error,
-with its `name` left unchanged.
+removed.
+
+The [`onError` option](README.md#onerror) can be used instead to customize how
+the errors are printed. It receives the original process error. The process
+error event is now passed as a second argument instead of being set as
+`error.name`.
 
 Before:
 
@@ -27,8 +30,8 @@ After:
 
 ```js
 logProcessErrors({
-  onError(error, reason) {
-    if (reason === 'uncaughtException') {
+  onError(error, event) {
+    if (event === 'uncaughtException') {
       console.error(error)
     }
   },

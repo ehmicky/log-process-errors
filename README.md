@@ -26,7 +26,7 @@ and [warnings](https://nodejs.org/api/process.html#process_event_warning).
 - Stack traces for warnings and
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 - [Single event handler](#onerror) for all process errors
-- Only log duplicate process errors [once](#onerror)
+- Ignore [duplicate](#onerror) process errors
 - [Process exit](#exit) is graceful and can be prevented
 
 # Install

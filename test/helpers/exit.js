@@ -10,7 +10,8 @@ import { startLogging } from './start.js'
 // `process.exit()` is being stubbed
 export const startProcessLogging = function (eventName, opts) {
   const processHandler = setProcessEvent(eventName)
-  const stopLogging = startExitLogging(opts)
+  stubProcessExit()
+  const { stopLogging } = startLogging(opts)
   return stopProcessLogging.bind(
     undefined,
     eventName,
@@ -21,6 +22,7 @@ export const startProcessLogging = function (eventName, opts) {
 
 const stopProcessLogging = function (eventName, stopLogging, processHandler) {
   stopLogging()
+  unStubProcessExit()
   unsetProcessEvent(eventName, processHandler)
 }
 

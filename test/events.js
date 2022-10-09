@@ -24,6 +24,32 @@ each(EVENTS, ({ title }, eventName) => {
 
     stopLogging()
   })
+
+  test.serial(
+    `should handle errors in opts.onError() | ${title}`,
+    async (t) => {
+      // Ava modifies how uncaught exceptions are handled there
+      if (eventName === 'uncaughtException') {
+        return t.pass()
+      }
+
+      const onError = sinon.spy()
+      const testError = new Error('test')
+      const stopLogging = logProcessErrors({
+        onError(error, event) {
+          onError(error, event)
+          throw testError
+        },
+        exit: false,
+      })
+
+      await emit(eventName)
+      t.is(onError.args[1][0], testError)
+      t.is(onError.args[1][1], 'unhandledRejection')
+
+      stopLogging()
+    },
+  )
 })
 
 test.serial('should log on the console by default', async (t) => {

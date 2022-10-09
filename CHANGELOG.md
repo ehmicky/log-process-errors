@@ -4,14 +4,11 @@
 
 The npm package size has been greatly reduced.
 
-## Pretty-printing
+## Custom logic
 
-Errors are not pretty-printed anymore. As a consequence, the `colors` option was
-removed.
-
-The [`onError` option](README.md#onerror) can be used instead to customize how
-the errors are printed. It receives the original process error. The process
-error event is now passed as a second argument instead of being set as
+The `log` option was renamed to [`onError`](README.md#onerror). Its arguments
+are `(originalError, event)` instead of `(error, level, originalError)`. The
+process error `event` is now passed as a second argument instead of being set as
 `error.name`.
 
 Before:
@@ -38,12 +35,16 @@ logProcessErrors({
 })
 ```
 
+## Pretty-printing
+
+Errors are not pretty-printed anymore. As a consequence, the `colors` option was
+removed. The [`onError` option](README.md#onerror) can be used instead to
+customize how the errors are printed.
+
 ## Filtering
 
-The `levels` option was removed. As a consequence, the arguments of the
-[`onError` option](README.md#onerror) (previously named `log`) are now
-`(originalError, event)` instead of `(error, level, originalError)`. This option
-can be used for filtering instead.
+The `levels` option was removed. The [`onError` option](README.md#onerror) can
+be used for filtering.
 
 Before:
 

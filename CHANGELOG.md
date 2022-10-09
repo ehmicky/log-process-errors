@@ -7,9 +7,11 @@ The npm package size has been reduced by 98%, from 4500kB to 87kB.
 ## Custom logic
 
 The `log` option was renamed to [`onError`](README.md#onerror). Its arguments
-are `(originalError, event)` instead of `(error, level, originalError)`. The
-process error `event` is now passed as a second argument instead of being set as
-`error.name`.
+are `(originalError, event)` instead of `(error, level, originalError)`.
+
+The process error `event` is now passed as a second argument instead of being
+set as `error.name`. Its case is not capitalized anymore, to match the event
+name in Node.js.
 
 Before:
 

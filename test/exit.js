@@ -1,130 +1,189 @@
-import process from 'process'
+import process, { version, nextTick } from 'process'
 import { promisify } from 'util'
 
 import fakeTimers from '@sinonjs/fake-timers'
 import test from 'ava'
+import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
-import { each } from 'test-each'
 
-import { EVENTS } from './helpers/events.js'
-import { startLogging } from './helpers/init.js'
+// eslint-disable-next-line no-restricted-imports
+import { EXIT_TIMEOUT, EXIT_CODE } from '../src/exit.js'
+
+import { EVENTS_MAP } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
-const pNextTick = promisify(process.nextTick)
-
-const EXIT_TIMEOUT = 3000
-const EXIT_STATUS = 1
+const pNextTick = promisify(nextTick)
 
 removeProcessListeners()
 
-// Stub `process.exit()`
 const stubProcessExit = function () {
+  sinon.stub(process, 'exit')
+}
+
+const unStubProcessExit = function () {
+  process.exit.restore()
+  process.exitCode = undefined
+}
+
+test.serial('call process.exit() after a timeout', async (t) => {
   const clock = fakeTimers.install({ toFake: ['setTimeout'] })
-  const processExit = sinon.stub(process, 'exit')
-  return { clock, processExit }
-}
+  stubProcessExit()
+  const stopLogging = logProcessErrors({ log() {}, exit: true })
 
-const unstubProcessExit = function ({ clock, processExit }) {
-  processExit.restore()
+  await EVENTS_MAP.uncaughtException.emit()
+  t.deepEqual(process.exit.args, [])
+  clock.tick(EXIT_TIMEOUT)
+  t.deepEqual(process.exit.args, [[EXIT_CODE]])
+
+  stopLogging()
+  unStubProcessExit()
   clock.uninstall()
-}
+})
 
-const emitAndWait = async function (timeout, { clock, emit }) {
-  await emit()
-  clock.tick(timeout)
-}
-
-each(EVENTS, ({ title }, { eventName, emit }) => {
-  test.serial(
-    `should process.exit(1) if inside exitOn | ${title}`,
-    async (t) => {
-      const { clock, processExit } = stubProcessExit()
-
-      const exitOn = [eventName]
-      const { stopLogging } = startLogging({ exitOn, eventName })
-
-      await emitAndWait(EXIT_TIMEOUT, { clock, emit })
-
-      t.is(processExit.callCount, 1)
-      t.is(processExit.firstCall.args[0], EXIT_STATUS)
-
-      stopLogging()
-
-      unstubProcessExit({ clock, processExit })
+// eslint-disable-next-line max-statements
+test.serial('wait for async log() before exiting', async (t) => {
+  const clock = fakeTimers.install({ toFake: ['setTimeout'] })
+  stubProcessExit()
+  const logDuration = 1e5
+  const stopLogging = logProcessErrors({
+    async log() {
+      await promisify(setTimeout)(logDuration)
     },
-  )
-
-  test.serial(
-    `should not process.exit(1) if not inside exitOn | ${title}`,
-    async (t) => {
-      const { clock, processExit } = stubProcessExit()
-
-      const exitOn = []
-      const { stopLogging } = startLogging({ exitOn, eventName })
-
-      await emitAndWait(EXIT_TIMEOUT, { clock, emit })
-
-      t.true(processExit.notCalled)
-
-      stopLogging()
-
-      unstubProcessExit({ clock, processExit })
-    },
-  )
-
-  test.serial(`should delay process.exit(1) | ${title}`, async (t) => {
-    const { clock, processExit } = stubProcessExit()
-
-    const { stopLogging } = startLogging({ exitOn: [eventName], eventName })
-
-    await emitAndWait(EXIT_TIMEOUT - 1, { clock, emit })
-
-    t.true(processExit.notCalled)
-
-    clock.tick(1)
-    t.true(processExit.called)
-
-    stopLogging()
-
-    unstubProcessExit({ clock, processExit })
+    exit: true,
   })
 
-  test.serial(
-    `should delay process.exit(1) with async opts.log() | ${title}`,
-    // eslint-disable-next-line max-statements
-    async (t) => {
-      const { clock, processExit } = stubProcessExit()
+  await EVENTS_MAP.uncaughtException.emit()
+  clock.tick(logDuration)
+  await pNextTick()
+  t.deepEqual(process.exit.args, [])
+  clock.tick(EXIT_TIMEOUT)
+  t.deepEqual(process.exit.args, [[EXIT_CODE]])
 
-      // eslint-disable-next-line fp/no-let, init-declarations
-      let resolveA
-      // eslint-disable-next-line promise/avoid-new
-      const promise = new Promise((resolve) => {
-        // eslint-disable-next-line fp/no-mutation
-        resolveA = resolve
-      })
-
-      const { stopLogging } = startLogging({
-        exitOn: [eventName],
-        eventName,
-        // We use `async` keyword to make sure they are validated correctly
-        async log() {
-          await promise
-        },
-      })
-
-      await emitAndWait(EXIT_TIMEOUT, { clock, emit })
-
-      t.true(processExit.notCalled)
-
-      resolveA()
-      await pNextTick()
-      clock.tick(EXIT_TIMEOUT)
-
-      t.true(processExit.called)
-
-      stopLogging()
-
-      unstubProcessExit({ clock, processExit })
-    },
-  )
+  stopLogging()
+  unStubProcessExit()
+  clock.uninstall()
 })
+
+test.serial('exit process if "exit: true"', async (t) => {
+  stubProcessExit()
+  const stopLogging = logProcessErrors({ log() {}, exit: true })
+
+  await EVENTS_MAP.uncaughtException.emit()
+  t.is(process.exitCode, EXIT_CODE)
+
+  stopLogging()
+  unStubProcessExit()
+})
+
+test.serial('does not exit process if "exit: false"', async (t) => {
+  stubProcessExit()
+  const stopLogging = logProcessErrors({ log() {}, exit: false })
+
+  await EVENTS_MAP.uncaughtException.emit()
+  t.is(process.exitCode, undefined)
+
+  stopLogging()
+  unStubProcessExit()
+})
+
+test.serial('does not exit process if not an exit event', async (t) => {
+  stubProcessExit()
+  const stopLogging = logProcessErrors({ log() {}, exit: true })
+
+  await EVENTS_MAP.warning.emit()
+  t.is(process.exitCode, undefined)
+
+  stopLogging()
+  unStubProcessExit()
+})
+
+test.serial(
+  'does not exit process if unhandledRejection on Node 14',
+  async (t) => {
+    stubProcessExit()
+    const stopLogging = logProcessErrors({ log() {}, exit: true })
+
+    await EVENTS_MAP.unhandledRejection.emit()
+    t.is(process.exit.exitCode === EXIT_CODE, version.startsWith('v14.'))
+
+    stopLogging()
+    unStubProcessExit()
+  },
+)
+
+test.serial('exit process by default', async (t) => {
+  stubProcessExit()
+  const stopLogging = logProcessErrors({ log() {} })
+
+  await EVENTS_MAP.uncaughtException.emit()
+  t.is(process.exitCode, EXIT_CODE)
+
+  stopLogging()
+  unStubProcessExit()
+})
+
+const noop = function () {}
+
+test.serial(
+  'does not exit process by default if there are other listeners',
+  async (t) => {
+    stubProcessExit()
+    const stopLogging = logProcessErrors({ log() {} })
+
+    process.on('uncaughtException', noop)
+    await EVENTS_MAP.uncaughtException.emit()
+    t.is(process.exitCode, undefined)
+    process.off('uncaughtException', noop)
+
+    stopLogging()
+    unStubProcessExit()
+  },
+)
+
+test.serial(
+  'exits process if there are other listeners but "exit: true"',
+  async (t) => {
+    stubProcessExit()
+    const stopLogging = logProcessErrors({ log() {}, exit: true })
+
+    process.on('uncaughtException', noop)
+    await EVENTS_MAP.uncaughtException.emit()
+    t.is(process.exitCode, EXIT_CODE)
+    process.off('uncaughtException', noop)
+
+    stopLogging()
+    unStubProcessExit()
+  },
+)
+
+test.serial(
+  'exits process by default if there are other listeners for other events',
+  async (t) => {
+    stubProcessExit()
+    const stopLogging = logProcessErrors({ log() {} })
+
+    process.on('unhandledRejection', noop)
+    await EVENTS_MAP.uncaughtException.emit()
+    t.is(process.exitCode, EXIT_CODE)
+    process.off('unhandledRejection', noop)
+
+    stopLogging()
+    unStubProcessExit()
+  },
+)
+
+test.serial(
+  'does not exit process by default if there are other listeners for other events but "exit: false"',
+  async (t) => {
+    stubProcessExit()
+    const stopLogging = logProcessErrors({ log() {}, exit: false })
+
+    process.on('unhandledRejection', noop)
+    await EVENTS_MAP.uncaughtException.emit()
+    t.is(process.exitCode, undefined)
+    process.off('unhandledRejection', noop)
+
+    stopLogging()
+    unStubProcessExit()
+  },
+)

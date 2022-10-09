@@ -1,9 +1,4 @@
 import process, { version } from 'process'
-import { promisify } from 'util'
-
-// TODO: replace with `timers/promises` `setTimeout()` after dropping support
-// for Node <15.0.0
-const pSetTimeout = promisify(setTimeout)
 
 // Exit process on `uncaughtException` and `unhandledRejection`
 //  - This is the default behavior of Node.js
@@ -17,14 +12,13 @@ const pSetTimeout = promisify(setTimeout)
 //     - And they might exit only after some logic is performed first
 //        - E.g. Winston waits for logging up to 3s before calling
 //          `process.exit()`
-export const exitProcess = async function (exit, event) {
+export const exitProcess = function (exit, event) {
   if (!shouldExit(exit, event)) {
     return
   }
 
-  process.exitCode = EXIT_STATUS
-  await pSetTimeout(EXIT_TIMEOUT, undefined, { ref: false })
-  forceExitProcess()
+  process.exitCode = EXIT_CODE
+  setTimeout(forceExitProcess, EXIT_TIMEOUT).unref()
 }
 
 const shouldExit = function (exit, event) {
@@ -57,8 +51,8 @@ const NEW_EXIT_MIN_VERSION = 15
 // Let tasks complete for a few seconds before forcing the exit
 const forceExitProcess = function () {
   // eslint-disable-next-line unicorn/no-process-exit, n/no-process-exit
-  process.exit(EXIT_STATUS)
+  process.exit(EXIT_CODE)
 }
 
-const EXIT_TIMEOUT = 3000
-const EXIT_STATUS = 1
+export const EXIT_TIMEOUT = 3000
+export const EXIT_CODE = 1

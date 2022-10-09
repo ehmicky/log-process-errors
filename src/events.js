@@ -43,5 +43,5 @@ const handleEvent = async function (
 
   const error = getError(value, event)
   await log(error, event)
-  await exitProcess(exit, event)
+  exitProcess(exit, event)
 }

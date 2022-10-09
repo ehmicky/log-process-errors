@@ -7,7 +7,6 @@ import { EVENTS, emit, getCallCount } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 import { startLogging } from './helpers/start.js'
 
-removeProcessListeners()
 const consoleStub = getConsoleStub()
 
 each(EVENTS, ({ title }, eventName) => {
@@ -62,3 +61,5 @@ each(EVENTS, ({ title }, eventName) => {
     consoleStub.reset()
   })
 })
+
+removeProcessListeners()

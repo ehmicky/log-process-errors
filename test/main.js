@@ -6,8 +6,6 @@ import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
 import { startLogging } from './helpers/start.js'
 
-removeProcessListeners()
-
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should allow disabling logging | ${eventName}`, async (t) => {
     if (eventName === 'rejectionHandled') {
@@ -43,3 +41,5 @@ each(EVENTS, ({ title }, eventName) => {
     },
   )
 })
+
+removeProcessListeners()

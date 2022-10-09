@@ -11,8 +11,6 @@ import {
 import { removeProcessListeners } from './helpers/remove.js'
 import { startLogging } from './helpers/start.js'
 
-removeProcessListeners()
-
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
     const { onError, stopLogging } = startLogging()
@@ -73,3 +71,5 @@ each(EVENTS, ({ title }, eventName) => {
     },
   )
 })
+
+removeProcessListeners()

@@ -4,8 +4,6 @@ import { each } from 'test-each'
 
 import { removeProcessListeners } from './helpers/remove.js'
 
-removeProcessListeners()
-
 each(
   [true, { exit: 'true' }, { onError: true }, { unknown: true }],
   ({ title }, options) => {
@@ -14,3 +12,5 @@ each(
     })
   },
 )
+
+removeProcessListeners()

@@ -9,8 +9,6 @@ import { EVENTS, emit, emitManyValues } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 import { startLogging } from './helpers/start.js'
 
-removeProcessListeners()
-
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should limit events | ${title}`, async (t) => {
     const { onError, stopLogging } = startLogging()
@@ -44,3 +42,5 @@ each(EVENTS, ({ title }, eventName) => {
     stopLogging()
   })
 })
+
+removeProcessListeners()

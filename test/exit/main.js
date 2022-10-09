@@ -8,8 +8,6 @@ import { emit } from '../helpers/events.js'
 import { startExitLogging } from '../helpers/exit.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 
-removeProcessListeners()
-
 test.serial('exit process if "exit: true"', async (t) => {
   const stopLogging = startExitLogging({ exit: true })
 
@@ -57,3 +55,5 @@ test.serial('exit process by default', async (t) => {
 
   stopLogging()
 })
+
+removeProcessListeners()

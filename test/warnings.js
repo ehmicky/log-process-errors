@@ -12,7 +12,6 @@ import { startLogging } from './helpers/start.js'
 
 const CLI_FIXTURE = fileURLToPath(new URL('helpers/cli.js', import.meta.url))
 
-removeProcessListeners()
 const consoleStub = getConsoleStub()
 
 test.serial('default event handlers should be enabled', async (t) => {
@@ -91,3 +90,5 @@ each(EVENTS, ({ title }, eventName) => {
     },
   )
 })
+
+removeProcessListeners()

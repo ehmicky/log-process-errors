@@ -10,7 +10,6 @@ import { startClockLogging } from '../helpers/exit.js'
 import { removeProcessListeners } from '../helpers/remove.js'
 
 const pNextTick = promisify(nextTick)
-removeProcessListeners()
 
 const advanceClock = function (t, clock) {
   t.deepEqual(process.exit.args, [])
@@ -43,3 +42,5 @@ test.serial('wait for async onError() before exiting', async (t) => {
 
   stopLogging()
 })
+
+removeProcessListeners()

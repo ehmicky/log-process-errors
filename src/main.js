@@ -4,6 +4,9 @@ import { EVENTS, handleEvent } from './events.js'
 import { getOptions } from './options.js'
 import { removeWarningListener, restoreWarningListener } from './warnings.js'
 
+// eslint-disable-next-line no-duplicate-imports
+export { validateOptions } from './options.js'
+
 // Add event handling for all process-related errors
 export default function logProcessErrors(opts) {
   const optsA = getOptions(opts)

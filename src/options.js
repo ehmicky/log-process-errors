@@ -1,5 +1,10 @@
 import isPlainObj from 'is-plain-obj'
 
+// Undocumented named export to validate options
+export const validateOptions = function (opts) {
+  getOptions(opts)
+}
+
 // Validate options and assign default options
 export const getOptions = function (opts = {}) {
   if (!isPlainObj(opts)) {

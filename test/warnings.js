@@ -24,62 +24,56 @@ const unsetProcessEvent = function (eventName, processHandler) {
   process.off(eventName, processHandler)
 }
 
-test.serial('default event handlers should be enabled', async (t) => {
+const getConsoleStub = function () {
   // eslint-disable-next-line no-restricted-globals
-  const stub = sinon.stub(console, 'error')
+  return sinon.stub(console, 'error')
+}
 
+const consoleStub = getConsoleStub()
+
+test.serial('default event handlers should be enabled', async (t) => {
   await emit('warning')
-  t.true(stub.calledOnce)
+  t.true(consoleStub.calledOnce)
 
-  stub.restore()
+  consoleStub.reset()
 })
 
 test.serial('default event handlers should be disabled', async (t) => {
-  // eslint-disable-next-line no-restricted-globals
-  const stub = sinon.stub(console, 'error')
   const stopLogging = logProcessErrors({ log() {} })
 
   await emit('warning')
-  t.false(stub.called)
+  t.false(consoleStub.called)
 
   stopLogging()
-  stub.restore()
+  consoleStub.reset()
 })
 
 test.serial('default event handlers should be re-enabled', async (t) => {
-  // eslint-disable-next-line no-restricted-globals
-  const stub = sinon.stub(console, 'error')
-
   const stopLogging = logProcessErrors({ log() {} })
   stopLogging()
   await emit('warning')
-  t.true(stub.calledOnce)
+  t.true(consoleStub.calledOnce)
 
-  stub.restore()
+  consoleStub.reset()
 })
 
 test.serial(
   'default event handlers should be re-enabled on multiple calls',
   async (t) => {
-    // eslint-disable-next-line no-restricted-globals
-    const stub = sinon.stub(console, 'error')
-
     const stopLoggingOne = logProcessErrors({ log() {} })
     const stopLoggingTwo = logProcessErrors({ log() {} })
     stopLoggingTwo()
     await emit('warning')
-    t.false(stub.called)
+    t.false(consoleStub.called)
     stopLoggingOne()
     await emit('warning')
-    t.true(stub.calledOnce)
+    t.true(consoleStub.calledOnce)
 
-    stub.restore()
+    consoleStub.reset()
   },
 )
 
 test.serial('user event handlers should be kept', async (t) => {
-  // eslint-disable-next-line no-restricted-globals
-  const stub = sinon.stub(console, 'error')
   const processHandler = setProcessEvent('warning')
   const stopLogging = logProcessErrors({ log() {} })
 
@@ -88,7 +82,7 @@ test.serial('user event handlers should be kept', async (t) => {
 
   stopLogging()
   unsetProcessEvent('warning', processHandler)
-  stub.restore()
+  consoleStub.reset()
 })
 
 const callCli = async function (eventName, cliFlag) {

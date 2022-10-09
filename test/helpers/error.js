@@ -4,7 +4,7 @@ export const getError = function () {
 
 export const getRandomStackError = function () {
   // eslint-disable-next-line fp/no-mutating-assign
-  return Object.assign(new Error('test'), { stack: `  at ${Math.random()}` })
+  return Object.assign(getError(), { stack: `  at ${Math.random()}` })
 }
 
 export const getRandomMessageError = function () {
@@ -12,5 +12,5 @@ export const getRandomMessageError = function () {
 }
 
 export const getObjectError = function (eventName) {
-  return eventName === 'warning' ? 'test' : { message: 'test' }
+  return eventName === 'warning' ? 'message' : { message: 'message' }
 }

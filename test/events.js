@@ -8,7 +8,6 @@ import { EVENTS, emit } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
-
 const consoleStub = getConsoleStub()
 
 each(EVENTS, ({ title }, eventName) => {

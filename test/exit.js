@@ -18,7 +18,6 @@ import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 const pNextTick = promisify(nextTick)
-
 removeProcessListeners()
 
 test.serial('call process.exit() after a timeout', async (t) => {

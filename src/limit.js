@@ -23,5 +23,5 @@ const isLimitedWarning = function (event, value) {
   return event === 'warning' && value.message.startsWith(PREFIX)
 }
 
-const MAX_EVENTS = 100
+export const MAX_EVENTS = 100
 const PREFIX = `Cannot log more than ${MAX_EVENTS}`

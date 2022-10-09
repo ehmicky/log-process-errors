@@ -1,106 +1,55 @@
 import test from 'ava'
+import logProcessErrors from 'log-process-errors'
+import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS } from './helpers/events.js'
-import { startLogging } from './helpers/init.js'
-import { removeProcessListeners } from './helpers/remove.js'
-import { stubStackTraceRandom, unstubStackTrace } from './helpers/stack.js'
+// eslint-disable-next-line no-restricted-imports
+import { MAX_EVENTS } from '../src/limit.js'
 
-const MAX_EVENTS = 100
+import { EVENTS, emit, emitManyValues } from './helpers/events.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-each(EVENTS, ({ title }, { eventName, emit, emitMany }) => {
+const getRandomError = function () {
+  // eslint-disable-next-line fp/no-mutating-assign
+  return Object.assign(new Error('test'), { stack: `  at ${Math.random()}` })
+}
+
+each(EVENTS, ({ title }, eventName) => {
   test.serial(`should limit events | ${title}`, async (t) => {
-    stubStackTraceRandom()
+    const log = sinon.spy()
+    const stopLogging = logProcessErrors({ log, exit: false })
 
-    const { stopLogging, log } = startLogging({
-      eventName,
-      spy: true,
-      log: onlyNotLimited,
-    })
-
-    await emitMany(MAX_EVENTS)
-
-    t.is(log.callCount, MAX_EVENTS)
-
-    await emit()
-
-    t.is(log.callCount, MAX_EVENTS)
+    t.is(log.callCount, 0)
+    await emitManyValues(getRandomError, eventName, MAX_EVENTS + 1)
+    const previousCallCount = log.callCount
+    await emit(eventName)
+    t.is(log.callCount, previousCallCount)
 
     stopLogging()
-
-    unstubStackTrace()
   })
 
-  test.serial(
-    `should emit warning when limiting events | ${title}`,
-    async (t) => {
-      stubStackTraceRandom()
+  test.serial(`should not limit other events | ${title}`, async (t) => {
+    const log = sinon.spy()
+    const stopLogging = logProcessErrors({ log, exit: false })
 
-      const { stopLogging, log } = startLogging({
-        eventName,
-        spy: true,
-        log: onlyLimited,
-      })
+    t.is(log.callCount, 0)
+    await emitManyValues(getRandomError, eventName, MAX_EVENTS + 1)
+    const previousCallCount = log.callCount
+    await emit(eventName === 'warning' ? 'uncaughtException' : 'warning')
+    t.is(log.callCount, previousCallCount + 1)
 
-      await emitMany(MAX_EVENTS)
+    stopLogging()
+  })
 
-      t.true(log.notCalled)
+  test.serial(`should print a warning on limit | ${title}`, async (t) => {
+    const log = sinon.spy()
+    const stopLogging = logProcessErrors({ log, exit: false })
 
-      await emit()
+    await emitManyValues(getRandomError, eventName, MAX_EVENTS + 1)
+    t.is(log.args[log.args.length - 1][1], 'warning')
 
-      t.true(log.called)
-
-      stopLogging()
-
-      unstubStackTrace()
-    },
-  )
-
-  test.serial(
-    `should only emit warning once when limiting events | ${title}`,
-    async (t) => {
-      stubStackTraceRandom()
-
-      const { stopLogging, log } = startLogging({
-        eventName,
-        spy: true,
-        log: onlyLimited,
-      })
-
-      await emitMany(MAX_EVENTS)
-
-      await emit()
-
-      const { callCount } = log
-
-      await emit()
-
-      const { callCount: newCallCount } = log
-      t.is(newCallCount, callCount)
-
-      stopLogging()
-
-      unstubStackTrace()
-    },
-  )
+    stopLogging()
+  })
 })
-
-const onlyLimited = function (error) {
-  if (isLimitedWarning(error)) {
-    // eslint-disable-next-line no-restricted-globals, no-console
-    console.error(error)
-  }
-}
-
-const onlyNotLimited = function (error) {
-  if (!isLimitedWarning(error)) {
-    // eslint-disable-next-line no-restricted-globals, no-console
-    console.error(error)
-  }
-}
-
-const isLimitedWarning = function ({ name, message }) {
-  return name === 'Warning' && message.includes('LogProcessErrors')
-}

@@ -7,6 +7,25 @@ import { getError } from './error.js'
 // for Node <15.0.0
 const pSetImmediate = promisify(setImmediate)
 
+export const emitMany = async function (eventName, length) {
+  await emitManyValues(getError, eventName, length)
+}
+
+export const emitManyValues = async function (getValue, eventName, length) {
+  await Promise.all(
+    Array.from({ length }, () => emitValue(getValue(), eventName)),
+  )
+}
+
+export const emit = async function (eventName) {
+  await emitValue(getError(), eventName)
+}
+
+export const emitValue = async function (value, eventName) {
+  await EVENTS_MAP[eventName](value)
+  await pSetImmediate()
+}
+
 const uncaughtException = function (value) {
   setImmediate(() => {
     throw value
@@ -37,22 +56,3 @@ const EVENTS_MAP = {
 }
 
 export const EVENTS = Object.keys(EVENTS_MAP)
-
-export const emitMany = async function (eventName, length) {
-  await emitManyValues(getError, eventName, length)
-}
-
-export const emitManyValues = async function (getValue, eventName, length) {
-  await Promise.all(
-    Array.from({ length }, () => emitValue(getValue(), eventName)),
-  )
-}
-
-export const emit = async function (eventName) {
-  await emitValue(getError(), eventName)
-}
-
-export const emitValue = async function (value, eventName) {
-  await EVENTS_MAP[eventName](value)
-  await pSetImmediate()
-}

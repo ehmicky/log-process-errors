@@ -27,6 +27,7 @@ and [warnings](https://nodejs.org/api/process.html#process_event_warning).
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 - [Single event handler](#onerror) for all process errors
 - Ignore [duplicate](#onerror) process errors
+- [Normalize](#error) invalid errors
 - [Process exit](#exit) is graceful and can be prevented
 
 # Install
@@ -109,7 +110,9 @@ logProcessErrors({
 
 _Type_: `Error`
 
-The process error. This is guaranteed to be an error instance.
+The process error. This is guaranteed to be a
+[normalized](https://github.com/ehmicky/normalize-exception) error instance. A
+short description of the [event](#event) is also appended to its message.
 
 #### event
 

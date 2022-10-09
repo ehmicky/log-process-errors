@@ -10,42 +10,15 @@ import { EXIT_TIMEOUT, EXIT_CODE } from '../src/exit.js'
 import { emit } from './helpers/events.js'
 import {
   stubProcessClock,
-  stubProcessExit,
   unStubProcessClock,
-  unStubProcessExit,
+  startExitLogging,
+  startProcessLogging,
 } from './helpers/exit.js'
-import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
 import { startLogging } from './helpers/start.js'
 
 const pNextTick = promisify(nextTick)
 removeProcessListeners()
-
-const startProcessLogging = function (eventName, opts) {
-  const processHandler = setProcessEvent(eventName)
-  const stopLogging = startExitLogging(opts)
-  return stopProcessLogging.bind(
-    undefined,
-    eventName,
-    stopLogging,
-    processHandler,
-  )
-}
-
-const stopProcessLogging = function (eventName, stopLogging, processHandler) {
-  stopLogging()
-  unsetProcessEvent(eventName, processHandler)
-}
-
-const startExitLogging = function (opts) {
-  stubProcessExit()
-  return stopExitLogging.bind(undefined, startLogging(opts).stopLogging)
-}
-
-const stopExitLogging = function (stopLogging) {
-  stopLogging()
-  unStubProcessExit()
-}
 
 test.serial('call process.exit() after a timeout', async (t) => {
   const clock = stubProcessClock()

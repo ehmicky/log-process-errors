@@ -6,17 +6,21 @@ export const getOptions = function (opts = {}) {
     throw new TypeError(`Options must be a plain object: ${opts}`)
   }
 
-  const { keep = false, log = defaultLog } = opts
+  const { keep, log = defaultLog } = opts
 
-  if (typeof keep !== 'boolean') {
-    throw new TypeError(`Option "keep" must be a boolean: ${keep}`)
-  }
+  validateKeep(keep)
 
   if (typeof log !== 'function') {
     throw new TypeError(`Option "log" must be a function: ${log}`)
   }
 
   return { keep, log }
+}
+
+const validateKeep = function (keep) {
+  if (keep !== undefined && typeof keep !== 'boolean') {
+    throw new TypeError(`Option "keep" must be a boolean: ${keep}`)
+  }
 }
 
 // `console` should be referenced inside this function, not outside, as user

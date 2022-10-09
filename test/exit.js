@@ -21,6 +21,16 @@ import { startLogging } from './helpers/start.js'
 const pNextTick = promisify(nextTick)
 removeProcessListeners()
 
+const startExitLogging = function (opts) {
+  stubProcessExit()
+  return stopExitLogging.bind(undefined, startLogging(opts).stopLogging)
+}
+
+const stopExitLogging = function (stopLogging) {
+  stopLogging()
+  unStubProcessExit()
+}
+
 test.serial('call process.exit() after a timeout', async (t) => {
   const clock = stubProcessClock()
   const { stopLogging } = startLogging({ exit: true })
@@ -56,23 +66,13 @@ test.serial('wait for async onError() before exiting', async (t) => {
   unStubProcessClock(clock)
 })
 
-const startExitLogging = function (opts) {
-  stubProcessExit()
-  return startLogging(opts).stopLogging
-}
-
-const stopExitLogging = function (stopLogging) {
-  stopLogging()
-  unStubProcessExit()
-}
-
 test.serial('exit process if "exit: true"', async (t) => {
   const stopLogging = startExitLogging({ exit: true })
 
   await emit('uncaughtException')
   t.is(process.exitCode, EXIT_CODE)
 
-  stopExitLogging(stopLogging)
+  stopLogging()
 })
 
 test.serial('does not exit process if "exit: false"', async (t) => {
@@ -81,7 +81,7 @@ test.serial('does not exit process if "exit: false"', async (t) => {
   await emit('uncaughtException')
   t.is(process.exitCode, undefined)
 
-  stopExitLogging(stopLogging)
+  stopLogging()
 })
 
 test.serial('does not exit process if not an exit event', async (t) => {
@@ -90,7 +90,7 @@ test.serial('does not exit process if not an exit event', async (t) => {
   await emit('warning')
   t.is(process.exitCode, undefined)
 
-  stopExitLogging(stopLogging)
+  stopLogging()
 })
 
 test.serial(
@@ -101,7 +101,7 @@ test.serial(
     await emit('unhandledRejection')
     t.is(process.exit.exitCode === EXIT_CODE, version.startsWith('v14.'))
 
-    stopExitLogging(stopLogging)
+    stopLogging()
   },
 )
 
@@ -111,7 +111,7 @@ test.serial('exit process by default', async (t) => {
   await emit('uncaughtException')
   t.is(process.exitCode, EXIT_CODE)
 
-  stopExitLogging(stopLogging)
+  stopLogging()
 })
 
 test.serial(
@@ -123,7 +123,7 @@ test.serial(
     await emit('uncaughtException')
     t.is(process.exitCode, undefined)
 
-    stopExitLogging(stopLogging)
+    stopLogging()
     unsetProcessEvent('uncaughtException', processHandler)
   },
 )
@@ -137,7 +137,7 @@ test.serial(
     await emit('uncaughtException')
     t.is(process.exitCode, EXIT_CODE)
 
-    stopExitLogging(stopLogging)
+    stopLogging()
     unsetProcessEvent('uncaughtException', processHandler)
   },
 )
@@ -151,7 +151,7 @@ test.serial(
     await emit('uncaughtException')
     t.is(process.exitCode, EXIT_CODE)
 
-    stopExitLogging(stopLogging)
+    stopLogging()
     unsetProcessEvent('unhandledRejection', processHandler)
   },
 )
@@ -165,7 +165,7 @@ test.serial(
     await emit('uncaughtException')
     t.is(process.exitCode, undefined)
 
-    stopExitLogging(stopLogging)
+    stopLogging()
     unsetProcessEvent('unhandledRejection', processHandler)
   },
 )

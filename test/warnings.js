@@ -1,29 +1,18 @@
-import process from 'process'
 import { fileURLToPath } from 'url'
 
 import test from 'ava'
 import { execa } from 'execa'
 import logProcessErrors from 'log-process-errors'
-import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.js'
 import { EVENTS, emit } from './helpers/events.js'
+import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 const CLI_FIXTURE = fileURLToPath(new URL('helpers/cli.js', import.meta.url))
 
 removeProcessListeners()
-
-const setProcessEvent = function (eventName) {
-  const processHandler = sinon.spy()
-  process.on(eventName, processHandler)
-  return processHandler
-}
-
-const unsetProcessEvent = function (eventName, processHandler) {
-  process.off(eventName, processHandler)
-}
 
 const consoleStub = getConsoleStub()
 

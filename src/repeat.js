@@ -1,5 +1,7 @@
 import { inspect } from 'util'
 
+import isErrorInstance from 'is-error-instance'
+
 import { PREFIX } from './limit.js'
 
 // Duplicate errors are only logged once because:
@@ -36,10 +38,6 @@ const getPreviousEvent = function (value) {
     ? serializeError(value)
     : stableSerialize(value)
   return previousEvent.slice(0, FINGERPRINT_MAX_LENGTH)
-}
-
-const isErrorInstance = function (value) {
-  return Object.prototype.toString.call(value) === '[object Error]'
 }
 
 // We do not serialize `error.message` as it may contain dynamic values like

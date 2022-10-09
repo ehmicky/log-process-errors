@@ -1,3 +1,10 @@
+# 10.1.0
+
+## Features
+
+- Improve error detection using
+  [`is-error-instance`](https://github.com/ehmicky/is-error-instance)
+
 # 10.0.0
 
 ## Package size

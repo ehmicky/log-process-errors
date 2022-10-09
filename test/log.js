@@ -3,18 +3,18 @@ import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS, EVENTS_MAP } from './helpers/events.js'
+import { EVENTS, emit } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-each(EVENTS, ({ title }, { eventName, emit }) => {
+each(EVENTS, ({ title }, eventName) => {
   test.serial(`should fire opts.log() | ${title}`, async (t) => {
     const log = sinon.spy()
     const stopLogging = logProcessErrors({ log, exit: false })
 
     t.false(log.called)
-    await emit()
+    await emit(eventName)
     t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
     t.true(log.args[log.args.length - 1][0] instanceof Error)
     t.is(log.args[log.args.length - 1][1], eventName)
@@ -29,7 +29,7 @@ test.serial('should log on the console by default', async (t) => {
   const stopLogging = logProcessErrors()
 
   t.false(stub.called)
-  await EVENTS_MAP.warning.emit()
+  await emit('warning')
   t.is(stub.callCount, 1)
   t.true(stub.args[stub.args.length - 1][0] instanceof Error)
 

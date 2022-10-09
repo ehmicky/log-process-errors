@@ -8,7 +8,7 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-each(EVENTS, ({ title }, { eventName }) => {
+each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
     const log = sinon.spy()
     const stopLogging = logProcessErrors({ log, exit: false })

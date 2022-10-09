@@ -1,8 +1,6 @@
 import { emitWarning } from 'process'
 import { promisify } from 'util'
 
-import mapObj from 'map-obj'
-
 // TODO: replace with `timers/promises` `setImmediate()` after dropping support
 // for Node <15.0.0
 const pSetImmediate = promisify(setImmediate)
@@ -33,28 +31,19 @@ const warning = async function () {
   await pSetImmediate()
 }
 
-const EVENTS_SIMPLE_MAP = {
+const EVENTS_MAP = {
   uncaughtException,
   unhandledRejection,
   rejectionHandled,
   warning,
 }
 
-const getEventsMap = function () {
-  return mapObj(EVENTS_SIMPLE_MAP, getEvent)
-}
+export const EVENTS = Object.keys(EVENTS_MAP)
 
-const getEvent = function (eventName, emit) {
-  return [eventName, { title: eventName, eventName, emit }]
-}
-
-// Emit several emits in parallel
 export const emitMany = async function (eventName, length) {
-  await Promise.all(Array.from({ length }, EVENTS_SIMPLE_MAP[eventName]))
+  await Promise.all(Array.from({ length }, emit.bind(undefined, eventName)))
 }
 
-// Map of all possible events, with related information and helper methods
-export const EVENTS_MAP = getEventsMap()
-
-// Same as an array
-export const EVENTS = Object.values(EVENTS_MAP)
+export const emit = async function (eventName) {
+  await EVENTS_MAP[eventName]()
+}

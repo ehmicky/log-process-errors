@@ -9,7 +9,7 @@ import sinon from 'sinon'
 // eslint-disable-next-line no-restricted-imports
 import { EXIT_TIMEOUT, EXIT_CODE } from '../src/exit.js'
 
-import { EVENTS_MAP } from './helpers/events.js'
+import { emit } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 const pNextTick = promisify(nextTick)
@@ -49,7 +49,7 @@ test.serial('call process.exit() after a timeout', async (t) => {
   const clock = stubProcessClock()
   const stopLogging = logProcessErrors({ log() {}, exit: true })
 
-  await EVENTS_MAP.uncaughtException.emit()
+  await emit('uncaughtException')
   t.deepEqual(process.exit.args, [])
   clock.tick(EXIT_TIMEOUT)
   t.deepEqual(process.exit.args, [[EXIT_CODE]])
@@ -69,7 +69,7 @@ test.serial('wait for async log() before exiting', async (t) => {
     exit: true,
   })
 
-  await EVENTS_MAP.uncaughtException.emit()
+  await emit('uncaughtException')
   clock.tick(logDuration)
   await pNextTick()
   t.deepEqual(process.exit.args, [])
@@ -84,7 +84,7 @@ test.serial('exit process if "exit: true"', async (t) => {
   stubProcessExit()
   const stopLogging = logProcessErrors({ log() {}, exit: true })
 
-  await EVENTS_MAP.uncaughtException.emit()
+  await emit('uncaughtException')
   t.is(process.exitCode, EXIT_CODE)
 
   stopLogging()
@@ -95,7 +95,7 @@ test.serial('does not exit process if "exit: false"', async (t) => {
   stubProcessExit()
   const stopLogging = logProcessErrors({ log() {}, exit: false })
 
-  await EVENTS_MAP.uncaughtException.emit()
+  await emit('uncaughtException')
   t.is(process.exitCode, undefined)
 
   stopLogging()
@@ -106,7 +106,7 @@ test.serial('does not exit process if not an exit event', async (t) => {
   stubProcessExit()
   const stopLogging = logProcessErrors({ log() {}, exit: true })
 
-  await EVENTS_MAP.warning.emit()
+  await emit('warning')
   t.is(process.exitCode, undefined)
 
   stopLogging()
@@ -119,7 +119,7 @@ test.serial(
     stubProcessExit()
     const stopLogging = logProcessErrors({ log() {}, exit: true })
 
-    await EVENTS_MAP.unhandledRejection.emit()
+    await emit('unhandledRejection')
     t.is(process.exit.exitCode === EXIT_CODE, version.startsWith('v14.'))
 
     stopLogging()
@@ -131,7 +131,7 @@ test.serial('exit process by default', async (t) => {
   stubProcessExit()
   const stopLogging = logProcessErrors({ log() {} })
 
-  await EVENTS_MAP.uncaughtException.emit()
+  await emit('uncaughtException')
   t.is(process.exitCode, EXIT_CODE)
 
   stopLogging()
@@ -145,7 +145,7 @@ test.serial(
     const processHandler = setProcessEvent('uncaughtException')
     const stopLogging = logProcessErrors({ log() {} })
 
-    await EVENTS_MAP.uncaughtException.emit()
+    await emit('uncaughtException')
     t.is(process.exitCode, undefined)
 
     unsetProcessEvent('uncaughtException', processHandler)
@@ -161,7 +161,7 @@ test.serial(
     const processHandler = setProcessEvent('uncaughtException')
     const stopLogging = logProcessErrors({ log() {}, exit: true })
 
-    await EVENTS_MAP.uncaughtException.emit()
+    await emit('uncaughtException')
     t.is(process.exitCode, EXIT_CODE)
 
     unsetProcessEvent('uncaughtException', processHandler)
@@ -177,7 +177,7 @@ test.serial(
     const processHandler = setProcessEvent('unhandledRejection')
     const stopLogging = logProcessErrors({ log() {} })
 
-    await EVENTS_MAP.uncaughtException.emit()
+    await emit('uncaughtException')
     t.is(process.exitCode, EXIT_CODE)
 
     unsetProcessEvent('unhandledRejection', processHandler)
@@ -193,7 +193,7 @@ test.serial(
     const processHandler = setProcessEvent('unhandledRejection')
     const stopLogging = logProcessErrors({ log() {}, exit: false })
 
-    await EVENTS_MAP.uncaughtException.emit()
+    await emit('uncaughtException')
     t.is(process.exitCode, undefined)
 
     unsetProcessEvent('unhandledRejection', processHandler)

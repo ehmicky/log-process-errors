@@ -5,7 +5,7 @@ import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS, EVENTS_MAP } from './helpers/events.js'
+import { EVENTS, emit } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
@@ -27,14 +27,14 @@ test.serial('should allow disabling logging', async (t) => {
   stopLogging()
 
   t.false(processHandler.called)
-  await EVENTS_MAP.warning.emit()
+  await emit('warning')
   t.false(log.called)
   t.true(processHandler.called)
 
   unsetProcessEvent('warning', processHandler)
 })
 
-each(EVENTS, ({ title }, { eventName, emit }) => {
+each(EVENTS, ({ title }, eventName) => {
   test.serial(
     `should keep existing process event handlers | ${title}`,
     async (t) => {
@@ -44,7 +44,7 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
 
       t.false(processHandler.called)
       t.false(log.called)
-      await emit()
+      await emit(eventName)
       t.true(log.called)
       t.true(processHandler.called)
 

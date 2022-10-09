@@ -1,25 +1,27 @@
 import test from 'ava'
+import logProcessErrors from 'log-process-errors'
+import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { EVENTS } from './helpers/events.js'
-import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
-import { stubStackTrace, unstubStackTrace } from './helpers/stack.js'
 
 removeProcessListeners()
 
-each(EVENTS, ({ title }, { eventName, emitMany }) => {
-  test.serial(`should not repeat identical events | ${title}`, async (t) => {
-    stubStackTrace()
+each(EVENTS, ({ title }, { emit }) => {
+  test.serial.only(
+    `should not repeat identical events | ${title}`,
+    async (t) => {
+      const log = sinon.spy()
+      const stopLogging = logProcessErrors({ log, exit: false })
 
-    const { stopLogging, log } = startLogging({ spy: true, eventName })
+      t.is(log.callCount, 0)
+      await emit()
+      t.is(log.callCount, 1)
+      await emit()
+      t.is(log.callCount, 1)
 
-    await emitMany(2)
-
-    t.is(log.callCount, 1)
-
-    stopLogging()
-
-    unstubStackTrace()
-  })
+      stopLogging()
+    },
+  )
 })

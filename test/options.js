@@ -1,17 +1,16 @@
 import test from 'ava'
+import logProcessErrors from 'log-process-errors'
 import { each } from 'test-each'
 
-import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
 each(
-  [{ log: true }, { exitOn: true }, { exitOn: ['invalid'] }],
+  [true, { exit: 'true' }, { log: true }, { unknown: true }],
   ({ title }, options) => {
     test(`should validate options | ${title}`, (t) => {
-      const error = t.throws(startLogging.bind(undefined, options))
-      t.snapshot(error.message)
+      t.throws(logProcessErrors.bind(undefined, options))
     })
   },
 )

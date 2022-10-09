@@ -6,13 +6,15 @@ export const getOptions = function (opts = {}) {
     throw new TypeError(`Options must be a plain object: ${opts}`)
   }
 
-  const { exit, log = defaultLog } = opts
+  const { exit, log = defaultLog, ...unknownOpts } = opts
 
   validateExit(exit)
 
   if (typeof log !== 'function') {
     throw new TypeError(`Option "log" must be a function: ${log}`)
   }
+
+  validateUnknownOpts(unknownOpts)
 
   return { exit, log }
 }
@@ -28,4 +30,12 @@ const validateExit = function (exit) {
 const defaultLog = function (error) {
   // eslint-disable-next-line no-restricted-globals, no-console
   console.error(error)
+}
+
+const validateUnknownOpts = function (unknownOpts) {
+  const [unknownOpt] = Object.keys(unknownOpts)
+
+  if (unknownOpt !== undefined) {
+    throw new TypeError(`Option "${unknownOpt}" is unknown.`)
+  }
 }

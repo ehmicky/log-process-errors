@@ -1,18 +1,16 @@
 import test from 'ava'
-import logProcessErrors from 'log-process-errors'
-import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { EVENTS, emit } from './helpers/events.js'
 import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
+import { startLogging } from './helpers/start.js'
 
 removeProcessListeners()
 
 test.serial('should allow disabling logging', async (t) => {
   const processHandler = setProcessEvent('warning')
-  const onError = sinon.spy()
-  const stopLogging = logProcessErrors({ onError })
+  const { onError, stopLogging } = startLogging()
   stopLogging()
 
   t.false(processHandler.called)
@@ -28,8 +26,7 @@ each(EVENTS, ({ title }, eventName) => {
     `should keep existing process event handlers | ${title}`,
     async (t) => {
       const processHandler = setProcessEvent(eventName)
-      const onError = sinon.spy()
-      const stopLogging = logProcessErrors({ onError, exit: false })
+      const { onError, stopLogging } = startLogging()
 
       t.false(processHandler.called)
       t.false(onError.called)

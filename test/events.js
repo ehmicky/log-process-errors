@@ -1,19 +1,18 @@
 import test from 'ava'
-import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.js'
 import { EVENTS, emit, getCallCount } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
+import { startLogging } from './helpers/start.js'
 
 removeProcessListeners()
 const consoleStub = getConsoleStub()
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should fire opts.onError() | ${title}`, async (t) => {
-    const onError = sinon.spy()
-    const stopLogging = logProcessErrors({ onError, exit: false })
+    const { onError, stopLogging } = startLogging()
 
     t.false(onError.called)
     await emit(eventName)
@@ -35,12 +34,11 @@ each(EVENTS, ({ title }, eventName) => {
 
       const onError = sinon.spy()
       const testError = new Error('test')
-      const stopLogging = logProcessErrors({
+      const { stopLogging } = startLogging({
         onError(...args) {
           onError(...args)
           throw testError
         },
-        exit: false,
       })
 
       await emit(eventName)
@@ -54,7 +52,7 @@ each(EVENTS, ({ title }, eventName) => {
 })
 
 test.serial('should log on the console by default', async (t) => {
-  const stopLogging = logProcessErrors()
+  const { stopLogging } = startLogging({ onError: undefined })
 
   t.false(consoleStub.called)
   await emit('warning')

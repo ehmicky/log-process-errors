@@ -1,6 +1,4 @@
 import test from 'ava'
-import logProcessErrors from 'log-process-errors'
-import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { getRandomMessageError, getObjectError } from './helpers/error.js'
@@ -11,13 +9,13 @@ import {
   getCallCount,
 } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
+import { startLogging } from './helpers/start.js'
 
 removeProcessListeners()
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
-    const onError = sinon.spy()
-    const stopLogging = logProcessErrors({ onError, exit: false })
+    const { onError, stopLogging } = startLogging()
 
     t.is(onError.callCount, 0)
     await emitMany(eventName, 2)
@@ -29,13 +27,16 @@ each(EVENTS, ({ title }, eventName) => {
   test.serial(
     `can repeat identical events between different loggers | ${title}`,
     async (t) => {
-      const onError = sinon.spy()
-      const stopLoggingOne = logProcessErrors({ onError })
-      const stopLoggingTwo = logProcessErrors({ onError })
+      const { onError: onErrorOne, stopLogging: stopLoggingOne } =
+        startLogging()
+      const { onError: onErrorTwo, stopLogging: stopLoggingTwo } =
+        startLogging()
 
-      t.is(onError.callCount, 0)
+      t.is(onErrorOne.callCount, 0)
+      t.is(onErrorTwo.callCount, 0)
       await emitMany(eventName, 2)
-      t.is(onError.callCount, 2 * getCallCount(eventName))
+      t.is(onErrorOne.callCount, getCallCount(eventName))
+      t.is(onErrorTwo.callCount, getCallCount(eventName))
 
       stopLoggingOne()
       stopLoggingTwo()
@@ -45,8 +46,7 @@ each(EVENTS, ({ title }, eventName) => {
   test.serial(
     `should not repeat errors with same stack but different message | ${title}`,
     async (t) => {
-      const onError = sinon.spy()
-      const stopLogging = logProcessErrors({ onError, exit: false })
+      const { onError, stopLogging } = startLogging()
 
       t.is(onError.callCount, 0)
       await emitManyValues(getRandomMessageError, eventName, 2)
@@ -59,8 +59,7 @@ each(EVENTS, ({ title }, eventName) => {
   test.serial(
     `should not repeat values that are not error instances | ${title}`,
     async (t) => {
-      const onError = sinon.spy()
-      const stopLogging = logProcessErrors({ onError, exit: false })
+      const { onError, stopLogging } = startLogging()
 
       t.is(onError.callCount, 0)
       await emitManyValues(

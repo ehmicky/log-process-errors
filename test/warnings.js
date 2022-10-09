@@ -2,13 +2,13 @@ import { fileURLToPath } from 'url'
 
 import test from 'ava'
 import { execa } from 'execa'
-import logProcessErrors from 'log-process-errors'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.js'
 import { EVENTS, emit } from './helpers/events.js'
 import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
+import { startLogging } from './helpers/start.js'
 
 const CLI_FIXTURE = fileURLToPath(new URL('helpers/cli.js', import.meta.url))
 
@@ -23,7 +23,7 @@ test.serial('default event handlers should be enabled', async (t) => {
 })
 
 test.serial('default event handlers should be disabled', async (t) => {
-  const stopLogging = logProcessErrors({ onError() {} })
+  const { stopLogging } = startLogging()
 
   await emit('warning')
   t.false(consoleStub.called)
@@ -33,7 +33,7 @@ test.serial('default event handlers should be disabled', async (t) => {
 })
 
 test.serial('default event handlers should be re-enabled', async (t) => {
-  const stopLogging = logProcessErrors({ onError() {} })
+  const { stopLogging } = startLogging()
   stopLogging()
   await emit('warning')
   t.true(consoleStub.calledOnce)
@@ -44,8 +44,8 @@ test.serial('default event handlers should be re-enabled', async (t) => {
 test.serial(
   'default event handlers should be re-enabled on multiple calls',
   async (t) => {
-    const stopLoggingOne = logProcessErrors({ onError() {} })
-    const stopLoggingTwo = logProcessErrors({ onError() {} })
+    const { stopLogging: stopLoggingOne } = startLogging()
+    const { stopLogging: stopLoggingTwo } = startLogging()
     stopLoggingTwo()
     await emit('warning')
     t.false(consoleStub.called)
@@ -59,7 +59,7 @@ test.serial(
 
 test.serial('user event handlers should be kept', async (t) => {
   const processHandler = setProcessEvent('warning')
-  const stopLogging = logProcessErrors({ onError() {} })
+  const { stopLogging } = startLogging()
 
   await emit('warning')
   t.true(processHandler.calledOnce)

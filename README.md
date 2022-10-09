@@ -13,10 +13,10 @@
 
 Show some ❤️ to Node.js process errors.
 
-This improves Node.js process errors:
+This improves process errors:
 [uncaught exceptions](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [unhandled promises](https://nodejs.org/api/process.html#process_event_unhandledrejection),
-[promises handled too late](https://nodejs.org/api/process.html#process_event_rejectionhandled))
+[promises handled too late](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 and [warnings](https://nodejs.org/api/process.html#process_event_warning).
 
 # Features

@@ -19,4 +19,20 @@ each(EVENTS, ({ title }, eventName) => {
 
     stopLogging()
   })
+
+  test.serial(
+    `can repeat identical events between different loggers | ${title}`,
+    async (t) => {
+      const log = sinon.spy()
+      const stopLoggingOne = logProcessErrors({ log })
+      const stopLoggingTwo = logProcessErrors({ log })
+
+      t.is(log.callCount, 0)
+      await emitMany(eventName, 2)
+      t.is(log.callCount, 2 * (eventName === 'rejectionHandled' ? 2 : 1))
+
+      stopLoggingOne()
+      stopLoggingTwo()
+    },
+  )
 })

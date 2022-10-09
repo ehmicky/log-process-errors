@@ -45,13 +45,12 @@ const getEventsMap = function () {
 }
 
 const getEvent = function (eventName, emit) {
-  const emitMany = emitEvents.bind(undefined, emit)
-  return [eventName, { title: eventName, eventName, emit, emitMany }]
+  return [eventName, { title: eventName, eventName, emit }]
 }
 
 // Emit several emits in parallel
-const emitEvents = async function (emit, length) {
-  await Promise.all(Array.from({ length }, emit))
+export const emitMany = async function (eventName, length) {
+  await Promise.all(Array.from({ length }, EVENTS_SIMPLE_MAP[eventName]))
 }
 
 // Map of all possible events, with related information and helper methods

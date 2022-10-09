@@ -41,17 +41,17 @@ export const stubProcessClock = function () {
   return fakeTimers.install({ toFake: ['setTimeout'] })
 }
 
-// Stub `process.exit()`
-export const stubProcessExit = function () {
-  sinon.stub(process, 'exit')
-}
-
 export const unStubProcessClock = function (clock) {
   unStubProcessExit()
   clock.uninstall()
 }
 
-export const unStubProcessExit = function () {
+// Stub `process.exit()`
+const stubProcessExit = function () {
+  sinon.stub(process, 'exit')
+}
+
+const unStubProcessExit = function () {
   process.exit.restore()
   process.exitCode = undefined
 }

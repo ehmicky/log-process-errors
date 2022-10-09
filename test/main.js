@@ -8,20 +8,24 @@ import { startLogging } from './helpers/start.js'
 
 removeProcessListeners()
 
-test.serial('should allow disabling logging', async (t) => {
-  const processHandler = setProcessEvent('warning')
-  const { onError, stopLogging } = startLogging()
-  stopLogging()
-
-  t.false(processHandler.called)
-  await emit('warning')
-  t.false(onError.called)
-  t.true(processHandler.called)
-
-  unsetProcessEvent('warning', processHandler)
-})
-
 each(EVENTS, ({ title }, eventName) => {
+  test.serial(`should allow disabling logging | ${eventName}`, async (t) => {
+    if (eventName === 'rejectionHandled') {
+      return t.pass()
+    }
+
+    const processHandler = setProcessEvent(eventName)
+    const { onError, stopLogging } = startLogging()
+    stopLogging()
+
+    t.false(processHandler.called)
+    await emit(eventName)
+    t.false(onError.called)
+    t.true(processHandler.called)
+
+    unsetProcessEvent(eventName, processHandler)
+  })
+
   test.serial(
     `should keep existing process event handlers | ${title}`,
     async (t) => {

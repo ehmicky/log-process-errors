@@ -36,12 +36,22 @@ const EVENTS_MAP = {
 
 export const EVENTS = Object.keys(EVENTS_MAP)
 
-export const emitMany = async function (eventName, length) {
-  await Promise.all(Array.from({ length }, emit.bind(undefined, eventName)))
+export const emitManyValues = async function (getValue, eventName, length) {
+  await Promise.all(
+    Array.from({ length }, (_, index) =>
+      emitValue(getValue.bind(undefined, index), eventName),
+    ),
+  )
 }
 
-export const emit = async function (eventName) {
-  const error = new Error('message')
-  await EVENTS_MAP[eventName](error)
+const emitValue = async function (getValue, eventName) {
+  await EVENTS_MAP[eventName](getValue())
   await pSetImmediate()
 }
+
+const getError = function () {
+  return new Error('message')
+}
+
+export const emit = emitValue.bind(undefined, getError)
+export const emitMany = emitManyValues.bind(undefined, getError)

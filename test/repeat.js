@@ -3,10 +3,14 @@ import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS, emitMany } from './helpers/events.js'
+import { EVENTS, emitMany, emitManyValues } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
+
+const getIndexError = function (index) {
+  return new Error(String(index))
+}
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
@@ -33,6 +37,20 @@ each(EVENTS, ({ title }, eventName) => {
 
       stopLoggingOne()
       stopLoggingTwo()
+    },
+  )
+
+  test.serial(
+    `should not repeat errors with same stack but different message | ${title}`,
+    async (t) => {
+      const log = sinon.spy()
+      const stopLogging = logProcessErrors({ log, exit: false })
+
+      t.is(log.callCount, 0)
+      await emitManyValues(getIndexError, eventName, 2)
+      t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+
+      stopLogging()
     },
   )
 })

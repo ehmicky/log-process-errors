@@ -1,40 +1,25 @@
 import process, { version, nextTick } from 'process'
 import { promisify } from 'util'
 
-import fakeTimers from '@sinonjs/fake-timers'
 import test from 'ava'
 import logProcessErrors from 'log-process-errors'
-import sinon from 'sinon'
 
 // eslint-disable-next-line no-restricted-imports
 import { EXIT_TIMEOUT, EXIT_CODE } from '../src/exit.js'
 
 import { emit } from './helpers/events.js'
+import {
+  stubProcessClock,
+  stubProcessExit,
+  unStubProcessClock,
+  unStubProcessExit,
+} from './helpers/exit.js'
 import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 const pNextTick = promisify(nextTick)
 
 removeProcessListeners()
-
-const stubProcessClock = function () {
-  stubProcessExit()
-  return fakeTimers.install({ toFake: ['setTimeout'] })
-}
-
-const stubProcessExit = function () {
-  sinon.stub(process, 'exit')
-}
-
-const unStubProcessClock = function (clock) {
-  unStubProcessExit()
-  clock.uninstall()
-}
-
-const unStubProcessExit = function () {
-  process.exit.restore()
-  process.exitCode = undefined
-}
 
 test.serial('call process.exit() after a timeout', async (t) => {
   const clock = stubProcessClock()

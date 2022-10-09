@@ -16,7 +16,7 @@ export type Options = {
    *
    * @default false
    */
-  readonly keep?: boolean
+  readonly exit?: boolean
 
   /**
    * Function called once per process error.

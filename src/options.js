@@ -6,20 +6,20 @@ export const getOptions = function (opts = {}) {
     throw new TypeError(`Options must be a plain object: ${opts}`)
   }
 
-  const { keep, log = defaultLog } = opts
+  const { exit, log = defaultLog } = opts
 
-  validateKeep(keep)
+  validateExit(exit)
 
   if (typeof log !== 'function') {
     throw new TypeError(`Option "log" must be a function: ${log}`)
   }
 
-  return { keep, log }
+  return { exit, log }
 }
 
-const validateKeep = function (keep) {
-  if (keep !== undefined && typeof keep !== 'boolean') {
-    throw new TypeError(`Option "keep" must be a boolean: ${keep}`)
+const validateExit = function (exit) {
+  if (exit !== undefined && typeof exit !== 'boolean') {
+    throw new TypeError(`Option "exit" must be a boolean: ${exit}`)
   }
 }
 

@@ -27,7 +27,7 @@ and [warnings](https://nodejs.org/api/process.html#process_event_warning).
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 - [Single event handler](#log) for all process errors
 - Only log duplicate process errors [once](#log)
-- Prevent [process exit](#keep) (optionally)
+- [Process exit](#exit) is graceful and can be prevented
 
 # Install
 
@@ -74,15 +74,20 @@ restore()
 
 ## Options
 
-### keep
+### exit
 
-_Type_: `boolean`\
-_Default_: `false`
+_Type_: `boolean`
 
-Prevent exiting the process on
+Whether to exit the process on
 [uncaught exceptions](https://nodejs.org/api/process.html#process_event_uncaughtexception)
 or
 [unhandled promises](https://nodejs.org/api/process.html#process_event_unhandledrejection).
+
+This is `false` by default if other libraries are listening to those events, so
+they can perform the exit instead. Otherwise, this is `true`.
+
+If some tasks are still ongoing, the exit waits for them to complete up to 3
+seconds.
 
 ### log
 

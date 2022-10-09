@@ -3,7 +3,7 @@
 ## Breaking changes
 
 - Replace the `exitOn` option by the simpler
-  [`keep` boolean option](README.md#keep)
+  [`exit` boolean option](README.md#exit)
 - Remove the following options: `testing`, `colors`, `levels`. Please use the
   [`log` option](README.md#log) instead.
 - The [`log` option's](README.md#log) arguments are now: `(error, reason)`
@@ -16,6 +16,8 @@
 ## Features
 
 - Reduce npm package size
+- Improves compatibility with [other libraries](README.md#exit) also listening
+  for process events
 
 ## Bug fixes
 

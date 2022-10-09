@@ -32,7 +32,7 @@ const resolvePromise = async function (promise) {
 
 const handleEvent = async function (
   value,
-  { opts: { log, keep }, reason, previousEvents },
+  { opts: { log, exit }, reason, previousEvents },
 ) {
   if (
     isLimited(value, reason, previousEvents) ||
@@ -43,5 +43,5 @@ const handleEvent = async function (
 
   const error = getError(value, reason)
   await log(error, reason)
-  await exitProcess(keep, reason)
+  await exitProcess(exit, reason)
 }

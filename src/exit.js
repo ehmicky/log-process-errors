@@ -9,7 +9,7 @@ const pSetTimeout = promisify(setTimeout)
 //  - This is the default behavior of Node.js
 //  - This is recommended by
 //     https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
-// This can be disabled or forced with the `keep` option.
+// This can be disabled or forced with the `exit` option.
 // The process exits by default, except if there are other listeners for those
 // events
 //  - This delegates the decision to exit or not to those listeners
@@ -17,8 +17,8 @@ const pSetTimeout = promisify(setTimeout)
 //     - And they might exit only after some logic is performed first
 //        - E.g. Winston waits for logging up to 3s before calling
 //          `process.exit()`
-export const exitProcess = async function (keep, reason) {
-  if (!shouldExit(keep, reason)) {
+export const exitProcess = async function (exit, reason) {
+  if (!shouldExit(exit, reason)) {
     return
   }
 
@@ -27,13 +27,13 @@ export const exitProcess = async function (keep, reason) {
   forceExitProcess()
 }
 
-const shouldExit = function (keep, reason) {
+const shouldExit = function (exit, reason) {
   if (!isExitEvent(reason)) {
     return false
   }
 
-  if (keep !== undefined) {
-    return !keep
+  if (exit !== undefined) {
+    return exit
   }
 
   return process.listeners(reason).length <= 1

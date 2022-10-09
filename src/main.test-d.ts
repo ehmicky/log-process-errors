@@ -23,5 +23,5 @@ expectError(logProcessErrors({ log: true }))
 expectError(logProcessErrors({ log(error: boolean) {} }))
 expectError(logProcessErrors({ log: () => true }))
 
-logProcessErrors({ keep: true })
-expectError(logProcessErrors({ keep: 'true' }))
+logProcessErrors({ exit: true })
+expectError(logProcessErrors({ exit: 'true' }))

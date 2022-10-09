@@ -17,13 +17,17 @@ import { removeProcessListeners } from './helpers/remove.js'
 const pNextTick = promisify(nextTick)
 removeProcessListeners()
 
+const advanceClock = function (t, clock) {
+  t.deepEqual(process.exit.args, [])
+  clock.tick(EXIT_TIMEOUT)
+  t.deepEqual(process.exit.args, [[EXIT_CODE]])
+}
+
 test.serial('call process.exit() after a timeout', async (t) => {
   const { clock, stopLogging } = startClockLogging({ exit: true })
 
   await emit('uncaughtException')
-  t.deepEqual(process.exit.args, [])
-  clock.tick(EXIT_TIMEOUT)
-  t.deepEqual(process.exit.args, [[EXIT_CODE]])
+  advanceClock(t, clock)
 
   stopLogging()
 })
@@ -40,9 +44,7 @@ test.serial('wait for async onError() before exiting', async (t) => {
   await emit('uncaughtException')
   clock.tick(onErrorDuration)
   await pNextTick()
-  t.deepEqual(process.exit.args, [])
-  clock.tick(EXIT_TIMEOUT)
-  t.deepEqual(process.exit.args, [[EXIT_CODE]])
+  advanceClock(t, clock)
 
   stopLogging()
 })

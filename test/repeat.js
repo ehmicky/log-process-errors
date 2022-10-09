@@ -12,6 +12,10 @@ const getIndexError = function (index) {
   return new Error(String(index))
 }
 
+const getObjectError = function (eventName) {
+  return eventName === 'warning' ? 'test' : { message: 'test' }
+}
+
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
     const log = sinon.spy()
@@ -48,6 +52,24 @@ each(EVENTS, ({ title }, eventName) => {
 
       t.is(log.callCount, 0)
       await emitManyValues(getIndexError, eventName, 2)
+      t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+
+      stopLogging()
+    },
+  )
+
+  test.serial(
+    `should not repeat values that are not error instances | ${title}`,
+    async (t) => {
+      const log = sinon.spy()
+      const stopLogging = logProcessErrors({ log, exit: false })
+
+      t.is(log.callCount, 0)
+      await emitManyValues(
+        getObjectError.bind(undefined, eventName),
+        eventName,
+        2,
+      )
       t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
 
       stopLogging()

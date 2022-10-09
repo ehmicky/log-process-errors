@@ -18,8 +18,9 @@ each(EVENTS, ({ title }, eventName) => {
     t.false(onError.called)
     await emit(eventName)
     t.is(onError.callCount, getCallCount(eventName))
-    t.true(onError.args[onError.args.length - 1][0] instanceof Error)
-    t.is(onError.args[onError.args.length - 1][1], eventName)
+    const [error, event] = onError.args[onError.args.length - 1]
+    t.true(error instanceof Error)
+    t.is(event, eventName)
 
     stopLogging()
   })
@@ -35,16 +36,17 @@ each(EVENTS, ({ title }, eventName) => {
       const onError = sinon.spy()
       const testError = new Error('test')
       const stopLogging = logProcessErrors({
-        onError(error, event) {
-          onError(error, event)
+        onError(...args) {
+          onError(...args)
           throw testError
         },
         exit: false,
       })
 
       await emit(eventName)
-      t.is(onError.args[1][0], testError)
-      t.is(onError.args[1][1], 'unhandledRejection')
+      const [, [error, event]] = onError.args
+      t.is(error, testError)
+      t.is(event, 'unhandledRejection')
 
       stopLogging()
     },

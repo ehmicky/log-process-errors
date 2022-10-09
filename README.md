@@ -25,8 +25,8 @@ and [warnings](https://nodejs.org/api/process.html#process_event_warning).
 
 - Stack traces for warnings and
   [`rejectionHandled`](https://nodejs.org/api/process.html#process_event_rejectionhandled)
-- [Single event handler](#log) for all process errors
-- Only log duplicate process errors [once](#log)
+- [Single event handler](#onerror) for all process errors
+- Only log duplicate process errors [once](#onerror)
 - [Process exit](#exit) is graceful and can be prevented
 
 # Install
@@ -89,7 +89,7 @@ they can perform the exit instead. Otherwise, this is `true`.
 If some tasks are still ongoing, the exit waits for them to complete up to 3
 seconds.
 
-### log
+### onError
 
 _Type_: `(Error, string) => Promise<void> | void`\
 _Default_: `console.error(error)`
@@ -99,7 +99,7 @@ Function called once per process error. Duplicate process errors are ignored.
 ```js
 // Log process errors with Winston instead
 logProcessErrors({
-  log(error, event) {
+  onError(error, event) {
     winstonLogger.error(error.stack)
   },
 })

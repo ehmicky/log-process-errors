@@ -1,28 +1,98 @@
 # 10.0.0
 
-## Breaking changes
+## Package size
 
-- Replace the `exitOn` option by the simpler
-  [`exit` boolean option](README.md#exit)
-- Remove the following options: `testing`, `colors`, `levels`. Please use the
-  [`log` option](README.md#log) instead.
-- The [`log` option's](README.md#log) arguments are now: `(error, event)`
-  instead of `(error, level, originalError)`
-- The `error` passed to the [`log` option](README.md#log) is now the original
-  process error. Its `name` is left unchanged.
-- Errors are not pretty-printed anymore
-- TypeScript types have been simplified
+The npm package size has been greatly reduced.
 
-## Features
+## Pretty-printing
 
-- Reduce npm package size
-- Improves compatibility with [other libraries](README.md#exit) also listening
-  for process events
+Errors are not pretty-printed anymore. As a consequence, the `colors` option was
+removed. The [`onError` option`](README.md#onerror) can be used instead to
+customize how the errors are printed. It receives the original process error,
+with its `name` left unchanged.
+
+## Filtering
+
+The `levels` option was removed. As a consequence, the arguments of the
+[`onError` option](README.md#onerror) (previously named `log`) are now
+`(originalError, event)` instead of `(error, level, originalError)`. This option
+can be used for filtering instead.
+
+Before:
+
+```js
+logProcessErrors({ warning: 'silent' })
+```
+
+After:
+
+```js
+logProcessErrors({
+  onError(error, event) {
+    if (event !== 'warning') {
+      console.error(error)
+    }
+  },
+})
+```
+
+## Testing option
+
+The `testing` option was removed. The [`onError` option](README.md#onerror) can
+be used instead.
+
+Before:
+
+```js
+logProcessErrors({ testing: 'ava' })
+```
+
+After:
+
+```js
+logProcessErrors({
+  onError(error) {
+    throw error
+  },
+})
+```
+
+## Process exit
+
+The `exitOn` option was changed from an array of strings to a simpler boolean.
+It was also renamed [`exit`](README.md#exit).
+
+The exit is still graceful, i.e. it waits for ongoing tasks to complete, up to 3
+seconds. However, if there are none, the process now exits immediately.
+
+Before:
+
+```js
+logProcessErrors({ exitOn: [] })
+```
+
+After:
+
+```js
+logProcessErrors({ exit: false })
+```
+
+## Compatibility with other libraries
+
+If other libraries (such as
+[Winston](https://github.com/winstonjs/winston/#to-exit-or-not-to-exit),
+[Bugsnag](https://docs.bugsnag.com/platforms/javascript/#reporting-unhandled-errors),
+etc.) are also listening for process events, they might also try to exit the
+process. This created conflicts with this library. This has been fixed by making
+the [`exit` option](README.md#exit) defaults to `false` when process events
+listeners already exist.
+
+## TypeScript
+
+TypeScript types have been simplified.
 
 ## Bug fixes
 
-- On uncaught exceptions, do not hold the process for 3 seconds unless there are
-  still some ongoing tasks
 - Support cross-realm errors
 - Do not crash when `error.stack` is `undefined` or `null`
 - Fix support for `--unhandled-rejections=strict`

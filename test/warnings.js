@@ -97,16 +97,19 @@ const callCli = async function (eventName, cliFlag) {
 }
 
 each(EVENTS, ({ title }, eventName) => {
-  test(`should work with warnings-related CLI flags | ${title}`, async (t) => {
-    const values = await Promise.all(
-      [
-        '--',
-        '--no-warnings',
-        '--unhandled-rejections=none',
-        '--unhandled-rejections=throw',
-        '--unhandled-rejections=strict',
-      ].map(callCli.bind(undefined, eventName)),
-    )
-    t.is([...new Set(values)].length, 1)
-  })
+  test.serial(
+    `should work with warnings-related CLI flags | ${title}`,
+    async (t) => {
+      const values = await Promise.all(
+        [
+          '--',
+          '--no-warnings',
+          '--unhandled-rejections=none',
+          '--unhandled-rejections=throw',
+          '--unhandled-rejections=strict',
+        ].map(callCli.bind(undefined, eventName)),
+      )
+      t.is([...new Set(values)].length, 1)
+    },
+  )
 })

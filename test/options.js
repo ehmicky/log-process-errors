@@ -9,7 +9,7 @@ removeProcessListeners()
 each(
   [true, { exit: 'true' }, { log: true }, { unknown: true }],
   ({ title }, options) => {
-    test(`should validate options | ${title}`, (t) => {
+    test.serial(`should validate options | ${title}`, (t) => {
       t.throws(logProcessErrors.bind(undefined, options))
     })
   },

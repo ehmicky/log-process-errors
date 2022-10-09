@@ -11,6 +11,30 @@ removed. The [`onError` option](README.md#onerror) can be used instead to
 customize how the errors are printed. It receives the original process error,
 with its `name` left unchanged.
 
+Before:
+
+```js
+logProcessErrors({
+  log(error) {
+    if (error.name === 'UncaughtException') {
+      console.error(error)
+    }
+  },
+})
+```
+
+After:
+
+```js
+logProcessErrors({
+  onError(error, reason) {
+    if (reason === 'uncaughtException') {
+      console.error(error)
+    }
+  },
+})
+```
+
 ## Filtering
 
 The `levels` option was removed. As a consequence, the arguments of the

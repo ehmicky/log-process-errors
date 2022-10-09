@@ -31,8 +31,3 @@ const logEvent = function ({ log, eventName }, error, actualEventName) {
     log(error, actualEventName)
   }
 }
-
-export const startLoggingNoOpts = function () {
-  const stopLogging = logProcessErrors()
-  return { stopLogging }
-}

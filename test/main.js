@@ -1,11 +1,12 @@
 import process from 'process'
 
 import test from 'ava'
+import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS } from './helpers/events.js'
-import { startLogging, startLoggingNoOpts } from './helpers/init.js'
+import { EVENTS, EVENTS_MAP } from './helpers/events.js'
+import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
@@ -16,26 +17,20 @@ const addProcessHandler = function (eventName) {
   return processHandler
 }
 
-const normalizeArgs = function ([error]) {
-  return String(error)
-}
+test.serial('should work with no options', async (t) => {
+  // eslint-disable-next-line no-restricted-globals
+  const stub = sinon.stub(console, 'error')
+  const stopLogging = logProcessErrors()
+
+  t.false(stub.called)
+  await EVENTS_MAP.warning.emit()
+  t.true(stub.called)
+
+  stopLogging()
+  stub.restore()
+})
 
 each(EVENTS, ({ title }, { eventName, emit }) => {
-  test.serial(`should work with no options | ${title}`, async (t) => {
-    // eslint-disable-next-line no-restricted-globals
-    const stub = sinon.stub(console, 'error')
-    const { stopLogging } = startLoggingNoOpts()
-
-    await emit()
-
-    const messages = stub.args.map(normalizeArgs)
-
-    stopLogging()
-    stub.restore()
-
-    t.snapshot(messages)
-  })
-
   test.serial(
     `should keep existing process event handlers | ${title}`,
     async (t) => {

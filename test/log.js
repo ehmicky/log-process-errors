@@ -11,20 +11,13 @@ removeProcessListeners()
 each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should fire opts.log() | ${title}`, async (t) => {
     const log = sinon.spy()
-    const stopLogging = logProcessErrors({
-      log(error, event) {
-        if (event === eventName) {
-          log(error)
-        }
-      },
-      exit: false,
-    })
+    const stopLogging = logProcessErrors({ log, exit: false })
 
     t.false(log.called)
     await emit()
-    t.true(log.called)
-    t.is(log.callCount, 1)
-    t.true(log.args[0][0] instanceof Error)
+    t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+    t.true(log.args[log.args.length - 1][0] instanceof Error)
+    t.is(log.args[log.args.length - 1][1], eventName)
 
     stopLogging()
   })

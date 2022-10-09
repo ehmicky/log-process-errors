@@ -16,8 +16,18 @@ const pNextTick = promisify(nextTick)
 
 removeProcessListeners()
 
+const stubProcessClock = function () {
+  stubProcessExit()
+  return fakeTimers.install({ toFake: ['setTimeout'] })
+}
+
 const stubProcessExit = function () {
   sinon.stub(process, 'exit')
+}
+
+const unStubProcessClock = function (clock) {
+  unStubProcessExit()
+  clock.uninstall()
 }
 
 const unStubProcessExit = function () {
@@ -25,9 +35,18 @@ const unStubProcessExit = function () {
   process.exitCode = undefined
 }
 
+const noop = function () {}
+
+const setProcessEvent = function (eventName) {
+  process.on(eventName, noop)
+}
+
+const unsetProcessEvent = function (eventName) {
+  process.off(eventName, noop)
+}
+
 test.serial('call process.exit() after a timeout', async (t) => {
-  const clock = fakeTimers.install({ toFake: ['setTimeout'] })
-  stubProcessExit()
+  const clock = stubProcessClock()
   const stopLogging = logProcessErrors({ log() {}, exit: true })
 
   await EVENTS_MAP.uncaughtException.emit()
@@ -36,14 +55,12 @@ test.serial('call process.exit() after a timeout', async (t) => {
   t.deepEqual(process.exit.args, [[EXIT_CODE]])
 
   stopLogging()
-  unStubProcessExit()
-  clock.uninstall()
+  unStubProcessClock(clock)
 })
 
 // eslint-disable-next-line max-statements
 test.serial('wait for async log() before exiting', async (t) => {
-  const clock = fakeTimers.install({ toFake: ['setTimeout'] })
-  stubProcessExit()
+  const clock = stubProcessClock()
   const logDuration = 1e5
   const stopLogging = logProcessErrors({
     async log() {
@@ -60,8 +77,7 @@ test.serial('wait for async log() before exiting', async (t) => {
   t.deepEqual(process.exit.args, [[EXIT_CODE]])
 
   stopLogging()
-  unStubProcessExit()
-  clock.uninstall()
+  unStubProcessClock(clock)
 })
 
 test.serial('exit process if "exit: true"', async (t) => {
@@ -122,19 +138,17 @@ test.serial('exit process by default', async (t) => {
   unStubProcessExit()
 })
 
-const noop = function () {}
-
 test.serial(
   'does not exit process by default if there are other listeners',
   async (t) => {
     stubProcessExit()
+    setProcessEvent('uncaughtException')
     const stopLogging = logProcessErrors({ log() {} })
 
-    process.on('uncaughtException', noop)
     await EVENTS_MAP.uncaughtException.emit()
     t.is(process.exitCode, undefined)
-    process.off('uncaughtException', noop)
 
+    unsetProcessEvent('uncaughtException')
     stopLogging()
     unStubProcessExit()
   },
@@ -144,13 +158,13 @@ test.serial(
   'exits process if there are other listeners but "exit: true"',
   async (t) => {
     stubProcessExit()
+    setProcessEvent('uncaughtException')
     const stopLogging = logProcessErrors({ log() {}, exit: true })
 
-    process.on('uncaughtException', noop)
     await EVENTS_MAP.uncaughtException.emit()
     t.is(process.exitCode, EXIT_CODE)
-    process.off('uncaughtException', noop)
 
+    unsetProcessEvent('uncaughtException')
     stopLogging()
     unStubProcessExit()
   },
@@ -160,13 +174,13 @@ test.serial(
   'exits process by default if there are other listeners for other events',
   async (t) => {
     stubProcessExit()
+    setProcessEvent('unhandledRejection')
     const stopLogging = logProcessErrors({ log() {} })
 
-    process.on('unhandledRejection', noop)
     await EVENTS_MAP.uncaughtException.emit()
     t.is(process.exitCode, EXIT_CODE)
-    process.off('unhandledRejection', noop)
 
+    unsetProcessEvent('unhandledRejection')
     stopLogging()
     unStubProcessExit()
   },
@@ -176,13 +190,13 @@ test.serial(
   'does not exit process by default if there are other listeners for other events but "exit: false"',
   async (t) => {
     stubProcessExit()
+    setProcessEvent('unhandledRejection')
     const stopLogging = logProcessErrors({ log() {}, exit: false })
 
-    process.on('unhandledRejection', noop)
     await EVENTS_MAP.uncaughtException.emit()
     t.is(process.exitCode, undefined)
-    process.off('unhandledRejection', noop)
 
+    unsetProcessEvent('unhandledRejection')
     stopLogging()
     unStubProcessExit()
   },

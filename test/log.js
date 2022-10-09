@@ -3,10 +3,13 @@ import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
+import { getConsoleStub } from './helpers/console.js'
 import { EVENTS, emit } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
+
+const consoleStub = getConsoleStub()
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should fire opts.log() | ${title}`, async (t) => {
@@ -24,15 +27,13 @@ each(EVENTS, ({ title }, eventName) => {
 })
 
 test.serial('should log on the console by default', async (t) => {
-  // eslint-disable-next-line no-restricted-globals
-  const stub = sinon.stub(console, 'error')
   const stopLogging = logProcessErrors()
 
-  t.false(stub.called)
+  t.false(consoleStub.called)
   await emit('warning')
-  t.is(stub.callCount, 1)
-  t.true(stub.args[stub.args.length - 1][0] instanceof Error)
+  t.is(consoleStub.callCount, 1)
+  t.true(consoleStub.args[consoleStub.args.length - 1][0] instanceof Error)
 
   stopLogging()
-  stub.restore()
+  consoleStub.reset()
 })

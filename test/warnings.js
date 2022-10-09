@@ -7,6 +7,7 @@ import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
+import { getConsoleStub } from './helpers/console.js'
 import { EVENTS, emit } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
@@ -22,11 +23,6 @@ const setProcessEvent = function (eventName) {
 
 const unsetProcessEvent = function (eventName, processHandler) {
   process.off(eventName, processHandler)
-}
-
-const getConsoleStub = function () {
-  // eslint-disable-next-line no-restricted-globals
-  return sinon.stub(console, 'error')
 }
 
 const consoleStub = getConsoleStub()

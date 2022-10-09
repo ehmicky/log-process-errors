@@ -7,7 +7,7 @@ The npm package size has been greatly reduced.
 ## Pretty-printing
 
 Errors are not pretty-printed anymore. As a consequence, the `colors` option was
-removed. The [`onError` option`](README.md#onerror) can be used instead to
+removed. The [`onError` option](README.md#onerror) can be used instead to
 customize how the errors are printed. It receives the original process error,
 with its `name` left unchanged.
 

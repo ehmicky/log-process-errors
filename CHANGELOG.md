@@ -121,6 +121,10 @@ TypeScript types have been simplified.
 - Do not crash when `error.stack` is `undefined` or `null`
 - Support cross-realm errors
 
+## Internal
+
+- Add 100% test coverage
+
 # 9.4.0
 
 ## Features

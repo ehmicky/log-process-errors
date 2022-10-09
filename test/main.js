@@ -34,23 +34,20 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(
     `should keep existing process event handlers | ${title}`,
     async (t) => {
-      if (eventName === 'warning') {
-        return t.pass()
-      }
+      const processHandler = sinon.spy()
+      process.on(eventName, processHandler)
+      // eslint-disable-next-line no-restricted-globals
+      const stub = sinon.stub(console, 'error')
+      const stopLogging = logProcessErrors({ exit: false })
 
-      const processHandler = addProcessHandler(eventName)
-
-      const { stopLogging } = startLogging()
-
-      t.true(processHandler.notCalled)
-
+      t.false(processHandler.called)
+      t.false(stub.called)
       await emit()
-
+      t.true(stub.called)
       t.true(processHandler.called)
 
       stopLogging()
-
-      process.off(eventName, processHandler)
+      stub.restore()
     },
   )
 

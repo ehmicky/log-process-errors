@@ -1,81 +1,112 @@
+import process from 'process'
 import { fileURLToPath } from 'url'
 
 import test from 'ava'
+import { execa } from 'execa'
+import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS, EVENTS_MAP } from './helpers/events.js'
-import { startLogging } from './helpers/init.js'
-import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
+import { EVENTS, emit } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
-import { hasOldExitBehavior } from './helpers/version.js'
 
-const LOAD_HELPER = fileURLToPath(new URL('helpers/load.js', import.meta.url))
+const CLI_FIXTURE = fileURLToPath(new URL('helpers/cli.js', import.meta.url))
 
 removeProcessListeners()
 
-const {
-  warning: { emit },
-} = EVENTS_MAP
+const setProcessEvent = function (eventName) {
+  const processHandler = sinon.spy()
+  process.on(eventName, processHandler)
+  return processHandler
+}
 
-test.serial('[warning] should disable default event handlers', async (t) => {
+const unsetProcessEvent = function (eventName, processHandler) {
+  process.off(eventName, processHandler)
+}
+
+test.serial('default event handlers should be enabled', async (t) => {
   // eslint-disable-next-line no-restricted-globals
   const stub = sinon.stub(console, 'error')
 
-  const { stopLogging, log } = startLogging({ spy: true })
+  await emit('warning')
+  t.true(stub.calledOnce)
 
-  await emit()
+  stub.restore()
+})
 
-  t.true(log.calledOnce)
-  t.snapshot(String(log.lastCall.args[0]))
+test.serial('default event handlers should be disabled', async (t) => {
+  // eslint-disable-next-line no-restricted-globals
+  const stub = sinon.stub(console, 'error')
+  const stopLogging = logProcessErrors({ log() {} })
 
-  t.true(stub.notCalled)
+  await emit('warning')
+  t.false(stub.called)
 
   stopLogging()
+  stub.restore()
+})
+
+test.serial('default event handlers should be re-enabled', async (t) => {
+  // eslint-disable-next-line no-restricted-globals
+  const stub = sinon.stub(console, 'error')
+
+  const stopLogging = logProcessErrors({ log() {} })
+  stopLogging()
+  await emit('warning')
+  t.true(stub.calledOnce)
 
   stub.restore()
 })
 
 test.serial(
-  '[warning] should multiply restore default event handlers',
+  'default event handlers should be re-enabled on multiple calls',
   async (t) => {
     // eslint-disable-next-line no-restricted-globals
     const stub = sinon.stub(console, 'error')
 
-    const { stopLogging } = startLogging()
-    startLogging().stopLogging()
-
-    await emit()
-
-    t.true(stub.notCalled)
-
-    stopLogging()
-
-    await emit()
-
+    const stopLoggingOne = logProcessErrors({ log() {} })
+    const stopLoggingTwo = logProcessErrors({ log() {} })
+    stopLoggingTwo()
+    await emit('warning')
+    t.false(stub.called)
+    stopLoggingOne()
+    await emit('warning')
     t.true(stub.calledOnce)
-    t.snapshot(normalizeMessage(String(stub.lastCall.args[0])))
 
     stub.restore()
   },
 )
 
-each(
-  EVENTS,
-  [
-    '--no-warnings',
-    '--unhandled-rejections=none',
-    '--unhandled-rejections=strict',
-  ],
-  ({ title }, { eventName }, flag) => {
-    test(`should work with warnings-related CLI flags | ${title}`, async (t) => {
-      if (hasOldExitBehavior(eventName)) {
-        return t.pass()
-      }
+test.serial('user event handlers should be kept', async (t) => {
+  // eslint-disable-next-line no-restricted-globals
+  const stub = sinon.stub(console, 'error')
+  const processHandler = setProcessEvent('warning')
+  const stopLogging = logProcessErrors({ log() {} })
 
-      t.snapshot(
-        await normalizeCall(`node ${flag} ${LOAD_HELPER} ${eventName}`),
-      )
-    })
-  },
-)
+  await emit('warning')
+  t.true(processHandler.calledOnce)
+
+  stopLogging()
+  unsetProcessEvent('warning', processHandler)
+  stub.restore()
+})
+
+const callCli = async function (eventName, cliFlag) {
+  const { stdout } = await execa('node', [cliFlag, CLI_FIXTURE, eventName])
+  return stdout
+}
+
+each(EVENTS, ({ title }, eventName) => {
+  test(`should work with warnings-related CLI flags | ${title}`, async (t) => {
+    const values = await Promise.all(
+      [
+        '--',
+        '--no-warnings',
+        '--unhandled-rejections=none',
+        '--unhandled-rejections=throw',
+        '--unhandled-rejections=strict',
+      ].map(callCli.bind(undefined, eventName)),
+    )
+    t.is([...new Set(values)].length, 1)
+  })
+})

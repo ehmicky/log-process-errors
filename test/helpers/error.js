@@ -14,3 +14,12 @@ export const getRandomMessageError = function () {
 export const getObjectError = function (eventName) {
   return eventName === 'warning' ? 'message' : { message: 'message' }
 }
+
+export const getInvalidError = function () {
+  // eslint-disable-next-line fp/no-mutating-assign
+  return Object.assign(getError(), {
+    name: undefined,
+    message: undefined,
+    stack: undefined,
+  })
+}

@@ -38,7 +38,7 @@ logProcessErrors({
 ## Pretty-printing
 
 Errors are not pretty-printed anymore. As a consequence, the `colors` option was
-removed. The [`onError` option](README.md#onerror) can be used instead to
+removed too. The [`onError` option](README.md#onerror) can be used instead to
 customize how the errors are printed.
 
 ## Filtering
@@ -49,7 +49,11 @@ be used for filtering.
 Before:
 
 ```js
-logProcessErrors({ warning: 'silent' })
+logProcessErrors({
+  levels: {
+    warning: 'silent',
+  },
+})
 ```
 
 After:
@@ -79,6 +83,7 @@ After:
 
 ```js
 logProcessErrors({
+  // Throw the `error` to make the unit test fail while letting other tests run
   onError(error) {
     throw error
   },
@@ -115,19 +120,19 @@ process. This created conflicts with this library. This has been fixed by making
 the [`exit` option](README.md#exit) default to `false` when process events
 listeners already exist.
 
-## TypeScript
-
-TypeScript types have been simplified.
-
 ## Bug fixes
 
 - Fix support for `--unhandled-rejections=strict`
 - Do not crash when `error.stack` is `undefined` or `null`
 - Support cross-realm errors
 
+## TypeScript
+
+TypeScript types have been simplified.
+
 ## Internal
 
-- Add 100% test coverage
+Added 100% test coverage.
 
 # 9.4.0
 

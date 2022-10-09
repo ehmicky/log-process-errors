@@ -91,7 +91,7 @@ seconds.
 
 ### onError
 
-_Type_: `(Error, string) => Promise<void> | void`\
+_Type_: `(error, event) => Promise<void> | void`\
 _Default_: `console.error(error)`
 
 Function called once per process error. Duplicate process errors are ignored.

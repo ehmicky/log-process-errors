@@ -1,7 +1,11 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { getRandomMessageError, getObjectError } from './helpers/error.js'
+import {
+  getRandomMessageError,
+  getObjectError,
+  getInvalidError,
+} from './helpers/error.js'
 import {
   EVENTS,
   emitMany,
@@ -65,6 +69,23 @@ each(EVENTS, ({ title }, eventName) => {
         eventName,
         2,
       )
+      t.is(onError.callCount, getCallCount(eventName))
+
+      stopLogging()
+    },
+  )
+
+  test.serial(
+    `should not repeat values that are invalid errors | ${title}`,
+    async (t) => {
+      if (eventName === 'rejectionHandled') {
+        return t.pass()
+      }
+
+      const { onError, stopLogging } = startLogging()
+
+      t.is(onError.callCount, 0)
+      await emitManyValues(getInvalidError, eventName, 2)
       t.is(onError.callCount, getCallCount(eventName))
 
       stopLogging()

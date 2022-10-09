@@ -49,16 +49,16 @@ each(EVENTS, ({ title }, eventName) => {
       stopLogging()
     },
   )
-})
 
-test.serial('should log on the console by default', async (t) => {
-  const { stopLogging } = startLogging({ onError: undefined })
+  test.serial(`should log on the console by default | ${title}`, async (t) => {
+    const { stopLogging } = startLogging({ onError: undefined })
 
-  t.false(consoleStub.called)
-  await emit('warning')
-  t.is(consoleStub.callCount, 1)
-  t.true(consoleStub.args[consoleStub.args.length - 1][0] instanceof Error)
+    t.false(consoleStub.called)
+    await emit(eventName)
+    t.is(consoleStub.callCount, getCallCount(eventName))
+    t.true(consoleStub.args[consoleStub.args.length - 1][0] instanceof Error)
 
-  stopLogging()
-  consoleStub.reset()
+    stopLogging()
+    consoleStub.reset()
+  })
 })

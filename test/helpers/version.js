@@ -17,10 +17,3 @@ const PROMISE_REJECTION_EVENTS = new Set([
 ])
 
 const NEW_EXIT_MIN_VERSION = '15.0.0'
-
-// Stack traces include inline preview since this version
-export const hasInlinePreview = function () {
-  return semver.gte(version, INLINE_PREVIEW_VERSION)
-}
-
-const INLINE_PREVIEW_VERSION = '18.8.0'

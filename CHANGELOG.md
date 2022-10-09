@@ -84,7 +84,7 @@ If other libraries (such as
 [Bugsnag](https://docs.bugsnag.com/platforms/javascript/#reporting-unhandled-errors),
 etc.) are also listening for process events, they might also try to exit the
 process. This created conflicts with this library. This has been fixed by making
-the [`exit` option](README.md#exit) defaults to `false` when process events
+the [`exit` option](README.md#exit) default to `false` when process events
 listeners already exist.
 
 ## TypeScript
@@ -93,9 +93,9 @@ TypeScript types have been simplified.
 
 ## Bug fixes
 
-- Support cross-realm errors
-- Do not crash when `error.stack` is `undefined` or `null`
 - Fix support for `--unhandled-rejections=strict`
+- Do not crash when `error.stack` is `undefined` or `null`
+- Support cross-realm errors
 
 # 9.4.0
 

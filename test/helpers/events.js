@@ -38,9 +38,7 @@ export const EVENTS = Object.keys(EVENTS_MAP)
 
 export const emitManyValues = async function (getValue, eventName, length) {
   await Promise.all(
-    Array.from({ length }, (_, index) =>
-      emitValue(getValue.bind(undefined, index), eventName),
-    ),
+    Array.from({ length }, () => emitValue(getValue, eventName)),
   )
 }
 

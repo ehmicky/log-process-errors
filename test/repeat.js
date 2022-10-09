@@ -8,8 +8,8 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-const getIndexError = function (index) {
-  return new Error(String(index))
+const getRandomError = function () {
+  return new Error(String(Math.random()))
 }
 
 const getObjectError = function (eventName) {
@@ -51,7 +51,7 @@ each(EVENTS, ({ title }, eventName) => {
       const stopLogging = logProcessErrors({ log, exit: false })
 
       t.is(log.callCount, 0)
-      await emitManyValues(getIndexError, eventName, 2)
+      await emitManyValues(getRandomError, eventName, 2)
       t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
 
       stopLogging()

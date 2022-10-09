@@ -99,7 +99,7 @@ Function called once per process error. Duplicate process errors are ignored.
 ```js
 // Log process errors with Winston instead
 logProcessErrors({
-  log(error, reason) {
+  log(error, event) {
     winstonLogger.error(error.stack)
   },
 })
@@ -111,11 +111,11 @@ _Type_: `Error`
 
 The process error. This is guaranteed to be an error instance.
 
-#### reason
+#### event
 
 _Type_: `string`
 
-The reason why the process error occurred among:
+Process event name among:
 [`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),
 [`'unhandledRejection'`](https://nodejs.org/api/process.html#process_event_unhandledrejection),
 [`'rejectionHandled'`](https://nodejs.org/api/process.html#process_event_rejectionhandled),

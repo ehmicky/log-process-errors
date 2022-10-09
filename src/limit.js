@@ -1,6 +1,6 @@
 import { emitWarning } from 'process'
 
-// We only allow 100 events per `reason` for the global process because:
+// We only allow 100 events per `event` for the global process because:
 //  - Process errors are exceptional and if more than 100 happen, this is
 //    probably due to some infinite recursion.
 //  - The `repeated` logic should prevents reaching the threshold
@@ -9,18 +9,18 @@ import { emitWarning } from 'process'
 //  - It prevents infinite recursions if `opts.log()` triggers itself an event.
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `value` is not an `Error` instance and contain dynamic content
-export const isLimited = function (value, reason, previousEvents) {
-  if (previousEvents.length < MAX_EVENTS || isLimitedWarning(reason, value)) {
+export const isLimited = function (value, event, previousEvents) {
+  if (previousEvents.length < MAX_EVENTS || isLimitedWarning(event, value)) {
     return false
   }
 
-  emitWarning(`${PREFIX} "${reason}" until process is restarted.`)
+  emitWarning(`${PREFIX} "${event}" until process is restarted.`)
   return true
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function (reason, value) {
-  return reason === 'warning' && value.message.startsWith(PREFIX)
+const isLimitedWarning = function (event, value) {
+  return event === 'warning' && value.message.startsWith(PREFIX)
 }
 
 const MAX_EVENTS = 100

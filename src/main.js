@@ -13,19 +13,19 @@ export default function logProcessErrors(opts) {
 }
 
 const addListeners = function (opts) {
-  return Object.entries(EVENTS).map(([reason, eventFunc]) =>
-    addListener(opts, reason, eventFunc),
+  return Object.entries(EVENTS).map(([event, eventFunc]) =>
+    addListener(opts, event, eventFunc),
   )
 }
 
-const addListener = function (opts, reason, eventFunc) {
+const addListener = function (opts, event, eventFunc) {
   const eventListener = eventFunc.bind(undefined, {
     opts,
-    reason,
+    event,
     previousEvents: [],
   })
-  process.on(reason, eventListener)
-  return { eventListener, reason }
+  process.on(event, eventListener)
+  return { eventListener, event }
 }
 
 // Remove all event handlers and restore previous `warning` listeners
@@ -34,6 +34,6 @@ const stopLogProcessErrors = function (listeners) {
   restoreWarningListener()
 }
 
-const removeListener = function ({ eventListener, reason }) {
-  process.off(reason, eventListener)
+const removeListener = function ({ eventListener, event }) {
+  process.off(event, eventListener)
 }

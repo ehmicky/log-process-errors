@@ -1,7 +1,7 @@
 /**
- * The reason why the process error occurred.
+ * Process event name
  */
-export type Reason =
+export type Event =
   | 'uncaughtException'
   | 'warning'
   | 'unhandledRejection'
@@ -28,13 +28,13 @@ export type Options = {
    * ```js
    * // Log process errors with Winston instead
    * logProcessErrors({
-   *   log(error, reason) {
+   *   log(error, event) {
    *     winstonLogger.error(error.stack)
    *   },
    * })
    * ```
    */
-  readonly log?: (error: Error, reason: Reason) => Promise<void> | void
+  readonly log?: (error: Error, event: Event) => Promise<void> | void
 }
 
 /**

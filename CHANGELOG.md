@@ -6,7 +6,7 @@
   [`exit` boolean option](README.md#exit)
 - Remove the following options: `testing`, `colors`, `levels`. Please use the
   [`log` option](README.md#log) instead.
-- The [`log` option's](README.md#log) arguments are now: `(error, reason)`
+- The [`log` option's](README.md#log) arguments are now: `(error, event)`
   instead of `(error, level, originalError)`
 - The `error` passed to the [`log` option](README.md#log) is now the original
   process error. Its `name` is left unchanged.

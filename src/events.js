@@ -32,16 +32,16 @@ const resolvePromise = async function (promise) {
 
 const handleEvent = async function (
   value,
-  { opts: { log, exit }, reason, previousEvents },
+  { opts: { log, exit }, event, previousEvents },
 ) {
   if (
-    isLimited(value, reason, previousEvents) ||
+    isLimited(value, event, previousEvents) ||
     isRepeated(value, previousEvents)
   ) {
     return
   }
 
-  const error = getError(value, reason)
-  await log(error, reason)
-  await exitProcess(exit, reason)
+  const error = getError(value, event)
+  await log(error, event)
+  await exitProcess(exit, event)
 }

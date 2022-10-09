@@ -1,15 +1,15 @@
 import normalizeException from 'normalize-exception'
 import setErrorMessage from 'set-error-message'
 
-// Normalize error and add the `reason` to its `message`
-export const getError = function (value, reason) {
+// Normalize error and add the `event` to its `message`
+export const getError = function (value, event) {
   const error = normalizeException(value)
-  setErrorMessage(error, `${getMessage(error, reason)}${MESSAGES[reason]}`)
+  setErrorMessage(error, `${getMessage(error, event)}${MESSAGES[event]}`)
   return error
 }
 
-const getMessage = function ({ message }, reason) {
-  return reason === 'rejectionHandled'
+const getMessage = function ({ message }, event) {
+  return event === 'rejectionHandled'
     ? message.replace(MESSAGES.unhandledRejection, '')
     : message
 }

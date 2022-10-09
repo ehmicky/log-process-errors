@@ -8,7 +8,7 @@ import { inspect } from 'util'
 //  - It prevents infinite recursions if `opts.log()` triggers itself an event
 //    (while still reporting that event once)
 // `previousEvents`:
-//  - Is reason-specific so that if events of a given reason stopped being
+//  - Is event-specific so that if events of a given event stopped being
 //    emitted, others still are.
 //  - Can take up some memory, but it should be cleaned up by
 //    `removeListener()`, i.e. once `eventListener` is garbage collected.

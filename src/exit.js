@@ -17,8 +17,8 @@ const pSetTimeout = promisify(setTimeout)
 //     - And they might exit only after some logic is performed first
 //        - E.g. Winston waits for logging up to 3s before calling
 //          `process.exit()`
-export const exitProcess = async function (exit, reason) {
-  if (!shouldExit(exit, reason)) {
+export const exitProcess = async function (exit, event) {
+  if (!shouldExit(exit, event)) {
     return
   }
 
@@ -27,8 +27,8 @@ export const exitProcess = async function (exit, reason) {
   forceExitProcess()
 }
 
-const shouldExit = function (exit, reason) {
-  if (!isExitEvent(reason)) {
+const shouldExit = function (exit, event) {
+  if (!isExitEvent(event)) {
     return false
   }
 
@@ -36,13 +36,13 @@ const shouldExit = function (exit, reason) {
     return exit
   }
 
-  return process.listeners(reason).length <= 1
+  return process.listeners(event).length <= 1
 }
 
-const isExitEvent = function (reason) {
+const isExitEvent = function (event) {
   return (
-    reason === 'uncaughtException' ||
-    (reason === 'unhandledRejection' && hasNewExitBehavior())
+    event === 'uncaughtException' ||
+    (event === 'unhandledRejection' && hasNewExitBehavior())
   )
 }
 

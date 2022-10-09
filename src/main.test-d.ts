@@ -5,7 +5,7 @@ import {
   expectError,
 } from 'tsd'
 
-import logProcessErrors, { Options, Reason } from './main.js'
+import logProcessErrors, { Options, Event } from './main.js'
 
 const undo = logProcessErrors()
 expectType<void>(undo())
@@ -14,10 +14,10 @@ expectError(undo(true))
 logProcessErrors({})
 expectAssignable<Options>({})
 
-expectAssignable<Reason>('warning')
-expectNotAssignable<Reason>('other')
+expectAssignable<Event>('warning')
+expectNotAssignable<Event>('other')
 
-logProcessErrors({ log(error: Error, reason: Reason) {} })
+logProcessErrors({ log(error: Error, event: Event) {} })
 logProcessErrors({ async log() {} })
 expectError(logProcessErrors({ log: true }))
 expectError(logProcessErrors({ log(error: boolean) {} }))

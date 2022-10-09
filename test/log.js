@@ -12,12 +12,12 @@ import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 
-const snapshotArgs = function ([error, reason]) {
+const snapshotArgs = function ([error, event]) {
   return [
     normalizeMessage(inspect(error)),
     String(error),
     Object.keys(error),
-    reason,
+    event,
   ]
 }
 

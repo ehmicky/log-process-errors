@@ -27,7 +27,8 @@ const stopProcessLogging = function (eventName, stopLogging, processHandler) {
 // Start logging while `process.exit()` is being stubbed
 export const startExitLogging = function (opts) {
   stubProcessExit()
-  return stopExitLogging.bind(undefined, startLogging(opts).stopLogging)
+  const { stopLogging } = startLogging(opts)
+  return stopExitLogging.bind(undefined, stopLogging)
 }
 
 const stopExitLogging = function (stopLogging) {
@@ -37,7 +38,8 @@ const stopExitLogging = function (stopLogging) {
 
 // Start logging while `setTimeout()` and `process.exit()` are being stubbed
 export const startClockLogging = function (opts) {
-  const clock = stubProcessClock()
+  const clock = fakeTimers.install({ toFake: ['setTimeout'] })
+  stubProcessExit()
   const { stopLogging } = startLogging(opts)
   const stopLoggingA = stopClockLogging.bind(undefined, stopLogging, clock)
   return { clock, stopLogging: stopLoggingA }
@@ -45,16 +47,6 @@ export const startClockLogging = function (opts) {
 
 const stopClockLogging = function (stopLogging, clock) {
   stopLogging()
-  unStubProcessClock(clock)
-}
-
-// Stub `setTimeout()` and `process.exit()`
-const stubProcessClock = function () {
-  stubProcessExit()
-  return fakeTimers.install({ toFake: ['setTimeout'] })
-}
-
-const unStubProcessClock = function (clock) {
   unStubProcessExit()
   clock.uninstall()
 }

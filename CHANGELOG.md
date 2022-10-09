@@ -2,7 +2,7 @@
 
 ## Package size
 
-The npm package size has been greatly reduced.
+The npm package size has been reduced by 98%, from 4500kB to 87kB.
 
 ## Custom logic
 

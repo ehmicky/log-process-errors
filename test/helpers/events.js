@@ -38,10 +38,6 @@ const EVENTS_MAP = {
 
 export const EVENTS = Object.keys(EVENTS_MAP)
 
-export const emit = async function (eventName) {
-  await emitValue(getError(), eventName)
-}
-
 export const emitMany = async function (eventName, length) {
   await emitManyValues(getError, eventName, length)
 }
@@ -50,6 +46,10 @@ export const emitManyValues = async function (getValue, eventName, length) {
   await Promise.all(
     Array.from({ length }, () => emitValue(getValue(), eventName)),
   )
+}
+
+export const emit = async function (eventName) {
+  await emitValue(getError(), eventName)
 }
 
 export const emitValue = async function (value, eventName) {

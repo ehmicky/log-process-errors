@@ -6,7 +6,7 @@ import test from 'ava'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS } from './helpers/events/main.js'
+import { EVENTS } from './helpers/events.js'
 import { startLogging } from './helpers/init.js'
 import { removeProcessListeners } from './helpers/remove.js'
 

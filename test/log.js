@@ -1,14 +1,15 @@
 import { inspect } from 'util'
 
 import test from 'ava'
+import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS } from './helpers/events/main.js'
-import { hasInlinePreview } from './helpers/events/version.js'
+import { EVENTS } from './helpers/events.js'
 import { startLogging } from './helpers/init.js'
 import { normalizeMessage } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
+import { hasInlinePreview } from './helpers/version.js'
 
 removeProcessListeners()
 
@@ -23,24 +24,21 @@ const snapshotArgs = function ([error, event]) {
 
 each(EVENTS, ({ title }, { eventName, emit }) => {
   test.serial(`should fire opts.log() | ${title}`, async (t) => {
-    const { stopLogging, log } = startLogging({ spy: true })
+    const log = sinon.spy()
+    const stopLogging = logProcessErrors({
+      log(error, event) {
+        if (event === eventName) {
+          log(error)
+        }
+      },
+      exit: false,
+    })
 
     t.true(log.notCalled)
 
     await emit()
 
     t.true(log.called)
-
-    stopLogging()
-  })
-
-  test.serial(`should fire opts.log() once | ${title}`, async (t) => {
-    const { stopLogging, log } = startLogging({ spy: true, eventName })
-
-    t.true(log.notCalled)
-
-    await emit()
-
     t.is(log.callCount, 1)
 
     stopLogging()

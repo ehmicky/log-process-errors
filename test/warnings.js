@@ -4,11 +4,11 @@ import test from 'ava'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS, EVENTS_MAP } from './helpers/events/main.js'
-import { hasOldExitBehavior } from './helpers/events/version.js'
+import { EVENTS, EVENTS_MAP } from './helpers/events.js'
 import { startLogging } from './helpers/init.js'
 import { normalizeMessage, normalizeCall } from './helpers/normalize.js'
 import { removeProcessListeners } from './helpers/remove.js'
+import { hasOldExitBehavior } from './helpers/version.js'
 
 const LOAD_HELPER = fileURLToPath(new URL('helpers/load.js', import.meta.url))
 

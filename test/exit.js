@@ -56,124 +56,116 @@ test.serial('wait for async onError() before exiting', async (t) => {
   unStubProcessClock(clock)
 })
 
-test.serial('exit process if "exit: true"', async (t) => {
+const startExitLogging = function (opts) {
   stubProcessExit()
-  const { stopLogging } = startLogging({ exit: true })
+  return startLogging(opts).stopLogging
+}
+
+const stopExitLogging = function (stopLogging) {
+  stopLogging()
+  unStubProcessExit()
+}
+
+test.serial('exit process if "exit: true"', async (t) => {
+  const stopLogging = startExitLogging({ exit: true })
 
   await emit('uncaughtException')
   t.is(process.exitCode, EXIT_CODE)
 
-  stopLogging()
-  unStubProcessExit()
+  stopExitLogging(stopLogging)
 })
 
 test.serial('does not exit process if "exit: false"', async (t) => {
-  stubProcessExit()
-  const { stopLogging } = startLogging({ exit: false })
+  const stopLogging = startExitLogging({ exit: false })
 
   await emit('uncaughtException')
   t.is(process.exitCode, undefined)
 
-  stopLogging()
-  unStubProcessExit()
+  stopExitLogging(stopLogging)
 })
 
 test.serial('does not exit process if not an exit event', async (t) => {
-  stubProcessExit()
-  const { stopLogging } = startLogging({ exit: true })
+  const stopLogging = startExitLogging({ exit: true })
 
   await emit('warning')
   t.is(process.exitCode, undefined)
 
-  stopLogging()
-  unStubProcessExit()
+  stopExitLogging(stopLogging)
 })
 
 test.serial(
   'does not exit process if unhandledRejection on Node 14',
   async (t) => {
-    stubProcessExit()
-    const { stopLogging } = startLogging({ exit: true })
+    const stopLogging = startExitLogging({ exit: true })
 
     await emit('unhandledRejection')
     t.is(process.exit.exitCode === EXIT_CODE, version.startsWith('v14.'))
 
-    stopLogging()
-    unStubProcessExit()
+    stopExitLogging(stopLogging)
   },
 )
 
 test.serial('exit process by default', async (t) => {
-  stubProcessExit()
-  const { stopLogging } = startLogging({ exit: undefined })
+  const stopLogging = startExitLogging({ exit: undefined })
 
   await emit('uncaughtException')
   t.is(process.exitCode, EXIT_CODE)
 
-  stopLogging()
-  unStubProcessExit()
+  stopExitLogging(stopLogging)
 })
 
 test.serial(
   'does not exit process by default if there are other listeners',
   async (t) => {
-    stubProcessExit()
     const processHandler = setProcessEvent('uncaughtException')
-    const { stopLogging } = startLogging({ exit: undefined })
+    const stopLogging = startExitLogging({ exit: undefined })
 
     await emit('uncaughtException')
     t.is(process.exitCode, undefined)
 
+    stopExitLogging(stopLogging)
     unsetProcessEvent('uncaughtException', processHandler)
-    stopLogging()
-    unStubProcessExit()
   },
 )
 
 test.serial(
   'exits process if there are other listeners but "exit: true"',
   async (t) => {
-    stubProcessExit()
     const processHandler = setProcessEvent('uncaughtException')
-    const { stopLogging } = startLogging({ exit: true })
+    const stopLogging = startExitLogging({ exit: true })
 
     await emit('uncaughtException')
     t.is(process.exitCode, EXIT_CODE)
 
+    stopExitLogging(stopLogging)
     unsetProcessEvent('uncaughtException', processHandler)
-    stopLogging()
-    unStubProcessExit()
   },
 )
 
 test.serial(
   'exits process by default if there are other listeners for other events',
   async (t) => {
-    stubProcessExit()
     const processHandler = setProcessEvent('unhandledRejection')
-    const { stopLogging } = startLogging({ exit: undefined })
+    const stopLogging = startExitLogging({ exit: undefined })
 
     await emit('uncaughtException')
     t.is(process.exitCode, EXIT_CODE)
 
+    stopExitLogging(stopLogging)
     unsetProcessEvent('unhandledRejection', processHandler)
-    stopLogging()
-    unStubProcessExit()
   },
 )
 
 test.serial(
   'does not exit process by default if there are other listeners for other events but "exit: false"',
   async (t) => {
-    stubProcessExit()
     const processHandler = setProcessEvent('unhandledRejection')
-    const { stopLogging } = startLogging({ exit: false })
+    const stopLogging = startExitLogging({ exit: false })
 
     await emit('uncaughtException')
     t.is(process.exitCode, undefined)
 
+    stopExitLogging(stopLogging)
     unsetProcessEvent('unhandledRejection', processHandler)
-    stopLogging()
-    unStubProcessExit()
   },
 )

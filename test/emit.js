@@ -1,9 +1,9 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { EVENTS } from '../helpers/events.js'
-import { startLogging } from '../helpers/init.js'
-import { removeProcessListeners } from '../helpers/remove.js'
+import { EVENTS } from './helpers/events.js'
+import { startLogging } from './helpers/init.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 

@@ -4,9 +4,9 @@ import test from 'ava'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS } from '../helpers/events.js'
-import { startLogging, startLoggingNoOpts } from '../helpers/init.js'
-import { removeProcessListeners } from '../helpers/remove.js'
+import { EVENTS } from './helpers/events.js'
+import { startLogging, startLoggingNoOpts } from './helpers/init.js'
+import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
 

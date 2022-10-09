@@ -18,37 +18,37 @@ const getRandomError = function () {
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should limit events | ${title}`, async (t) => {
-    const log = sinon.spy()
-    const stopLogging = logProcessErrors({ log, exit: false })
+    const onError = sinon.spy()
+    const stopLogging = logProcessErrors({ onError, exit: false })
 
-    t.is(log.callCount, 0)
+    t.is(onError.callCount, 0)
     await emitManyValues(getRandomError, eventName, MAX_EVENTS + 1)
-    const previousCallCount = log.callCount
+    const previousCallCount = onError.callCount
     await emit(eventName)
-    t.is(log.callCount, previousCallCount)
+    t.is(onError.callCount, previousCallCount)
 
     stopLogging()
   })
 
   test.serial(`should not limit other events | ${title}`, async (t) => {
-    const log = sinon.spy()
-    const stopLogging = logProcessErrors({ log, exit: false })
+    const onError = sinon.spy()
+    const stopLogging = logProcessErrors({ onError, exit: false })
 
-    t.is(log.callCount, 0)
+    t.is(onError.callCount, 0)
     await emitManyValues(getRandomError, eventName, MAX_EVENTS + 1)
-    const previousCallCount = log.callCount
+    const previousCallCount = onError.callCount
     await emit(eventName === 'warning' ? 'uncaughtException' : 'warning')
-    t.is(log.callCount, previousCallCount + 1)
+    t.is(onError.callCount, previousCallCount + 1)
 
     stopLogging()
   })
 
   test.serial(`should print a warning on limit | ${title}`, async (t) => {
-    const log = sinon.spy()
-    const stopLogging = logProcessErrors({ log, exit: false })
+    const onError = sinon.spy()
+    const stopLogging = logProcessErrors({ onError, exit: false })
 
     await emitManyValues(getRandomError, eventName, MAX_EVENTS + 1)
-    t.is(log.args[log.args.length - 1][1], 'warning')
+    t.is(onError.args[onError.args.length - 1][1], 'warning')
 
     stopLogging()
   })

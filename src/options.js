@@ -6,17 +6,17 @@ export const getOptions = function (opts = {}) {
     throw new TypeError(`Options must be a plain object: ${opts}`)
   }
 
-  const { exit, log = defaultLog, ...unknownOpts } = opts
+  const { exit, onError = defaultOnError, ...unknownOpts } = opts
 
   validateExit(exit)
 
-  if (typeof log !== 'function') {
-    throw new TypeError(`Option "log" must be a function: ${log}`)
+  if (typeof onError !== 'function') {
+    throw new TypeError(`Option "onError" must be a function: ${onError}`)
   }
 
   validateUnknownOpts(unknownOpts)
 
-  return { exit, log }
+  return { exit, onError }
 }
 
 const validateExit = function (exit) {
@@ -27,7 +27,7 @@ const validateExit = function (exit) {
 
 // `console` should be referenced inside this function, not outside, as user
 // might monkey patch it.
-const defaultLog = function (error) {
+const defaultOnError = function (error) {
   // eslint-disable-next-line no-restricted-globals, no-console
   console.error(error)
 }

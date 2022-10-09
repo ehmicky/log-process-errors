@@ -28,13 +28,13 @@ export type Options = {
    * ```js
    * // Log process errors with Winston instead
    * logProcessErrors({
-   *   log(error, event) {
+   *   onError(error, event) {
    *     winstonLogger.error(error.stack)
    *   },
    * })
    * ```
    */
-  readonly log?: (error: Error, event: Event) => Promise<void> | void
+  readonly onError?: (error: Error, event: Event) => Promise<void> | void
 }
 
 /**

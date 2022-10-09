@@ -24,7 +24,7 @@ test.serial('default event handlers should be enabled', async (t) => {
 })
 
 test.serial('default event handlers should be disabled', async (t) => {
-  const stopLogging = logProcessErrors({ log() {} })
+  const stopLogging = logProcessErrors({ onError() {} })
 
   await emit('warning')
   t.false(consoleStub.called)
@@ -34,7 +34,7 @@ test.serial('default event handlers should be disabled', async (t) => {
 })
 
 test.serial('default event handlers should be re-enabled', async (t) => {
-  const stopLogging = logProcessErrors({ log() {} })
+  const stopLogging = logProcessErrors({ onError() {} })
   stopLogging()
   await emit('warning')
   t.true(consoleStub.calledOnce)
@@ -45,8 +45,8 @@ test.serial('default event handlers should be re-enabled', async (t) => {
 test.serial(
   'default event handlers should be re-enabled on multiple calls',
   async (t) => {
-    const stopLoggingOne = logProcessErrors({ log() {} })
-    const stopLoggingTwo = logProcessErrors({ log() {} })
+    const stopLoggingOne = logProcessErrors({ onError() {} })
+    const stopLoggingTwo = logProcessErrors({ onError() {} })
     stopLoggingTwo()
     await emit('warning')
     t.false(consoleStub.called)
@@ -60,7 +60,7 @@ test.serial(
 
 test.serial('user event handlers should be kept', async (t) => {
   const processHandler = setProcessEvent('warning')
-  const stopLogging = logProcessErrors({ log() {} })
+  const stopLogging = logProcessErrors({ onError() {} })
 
   await emit('warning')
   t.true(processHandler.calledOnce)

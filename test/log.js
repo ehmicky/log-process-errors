@@ -12,15 +12,15 @@ removeProcessListeners()
 const consoleStub = getConsoleStub()
 
 each(EVENTS, ({ title }, eventName) => {
-  test.serial(`should fire opts.log() | ${title}`, async (t) => {
-    const log = sinon.spy()
-    const stopLogging = logProcessErrors({ log, exit: false })
+  test.serial(`should fire opts.onError() | ${title}`, async (t) => {
+    const onError = sinon.spy()
+    const stopLogging = logProcessErrors({ onError, exit: false })
 
-    t.false(log.called)
+    t.false(onError.called)
     await emit(eventName)
-    t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
-    t.true(log.args[log.args.length - 1][0] instanceof Error)
-    t.is(log.args[log.args.length - 1][1], eventName)
+    t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+    t.true(onError.args[onError.args.length - 1][0] instanceof Error)
+    t.is(onError.args[onError.args.length - 1][1], eventName)
 
     stopLogging()
   })

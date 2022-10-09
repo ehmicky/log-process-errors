@@ -6,7 +6,7 @@ import { emit } from './events.js'
 
 const emitEvent = async function () {
   const stopLogging = logProcessErrors({
-    log(error) {
+    onError(error) {
       // eslint-disable-next-line no-restricted-globals, no-console
       console.log(error.message)
     },

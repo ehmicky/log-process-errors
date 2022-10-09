@@ -5,8 +5,8 @@ import { inspect } from 'util'
 //  - It prevents creating too much CPU load or too many microtasks
 //  - It prevents creating too many logs, which can be expensive if logs are
 //    hosted remotely
-//  - It prevents infinite recursions if `opts.log()` triggers itself an event
-//    (while still reporting that event once)
+//  - It prevents infinite recursions if `opts.onError()` triggers itself an
+//    event (while still reporting that event once)
 // `previousEvents`:
 //  - Is event-specific so that if events of a given event stopped being
 //    emitted, others still are.

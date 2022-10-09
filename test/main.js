@@ -11,13 +11,13 @@ removeProcessListeners()
 
 test.serial('should allow disabling logging', async (t) => {
   const processHandler = setProcessEvent('warning')
-  const log = sinon.spy()
-  const stopLogging = logProcessErrors({ log })
+  const onError = sinon.spy()
+  const stopLogging = logProcessErrors({ onError })
   stopLogging()
 
   t.false(processHandler.called)
   await emit('warning')
-  t.false(log.called)
+  t.false(onError.called)
   t.true(processHandler.called)
 
   unsetProcessEvent('warning', processHandler)
@@ -28,13 +28,13 @@ each(EVENTS, ({ title }, eventName) => {
     `should keep existing process event handlers | ${title}`,
     async (t) => {
       const processHandler = setProcessEvent(eventName)
-      const log = sinon.spy()
-      const stopLogging = logProcessErrors({ log, exit: false })
+      const onError = sinon.spy()
+      const stopLogging = logProcessErrors({ onError, exit: false })
 
       t.false(processHandler.called)
-      t.false(log.called)
+      t.false(onError.called)
       await emit(eventName)
-      t.true(log.called)
+      t.true(onError.called)
       t.true(processHandler.called)
 
       stopLogging()

@@ -18,12 +18,12 @@ const getObjectError = function (eventName) {
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {
-    const log = sinon.spy()
-    const stopLogging = logProcessErrors({ log, exit: false })
+    const onError = sinon.spy()
+    const stopLogging = logProcessErrors({ onError, exit: false })
 
-    t.is(log.callCount, 0)
+    t.is(onError.callCount, 0)
     await emitMany(eventName, 2)
-    t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+    t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
 
     stopLogging()
   })
@@ -31,13 +31,13 @@ each(EVENTS, ({ title }, eventName) => {
   test.serial(
     `can repeat identical events between different loggers | ${title}`,
     async (t) => {
-      const log = sinon.spy()
-      const stopLoggingOne = logProcessErrors({ log })
-      const stopLoggingTwo = logProcessErrors({ log })
+      const onError = sinon.spy()
+      const stopLoggingOne = logProcessErrors({ onError })
+      const stopLoggingTwo = logProcessErrors({ onError })
 
-      t.is(log.callCount, 0)
+      t.is(onError.callCount, 0)
       await emitMany(eventName, 2)
-      t.is(log.callCount, 2 * (eventName === 'rejectionHandled' ? 2 : 1))
+      t.is(onError.callCount, 2 * (eventName === 'rejectionHandled' ? 2 : 1))
 
       stopLoggingOne()
       stopLoggingTwo()
@@ -47,12 +47,12 @@ each(EVENTS, ({ title }, eventName) => {
   test.serial(
     `should not repeat errors with same stack but different message | ${title}`,
     async (t) => {
-      const log = sinon.spy()
-      const stopLogging = logProcessErrors({ log, exit: false })
+      const onError = sinon.spy()
+      const stopLogging = logProcessErrors({ onError, exit: false })
 
-      t.is(log.callCount, 0)
+      t.is(onError.callCount, 0)
       await emitManyValues(getRandomError, eventName, 2)
-      t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+      t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
 
       stopLogging()
     },
@@ -61,16 +61,16 @@ each(EVENTS, ({ title }, eventName) => {
   test.serial(
     `should not repeat values that are not error instances | ${title}`,
     async (t) => {
-      const log = sinon.spy()
-      const stopLogging = logProcessErrors({ log, exit: false })
+      const onError = sinon.spy()
+      const stopLogging = logProcessErrors({ onError, exit: false })
 
-      t.is(log.callCount, 0)
+      t.is(onError.callCount, 0)
       await emitManyValues(
         getObjectError.bind(undefined, eventName),
         eventName,
         2,
       )
-      t.is(log.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+      t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
 
       stopLogging()
     },

@@ -27,7 +27,6 @@ each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not limit other events | ${title}`, async (t) => {
     const { onError, stopLogging } = startLogging()
 
-    t.is(onError.callCount, 0)
     await emitManyValues(getRandomStackError, eventName, MAX_EVENTS + 1)
     const previousCallCount = onError.callCount
     await emit(eventName === 'warning' ? 'uncaughtException' : 'warning')

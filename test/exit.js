@@ -10,6 +10,7 @@ import sinon from 'sinon'
 import { EXIT_TIMEOUT, EXIT_CODE } from '../src/exit.js'
 
 import { emit } from './helpers/events.js'
+import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 const pNextTick = promisify(nextTick)
@@ -33,16 +34,6 @@ const unStubProcessClock = function (clock) {
 const unStubProcessExit = function () {
   process.exit.restore()
   process.exitCode = undefined
-}
-
-const setProcessEvent = function (eventName) {
-  const processHandler = sinon.spy()
-  process.on(eventName, processHandler)
-  return processHandler
-}
-
-const unsetProcessEvent = function (eventName, processHandler) {
-  process.off(eventName, processHandler)
 }
 
 test.serial('call process.exit() after a timeout', async (t) => {

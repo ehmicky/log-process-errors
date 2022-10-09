@@ -1,24 +1,13 @@
-import process from 'process'
-
 import test from 'ava'
 import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { EVENTS, emit } from './helpers/events.js'
+import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
-
-const setProcessEvent = function (eventName) {
-  const processHandler = sinon.spy()
-  process.on(eventName, processHandler)
-  return processHandler
-}
-
-const unsetProcessEvent = function (eventName, processHandler) {
-  process.off(eventName, processHandler)
-}
 
 test.serial('should allow disabling logging', async (t) => {
   const processHandler = setProcessEvent('warning')

@@ -9,20 +9,17 @@ import { EXIT_TIMEOUT, EXIT_CODE } from '../src/exit.js'
 
 import { emit } from './helpers/events.js'
 import {
-  stubProcessClock,
-  unStubProcessClock,
+  startClockLogging,
   startExitLogging,
   startProcessLogging,
 } from './helpers/exit.js'
 import { removeProcessListeners } from './helpers/remove.js'
-import { startLogging } from './helpers/start.js'
 
 const pNextTick = promisify(nextTick)
 removeProcessListeners()
 
 test.serial('call process.exit() after a timeout', async (t) => {
-  const clock = stubProcessClock()
-  const { stopLogging } = startLogging({ exit: true })
+  const { clock, stopLogging } = startClockLogging({ exit: true })
 
   await emit('uncaughtException')
   t.deepEqual(process.exit.args, [])
@@ -30,14 +27,11 @@ test.serial('call process.exit() after a timeout', async (t) => {
   t.deepEqual(process.exit.args, [[EXIT_CODE]])
 
   stopLogging()
-  unStubProcessClock(clock)
 })
 
-// eslint-disable-next-line max-statements
 test.serial('wait for async onError() before exiting', async (t) => {
-  const clock = stubProcessClock()
   const onErrorDuration = 1e5
-  const { stopLogging } = startLogging({
+  const { clock, stopLogging } = startClockLogging({
     async onError() {
       await promisify(setTimeout)(onErrorDuration)
     },
@@ -52,7 +46,6 @@ test.serial('wait for async onError() before exiting', async (t) => {
   t.deepEqual(process.exit.args, [[EXIT_CODE]])
 
   stopLogging()
-  unStubProcessClock(clock)
 })
 
 test.serial('exit process if "exit: true"', async (t) => {

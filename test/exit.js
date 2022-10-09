@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import process, { version, nextTick } from 'process'
 import { promisify } from 'util'
 

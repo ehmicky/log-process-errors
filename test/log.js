@@ -3,7 +3,7 @@ import logProcessErrors from 'log-process-errors'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { EVENTS } from './helpers/events.js'
+import { EVENTS, EVENTS_MAP } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
@@ -21,18 +21,18 @@ each(EVENTS, ({ title }, { eventName, emit }) => {
 
     stopLogging()
   })
+})
 
-  test.serial(`should log on the console by default | ${title}`, async (t) => {
-    // eslint-disable-next-line no-restricted-globals
-    const stub = sinon.stub(console, 'error')
-    const stopLogging = logProcessErrors({ exit: false })
+test.serial('should log on the console by default', async (t) => {
+  // eslint-disable-next-line no-restricted-globals
+  const stub = sinon.stub(console, 'error')
+  const stopLogging = logProcessErrors()
 
-    t.false(stub.called)
-    await emit()
-    t.is(stub.callCount, eventName === 'rejectionHandled' ? 2 : 1)
-    t.true(stub.args[stub.args.length - 1][0] instanceof Error)
+  t.false(stub.called)
+  await EVENTS_MAP.warning.emit()
+  t.is(stub.callCount, 1)
+  t.true(stub.args[stub.args.length - 1][0] instanceof Error)
 
-    stopLogging()
-    stub.restore()
-  })
+  stopLogging()
+  stub.restore()
 })

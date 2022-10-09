@@ -6,8 +6,8 @@ import sinon from 'sinon'
 import { setProcessEvent, unsetProcessEvent } from './process.js'
 import { startLogging } from './start.js'
 
-// Start logging while a specific process event handler is being used, and
-// `process.exit()` is being stubbed
+// Start logging and stub `process.exit()`, while a specific process event
+// handler is being used
 export const startProcessLogging = function (eventName, opts) {
   const processHandler = setProcessEvent(eventName)
   const stopLogging = startExitLogging(opts)
@@ -24,7 +24,7 @@ const stopProcessLogging = function (eventName, stopLogging, processHandler) {
   unsetProcessEvent(eventName, processHandler)
 }
 
-// Start logging while `setTimeout()` and `process.exit()` are being stubbed
+// Start logging and stub `process.exit()` and `setTimeout()`
 export const startClockLogging = function (opts) {
   const clock = fakeTimers.install({ toFake: ['setTimeout'] })
   const stopLogging = startExitLogging(opts)
@@ -37,7 +37,7 @@ const stopClockLogging = function (stopLogging, clock) {
   clock.uninstall()
 }
 
-// Start logging while `process.exit()` is being stubbed
+// Start logging and stub `process.exit()`
 export const startExitLogging = function (opts) {
   sinon.stub(process, 'exit')
   const { stopLogging } = startLogging(opts)

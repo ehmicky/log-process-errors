@@ -10,8 +10,7 @@ import { startLogging } from './start.js'
 // `process.exit()` is being stubbed
 export const startProcessLogging = function (eventName, opts) {
   const processHandler = setProcessEvent(eventName)
-  stubProcessExit()
-  const { stopLogging } = startLogging(opts)
+  const stopLogging = startExitLogging(opts)
   return stopProcessLogging.bind(
     undefined,
     eventName,
@@ -22,43 +21,31 @@ export const startProcessLogging = function (eventName, opts) {
 
 const stopProcessLogging = function (eventName, stopLogging, processHandler) {
   stopLogging()
-  unStubProcessExit()
   unsetProcessEvent(eventName, processHandler)
 }
 
 // Start logging while `setTimeout()` and `process.exit()` are being stubbed
 export const startClockLogging = function (opts) {
   const clock = fakeTimers.install({ toFake: ['setTimeout'] })
-  stubProcessExit()
-  const { stopLogging } = startLogging(opts)
+  const stopLogging = startExitLogging(opts)
   const stopLoggingA = stopClockLogging.bind(undefined, stopLogging, clock)
   return { clock, stopLogging: stopLoggingA }
 }
 
 const stopClockLogging = function (stopLogging, clock) {
   stopLogging()
-  unStubProcessExit()
   clock.uninstall()
 }
 
 // Start logging while `process.exit()` is being stubbed
 export const startExitLogging = function (opts) {
-  stubProcessExit()
+  sinon.stub(process, 'exit')
   const { stopLogging } = startLogging(opts)
   return stopExitLogging.bind(undefined, stopLogging)
 }
 
 const stopExitLogging = function (stopLogging) {
   stopLogging()
-  unStubProcessExit()
-}
-
-// Stub `process.exit()`
-const stubProcessExit = function () {
-  sinon.stub(process, 'exit')
-}
-
-const unStubProcessExit = function () {
   process.exit.restore()
   process.exitCode = undefined
 }

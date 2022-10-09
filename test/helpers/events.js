@@ -42,7 +42,7 @@ export const emitManyValues = async function (getValue, eventName, length) {
   )
 }
 
-const emitValue = async function (getValue, eventName) {
+export const emitValue = async function (getValue, eventName) {
   await EVENTS_MAP[eventName](getValue())
   await pSetImmediate()
 }

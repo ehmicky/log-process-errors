@@ -4,7 +4,7 @@ import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.js'
-import { EVENTS, emit } from './helpers/events.js'
+import { EVENTS, emit, getCallCount } from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
@@ -17,7 +17,7 @@ each(EVENTS, ({ title }, eventName) => {
 
     t.false(onError.called)
     await emit(eventName)
-    t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+    t.is(onError.callCount, getCallCount(eventName))
     t.true(onError.args[onError.args.length - 1][0] instanceof Error)
     t.is(onError.args[onError.args.length - 1][1], eventName)
 

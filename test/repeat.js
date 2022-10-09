@@ -4,7 +4,12 @@ import sinon from 'sinon'
 import { each } from 'test-each'
 
 import { getRandomMessageError, getObjectError } from './helpers/error.js'
-import { EVENTS, emitMany, emitManyValues } from './helpers/events.js'
+import {
+  EVENTS,
+  emitMany,
+  emitManyValues,
+  getCallCount,
+} from './helpers/events.js'
 import { removeProcessListeners } from './helpers/remove.js'
 
 removeProcessListeners()
@@ -16,7 +21,7 @@ each(EVENTS, ({ title }, eventName) => {
 
     t.is(onError.callCount, 0)
     await emitMany(eventName, 2)
-    t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+    t.is(onError.callCount, getCallCount(eventName))
 
     stopLogging()
   })
@@ -30,7 +35,7 @@ each(EVENTS, ({ title }, eventName) => {
 
       t.is(onError.callCount, 0)
       await emitMany(eventName, 2)
-      t.is(onError.callCount, 2 * (eventName === 'rejectionHandled' ? 2 : 1))
+      t.is(onError.callCount, 2 * getCallCount(eventName))
 
       stopLoggingOne()
       stopLoggingTwo()
@@ -45,7 +50,7 @@ each(EVENTS, ({ title }, eventName) => {
 
       t.is(onError.callCount, 0)
       await emitManyValues(getRandomMessageError, eventName, 2)
-      t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+      t.is(onError.callCount, getCallCount(eventName))
 
       stopLogging()
     },
@@ -63,7 +68,7 @@ each(EVENTS, ({ title }, eventName) => {
         eventName,
         2,
       )
-      t.is(onError.callCount, eventName === 'rejectionHandled' ? 2 : 1)
+      t.is(onError.callCount, getCallCount(eventName))
 
       stopLogging()
     },

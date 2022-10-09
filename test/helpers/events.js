@@ -56,3 +56,9 @@ const EVENTS_MAP = {
 }
 
 export const EVENTS = Object.keys(EVENTS_MAP)
+
+// `rejectionHandled` also fires an additional event: the initial
+// `unhandledRejection`
+export const getCallCount = function (eventName) {
+  return eventName === 'rejectionHandled' ? 2 : 1
+}

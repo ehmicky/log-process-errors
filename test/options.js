@@ -1,5 +1,4 @@
 import test from 'ava'
-// eslint-disable-next-line import/named
 import logProcessErrors, { validateOptions } from 'log-process-errors'
 import { each } from 'test-each'
 

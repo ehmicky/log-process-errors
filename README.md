@@ -59,7 +59,7 @@ not `require()`.
 [`options`](#options) `object?`\
 _Return value_: `() => void`
 
-Initializes `log-process-errors`.
+Start handling process errors.
 
 ```js
 import logProcessErrors from 'log-process-errors'
@@ -116,7 +116,7 @@ short description of the [event](#event) is also appended to its message.
 
 #### event
 
-_Type_: `string`
+_Type_: `Event`
 
 Process event name among:
 [`'uncaughtException'`](https://nodejs.org/api/process.html#process_event_uncaughtexception),

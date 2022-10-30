@@ -1,4 +1,4 @@
-import { argv } from 'process'
+import { argv } from 'node:process'
 
 // eslint-disable-next-line import/order
 import logProcessErrors from 'log-process-errors'

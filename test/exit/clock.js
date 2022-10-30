@@ -1,5 +1,5 @@
-import process, { nextTick } from 'process'
-import { promisify } from 'util'
+import process, { nextTick } from 'node:process'
+import { promisify } from 'node:util'
 
 import test from 'ava'
 

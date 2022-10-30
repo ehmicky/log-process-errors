@@ -1,4 +1,4 @@
-import process, { version } from 'process'
+import process, { version } from 'node:process'
 
 // Exit process on `uncaughtException` and `unhandledRejection`
 //  - This is the default behavior of Node.js

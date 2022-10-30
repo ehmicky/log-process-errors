@@ -1,5 +1,5 @@
-import { emitWarning } from 'process'
-import { promisify } from 'util'
+import { emitWarning } from 'node:process'
+import { promisify } from 'node:util'
 
 import { getError } from './error.js'
 

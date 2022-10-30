@@ -1,4 +1,4 @@
-import process from 'process'
+import process from 'node:process'
 
 import { EVENTS, handleEvent } from './events.js'
 import { getOptions } from './options.js'

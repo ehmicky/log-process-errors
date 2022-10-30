@@ -1,4 +1,4 @@
-import { emitWarning } from 'process'
+import { emitWarning } from 'node:process'
 
 // We only allow 100 events per `event` for the global process because:
 //  - Process errors are exceptional and if more than 100 happen, this is

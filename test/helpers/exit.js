@@ -1,4 +1,4 @@
-import process from 'process'
+import process from 'node:process'
 
 import fakeTimers from '@sinonjs/fake-timers'
 import sinon from 'sinon'

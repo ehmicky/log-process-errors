@@ -1,4 +1,4 @@
-import process from 'process'
+import process from 'node:process'
 
 // By default Node.js adds a `warning` listener that prints `warning` events
 // on the console. This leads to duplicated events printing with this module.

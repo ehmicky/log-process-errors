@@ -1,4 +1,4 @@
-import process, { version } from 'process'
+import process, { version } from 'node:process'
 
 import test from 'ava'
 

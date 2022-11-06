@@ -56,7 +56,7 @@
     "set-error-message": "^1.4.0"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^1.0.101",
+    "@ehmicky/dev-tasks": "^1.0.102",
     "@sinonjs/fake-timers": "^9.1.2",
     "execa": "^6.1.0",
     "semver": "^7.3.8",

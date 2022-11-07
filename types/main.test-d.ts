@@ -5,7 +5,7 @@ import {
   expectError,
 } from 'tsd'
 
-import logProcessErrors, { Options, Event } from './main.js'
+import logProcessErrors, { Options, Event } from 'log-process-errors'
 
 const undo = logProcessErrors()
 expectType<void>(undo())

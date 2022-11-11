@@ -1,3 +1,9 @@
+# 10.2.0
+
+## Features
+
+- Improve tree-shaking support
+
 # 10.1.1
 
 ## Internal

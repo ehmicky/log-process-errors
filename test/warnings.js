@@ -86,7 +86,7 @@ each(EVENTS, ({ title }, eventName) => {
           '--unhandled-rejections=strict',
         ].map(callCli.bind(undefined, eventName)),
       )
-      t.is([...new Set(values)].length, 1)
+      t.is(new Set(values).size, 1)
     },
   )
 })

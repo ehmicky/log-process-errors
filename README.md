@@ -149,6 +149,8 @@ Process event name among:
   update an error's message
 - [`set-error-props`](https://github.com/ehmicky/set-error-props): Properly
   update an error's properties
+- [`set-error-stack`](https://github.com/ehmicky/set-error-stack): Properly
+  update an error's stack
 - [`error-cause-polyfill`](https://github.com/ehmicky/error-cause-polyfill):
   Polyfill `error.cause`
 - [`handle-cli-error`](https://github.com/ehmicky/handle-cli-error): 💣 Error

@@ -157,6 +157,8 @@ Process event name among:
   Polyfill `error.cause`
 - [`handle-cli-error`](https://github.com/ehmicky/handle-cli-error): 💣 Error
   handler for CLI applications 💥
+- [`error-http-response`](https://github.com/ehmicky/error-http-response):
+  Create HTTP error responses
 
 # Support
 

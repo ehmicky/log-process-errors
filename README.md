@@ -128,7 +128,7 @@ Process event name among:
 # Related projects
 
 - [`modern-errors`](https://github.com/ehmicky/modern-errors): Handle errors
-  like it's 2022 🔮
+  like it's 2023 🔮
 - [`modern-errors-process`](https://github.com/ehmicky/modern-errors-process):
   Handle process errors
 - [`error-custom-class`](https://github.com/ehmicky/error-custom-class): Create

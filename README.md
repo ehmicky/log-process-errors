@@ -159,6 +159,8 @@ Process event name among:
   handler for CLI applications 💥
 - [`error-http-response`](https://github.com/ehmicky/error-http-response):
   Create HTTP error responses
+- [`winston-error-format`](https://github.com/ehmicky/winston-error-format): Log
+  errors with Winston
 
 # Support
 

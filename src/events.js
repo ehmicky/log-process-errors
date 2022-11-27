@@ -1,5 +1,5 @@
 import { getError } from './error.js'
-import { exitProcess } from './exit.js'
+import { exitProcess } from './exit/main.js'
 import { isLimited } from './limit.js'
 import { isRepeated } from './repeat.js'
 

@@ -2,10 +2,12 @@ import process, { version } from 'node:process'
 
 import test from 'ava'
 
-import { EXIT_CODE } from '../exit.js'
 import { emit } from '../helpers/events.test.js'
 import { startExitLogging } from '../helpers/exit.test.js'
 import { removeProcessListeners } from '../helpers/remove.test.js'
+
+// eslint-disable-next-line no-restricted-imports
+import { EXIT_CODE } from './main.js'
 
 test.serial('exit process if "exit: true"', async (t) => {
   const stopLogging = startExitLogging({ exit: true })

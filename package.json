@@ -61,7 +61,7 @@
     "@sinonjs/fake-timers": "^10.0.0",
     "execa": "^6.1.0",
     "semver": "^7.3.8",
-    "sinon": "^14.0.2",
+    "sinon": "^15.0.0",
     "test-each": "^5.6.0"
   },
   "engines": {

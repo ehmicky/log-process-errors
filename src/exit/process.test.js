@@ -3,9 +3,12 @@ import process from 'node:process'
 import test from 'ava'
 
 // eslint-disable-next-line no-restricted-imports
-import { EXIT_CODE } from '../../src/exit.js'
+import { EXIT_CODE } from '../exit.js'
+// eslint-disable-next-line no-restricted-imports
 import { emit } from '../helpers/events.test.js'
+// eslint-disable-next-line no-restricted-imports
 import { startProcessLogging } from '../helpers/exit.test.js'
+// eslint-disable-next-line no-restricted-imports
 import { removeProcessListeners } from '../helpers/remove.test.js'
 
 test.serial(

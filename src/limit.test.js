@@ -1,13 +1,11 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-// eslint-disable-next-line no-restricted-imports
-import { MAX_EVENTS } from '../src/limit.js'
-
 import { getRandomStackError } from './helpers/error.test.js'
 import { EVENTS, emit, emitManyValues } from './helpers/events.test.js'
 import { removeProcessListeners } from './helpers/remove.test.js'
 import { startLogging } from './helpers/start.test.js'
+import { MAX_EVENTS } from './limit.js'
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should limit events | ${title}`, async (t) => {

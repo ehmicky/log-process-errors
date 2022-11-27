@@ -4,9 +4,12 @@ import { promisify } from 'node:util'
 import test from 'ava'
 
 // eslint-disable-next-line no-restricted-imports
-import { EXIT_TIMEOUT, EXIT_CODE } from '../../src/exit.js'
+import { EXIT_TIMEOUT, EXIT_CODE } from '../exit.js'
+// eslint-disable-next-line no-restricted-imports
 import { emit } from '../helpers/events.test.js'
+// eslint-disable-next-line no-restricted-imports
 import { startClockLogging } from '../helpers/exit.test.js'
+// eslint-disable-next-line no-restricted-imports
 import { removeProcessListeners } from '../helpers/remove.test.js'
 
 const pNextTick = promisify(nextTick)

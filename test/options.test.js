@@ -2,7 +2,7 @@ import test from 'ava'
 import logProcessErrors, { validateOptions } from 'log-process-errors'
 import { each } from 'test-each'
 
-import { removeProcessListeners } from './helpers/remove.js'
+import { removeProcessListeners } from './helpers/remove.test.js'
 
 each(
   [logProcessErrors, validateOptions],

@@ -1,7 +1,7 @@
 import { emitWarning } from 'node:process'
 import { promisify } from 'node:util'
 
-import { getError } from './error.js'
+import { getError } from './error.test.js'
 
 // TODO: replace with `timers/promises` `setImmediate()` after dropping support
 // for Node <15.0.0

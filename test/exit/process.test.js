@@ -4,9 +4,9 @@ import test from 'ava'
 
 // eslint-disable-next-line no-restricted-imports
 import { EXIT_CODE } from '../../src/exit.js'
-import { emit } from '../helpers/events.js'
-import { startProcessLogging } from '../helpers/exit.js'
-import { removeProcessListeners } from '../helpers/remove.js'
+import { emit } from '../helpers/events.test.js'
+import { startProcessLogging } from '../helpers/exit.test.js'
+import { removeProcessListeners } from '../helpers/remove.test.js'
 
 test.serial(
   'does not exit process by default if there are other listeners',

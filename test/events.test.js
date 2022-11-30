@@ -2,10 +2,10 @@ import test from 'ava'
 import sinon from 'sinon'
 import { each } from 'test-each'
 
-import { getConsoleStub } from './helpers/console.js'
-import { EVENTS, emit, getCallCount } from './helpers/events.js'
-import { removeProcessListeners } from './helpers/remove.js'
-import { startLogging } from './helpers/start.js'
+import { getConsoleStub } from './helpers/console.test.js'
+import { EVENTS, emit, getCallCount } from './helpers/events.test.js'
+import { removeProcessListeners } from './helpers/remove.test.js'
+import { startLogging } from './helpers/start.test.js'
 
 const consoleStub = getConsoleStub()
 

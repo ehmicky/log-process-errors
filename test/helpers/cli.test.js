@@ -2,7 +2,7 @@ import { argv } from 'node:process'
 
 // eslint-disable-next-line import/order
 import logProcessErrors from 'log-process-errors'
-import { emit } from './events.js'
+import { emit } from './events.test.js'
 
 const emitEvent = async function () {
   const stopLogging = logProcessErrors({

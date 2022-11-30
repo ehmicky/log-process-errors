@@ -4,13 +4,15 @@ import test from 'ava'
 import { execa } from 'execa'
 import { each } from 'test-each'
 
-import { getConsoleStub } from './helpers/console.js'
-import { EVENTS, emit } from './helpers/events.js'
-import { setProcessEvent, unsetProcessEvent } from './helpers/process.js'
-import { removeProcessListeners } from './helpers/remove.js'
-import { startLogging } from './helpers/start.js'
+import { getConsoleStub } from './helpers/console.test.js'
+import { EVENTS, emit } from './helpers/events.test.js'
+import { setProcessEvent, unsetProcessEvent } from './helpers/process.test.js'
+import { removeProcessListeners } from './helpers/remove.test.js'
+import { startLogging } from './helpers/start.test.js'
 
-const CLI_FIXTURE = fileURLToPath(new URL('helpers/cli.js', import.meta.url))
+const CLI_FIXTURE = fileURLToPath(
+  new URL('helpers/cli.test.js', import.meta.url),
+)
 
 const consoleStub = getConsoleStub()
 

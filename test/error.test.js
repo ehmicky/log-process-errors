@@ -1,9 +1,9 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { EVENTS, emit, emitValue } from './helpers/events.js'
-import { removeProcessListeners } from './helpers/remove.js'
-import { startLogging } from './helpers/start.js'
+import { EVENTS, emit, emitValue } from './helpers/events.test.js'
+import { removeProcessListeners } from './helpers/remove.test.js'
+import { startLogging } from './helpers/start.test.js'
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(

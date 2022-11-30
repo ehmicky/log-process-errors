@@ -3,8 +3,8 @@ import process from 'node:process'
 import fakeTimers from '@sinonjs/fake-timers'
 import sinon from 'sinon'
 
-import { setProcessEvent, unsetProcessEvent } from './process.js'
-import { startLogging } from './start.js'
+import { setProcessEvent, unsetProcessEvent } from './process.test.js'
+import { startLogging } from './start.test.js'
 
 // Start logging and stub `process.exit()`, while a specific process event
 // handler is being used

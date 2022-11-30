@@ -5,15 +5,15 @@ import {
   getRandomMessageError,
   getObjectError,
   getInvalidError,
-} from './helpers/error.js'
+} from './helpers/error.test.js'
 import {
   EVENTS,
   emitMany,
   emitManyValues,
   getCallCount,
-} from './helpers/events.js'
-import { removeProcessListeners } from './helpers/remove.js'
-import { startLogging } from './helpers/start.js'
+} from './helpers/events.test.js'
+import { removeProcessListeners } from './helpers/remove.test.js'
+import { startLogging } from './helpers/start.test.js'
 
 each(EVENTS, ({ title }, eventName) => {
   test.serial(`should not repeat identical events | ${title}`, async (t) => {

@@ -1,6 +1,8 @@
+import logProcessErrors, {
+  type Options,
+  type Event as LogProcessErrorEvent,
+} from 'log-process-errors'
 import { expectType, expectAssignable, expectNotAssignable } from 'tsd'
-
-import logProcessErrors, { Options, Event } from 'log-process-errors'
 
 const undo = logProcessErrors()
 expectType<void>(undo())
@@ -10,10 +12,10 @@ undo(true)
 logProcessErrors({})
 expectAssignable<Options>({})
 
-expectAssignable<Event>('warning')
-expectNotAssignable<Event>('other')
+expectAssignable<LogProcessErrorEvent>('warning')
+expectNotAssignable<LogProcessErrorEvent>('other')
 
-logProcessErrors({ onError(error: Error, event: Event) {} })
+logProcessErrors({ onError(error: Error, event: LogProcessErrorEvent) {} })
 logProcessErrors({ async onError() {} })
 // @ts-expect-error
 logProcessErrors({ onError: true })

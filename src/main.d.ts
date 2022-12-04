@@ -7,7 +7,7 @@ export type Event =
   | 'unhandledRejection'
   | 'rejectionHandled'
 
-export type Options = {
+export interface Options {
   /**
    * Prevent exiting the process on
    * [uncaught exceptions](https://nodejs.org/api/process.html#process_event_uncaughtexception)

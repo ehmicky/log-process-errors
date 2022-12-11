@@ -20,4 +20,4 @@ const emitEvent = async function () {
   }
 }
 
-emitEvent()
+await emitEvent()

@@ -63,7 +63,7 @@
     "execa": "^6.1.0",
     "semver": "^7.3.8",
     "sinon": "^15.0.0",
-    "test-each": "^5.6.0"
+    "test-each": "^5.7.0"
   },
   "engines": {
     "node": ">=14.18.0"

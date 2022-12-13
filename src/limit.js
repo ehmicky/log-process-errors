@@ -10,7 +10,7 @@ import { emitWarning } from 'node:process'
 //    event.
 //    The `repeated` logic should prevent it most of the times, but it can still
 //    happen when `value` is not an `Error` instance and contain dynamic content
-export const isLimited = function (value, event, previousEvents) {
+export const isLimited = (value, event, previousEvents) => {
   if (previousEvents.length < MAX_EVENTS || isLimitedWarning(event, value)) {
     return false
   }
@@ -20,9 +20,8 @@ export const isLimited = function (value, event, previousEvents) {
 }
 
 // The `warning` itself should not be skipped
-const isLimitedWarning = function (event, value) {
-  return event === 'warning' && value.message.startsWith(PREFIX)
-}
+const isLimitedWarning = (event, value) =>
+  event === 'warning' && value.message.startsWith(PREFIX)
 
 export const MAX_EVENTS = 100
 export const PREFIX = `Cannot log more than ${MAX_EVENTS}`

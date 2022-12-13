@@ -7,44 +7,44 @@ import { getError } from './error.test.js'
 // for Node <15.0.0
 const pSetImmediate = promisify(setImmediate)
 
-export const emitMany = async function (eventName, length) {
+export const emitMany = async (eventName, length) => {
   await emitManyValues(getError, eventName, length)
 }
 
-export const emitManyValues = async function (getValue, eventName, length) {
+export const emitManyValues = async (getValue, eventName, length) => {
   await Promise.all(
     Array.from({ length }, () => emitValue(getValue(), eventName)),
   )
 }
 
-export const emit = async function (eventName) {
+export const emit = async (eventName) => {
   await emitValue(getError(), eventName)
 }
 
-export const emitValue = async function (value, eventName) {
+export const emitValue = async (value, eventName) => {
   await EVENTS_MAP[eventName](value)
   await pSetImmediate()
 }
 
-const uncaughtException = function (value) {
+const uncaughtException = (value) => {
   setImmediate(() => {
     throw value
   })
 }
 
-const unhandledRejection = function (value) {
+const unhandledRejection = (value) => {
   // eslint-disable-next-line promise/catch-or-return
   Promise.reject(value)
 }
 
-const rejectionHandled = async function (value) {
+const rejectionHandled = async (value) => {
   const promise = Promise.reject(value)
   await pSetImmediate()
   // eslint-disable-next-line promise/prefer-await-to-then
   promise.catch(() => {})
 }
 
-const warning = function (value) {
+const warning = (value) => {
   emitWarning(value)
 }
 
@@ -59,6 +59,5 @@ export const EVENTS = Object.keys(EVENTS_MAP)
 
 // `rejectionHandled` also fires an additional event: the initial
 // `unhandledRejection`
-export const getCallCount = function (eventName) {
-  return eventName === 'rejectionHandled' ? 2 : 1
-}
+export const getCallCount = (eventName) =>
+  eventName === 'rejectionHandled' ? 2 : 1

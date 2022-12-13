@@ -117,7 +117,7 @@ test.serial(
   },
 )
 
-const advanceClock = function (t, clock) {
+const advanceClock = (t, clock) => {
   t.deepEqual(process.exit.args, [])
   clock.tick(EXIT_TIMEOUT)
   t.deepEqual(process.exit.args, [[EXIT_CODE]])
@@ -135,7 +135,7 @@ test.serial('call process.exit() after a timeout', async (t) => {
 test.serial('wait for async onError() before exiting', async (t) => {
   const onErrorDuration = 1e5
   const { clock, stopLogging } = startClockLogging({
-    async onError() {
+    onError: async () => {
       await promisify(setTimeout)(onErrorDuration)
     },
     exit: true,

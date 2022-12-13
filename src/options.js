@@ -1,12 +1,12 @@
 import isPlainObj from 'is-plain-obj'
 
 // Undocumented named export to validate options
-export const validateOptions = function (opts) {
+export const validateOptions = (opts) => {
   getOptions(opts)
 }
 
 // Validate options and assign default options
-export const getOptions = function (opts = {}) {
+export const getOptions = (opts = {}) => {
   if (!isPlainObj(opts)) {
     throw new TypeError(`Options must be a plain object: ${opts}`)
   }
@@ -24,7 +24,7 @@ export const getOptions = function (opts = {}) {
   return { exit, onError }
 }
 
-const validateExit = function (exit) {
+const validateExit = (exit) => {
   if (exit !== undefined && typeof exit !== 'boolean') {
     throw new TypeError(`Option "exit" must be a boolean: ${exit}`)
   }
@@ -32,12 +32,12 @@ const validateExit = function (exit) {
 
 // `console` should be referenced inside this function, not outside, as user
 // might monkey patch it.
-const defaultOnError = function (error) {
+const defaultOnError = (error) => {
   // eslint-disable-next-line no-restricted-globals, no-console
   console.error(error)
 }
 
-const validateUnknownOpts = function (unknownOpts) {
+const validateUnknownOpts = (unknownOpts) => {
   const [unknownOpt] = Object.keys(unknownOpts)
 
   if (unknownOpt !== undefined) {

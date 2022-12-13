@@ -10,11 +10,11 @@ export const EVENTS = [
   'warning',
 ]
 
-export const handleEvent = async function (
+export const handleEvent = async (
   { event, opts: { onError, exit }, previousEvents },
   value,
   origin,
-) {
+) => {
   const valueA = await resolveValue(value, event)
 
   if (
@@ -32,7 +32,7 @@ export const handleEvent = async function (
 
 // `rejectionHandled` pass a `Promise` as argument. The other events pass the
 // main value as is.
-const resolveValue = async function (value, event) {
+const resolveValue = async (value, event) => {
   if (event !== 'rejectionHandled') {
     return value
   }
@@ -46,6 +46,5 @@ const resolveValue = async function (value, event) {
 
 // With `--unhandled-rejections=strict`, `unhandledRejection` also emits an
 // `uncaughtException` event. We discard it to avoid repetitions.
-const isDoubleRejection = function (event, origin) {
-  return event === 'uncaughtException' && origin === 'unhandledRejection'
-}
+const isDoubleRejection = (event, origin) =>
+  event === 'uncaughtException' && origin === 'unhandledRejection'

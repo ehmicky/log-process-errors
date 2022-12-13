@@ -36,7 +36,7 @@ Before:
 
 ```js
 logProcessErrors({
-  log(error) {
+  log: (error) => {
     if (error.name === 'UncaughtException') {
       console.error(error)
     }
@@ -48,7 +48,7 @@ After:
 
 ```js
 logProcessErrors({
-  onError(error, event) {
+  onError: (error, event) => {
     if (event === 'uncaughtException') {
       console.error(error)
     }
@@ -81,7 +81,7 @@ After:
 
 ```js
 logProcessErrors({
-  onError(error, event) {
+  onError: (error, event) => {
     if (event !== 'warning') {
       console.error(error)
     }
@@ -105,7 +105,7 @@ After:
 ```js
 logProcessErrors({
   // Throw the `error` to make the unit test fail while letting other tests run
-  onError(error) {
+  onError: (error) => {
     throw error
   },
 })

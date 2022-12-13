@@ -34,7 +34,7 @@ each(EVENTS, ({ title }, eventName) => {
       const onError = sinon.spy()
       const testError = new Error('test')
       const { stopLogging } = startLogging({
-        onError(...args) {
+        onError: (...args) => {
           onError(...args)
           throw testError
         },

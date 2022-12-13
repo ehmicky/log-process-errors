@@ -101,7 +101,7 @@ Function called once per process error. Duplicate process errors are ignored.
 ```js
 // Log process errors with Winston instead
 logProcessErrors({
-  onError(error, event) {
+  onError: (error, event) => {
     winstonLogger.error(error.stack)
   },
 })

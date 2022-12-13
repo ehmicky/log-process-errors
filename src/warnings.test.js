@@ -70,7 +70,7 @@ test.serial('user event handlers should be kept', async (t) => {
   consoleStub.reset()
 })
 
-const callCli = async function (eventName, cliFlag) {
+const callCli = async (eventName, cliFlag) => {
   const { stdout } = await execa('node', [cliFlag, CLI_FIXTURE, eventName])
   return stdout
 }

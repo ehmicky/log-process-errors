@@ -16,7 +16,7 @@ import { PREFIX } from './limit.js'
 //    emitted, others still are.
 //  - Can take up some memory, but it should be cleaned up by
 //    `removeListener()`, i.e. once `eventListener` is garbage collected.
-export const isRepeated = function (value, previousEvents) {
+export const isRepeated = (value, previousEvents) => {
   const previousEvent = getPreviousEvent(value)
 
   if (previousEvents.includes(previousEvent)) {
@@ -33,7 +33,7 @@ export const isRepeated = function (value, previousEvents) {
 // is big.
 // This introduces higher risk of false positives (see comment below).
 // We do not hash as it would be too CPU-intensive if the value is big.
-const getPreviousEvent = function (value) {
+const getPreviousEvent = (value) => {
   const previousEvent = isErrorInstance(value)
     ? serializeError(value)
     : stableSerialize(value)
@@ -44,23 +44,20 @@ const getPreviousEvent = function (value) {
 // timestamps. This means errors are only `error.name` + `error.stack`, which
 // should be a good fingerprint.
 // Also we only keep first 10 call sites in case of infinitely recursive stack.
-const serializeError = function ({ name, message, stack }) {
+const serializeError = ({ name, message, stack }) => {
   const messageA = String(message).includes(PREFIX) ? `${message}\n` : ''
   const stackA = serializeStack(stack)
   return `${name}\n${messageA}${stackA}`
 }
 
-const serializeStack = function (stack) {
-  return String(stack)
+const serializeStack = (stack) =>
+  String(stack)
     .split('\n')
     .filter(isStackLine)
     .slice(0, STACK_TRACE_MAX_LENGTH)
     .join('\n')
-}
 
-const isStackLine = function (line) {
-  return STACK_TRACE_LINE_REGEXP.test(line)
-}
+const isStackLine = (line) => STACK_TRACE_LINE_REGEXP.test(line)
 
 const STACK_TRACE_LINE_REGEXP = /^\s+at /u
 const STACK_TRACE_MAX_LENGTH = 10
@@ -75,9 +72,7 @@ const STACK_TRACE_MAX_LENGTH = 10
 // introduces higher risk of false positives (event being flagged as repeated
 // even though it's different). Process errors should be exceptional, so this
 // is ok.
-const stableSerialize = function (value) {
-  return inspect(value, INSPECT_OPTS)
-}
+const stableSerialize = (value) => inspect(value, INSPECT_OPTS)
 
 const INSPECT_OPTS = { getters: true, sorted: true }
 

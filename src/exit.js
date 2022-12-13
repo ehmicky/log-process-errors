@@ -12,7 +12,7 @@ import process, { version } from 'node:process'
 //     - And they might exit only after some logic is performed first
 //        - E.g. Winston waits for logging up to 3s before calling
 //          `process.exit()`
-export const exitProcess = function (exit, event) {
+export const exitProcess = (exit, event) => {
   if (!shouldExit(exit, event)) {
     return
   }
@@ -21,7 +21,7 @@ export const exitProcess = function (exit, event) {
   setTimeout(forceExitProcess, EXIT_TIMEOUT).unref()
 }
 
-const shouldExit = function (exit, event) {
+const shouldExit = (exit, event) => {
   if (!isExitEvent(event)) {
     return false
   }
@@ -33,23 +33,19 @@ const shouldExit = function (exit, event) {
   return process.listeners(event).length <= 1
 }
 
-const isExitEvent = function (event) {
-  return (
-    event === 'uncaughtException' ||
-    (event === 'unhandledRejection' && hasNewExitBehavior())
-  )
-}
+const isExitEvent = (event) =>
+  event === 'uncaughtException' ||
+  (event === 'unhandledRejection' && hasNewExitBehavior())
 
 // Since Node 15.0.0, `unhandledRejection` makes the process exit too
 // TODO: remove after dropping support for Node <15.0.0
-const hasNewExitBehavior = function () {
-  return Number(version.split('.')[0].replace('v', '')) >= NEW_EXIT_MIN_VERSION
-}
+const hasNewExitBehavior = () =>
+  Number(version.split('.')[0].replace('v', '')) >= NEW_EXIT_MIN_VERSION
 
 const NEW_EXIT_MIN_VERSION = 15
 
 // Let tasks complete for a few seconds before forcing the exit
-const forceExitProcess = function () {
+const forceExitProcess = () => {
   // eslint-disable-next-line unicorn/no-process-exit, n/no-process-exit
   process.exit(EXIT_CODE)
 }

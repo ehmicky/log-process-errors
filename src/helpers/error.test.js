@@ -1,25 +1,18 @@
-export const getError = function () {
-  return new Error('message')
-}
+export const getError = () => new Error('message')
 
-export const getRandomStackError = function () {
+export const getRandomStackError = () =>
   // eslint-disable-next-line fp/no-mutating-assign
-  return Object.assign(getError(), { stack: `  at ${Math.random()}` })
-}
+  Object.assign(getError(), { stack: `  at ${Math.random()}` })
 
-export const getRandomMessageError = function () {
-  return new Error(String(Math.random()))
-}
+export const getRandomMessageError = () => new Error(String(Math.random()))
 
-export const getObjectError = function (eventName) {
-  return eventName === 'warning' ? 'message' : { message: 'message' }
-}
+export const getObjectError = (eventName) =>
+  eventName === 'warning' ? 'message' : { message: 'message' }
 
-export const getInvalidError = function () {
+export const getInvalidError = () =>
   // eslint-disable-next-line fp/no-mutating-assign
-  return Object.assign(getError(), {
+  Object.assign(getError(), {
     name: undefined,
     message: undefined,
     stack: undefined,
   })
-}

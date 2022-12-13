@@ -15,12 +15,12 @@ expectAssignable<Options>({})
 expectAssignable<LogProcessErrorEvent>('warning')
 expectNotAssignable<LogProcessErrorEvent>('other')
 
-logProcessErrors({ onError(error: Error, event: LogProcessErrorEvent) {} })
-logProcessErrors({ async onError() {} })
+logProcessErrors({ onError: (error: Error, event: LogProcessErrorEvent) => {} })
+logProcessErrors({ onError: async () => {} })
 // @ts-expect-error
 logProcessErrors({ onError: true })
 // @ts-expect-error
-logProcessErrors({ onError(error: boolean) {} })
+logProcessErrors({ onError: (error: boolean) => {} })
 // @ts-expect-error
 logProcessErrors({ onError: () => true })
 

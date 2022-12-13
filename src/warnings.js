@@ -7,7 +7,7 @@ import process from 'node:process'
 // CLI flag or `NODE_NO_WARNINGS=1` environment variable. But this is not as
 // developer-friendly.
 // This is a noop if `init()` is called several times
-export const removeWarningListener = function () {
+export const removeWarningListener = () => {
   if (warningListener !== undefined) {
     process.off('warning', warningListener)
   }
@@ -16,7 +16,7 @@ export const removeWarningListener = function () {
 // When this module is undone, Node.js default `warning` listener is restored
 // Do not restore if there is some user-defined listener, including if
 // `init()` was called several times.
-export const restoreWarningListener = function () {
+export const restoreWarningListener = () => {
   if (warningListener !== undefined && getWarningListeners().length === 0) {
     process.on('warning', warningListener)
   }
@@ -31,8 +31,6 @@ export const restoreWarningListener = function () {
 //  - this is idempotent, allowing this module to be called several times
 // One side effect is that it removes the possibility to use `--*deprecation`
 // CLI flags
-const getWarningListeners = function () {
-  return process.listeners('warning')
-}
+const getWarningListeners = () => process.listeners('warning')
 
 const [warningListener] = getWarningListeners()

@@ -48,8 +48,7 @@
   },
   "author": "ehmicky <ehmicky@gmail.com> (https://github.com/ehmicky)",
   "directories": {
-    "lib": "src",
-    "test": "test"
+    "lib": "src"
   },
   "dependencies": {
     "is-error-instance": "^1.5.0",

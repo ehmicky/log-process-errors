@@ -21,6 +21,16 @@ promises, promises
 [handled too late](https://nodejs.org/api/process.html#process_event_rejectionhandled)
 and [warnings](https://nodejs.org/api/process.html#process_event_warning).
 
+# Hire me
+
+Please
+[reach out](https://www.linkedin.com/feed/update/urn:li:activity:7018596298127781890/)
+if you're looking for a Node.js API or CLI engineer (10 years of experience).
+Most recently I have been [Netlify Build](https://github.com/netlify/build)'s
+and [Netlify Plugins](https://www.netlify.com/products/build/plugins/)'
+technical lead for 2.5 years. I am available for full-time remote positions in
+either US or EU time zones.
+
 # Features
 
 - Stack traces for warnings and

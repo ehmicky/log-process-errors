@@ -51,7 +51,7 @@
     "lib": "src"
   },
   "dependencies": {
-    "is-error-instance": "^1.6.0",
+    "is-error-instance": "^2.0.0",
     "is-plain-obj": "^4.1.0",
     "normalize-exception": "^2.11.0",
     "set-error-message": "^1.6.0"

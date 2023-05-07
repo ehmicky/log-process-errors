@@ -54,7 +54,7 @@
     "is-error-instance": "^2.0.0",
     "is-plain-obj": "^4.1.0",
     "normalize-exception": "^3.0.0",
-    "set-error-message": "^2.0.0"
+    "set-error-message": "^2.0.1"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^2.0.80",

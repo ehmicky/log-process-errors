@@ -1,11 +1,7 @@
 import { emitWarning } from 'node:process'
-import { promisify } from 'node:util'
+import { setImmediate as pSetImmediate } from 'node:timers/promises'
 
 import { getError } from './error.test.js'
-
-// TODO: replace with `timers/promises` `setImmediate()` after dropping support
-// for Node <15.0.0
-const pSetImmediate = promisify(setImmediate)
 
 export const emitMany = async (eventName, length) => {
   await emitManyValues(getError, eventName, length)

@@ -1,3 +1,9 @@
+# 11.0.1
+
+## Dependencies
+
+- Upgrade internal dependencies
+
 # 11.0.0
 
 ## Breaking changes

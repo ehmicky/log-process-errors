@@ -1,4 +1,4 @@
-import process, { version } from 'node:process'
+import process from 'node:process'
 
 // Exit process on `uncaughtException` and `unhandledRejection`
 //  - This is the default behavior of Node.js
@@ -34,15 +34,7 @@ const shouldExit = (exit, event) => {
 }
 
 const isExitEvent = (event) =>
-  event === 'uncaughtException' ||
-  (event === 'unhandledRejection' && hasNewExitBehavior())
-
-// Since Node 15.0.0, `unhandledRejection` makes the process exit too
-// TODO: remove after dropping support for Node <15.0.0
-const hasNewExitBehavior = () =>
-  Number(version.split('.')[0].replace('v', '')) >= NEW_EXIT_MIN_VERSION
-
-const NEW_EXIT_MIN_VERSION = 15
+  event === 'uncaughtException' || event === 'unhandledRejection'
 
 // Let tasks complete for a few seconds before forcing the exit
 const forceExitProcess = () => {

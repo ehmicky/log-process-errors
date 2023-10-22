@@ -16,7 +16,7 @@ each(EVENTS, ({ title }, eventName) => {
     t.false(onError.called)
     await emit(eventName)
     t.is(onError.callCount, getCallCount(eventName))
-    const [error, event] = onError.args[onError.args.length - 1]
+    const [error, event] = onError.args.at(-1)
     t.true(error instanceof Error)
     t.is(event, eventName)
 
@@ -55,7 +55,7 @@ each(EVENTS, ({ title }, eventName) => {
     t.false(consoleStub.called)
     await emit(eventName)
     t.is(consoleStub.callCount, getCallCount(eventName))
-    t.true(consoleStub.args[consoleStub.args.length - 1][0] instanceof Error)
+    t.true(consoleStub.args.at(-1)[0] instanceof Error)
 
     stopLogging()
     consoleStub.reset()

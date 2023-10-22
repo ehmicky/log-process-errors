@@ -36,7 +36,7 @@ each(EVENTS, ({ title }, eventName) => {
     const { onError, stopLogging } = startLogging()
 
     await emitManyValues(getRandomStackError, eventName, MAX_EVENTS + 1)
-    t.is(onError.args[onError.args.length - 1][1], 'warning')
+    t.is(onError.args.at(-1)[1], 'warning')
 
     stopLogging()
   })

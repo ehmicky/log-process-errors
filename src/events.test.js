@@ -1,5 +1,5 @@
 import test from 'ava'
-import sinon from 'sinon'
+import { spy } from 'sinon'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.test.js'
@@ -31,7 +31,7 @@ each(EVENTS, ({ title }, eventName) => {
         return t.pass()
       }
 
-      const onError = sinon.spy()
+      const onError = spy()
       const testError = new Error('test')
       const { stopLogging } = startLogging({
         onError: (...args) => {

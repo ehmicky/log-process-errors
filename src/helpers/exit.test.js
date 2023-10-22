@@ -1,7 +1,7 @@
 import process from 'node:process'
 
 import fakeTimers from '@sinonjs/fake-timers'
-import sinon from 'sinon'
+import { stub } from 'sinon'
 
 import { setProcessEvent, unsetProcessEvent } from './process.test.js'
 import { startLogging } from './start.test.js'
@@ -39,7 +39,7 @@ const stopClockLogging = (stopLogging, clock) => {
 
 // Start logging and stub `process.exit()`
 export const startExitLogging = (opts) => {
-  sinon.stub(process, 'exit')
+  stub(process, 'exit')
   const { stopLogging } = startLogging(opts)
   return stopExitLogging.bind(undefined, stopLogging)
 }

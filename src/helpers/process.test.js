@@ -1,10 +1,10 @@
 import process from 'node:process'
 
-import sinon from 'sinon'
+import { spy } from 'sinon'
 
 // Spy on process event handlers
 export const setProcessEvent = (eventName) => {
-  const processHandler = sinon.spy()
+  const processHandler = spy()
   process.on(eventName, processHandler)
   return processHandler
 }

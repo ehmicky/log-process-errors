@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 
 import test from 'ava'
-import { execa } from 'execa'
+import { execaNode } from 'execa'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.test.js'
@@ -71,7 +71,7 @@ test.serial('user event handlers should be kept', async (t) => {
 })
 
 const callCli = async (eventName, cliFlag) => {
-  const { stdout } = await execa('node', [cliFlag, CLI_FIXTURE, eventName])
+  const { stdout } = await execaNode(cliFlag, [CLI_FIXTURE, eventName])
   return stdout
 }
 

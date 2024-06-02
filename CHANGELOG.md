@@ -226,9 +226,8 @@ Added 100% test coverage.
 ## Breaking changes
 
 - The `log-process-errors/build/register` export has been removed. Please
-  [import `log-process-errors` directly](README.md#usage) instead.
-- The [`testing` option value](docs/API.md#testing) `node-tap` has been renamed
-  to `node_tap`
+  [import `log-process-errors` directly](README.md#install) instead.
+- The `testing` option value `node-tap` has been renamed to `node_tap`
 - Minimal supported Node.js version is now `12.20.0`
 - This package is now an ES module. It can only be loaded with an `import` or
   `import()` statement, not `require()`. See
@@ -248,7 +247,7 @@ Added 100% test coverage.
 
 ## Features
 
-- The [`exitOn()` option](docs/API.md#exiton) now defaults to
+- The `exitOn()` option now defaults to
   `['uncaughtException', 'unhandledRejection']` on Node `>= 15.0.0`. Its default
   value is still `['uncaughtException']` on Node `< 15.0.0`. This is to mimic
   Node.js default behavior:
@@ -266,7 +265,7 @@ Added 100% test coverage.
 
 ## Features
 
-- Pass original error to [`log()` option](docs/API.md#log)
+- Pass original error to `log()` option
 
 ## Bug fixes
 
@@ -301,7 +300,7 @@ Added 100% test coverage.
 
 ## Features
 
-- Pass original error to [`log()` option](docs/API.md#log)
+- Pass original error to `log()` option
 
 ## Bug fixes
 

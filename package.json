@@ -63,7 +63,7 @@
     "@ehmicky/dev-tasks": "^3.0.5",
     "@sinonjs/fake-timers": "^11.2.2",
     "execa": "^9.3.0",
-    "semver": "^7.6.2",
+    "semver": "^7.6.3",
     "sinon": "^18.0.0",
     "test-each": "^7.0.0"
   },

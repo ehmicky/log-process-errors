@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^3.0.11",
-    "@sinonjs/fake-timers": "^11.2.2",
+    "@sinonjs/fake-timers": "^13.0.2",
     "nano-spawn": "^0.1.0",
     "semver": "^7.6.3",
     "sinon": "^19.0.2",

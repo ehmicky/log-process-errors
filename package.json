@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^3.0.19",
-    "@ehmicky/eslint-config": "^20.0.1",
+    "@ehmicky/eslint-config": "^20.0.2",
     "@sinonjs/fake-timers": "^13.0.4",
     "nano-spawn": "^0.2.0",
     "semver": "^7.6.3",

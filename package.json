@@ -60,7 +60,7 @@
     "set-error-message": "^3.0.0"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^3.0.12",
+    "@ehmicky/dev-tasks": "^3.0.13",
     "@sinonjs/fake-timers": "^13.0.4",
     "nano-spawn": "^0.2.0",
     "semver": "^7.6.3",

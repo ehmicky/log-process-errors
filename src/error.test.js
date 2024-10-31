@@ -1,7 +1,7 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { EVENTS, emit, emitValue } from './helpers/events.test.js'
+import { emit, emitValue, EVENTS } from './helpers/events.test.js'
 import { removeProcessListeners } from './helpers/remove.test.js'
 import { startLogging } from './helpers/start.test.js'
 

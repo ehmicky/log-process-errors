@@ -3,7 +3,7 @@ import { spy } from 'sinon'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.test.js'
-import { EVENTS, emit, getCallCount } from './helpers/events.test.js'
+import { emit, EVENTS, getCallCount } from './helpers/events.test.js'
 import { removeProcessListeners } from './helpers/remove.test.js'
 import { startLogging } from './helpers/start.test.js'
 

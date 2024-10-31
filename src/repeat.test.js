@@ -2,14 +2,14 @@ import test from 'ava'
 import { each } from 'test-each'
 
 import {
-  getRandomMessageError,
-  getObjectError,
   getInvalidError,
+  getObjectError,
+  getRandomMessageError,
 } from './helpers/error.test.js'
 import {
-  EVENTS,
   emitMany,
   emitManyValues,
+  EVENTS,
   getCallCount,
 } from './helpers/events.test.js'
 import { removeProcessListeners } from './helpers/remove.test.js'

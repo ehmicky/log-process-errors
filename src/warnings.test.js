@@ -5,7 +5,7 @@ import spawn from 'nano-spawn'
 import { each } from 'test-each'
 
 import { getConsoleStub } from './helpers/console.test.js'
-import { EVENTS, emit } from './helpers/events.test.js'
+import { emit, EVENTS } from './helpers/events.test.js'
 import { setProcessEvent, unsetProcessEvent } from './helpers/process.test.js'
 import { removeProcessListeners } from './helpers/remove.test.js'
 import { startLogging } from './helpers/start.test.js'

@@ -2,7 +2,7 @@ import test from 'ava'
 import { each } from 'test-each'
 
 import { getRandomStackError } from './helpers/error.test.js'
-import { EVENTS, emit, emitManyValues } from './helpers/events.test.js'
+import { emit, emitManyValues, EVENTS } from './helpers/events.test.js'
 import { removeProcessListeners } from './helpers/remove.test.js'
 import { startLogging } from './helpers/start.test.js'
 // eslint-disable-next-line no-restricted-imports

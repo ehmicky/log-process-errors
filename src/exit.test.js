@@ -1,15 +1,15 @@
-import process, { version, nextTick } from 'node:process'
+import process, { nextTick, version } from 'node:process'
 import { promisify } from 'node:util'
 
 import test from 'ava'
 
 // eslint-disable-next-line no-restricted-imports
-import { EXIT_TIMEOUT, EXIT_CODE } from './exit.js'
+import { EXIT_CODE, EXIT_TIMEOUT } from './exit.js'
 import { emit } from './helpers/events.test.js'
 import {
-  startProcessLogging,
-  startExitLogging,
   startClockLogging,
+  startExitLogging,
+  startProcessLogging,
 } from './helpers/exit.test.js'
 import { removeProcessListeners } from './helpers/remove.test.js'
 

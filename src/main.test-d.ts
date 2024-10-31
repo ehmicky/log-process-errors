@@ -1,8 +1,8 @@
 import logProcessErrors, {
-  type Options,
   type Event as LogProcessErrorEvent,
+  type Options,
 } from 'log-process-errors'
-import { expectType, expectAssignable, expectNotAssignable } from 'tsd'
+import { expectAssignable, expectNotAssignable, expectType } from 'tsd'
 
 const undo = logProcessErrors()
 expectType<void>(undo())

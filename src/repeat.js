@@ -23,6 +23,7 @@ export const isRepeated = (value, previousEvents) => {
     return true
   }
 
+  // eslint-disable-next-line fp/no-mutating-methods
   previousEvents.push(previousEvent)
   return false
 }

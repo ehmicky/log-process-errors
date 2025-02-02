@@ -65,7 +65,7 @@
     "@ehmicky/prettier-config": "^1.0.4",
     "@sinonjs/fake-timers": "^14.0.0",
     "nano-spawn": "^0.2.0",
-    "semver": "^7.6.3",
+    "semver": "^7.7.1",
     "sinon": "^19.0.2",
     "test-each": "^7.0.0"
   },

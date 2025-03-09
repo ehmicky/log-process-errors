@@ -60,7 +60,7 @@
     "set-error-message": "^3.0.0"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^3.0.30",
+    "@ehmicky/dev-tasks": "^3.0.31",
     "@ehmicky/eslint-config": "^20.0.25",
     "@ehmicky/prettier-config": "^1.0.4",
     "@sinonjs/fake-timers": "^14.0.0",

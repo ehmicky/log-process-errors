@@ -160,6 +160,8 @@ Process event name among:
   Polyfill `error.cause`
 - [`handle-cli-error`](https://github.com/ehmicky/handle-cli-error): 💣 Error
   handler for CLI applications 💥
+- [`beautiful-error`](https://github.com/ehmicky/beautiful-error): Prettify
+  error messages and stacks
 - [`error-http-response`](https://github.com/ehmicky/error-http-response):
   Create HTTP error responses
 - [`winston-error-format`](https://github.com/ehmicky/winston-error-format): Log

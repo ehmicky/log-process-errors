@@ -1,3 +1,34 @@
+
+<div align="right">
+  <details>
+    <summary >🌐 Language</summary>
+    <div>
+      <div align="center">
+        <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=en">English</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=zh-CN">简体中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=zh-TW">繁體中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=ja">日本語</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=ko">한국어</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=hi">हिन्दी</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=th">ไทย</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=fr">Français</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=de">Deutsch</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=es">Español</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=it">Italiano</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=ru">Русский</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=pt">Português</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=nl">Nederlands</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=pl">Polski</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=ar">العربية</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=fa">فارسی</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=tr">Türkçe</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=vi">Tiếng Việt</a>
+        | <a href="https://openaitx.github.io/view.html?user=ehmicky&project=log-process-errors&lang=id">Bahasa Indonesia</a>
+      </div>
+    </div>
+  </details>
+</div>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ehmicky/design/main/log-process-errors/log-process-errors_dark.svg"/>
   <img alt="log-process-errors logo" src="https://raw.githubusercontent.com/ehmicky/design/main/log-process-errors/log-process-errors.svg" width="500"/>
